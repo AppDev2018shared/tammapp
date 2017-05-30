@@ -77,9 +77,6 @@
 		61B8C87E1EC1AA6700954A68 /* CommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B8C87D1EC1AA6700954A68 /* CommentCell.m */; };
 		61B8C8811EC1AA8400954A68 /* SuggestedPostCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B8C8801EC1AA8400954A68 /* SuggestedPostCell.m */; };
 		61B8C8851EC1E61100954A68 /* steve.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 61B8C8841EC1E61100954A68 /* steve.jpeg */; };
-		61C4E46B1EBB58C8007862FE /* HarajLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 61C4E46A1EBB58C8007862FE /* HarajLayout.m */; };
-		61C5556B1ED59D1A006F2DD8 /* CustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61C555691ED59D1A006F2DD8 /* CustomTableViewCell.m */; };
-		61C5556C1ED59D1A006F2DD8 /* CustomTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61C5556A1ED59D1A006F2DD8 /* CustomTableViewCell.xib */; };
 		61D376681EBC3F6300BA02D4 /* LGPlusButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D376611EBC3F6300BA02D4 /* LGPlusButton.m */; };
 		61D376691EBC3F6300BA02D4 /* LGPlusButtonDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D376631EBC3F6300BA02D4 /* LGPlusButtonDescription.m */; };
 		61D3766A1EBC3F6300BA02D4 /* LGPlusButtonsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D376651EBC3F6300BA02D4 /* LGPlusButtonsView.m */; };
@@ -91,6 +88,8 @@
 		61D3767A1EBC868000BA02D4 /* SanFranciscoDisplay-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 61D376731EBC867F00BA02D4 /* SanFranciscoDisplay-Regular.otf */; };
 		61D3767B1EBC868000BA02D4 /* SanFranciscoDisplay-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 61D376741EBC867F00BA02D4 /* SanFranciscoDisplay-Semibold.otf */; };
 		61D3767C1EBC868000BA02D4 /* SanFranciscoDisplay-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 61D376751EBC867F00BA02D4 /* SanFranciscoDisplay-Thin.otf */; };
+		61E015F41ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E015F21ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.m */; };
+		61E015F51ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61E015F31ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.xib */; };
 		61ED095A1EB85369008EAFB7 /* YSLContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61ED09571EB85369008EAFB7 /* YSLContainerViewController.m */; };
 		61ED095B1EB85369008EAFB7 /* YSLScrollMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61ED09591EB85369008EAFB7 /* YSLScrollMenuView.m */; };
 		61ED09931EB85D42008EAFB7 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 61ED095F1EB85D42008EAFB7 /* AFHTTPSessionManager.m */; };
@@ -253,8 +252,8 @@
 		614C16121EC0739900B11A9B /* FRGWaterfallHeaderReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRGWaterfallHeaderReusableView.h; sourceTree = "<group>"; };
 		614C16131EC0739900B11A9B /* FRGWaterfallHeaderReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRGWaterfallHeaderReusableView.m; sourceTree = "<group>"; };
 		614C161A1EC07E4600B11A9B /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play.png; sourceTree = "<group>"; };
-		614C161C1EC0919200B11A9B /* OnCellClickViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnCellClickViewController.h; sourceTree = "<group>"; };
-		614C161D1EC0919200B11A9B /* OnCellClickViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnCellClickViewController.m; sourceTree = "<group>"; };
+		614C161C1EC0919200B11A9B /* OnCellClickViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OnCellClickViewController.h; path = ../OnCellClickViewController.h; sourceTree = "<group>"; };
+		614C161D1EC0919200B11A9B /* OnCellClickViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OnCellClickViewController.m; path = ../OnCellClickViewController.m; sourceTree = "<group>"; };
 		614E896D1ECB0A0300C302E6 /* PostingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostingViewController.h; sourceTree = "<group>"; };
 		614E896E1ECB0A0300C302E6 /* PostingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostingViewController.m; sourceTree = "<group>"; };
 		617FD8891EB9B2DD008B827F /* ImageCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCollectionViewCell.h; sourceTree = "<group>"; };
@@ -272,11 +271,6 @@
 		61B8C87F1EC1AA8400954A68 /* SuggestedPostCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuggestedPostCell.h; sourceTree = "<group>"; };
 		61B8C8801EC1AA8400954A68 /* SuggestedPostCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuggestedPostCell.m; sourceTree = "<group>"; };
 		61B8C8841EC1E61100954A68 /* steve.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = steve.jpeg; sourceTree = "<group>"; };
-		61C4E4691EBB58C8007862FE /* HarajLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HarajLayout.h; sourceTree = "<group>"; };
-		61C4E46A1EBB58C8007862FE /* HarajLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HarajLayout.m; sourceTree = "<group>"; };
-		61C555681ED59D1A006F2DD8 /* CustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableViewCell.h; sourceTree = "<group>"; };
-		61C555691ED59D1A006F2DD8 /* CustomTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTableViewCell.m; sourceTree = "<group>"; };
-		61C5556A1ED59D1A006F2DD8 /* CustomTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomTableViewCell.xib; sourceTree = "<group>"; };
 		61D376601EBC3F6300BA02D4 /* LGPlusButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGPlusButton.h; sourceTree = "<group>"; };
 		61D376611EBC3F6300BA02D4 /* LGPlusButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGPlusButton.m; sourceTree = "<group>"; };
 		61D376621EBC3F6300BA02D4 /* LGPlusButtonDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGPlusButtonDescription.h; sourceTree = "<group>"; };
@@ -292,6 +286,9 @@
 		61D376731EBC867F00BA02D4 /* SanFranciscoDisplay-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SanFranciscoDisplay-Regular.otf"; sourceTree = "<group>"; };
 		61D376741EBC867F00BA02D4 /* SanFranciscoDisplay-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SanFranciscoDisplay-Semibold.otf"; sourceTree = "<group>"; };
 		61D376751EBC867F00BA02D4 /* SanFranciscoDisplay-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SanFranciscoDisplay-Thin.otf"; sourceTree = "<group>"; };
+		61E015F11ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwoImageOnClickTableViewCell.h; sourceTree = "<group>"; };
+		61E015F21ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwoImageOnClickTableViewCell.m; sourceTree = "<group>"; };
+		61E015F31ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TwoImageOnClickTableViewCell.xib; sourceTree = "<group>"; };
 		61ED09561EB85369008EAFB7 /* YSLContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSLContainerViewController.h; sourceTree = "<group>"; };
 		61ED09571EB85369008EAFB7 /* YSLContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YSLContainerViewController.m; sourceTree = "<group>"; };
 		61ED09581EB85369008EAFB7 /* YSLScrollMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSLScrollMenuView.h; sourceTree = "<group>"; };
@@ -442,19 +439,14 @@
 				324780781EACEE0A00FF4B79 /* AppDelegate.m */,
 				3247807A1EACEE0A00FF4B79 /* ViewController.h */,
 				3247807B1EACEE0A00FF4B79 /* ViewController.m */,
-				614C161C1EC0919200B11A9B /* OnCellClickViewController.h */,
-				614C161D1EC0919200B11A9B /* OnCellClickViewController.m */,
-				613171071EC5953000E3BD4C /* MyPostViewController.h */,
-				613171081EC5953000E3BD4C /* MyPostViewController.m */,
-				614E896D1ECB0A0300C302E6 /* PostingViewController.h */,
-				614E896E1ECB0A0300C302E6 /* PostingViewController.m */,
 				613E82F91ED2B82400B1BC23 /* UrlName.plist */,
 				614B96D21ED45998008CB090 /* defaultpostimg.jpg */,
+				61E015F01ED6BB6B0037C72C /* onclickVC */,
+				6181A17D1ED6FF58004E1CEF /* mypostVC */,
+				6181A17E1ED6FF98004E1CEF /* newpostVC */,
 				619229671EC4820A004E67D6 /* pop over views */,
 				61B8C8721EC1A8FB00954A68 /* TableView Cells */,
 				614E89721ECB0B5A00C302E6 /* Posting TableView Cells */,
-				61C4E4691EBB58C8007862FE /* HarajLayout.h */,
-				61C4E46A1EBB58C8007862FE /* HarajLayout.m */,
 				3247807D1EACEE0A00FF4B79 /* Main.storyboard */,
 				324780801EACEE0A00FF4B79 /* Images.xcassets */,
 				324780821EACEE0A00FF4B79 /* LaunchScreen.xib */,
@@ -683,15 +675,30 @@
 			name = "Posting TableView Cells";
 			sourceTree = "<group>";
 		};
+		6181A17D1ED6FF58004E1CEF /* mypostVC */ = {
+			isa = PBXGroup;
+			children = (
+				613171071EC5953000E3BD4C /* MyPostViewController.h */,
+				613171081EC5953000E3BD4C /* MyPostViewController.m */,
+			);
+			name = mypostVC;
+			sourceTree = "<group>";
+		};
+		6181A17E1ED6FF98004E1CEF /* newpostVC */ = {
+			isa = PBXGroup;
+			children = (
+				614E896D1ECB0A0300C302E6 /* PostingViewController.h */,
+				614E896E1ECB0A0300C302E6 /* PostingViewController.m */,
+			);
+			name = newpostVC;
+			sourceTree = "<group>";
+		};
 		619229671EC4820A004E67D6 /* pop over views */ = {
 			isa = PBXGroup;
 			children = (
 				6131710C1EC5BB0A00E3BD4C /* EnterPrice.h */,
 				6131710D1EC5BB0A00E3BD4C /* EnterPrice.m */,
 				6131710F1EC5BB2000E3BD4C /* EnterPrice.xib */,
-				61C555681ED59D1A006F2DD8 /* CustomTableViewCell.h */,
-				61C555691ED59D1A006F2DD8 /* CustomTableViewCell.m */,
-				61C5556A1ED59D1A006F2DD8 /* CustomTableViewCell.xib */,
 			);
 			name = "pop over views";
 			sourceTree = "<group>";
@@ -740,6 +747,18 @@
 				61D376751EBC867F00BA02D4 /* SanFranciscoDisplay-Thin.otf */,
 			);
 			path = sanfranciscofont;
+			sourceTree = "<group>";
+		};
+		61E015F01ED6BB6B0037C72C /* onclickVC */ = {
+			isa = PBXGroup;
+			children = (
+				614C161C1EC0919200B11A9B /* OnCellClickViewController.h */,
+				614C161D1EC0919200B11A9B /* OnCellClickViewController.m */,
+				61E015F11ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.h */,
+				61E015F21ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.m */,
+				61E015F31ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.xib */,
+			);
+			path = onclickVC;
 			sourceTree = "<group>";
 		};
 		61ED09551EB85369008EAFB7 /* YSLContainerViewController */ = {
@@ -959,6 +978,7 @@
 				61D3767C1EBC868000BA02D4 /* SanFranciscoDisplay-Thin.otf in Resources */,
 				61F56CD31ECD75A10031E9C1 /* ELCAssetTablePicker.xib in Resources */,
 				61271D461EBD928C0082E504 /* facebook.png in Resources */,
+				61E015F51ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.xib in Resources */,
 				61F56CD21ECD75A10031E9C1 /* ELCAssetPicker.xib in Resources */,
 				61271D481EBD928C0082E504 /* facebook@3x.png in Resources */,
 				613171101EC5BB2000E3BD4C /* EnterPrice.xib in Resources */,
@@ -966,7 +986,6 @@
 				61ED09B31EB865EF008EAFB7 /* photoicon.png in Resources */,
 				61D3767B1EBC868000BA02D4 /* SanFranciscoDisplay-Semibold.otf in Resources */,
 				61271D491EBD928C0082E504 /* twitter.png in Resources */,
-				61C5556C1ED59D1A006F2DD8 /* CustomTableViewCell.xib in Resources */,
 				61D3767A1EBC868000BA02D4 /* SanFranciscoDisplay-Regular.otf in Resources */,
 				61F56CD41ECD75A10031E9C1 /* Overlay.png in Resources */,
 				3247807F1EACEE0A00FF4B79 /* Main.storyboard in Resources */,
@@ -1016,7 +1035,6 @@
 				61ED09A61EB85D42008EAFB7 /* UIImage+WebP.m in Sources */,
 				614C15EB1EC039C100B11A9B /* NSObject+SBJson.m in Sources */,
 				61B8C8751EC1AA1800954A68 /* FirstImageViewCell.m in Sources */,
-				61C5556B1ED59D1A006F2DD8 /* CustomTableViewCell.m in Sources */,
 				61D3766B1EBC3F6300BA02D4 /* LGPlusButtonsViewShared.m in Sources */,
 				61ED099B1EB85D42008EAFB7 /* NSData+ImageContentType.m in Sources */,
 				61EDCA0B1ECB2E3F0036A250 /* MoreDetailCell.m in Sources */,
@@ -1031,7 +1049,6 @@
 				61B8C8811EC1AA8400954A68 /* SuggestedPostCell.m in Sources */,
 				614C15EE1EC039C100B11A9B /* SBJsonStreamParserAccumulator.m in Sources */,
 				61F56CCE1ECD75A10031E9C1 /* ELCConsole.m in Sources */,
-				61C4E46B1EBB58C8007862FE /* HarajLayout.m in Sources */,
 				614E896F1ECB0A0300C302E6 /* PostingViewController.m in Sources */,
 				61EDCA081ECB2E270036A250 /* ProductDetailCell.m in Sources */,
 				61271E1B1EBDDD960082E504 /* RNActivityView.m in Sources */,
@@ -1047,6 +1064,7 @@
 				324780761EACEE0A00FF4B79 /* main.m in Sources */,
 				61D376691EBC3F6300BA02D4 /* LGPlusButtonDescription.m in Sources */,
 				614C16071EC042D900B11A9B /* MainNavigationController.m in Sources */,
+				61E015F41ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.m in Sources */,
 				614C16161EC0739900B11A9B /* FRGWaterfallDecorationReusableView.m in Sources */,
 				614C15EC1EC039C100B11A9B /* SBJsonParser.m in Sources */,
 				61ED09931EB85D42008EAFB7 /* AFHTTPSessionManager.m in Sources */,
@@ -1229,7 +1247,7 @@
 				INFOPLIST_FILE = Haraj_app/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.bba.Care2Dare;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bba.tamm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_PNG_TEXT = YES;
 			};
@@ -1255,7 +1273,7 @@
 				INFOPLIST_FILE = Haraj_app/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.bba.Care2Dare;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bba.tamm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_PNG_TEXT = YES;
 			};

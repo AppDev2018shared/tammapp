@@ -10,10 +10,10 @@
 
 @interface FirstImageViewCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UIImageView *imageView;
-
-@property (weak, nonatomic) IBOutlet UIView *bgView;
-@property (weak, nonatomic) IBOutlet UILabel *countLabel;
-
+@property (weak, nonatomic) IBOutlet UIImageView *imageView_thumbnails;
+@property (weak, nonatomic) IBOutlet UIImageView *image_play;
+@property (weak, nonatomic) IBOutlet UIButton  *button_threedots;
+@property (weak, nonatomic) IBOutlet UIButton  *button_favourite;
+@property (weak, nonatomic) IBOutlet UIButton  *button_back;
 
 @end

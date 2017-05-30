@@ -33,6 +33,7 @@
     NSURLConnection *Connection_Create;
     NSMutableData *webData_Create;
     NSMutableArray *Array_Create;
+    NSString *postIDValue;
     
 }
 
@@ -89,6 +90,25 @@
     
     NSString *plistPath = [[NSBundle mainBundle]pathForResource:@"UrlName" ofType:@"plist"];
     urlplist = [NSDictionary dictionaryWithContentsOfFile:plistPath];
+    
+  //---------------------------POST ID Creating ---------------------------------------------------------------
+    
+    NSString *letters = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    NSMutableString *randomString = [[NSMutableString alloc]init];
+    for (int i=0; i<3; i++)
+    {
+        [randomString appendFormat: @"%C", [letters characterAtIndex: arc4random_uniform([letters length])]];
+    }
+    NSLog(@" Random String=%@",randomString);
+    
+    NSDateFormatter *dateFormatter=[[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyyMMddHHmmss"];
+    // or @"yyyy-MM-dd hh:mm:ss a" if you prefer the time with AM/PM
+    NSLog(@" date=%@",[dateFormatter stringFromDate:[NSDate date]]);
+    postIDValue = [NSString stringWithFormat:@"M%@%@",[dateFormatter stringFromDate:[NSDate date]],randomString];
+    NSLog(@"postIDValue %@",postIDValue);
+    
+
     
     
     
@@ -513,7 +533,7 @@
         
         
         NSString *postid= @"postid";
-        NSString *postidVal = @"P20170522123513ABS";    //[defaults valueForKey:@"postid"];
+        NSString *postidVal = postIDValue;    //[defaults valueForKey:@"postid"];
         NSString *userid= @"userid";
         NSString *useridVal =[defaults valueForKey:@"userid"];
         NSString *title= @"title";

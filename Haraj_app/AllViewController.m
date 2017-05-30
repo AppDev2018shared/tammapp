@@ -11,7 +11,6 @@
 #import "ImageCollectionViewCell.h"
 #import "AFNetworking.h"
 #import "CellModel.h"
-#import "HarajLayout.h"
 #import "AFHTTPSessionManager.h"
 #import "FRGWaterfallCollectionViewCell.h"
 #import "FRGWaterfallCollectionViewLayout.h"

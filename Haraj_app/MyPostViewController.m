@@ -13,7 +13,7 @@
 #import "CommentCell.h"
 #import "SuggestedPostCell.h"
 #import "UIImageView+WebCache.h"
-
+#import "TwoImageOnClickTableViewCell.h"
 
 @interface MyPostViewController ()<UITableViewDataSource, UITableViewDelegate,UIScrollViewDelegate>
 
@@ -25,20 +25,22 @@
     FirstImageViewCell *FirstCell;
     NSURL * imageUrl;
     NSUserDefaults *defaults;
+    NSString *total_image;
 }
+@property (strong,nonatomic)TwoImageOnClickTableViewCell * Cell_two;
 
 
 @end
 
 @implementation MyPostViewController
-@synthesize Array_UserInfo,swipeCount,imageArray;
+@synthesize Array_UserInfo,swipeCount,MoreImageArray,Cell_two;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
     
-    
+    total_image = @"2";
     defaults = [[NSUserDefaults alloc]init];
     
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
@@ -167,62 +169,48 @@
     
     NSDictionary *dic_request=[Array_UserInfo objectAtIndex:swipeCount];
     NSLog(@"dic= %@",dic_request);
-    
+    static NSString *cell_two1=@"Cell_Two";
     switch (indexPath.section)
     {
         case 0:
         {
             
-            FirstCell = [tableView dequeueReusableCellWithIdentifier:@"ImageCell"];
-            
-            UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-            if(cell == nil) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            if ([total_image isEqualToString:@"2"])
+            {
+                
+                Cell_two = [[[NSBundle mainBundle]loadNibNamed:@"TwoImageOnClickTableViewCell" owner:self options:nil] objectAtIndex:0];
+                
+                
+                
+                
+                if (Cell_two == nil)
+                {
+                    
+                    Cell_two = [[TwoImageOnClickTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cell_two1];
+                    
+                    
+                }
+                [Cell_two.button_threedots addTarget:self action:@selector(button_threedots_action:) forControlEvents:UIControlEventTouchUpInside];
+                [Cell_two.button_favourite addTarget:self action:@selector(button_favourite_action:) forControlEvents:UIControlEventTouchUpInside];
+                [Cell_two.button_back addTarget:self action:@selector(button_back_action:) forControlEvents:UIControlEventTouchUpInside];
+                UITapGestureRecognizer * moreTap =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(MoreImage:)];
+                Cell_two.countLabel.text = @"15";
+                [Cell_two.bgView addGestureRecognizer:moreTap];
+                
+                
+                return Cell_two;
+                
                 
             }
+            else
+            {
+                FirstCell = [tableView dequeueReusableCellWithIdentifier:@"ImageCell"];
+                [FirstCell.button_threedots addTarget:self action:@selector(button_threedots_action:) forControlEvents:UIControlEventTouchUpInside];
+                [FirstCell.button_favourite addTarget:self action:@selector(button_favourite_action:) forControlEvents:UIControlEventTouchUpInside];
+                [FirstCell.button_back addTarget:self action:@selector(button_back_action:) forControlEvents:UIControlEventTouchUpInside];
+                return FirstCell;
+            }
             
-            //[FirstCell.imageView sd_setImageWithURL:imageUrl];
-//            UITapGestureRecognizer * moreTap =[[UITapGestureRecognizer alloc] initWithTarget:self
-//                                                                                    action:@selector(MoreImage:)];
-//
-//            FirstCell.countLabel.text = @"15";
-//            [FirstCell.bgView addGestureRecognizer:moreTap];
-            
-            UIImageView *image1 = [[UIImageView alloc]initWithFrame:CGRectMake(8, 8, 181, 264)];
-            image1.backgroundColor = [UIColor redColor];
-            
-            UIView *bgView = [[UIView alloc]initWithFrame:CGRectMake(8, 186, 103, 75)];
-            UIImageView *image3 = [[UIImageView alloc]initWithFrame:CGRectMake(13, 10, 37, 29)];
-            image3.image = [UIImage imageNamed:@"Moreimages"];
-            
-            UILabel *count = [[UILabel alloc]initWithFrame:CGRectMake(42, 6, 42, 36)];
-            count.text = @"15";
-            count.textAlignment = NSTextAlignmentCenter;
-            count .font = [UIFont systemFontOfSize:17];
-            count.textColor = [UIColor whiteColor];
-            [bgView addSubview:count];
-            UILabel *plus = [[UILabel alloc]initWithFrame:CGRectMake(22, 36, 29, 21)];
-            plus.text = @"+";
-            plus.textColor = [UIColor whiteColor];
-            [bgView addSubview:plus];
-            UILabel *more = [[UILabel alloc]initWithFrame:CGRectMake(42, 36, 42, 21)];
-            more.text = @"more";
-            more.textColor = [UIColor whiteColor];
-            [bgView addSubview:more];
-            
-            [bgView addSubview:image3];
-            [image1 addSubview:bgView];
-            
-            
-            UIImageView *image2 = [[UIImageView alloc]initWithFrame:CGRectMake(186, 8, 181, 264)];
-            image2.backgroundColor = [UIColor yellowColor];
-            
-            
-            [cell addSubview:image1];
-            [cell addSubview:image2];
-//            
-            
-            return cell;
             
         }
             break;
@@ -278,7 +266,14 @@
 {
     if (indexPath.section==0)
     {
-        return 434;
+        if ([total_image isEqualToString:@"2"])
+        {
+            return 275;
+        }
+        else
+        {
+            return 434;
+        }
     }
     else if (indexPath.section == 1)
     {
@@ -296,35 +291,6 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    
-    if (section==0)
-    {
-        
-        sectionView=[[UIView alloc]initWithFrame:CGRectMake(0, -200,self.view.frame.size.width,40)];//36
-        
-        
-        UIButton *button1 = [[UIButton alloc]initWithFrame:CGRectMake(40, 0, 40, 40)];
-        [button1 setImage:[UIImage imageNamed:@"3dots"] forState:UIControlStateNormal];
-        [button1 setTag:1];
-        [button1 addTarget:self action:@selector(sectionHeaderTopButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        [sectionView addSubview:button1];
-        
-        UIButton *button2 = [[UIButton alloc]initWithFrame:CGRectMake(80, 0, 40, 40)];
-        [button2 setImage:[UIImage imageNamed:@"Whitefavourite"] forState:UIControlStateNormal];
-        [button2 setTag:2];
-        [button2 addTarget:self action:@selector(sectionHeaderTopButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        [sectionView addSubview:button2];
-        
-        UIButton *button3 = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width  - 95, 0, 40, 40)];
-        [button3 setImage:[UIImage imageNamed:@"Whitearrow"] forState:UIControlStateNormal];
-        [button3 setTag:3];
-        [button3 addTarget:self action:@selector(sectionHeaderTopButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        [sectionView addSubview:button3];
-        
-        sectionView.tag=section;
-        
-    }
-    
     
     if (section==1)
     {
@@ -372,10 +338,7 @@
         comment.textColor = [UIColor lightGrayColor];
         [sectionView addSubview:comment];
         
-        
-        
         sectionView.tag=section;
-        
         
     }
     
@@ -385,11 +348,6 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (section==0)
-    {
-        return 40;
-    }
-    
     if (section==1)
     {
         return 40;
@@ -398,8 +356,6 @@
     {
         return 40;
     }
-    
-    
     
     return 0;
     
@@ -534,6 +490,31 @@
     
 }
 
+
+-(void) button_threedots_action:(id)sender
+{
+    
+}
+-(void) button_favourite_action:(id)sender
+{
+    
+}
+-(void) button_back_action:(id)sender
+{
+    
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.3;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    transition.type = kCATransitionPush;
+    transition.subtype = kCATransitionFromRight;
+    [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
+    
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    
+    
+}
+
+
 #pragma mark - PopOver Button Action
 
 
@@ -580,27 +561,9 @@
     }
     else
     {
-        if ([[defaults valueForKey:@"MoreImage"] isEqualToString:@"yes"])
-        {
+        
             transparentView.hidden = YES;
-            [defaults setObject:@"no" forKey:@"MoreImage"];
-        }
-        else
-        {
-        
-        NSLog(@"Whitearrow Pressed");
-        
-        CATransition *transition = [CATransition animation];
-        transition.duration = 0.3;
-        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-        transition.type = kCATransitionPush;
-        transition.subtype = kCATransitionFromRight;
-        [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
-        
-        [self.navigationController popToRootViewControllerAnimated:YES];
-        
-        }
-        
+            NSLog(@"Whitearrow Pressed");
     }
     
 }
@@ -618,28 +581,30 @@
     
 }
 
+
+
+
 -(void)MoreImage:(UITapGestureRecognizer *)sender
 {
 #pragma mark- --more image scroll view
     
-    [defaults setObject:@"yes" forKey:@"MoreImage"];
     
     transparentView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     transparentView.backgroundColor=[UIColor colorWithRed:30/255.0 green:30/255.0 blue:30/255.0 alpha:0.95];
     
-    UIButton *button1 = [[UIButton alloc]initWithFrame:CGRectMake(15,20, 40, 40)];
+    UIButton *button1 = [[UIButton alloc]initWithFrame:CGRectMake(8,12, 38, 42)];
     [button1 setImage:[UIImage imageNamed:@"3dots"] forState:UIControlStateNormal];
     [button1 setTag:1];
     [button1 addTarget:self action:@selector(sectionHeaderTopButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [transparentView addSubview:button1];
     
-    UIButton *button2 = [[UIButton alloc]initWithFrame:CGRectMake(80, 20, 40, 40)];
+    UIButton *button2 = [[UIButton alloc]initWithFrame:CGRectMake(80, 12, 50, 42)];
     [button2 setImage:[UIImage imageNamed:@"Whitefavourite"] forState:UIControlStateNormal];
     [button2 setTag:2];
     [button2 addTarget:self action:@selector(sectionHeaderTopButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [transparentView addSubview:button2];
     
-    UIButton *button3 = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width  - 95, 20, 40, 40)];
+    UIButton *button3 = [[UIButton alloc]initWithFrame:CGRectMake(302, 12, 65, 43)];
     [button3 setImage:[UIImage imageNamed:@"Whitearrow"] forState:UIControlStateNormal];
     [button3 setTag:3];
     [button3 addTarget:self action:@selector(sectionHeaderTopButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -650,9 +615,9 @@
     scrollView.delegate = self;
     scrollView.pagingEnabled = YES;
     
-    imageArray = [[NSArray alloc] initWithObjects:@"1.png", @"2.png", @"3.png", nil];
+    MoreImageArray = [[NSArray alloc] initWithObjects:@"1.png", @"2.png", @"3.png", nil];
     
-    for (int i = 0; i < [imageArray count]; i++ ) {
+    for (int i = 0; i < [MoreImageArray count]; i++ ) {
         int page = scrollView.contentOffset.x / scrollView.frame.size.width;
         
         CGRect frame;
@@ -673,12 +638,12 @@
         
     }
     scrollView.contentSize = CGSizeMake(scrollView.frame.size.
-                                        width *[imageArray count],
+                                        width *[MoreImageArray count],
                                         scrollView.frame.size.height);
     
     pageControll = [[UIPageControl alloc]init];
     pageControll.frame = CGRectMake(375/2-20, transparentView.frame.size.height - 100, 40, 10);
-    pageControll.numberOfPages = imageArray.count;
+    pageControll.numberOfPages = MoreImageArray.count;
     pageControll.currentPage = 0;
     [pageControll setPageIndicatorTintColor:[UIColor grayColor]];
     

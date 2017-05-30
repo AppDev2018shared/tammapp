@@ -11,7 +11,6 @@
 #import "ImageCollectionViewCell.h"
 #import "AFNetworking.h"
 #import "CellModel.h"
-#import "HarajLayout.h"
 #import "AFHTTPSessionManager.h"
 #import "FRGWaterfallCollectionViewCell.h"
 #import "FRGWaterfallCollectionViewLayout.h"
@@ -49,7 +48,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    Array_Property = [[NSMutableArray alloc]init];
+    
     defaults = [[NSUserDefaults alloc]init];
     NSString *plistPath = [[NSBundle mainBundle]pathForResource:@"UrlName" ofType:@"plist"];
     urlplist = [NSDictionary dictionaryWithContentsOfFile:plistPath];
@@ -176,6 +175,7 @@
     
     if (connection==Connection_ViewPost)
     {
+        Array_Property = [[NSMutableArray alloc]init];
         
         Array_ViewPost=[[NSMutableArray alloc]init];
         SBJsonParser *objSBJsonParser = [[SBJsonParser alloc]init];
@@ -208,30 +208,9 @@
             if ([[[Array_ViewPost objectAtIndex:i]valueForKey:@"category"]isEqualToString:@"property"])
             {
                 
-                if (Array_Property.count==0)
-                {
+               
                     [Array_Property addObject:[Array_ViewPost objectAtIndex:i]];
-                }
                 
-                else
-                    
-                {
-                    
-                    for (NSInteger k=Array_Property.count-1; k<Array_Property.count; k++)
-                    {
-                        NSString * fbMatch11=[[Array_ViewPost objectAtIndex:i]valueForKey:@"postid"];
-                        NSString * fbMatch22=[[Array_Property objectAtIndex:k]valueForKey:@"postid"];
-                        
-                        if (![fbMatch22 isEqualToString:fbMatch11])
-                        {
-                            
-                            [Array_Property addObject:[Array_ViewPost objectAtIndex:i]];
-                            break;
-                        }
-                        
-                    }
-                }
-
             }
         
         }

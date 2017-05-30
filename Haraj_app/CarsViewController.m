@@ -11,7 +11,6 @@
 #import "ImageCollectionViewCell.h"
 #import "AFNetworking.h"
 #import "CellModel.h"
-#import "HarajLayout.h"
 #import "AFHTTPSessionManager.h"
 #import "FRGWaterfallCollectionViewCell.h"
 #import "FRGWaterfallCollectionViewLayout.h"
@@ -48,7 +47,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    Array_Car = [[NSMutableArray alloc]init];
+    
     defaults = [[NSUserDefaults alloc]init];
     NSString *plistPath = [[NSBundle mainBundle]pathForResource:@"UrlName" ofType:@"plist"];
     urlplist = [NSDictionary dictionaryWithContentsOfFile:plistPath];
@@ -72,7 +71,7 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-   // [self viewPostConnection];
+    [self viewPostConnection];
     [[self navigationController] setNavigationBarHidden:NO animated:YES];
 }
 
@@ -180,7 +179,7 @@
     
     if (connection==Connection_ViewPost)
     {
-        
+        Array_Car = [[NSMutableArray alloc]init];
         Array_ViewPost=[[NSMutableArray alloc]init];
         SBJsonParser *objSBJsonParser = [[SBJsonParser alloc]init];
         Array_ViewPost=[objSBJsonParser objectWithData:webData_ViewPost];
@@ -215,28 +214,9 @@
             if ([[[Array_ViewPost objectAtIndex:i]valueForKey:@"category"]isEqualToString:@"car"])
             {
                 
-                if (Array_Car.count==0)
-                {
-                    [Array_Car addObject:[Array_ViewPost objectAtIndex:i]];
-                }
                 
-                else
-                    
-                {                    
-                    for (NSInteger k=Array_Car.count-1; k<Array_Car.count; k++)
-                    {
-                        NSString * fbMatch11=[[Array_ViewPost objectAtIndex:i]valueForKey:@"postid"];
-                        NSString * fbMatch22=[[Array_Car objectAtIndex:k]valueForKey:@"postid"];
-                        
-                        if (![fbMatch22 isEqualToString:fbMatch11])
-                        {
-                            
-                            [Array_Car addObject:[Array_ViewPost objectAtIndex:i]];
-                            break;
-                        }
-                        
-                    }
-                }
+                    [Array_Car addObject:[Array_ViewPost objectAtIndex:i]];
+                
                 
             }
             

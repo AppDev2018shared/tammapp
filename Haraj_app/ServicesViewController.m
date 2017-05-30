@@ -11,7 +11,6 @@
 #import "ImageCollectionViewCell.h"
 #import "AFNetworking.h"
 #import "CellModel.h"
-#import "HarajLayout.h"
 #import "AFHTTPSessionManager.h"
 #import "FRGWaterfallCollectionViewCell.h"
 #import "FRGWaterfallCollectionViewLayout.h"
@@ -33,7 +32,7 @@
     NSDictionary *urlplist;
     NSURLConnection *Connection_ViewPost;
     NSMutableData *webData_ViewPost;
-    NSMutableArray *Array_ViewPost ,*Array_Services;
+    NSMutableArray *Array_ViewPost, *Array_Services;
 }
 
 
@@ -48,7 +47,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    Array_Services = [[NSMutableArray alloc]init];
+    
     defaults = [[NSUserDefaults alloc]init];
     NSString *plistPath = [[NSBundle mainBundle]pathForResource:@"UrlName" ofType:@"plist"];
     urlplist = [NSDictionary dictionaryWithContentsOfFile:plistPath];
@@ -66,6 +65,13 @@
     
     [self viewPostConnection];
 }
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [self viewPostConnection];
+    [[self navigationController] setNavigationBarHidden:NO animated:YES];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -173,7 +179,7 @@
     
     if (connection==Connection_ViewPost)
     {
-        
+        Array_Services = [[NSMutableArray alloc]init];
         Array_ViewPost=[[NSMutableArray alloc]init];
         SBJsonParser *objSBJsonParser = [[SBJsonParser alloc]init];
         Array_ViewPost=[objSBJsonParser objectWithData:webData_ViewPost];
@@ -215,10 +221,6 @@
 }
 
 
--(void)viewWillAppear:(BOOL)animated
-{
-    [[self navigationController] setNavigationBarHidden:NO animated:YES];
-}
 
 
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView

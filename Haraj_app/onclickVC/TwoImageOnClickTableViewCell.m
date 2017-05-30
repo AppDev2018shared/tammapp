@@ -1,14 +1,14 @@
 //
-//  CustomTableViewCell.m
+//  TwoImageOnClickTableViewCell.m
 //  Haraj_app
 //
-//  Created by Spiel on 24/05/17.
+//  Created by Spiel on 25/05/17.
 //  Copyright © 2017 udaysinh. All rights reserved.
 //
 
-#import "CustomTableViewCell.h"
+#import "TwoImageOnClickTableViewCell.h"
 
-@implementation CustomTableViewCell
+@implementation TwoImageOnClickTableViewCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];

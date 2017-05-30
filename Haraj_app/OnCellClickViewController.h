@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "TwoImageOnClickTableViewCell.h"
 @interface OnCellClickViewController : UIViewController
 {
     UIView *transparentView,*grayView;
@@ -17,5 +17,6 @@
 
 @property (strong,nonatomic)NSMutableArray * Array_UserInfo;
 @property (nonatomic)NSInteger swipeCount;
-
+@property (strong,nonatomic)TwoImageOnClickTableViewCell * Cell_two;
+@property (nonatomic, strong) NSArray *MoreImageArray;
 @end
