@@ -28,6 +28,7 @@
     NSString *total_image;
     
     CGFloat Xpostion, Ypostion, Xwidth, Yheight, ScrollContentSize,Xpostion_label, Ypostion_label, Xwidth_label, Yheight_label,Cell_DescLabelX,Cell_DescLabelY,Cell_DescLabelW,Cell_DescLabelH,TextView_ViewX,TextView_ViewY,TextView_ViewW,TextView_ViewH;
+    CGFloat button_threeDotsx,button_threeDotsy,button_threeDotsw,button_threeDotsh,button_favx,button_favy,button_favw,button_favh,button_arrowx,button_arrowy,button_arroww,button_arrowh;
     CGFloat FavIV_X,FavIV_Y,FavIV_W,FavIV_H,FavLabel_X,FavLabel_Y,FavLabel_W,FavLabel_H;
     
     NSString *str_LabelCoordinates,*str_TappedLabel;
@@ -227,6 +228,18 @@
                 Cell_two.countLabel.text = @"15";
                 [Cell_two.bgView addGestureRecognizer:moreTap];
                 
+                button_threeDotsx=Cell_two.button_threedots.frame.origin.x;
+                button_threeDotsy=Cell_two.button_threedots.frame.origin.y;
+                button_threeDotsw=Cell_two.button_threedots.frame.size.width;
+                button_threeDotsh=Cell_two.button_threedots.frame.size.height;
+                button_favx=Cell_two.button_favourite.frame.origin.x;
+                button_favy=Cell_two.button_favourite.frame.origin.y;
+                button_favw=Cell_two.button_favourite.frame.size.width;
+                button_favh=Cell_two.button_favourite.frame.size.height;
+                button_arrowx=Cell_two.button_back.frame.origin.x;
+                button_arrowy=Cell_two.button_back.frame.origin.y;
+                button_arroww=Cell_two.button_back.frame.size.width;
+                button_arrowh=Cell_two.button_back.frame.size.height;
                 
                 return Cell_two;
                 
@@ -238,6 +251,18 @@
                 [FirstCell.button_threedots addTarget:self action:@selector(button_threedots_action:) forControlEvents:UIControlEventTouchUpInside];
                 [FirstCell.button_favourite addTarget:self action:@selector(button_favourite_action:) forControlEvents:UIControlEventTouchUpInside];
                 [FirstCell.button_back addTarget:self action:@selector(button_back_action:) forControlEvents:UIControlEventTouchUpInside];
+                button_threeDotsx=FirstCell.button_threedots.frame.origin.x;
+                button_threeDotsy=FirstCell.button_threedots.frame.origin.y;
+                button_threeDotsw=FirstCell.button_threedots.frame.size.width;
+                button_threeDotsh=FirstCell.button_threedots.frame.size.height;
+                button_favx=FirstCell.button_favourite.frame.origin.x;
+                button_favy=FirstCell.button_favourite.frame.origin.y;
+                button_favw=FirstCell.button_favourite.frame.size.width;
+                button_favh=FirstCell.button_favourite.frame.size.height;
+                button_arrowx=FirstCell.button_back.frame.origin.x;
+                button_arrowy=FirstCell.button_back.frame.origin.y;
+                button_arroww=FirstCell.button_back.frame.size.width;
+                button_arrowh=FirstCell.button_back.frame.size.height;
                 return FirstCell;
             }
             
@@ -830,19 +855,19 @@
     NSLog(@"FirstCell=%f",FirstCell.button_threedots.frame.origin.y);
      NSLog(@"cell two=%f",Cell_two.button_threedots.frame.origin.y);
     
-    UIButton *button1 = [[UIButton alloc]initWithFrame:CGRectMake(8,12, 38, 42)];
+    UIButton *button1 = [[UIButton alloc]initWithFrame:CGRectMake(button_threeDotsx,button_threeDotsy, button_threeDotsw, button_threeDotsh)];
     [button1 setImage:[UIImage imageNamed:@"3dots"] forState:UIControlStateNormal];
     [button1 setTag:1];
     [button1 addTarget:self action:@selector(sectionHeaderTopButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [transparentView addSubview:button1];
     
-    UIButton *button2 = [[UIButton alloc]initWithFrame:CGRectMake(80, 12, 50, 42)];
+    UIButton *button2 = [[UIButton alloc]initWithFrame:CGRectMake(button_favx, button_favy, button_favw, button_favh)];
     [button2 setImage:[UIImage imageNamed:@"Whitefavourite"] forState:UIControlStateNormal];
     [button2 setTag:2];
     [button2 addTarget:self action:@selector(sectionHeaderTopButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [transparentView addSubview:button2];
     
-    UIButton *button3 = [[UIButton alloc]initWithFrame:CGRectMake(302, 12, 65, 43)];
+    UIButton *button3 = [[UIButton alloc]initWithFrame:CGRectMake(button_arrowx, button_arrowy, button_arroww, button_arrowh)];
     [button3 setImage:[UIImage imageNamed:@"Whitearrow"] forState:UIControlStateNormal];
     [button3 setTag:3];
     [button3 addTarget:self action:@selector(sectionHeaderTopButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -850,7 +875,7 @@
     
     scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0,160,self.view.frame.size.width , self.view.frame.size.height -160)];
     scrollView.center = transparentView.center;
-    scrollView.backgroundColor = [UIColor whiteColor];
+    scrollView.backgroundColor = [UIColor greenColor];
     scrollView.delegate = self;
     scrollView.pagingEnabled = YES;
     

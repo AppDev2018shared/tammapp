@@ -93,7 +93,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3iy-fR-Ssl">
-                                <frame key="frameInset" minX="55.20%" minY="64.92%" width="30.67%" height="10.95%"/>
+                                <frame key="frameInset" minX="55.20%" minY="64.92%" width="30.93%" height="10.95%"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <inset key="imageEdgeInsets" minX="20" minY="20" maxX="20" maxY="20"/>
                                 <state key="normal" image="twitter.png"/>
@@ -109,7 +109,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3iB-QD-VBG">
-                                <frame key="frameInset" minX="43.47%" minY="83.36%" width="50.13%" height="4.50%"/>
+                                <frame key="frameInset" minX="43.73%" minY="83.36%" width="49.87%" height="4.50%"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="SanFranciscoDisplay-Bold" family="San Francisco Display" pointSize="19"/>
                                 <state key="normal" title="Create an account">
@@ -120,7 +120,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g9u-vU-cMh">
-                                <frame key="frameInset" minX="14.40%" minY="64.92%" width="30.67%" height="10.95%"/>
+                                <frame key="frameInset" minX="14.40%" minY="64.92%" width="30.93%" height="10.95%"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <inset key="imageEdgeInsets" minX="15" minY="15" maxX="15" maxY="15"/>
                                 <state key="normal" image="facebook.png"/>
@@ -1268,7 +1268,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ImageCell" rowHeight="271" id="Q1V-rH-b6A" userLabel="Add image cell" customClass="AddImageCell">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ImageCell" rowHeight="271" id="Q1V-rH-b6A" userLabel="Add image cell" customClass="AddImageCell">
                                         <rect key="frame" x="0.0" y="28" width="375" height="271"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Q1V-rH-b6A" id="GsY-FO-Xdb">
@@ -1312,7 +1312,7 @@
                                             <outlet property="videoButton" destination="Bqf-mm-k6R" id="iek-FN-3cw"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ProductCell" rowHeight="243" id="d8G-nb-Mpz" userLabel="Product detail cell" customClass="ProductDetailCell">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ProductCell" rowHeight="243" id="d8G-nb-Mpz" userLabel="Product detail cell" customClass="ProductDetailCell">
                                         <rect key="frame" x="0.0" y="299" width="375" height="243"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="d8G-nb-Mpz" id="bab-9H-N3F">
@@ -1377,7 +1377,7 @@
                                             <outlet property="usernameLabel" destination="3io-bn-44U" id="hZq-F0-Xay"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MoreCell" rowHeight="520" id="dBK-0K-t9d" userLabel="More detail cell" customClass="MoreDetailCell">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MoreCell" rowHeight="520" id="dBK-0K-t9d" userLabel="More detail cell" customClass="MoreDetailCell">
                                         <rect key="frame" x="0.0" y="542" width="375" height="520"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dBK-0K-t9d" id="OCM-gT-tfU">
@@ -1981,7 +1981,7 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ImageCell" id="AB1-DB-FMN" customClass="ImageCollectionViewCell">
-                                        <rect key="frame" x="186" y="27.5" width="176" height="231"/>
+                                        <rect key="frame" x="186" y="28" width="176" height="231"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="176" height="231"/>
