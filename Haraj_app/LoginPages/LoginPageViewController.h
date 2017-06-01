@@ -25,8 +25,6 @@
 -(IBAction)SignUpView:(id)sender;
 
 -(IBAction)ForgetPasswordAction:(id)sender;
--(IBAction)LoginWithFbAction:(id)sender;
--(IBAction)LoginWithTwitterAction:(id)sender;
 -(IBAction)LoginButtonAction:(id)sender;
 - (IBAction)usernameTxtAction:(id)sender;
 

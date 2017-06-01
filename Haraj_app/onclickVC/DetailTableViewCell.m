@@ -1,14 +1,14 @@
 //
-//  BidAmountCell.m
+//  DetailTableViewCell.m
 //  Haraj_app
 //
-//  Created by Spiel on 09/05/17.
+//  Created by Spiel on 31/05/17.
 //  Copyright © 2017 udaysinh. All rights reserved.
 //
 
-#import "BidAmountCell.h"
+#import "DetailTableViewCell.h"
 
-@implementation BidAmountCell
+@implementation DetailTableViewCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
@@ -21,6 +21,4 @@
     // Configure the view for the selected state
 }
 
-- (IBAction)makeOfferAction:(id)sender {
-}
 @end

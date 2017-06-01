@@ -1,14 +1,14 @@
 //
-//  DetailInfoCell.m
+//  CommentsTableViewCell.m
 //  Haraj_app
 //
-//  Created by Spiel on 09/05/17.
+//  Created by Spiel on 31/05/17.
 //  Copyright © 2017 udaysinh. All rights reserved.
 //
 
-#import "DetailInfoCell.h"
+#import "CommentsTableViewCell.h"
 
-@implementation DetailInfoCell
+@implementation CommentsTableViewCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];

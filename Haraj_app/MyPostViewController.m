@@ -8,12 +8,12 @@
 
 #import "MyPostViewController.h"
 #import "FirstImageViewCell.h"
-#import "DetailInfoCell.h"
-#import "BidAmountCell.h"
-#import "CommentCell.h"
-#import "SuggestedPostCell.h"
 #import "UIImageView+WebCache.h"
 #import "TwoImageOnClickTableViewCell.h"
+
+#define FONT_SIZE 15.0f
+#define CELL_CONTENT_WIDTH self.view.frame.size.width-138
+#define CELL_CONTENT_MARGIN 0.0f
 
 @interface MyPostViewController ()<UITableViewDataSource, UITableViewDelegate,UIScrollViewDelegate>
 
@@ -26,6 +26,13 @@
     NSURL * imageUrl;
     NSUserDefaults *defaults;
     NSString *total_image;
+    
+    CGFloat Xpostion, Ypostion, Xwidth, Yheight, ScrollContentSize,Xpostion_label, Ypostion_label, Xwidth_label, Yheight_label,Cell_DescLabelX,Cell_DescLabelY,Cell_DescLabelW,Cell_DescLabelH,TextView_ViewX,TextView_ViewY,TextView_ViewW,TextView_ViewH;
+    CGFloat FavIV_X,FavIV_Y,FavIV_W,FavIV_H,FavLabel_X,FavLabel_Y,FavLabel_W,FavLabel_H;
+    
+    NSString *str_LabelCoordinates,*str_TappedLabel;
+    NSString *text;
+
 }
 @property (strong,nonatomic)TwoImageOnClickTableViewCell * Cell_two;
 
@@ -33,7 +40,7 @@
 @end
 
 @implementation MyPostViewController
-@synthesize Array_UserInfo,swipeCount,MoreImageArray,Cell_two;
+@synthesize Array_UserInfo,swipeCount,MoreImageArray,Cell_two,detailCell,ComCell;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -61,6 +68,10 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(Hide_Popover) name:@"HidePopOver" object:nil];
     
+    str_TappedLabel=@"no";
+    str_LabelCoordinates=@"no";
+    text =@"udfgsdfgf iudhgiufd rgfod gfd ggdfhgiudfg fdihgdfiug dfiughfdiug dfihgdfiu gdfiguhdfuigh fdiughdfiugh dfiug hdfiughdfuig ghfdig dfigdf igfdiug fdiughdfiug fdiugh udfihg dfiugh uig dfiughdf";
+    
 }
 
 #pragma mark - UIScrollView Delegate
@@ -82,11 +93,14 @@
 - (void)handleSwipeLeft:(UISwipeGestureRecognizer *)gestureRecognizer
 {
         
-    swipeCount +=1;
-    NSLog(@ "Left= %ld",(long)swipeCount);
-   // imageUrl=[NSURL URLWithString:[[Array_UserInfo valueForKey:@"image_url"] objectAtIndex:swipeCount]];
+//    swipeCount +=1;
+//    NSLog(@ "Left= %ld",(long)swipeCount);
+//   // imageUrl=[NSURL URLWithString:[[Array_UserInfo valueForKey:@"image_url"] objectAtIndex:swipeCount]];
     
-    
+    if (swipeCount >= 0 && swipeCount < Array_UserInfo.count-1)
+    {
+        swipeCount +=1;
+        
     //to animate the view as new view is loaded
     [UIView animateWithDuration:0.1 animations:^{
         
@@ -105,6 +119,13 @@
     
     //        selectedDay++;
     //        [self fetchDataFromWeb];
+    }
+    
+    else
+    {
+        swipeCount =Array_UserInfo.count-1;
+    }
+
     
     
 }
@@ -114,6 +135,14 @@
     
     
     swipeCount -=1;
+    
+    if (swipeCount < 0)
+    {
+        swipeCount = 0;
+    }
+    else
+    {
+
     NSLog(@ "Right= %ld",(long)swipeCount);
   //  imageUrl=[NSURL URLWithString:[[Array_UserInfo valueForKey:@"image_url"] objectAtIndex:swipeCount]];
     
@@ -131,7 +160,7 @@
             self.tableView.frame = CGRectMake(0.0,  self.tableView.frame.origin.y,  self.tableView.frame.size.width,  self.tableView.frame.size.height);
         }];
     }];
-    
+    }
     //        selectedDay--;
     //        [self fetchDataFromWeb];
     
@@ -166,7 +195,8 @@
     // imageUrl=[NSURL URLWithString:[[Array_UserInfo valueForKey:@"image_url"] objectAtIndex:indexPath.row]];
     
     static NSString *CellIdentifier = @"Cell";
-    
+    static NSString *cell_details=@"DetailCell";
+    static NSString *cell_comments=@"ComCell";
     NSDictionary *dic_request=[Array_UserInfo objectAtIndex:swipeCount];
     NSLog(@"dic= %@",dic_request);
     static NSString *cell_two1=@"Cell_Two";
@@ -216,7 +246,22 @@
             break;
         case 1:
         {
-            DetailInfoCell *detailCell = [tableView dequeueReusableCellWithIdentifier:@"DetailCell"];
+            
+            detailCell = [[[NSBundle mainBundle]loadNibNamed:@"DetailTableViewCell" owner:self options:nil] objectAtIndex:0];
+            
+            
+            
+            
+            if (detailCell == nil)
+            {
+                
+                detailCell = [[DetailTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cell_details];
+                
+                
+            }
+            
+            
+
             detailCell.locationLabel.text = [dic_request valueForKey:@"city1"];
             detailCell.hashtagLabel.text = [dic_request valueForKey:@"hashtags"];
             //NSString *post = [NSString stringWithFormat:@"POST ID:%@",[dic_request valueForKey:@"postid"]];
@@ -229,28 +274,153 @@
             detailCell.titleLabel.text = [dic_request valueForKey:@"title"];
             //detailCell.profileImage.image =
             
-            NSURL * url=[[NSURL alloc]initWithString:[dic_request valueForKey:@"usersprofilepic"]];//[[Array_UserInfo objectAtIndex:0]valueForKey:@"usersprofilepic"];
-            NSData *data = [[NSData alloc]initWithContentsOfURL:url];
+            NSURL *url=[NSURL URLWithString:[dic_request valueForKey:@"usersprofilepic"]];
+            
+            [detailCell.profileImage sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultimg.jpg"] options:SDWebImageRefreshCached];
             detailCell.profileImage.layer.cornerRadius = detailCell.profileImage.frame.size.height / 2;
             detailCell.profileImage.clipsToBounds = YES;
             
-            detailCell.profileImage.image = [UIImage imageWithData:data];
+            if ([str_LabelCoordinates isEqualToString:@"no"])
+            {
+                str_LabelCoordinates=@"yes";
+                
+                Cell_DescLabelX=detailCell.detailinfoTextView.frame.origin.x;
+                Cell_DescLabelY=detailCell.detailinfoTextView.frame.origin.y;
+                Cell_DescLabelW=detailCell.detailinfoTextView.frame.size.width;
+                Cell_DescLabelH=detailCell.detailinfoTextView.frame.size.height;
+                
+                TextView_ViewX=detailCell.tapView.frame.origin.x;
+                TextView_ViewY=detailCell.tapView.frame.origin.y;
+                TextView_ViewW=detailCell.tapView.frame.size.width;
+                TextView_ViewH=detailCell.tapView.frame.size.height;
+                
+                FavIV_Y=(detailCell.view_CordinateViewTapped.frame.origin.y-(detailCell.tapView.frame.origin.y+detailCell.tapView.frame.size.height));
+                
+                NSLog(@"Dynamic label heightc====%f",Cell_DescLabelX);
+                NSLog(@"Dynamic label heightc====%f",Cell_DescLabelY);
+                NSLog(@"Dynamic label heightc====%f",Cell_DescLabelW);
+                NSLog(@"Dynamic label heightc====%f",Cell_DescLabelH);
+                NSLog(@"FavIV_Y====%f",FavIV_Y);
+                
+                
+                
+            }
             
             
-            // [detailCell.profileImage sd_setImageWithURL:url];
+            //[[AllArrayData objectAtIndex:0]valueForKey:@"title"];;
             
-            //[detailCell.profileImage sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"swift.jpg"]options:SDWebImageRefreshCached];
             
-            return detailCell;
-
+            CGSize constraint = CGSizeMake(340 - (CELL_CONTENT_MARGIN * 2), 20000.0f);
             
+            CGSize size = [text sizeWithFont:[UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:17] constrainedToSize:constraint lineBreakMode:UILineBreakModeWordWrap];
+            
+            CGFloat height = MAX(size.height, 30.0f);
+            NSLog(@"Dynamic label height====%f",height);
+            
+            
+            float rows = (detailCell.detailinfoTextView.contentSize.height - detailCell.detailinfoTextView.textContainerInset.top - detailCell.detailinfoTextView.textContainerInset.bottom) / detailCell.detailinfoTextView.font.lineHeight;
+            NSLog(@"Dynamic label rowsline====%f",rows);
+            //  cell_TwoDetails.label_Desc.numberOfLines=0;
+            
+            [detailCell.detailinfoTextView setText:text];
+            detailCell.detailinfoTextView.tag=indexPath.row;
+            detailCell.tapView.tag=indexPath.row;
+            CGFloat fixedWidth = detailCell.detailinfoTextView.frame.size.width;
+            CGSize newSize = [detailCell.detailinfoTextView sizeThatFits:CGSizeMake(fixedWidth, MAXFLOAT)];
+            NSInteger rHeight = size.height/17;
+            NSLog(@"No of lines: %ld",(long)rHeight);
+            detailCell.detailinfoTextView1.hidden=YES;
+            if ([str_TappedLabel isEqualToString:@"no"])
+            {
+                if ((long)rHeight==1)
+                {
+                    
+                    [detailCell.tapView setFrame:CGRectMake(TextView_ViewX,TextView_ViewY, TextView_ViewW,TextView_ViewH)];
+                    
+                    [detailCell.detailinfoTextView setFrame:CGRectMake(Cell_DescLabelX,Cell_DescLabelY, Cell_DescLabelW,Cell_DescLabelH)];
+                    
+                    
+                    
+                    
+                }
+                else if ((long)rHeight==2)
+                {
+                    
+                    [detailCell.tapView setFrame:CGRectMake(TextView_ViewX,TextView_ViewY, TextView_ViewW,TextView_ViewH*2)];
+                    
+                    [detailCell.detailinfoTextView setFrame:CGRectMake(Cell_DescLabelX,Cell_DescLabelY, Cell_DescLabelW,Cell_DescLabelH*2)];
+                    
+                    
+                }
+                else if ((long)rHeight>=3)
+                {
+                    detailCell.tapView.userInteractionEnabled=YES;
+                    detailCell.detailinfoTextView.textContainer.maximumNumberOfLines = 0;
+                    detailCell.detailinfoTextView.textContainer.lineBreakMode = NSLineBreakByTruncatingTail;
+                    UITapGestureRecognizer *label_Desc_Tapped =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(label_Desc_Tapped_ActionDetails:)];
+                    [detailCell.tapView addGestureRecognizer:label_Desc_Tapped];
+                    
+                    
+                    
+                    
+                    [detailCell.tapView setFrame:CGRectMake(TextView_ViewX,TextView_ViewY, TextView_ViewW,TextView_ViewH*2)];
+                    
+                    [detailCell.detailinfoTextView setFrame:CGRectMake(Cell_DescLabelX,Cell_DescLabelY, Cell_DescLabelW,Cell_DescLabelH*2)];
+                    
+                    
+                }
+                
+            }
+            else
+            {
+                
+                
+                CGRect newFrame = detailCell.detailinfoTextView.frame;
+                newFrame.size = CGSizeMake(fmaxf(newSize.width, fixedWidth), newSize.height);
+                
+                detailCell.tapView.userInteractionEnabled=YES;
+                
+                UITapGestureRecognizer *label_Desc_Tapped =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(label_Desc_Tapped_ActionDetails:)];
+                [detailCell.tapView addGestureRecognizer:label_Desc_Tapped];
+                [detailCell.tapView setFrame:CGRectMake(TextView_ViewX,TextView_ViewY, newFrame.size.width,newFrame.size.height)];
+                [detailCell.detailinfoTextView setFrame:newFrame];
+                
+                
+            }
+            
+            NSLog(@"Dynamic label heightccc====%f",Cell_DescLabelX);
+            NSLog(@"Dynamic label heightccc====%f",Cell_DescLabelY);
+            NSLog(@"Dynamic label heightccc====%f",Cell_DescLabelW);
+            NSLog(@"Dynamic label heightccc====%f",Cell_DescLabelH);
+            detailCell.tapView.backgroundColor=[UIColor clearColor];
+            
+            [detailCell.view_CordinateViewTapped setFrame:CGRectMake(detailCell.view_CordinateViewTapped.frame.origin.x,(detailCell.tapView.frame.origin.y+detailCell.tapView.frame.size.height)+23,detailCell.view_CordinateViewTapped.frame.size.width, detailCell.view_CordinateViewTapped.frame.size.height)];
+            
+            [detailCell.Button_makeoffer setFrame:CGRectMake(detailCell.Button_makeoffer.frame.origin.x,(detailCell.view_CordinateViewTapped.frame.origin.y+detailCell.view_CordinateViewTapped.frame.size.height),detailCell.Button_makeoffer.frame.size.width, detailCell.Button_makeoffer.frame.size.height)];
+            [detailCell.Button_makeoffer  addTarget:self action:@selector(makeOfferPressed:) forControlEvents:UIControlEventTouchUpInside];
+            detailCell.Button_makeoffer.hidden = YES;
+            
+           
             return detailCell;
         }
             break;
             
         case 2:
         {
-            CommentCell *ComCell = [tableView dequeueReusableCellWithIdentifier:@"ComCell"];
+            
+            ComCell = [[[NSBundle mainBundle]loadNibNamed:@"CommentsTableViewCell" owner:self options:nil] objectAtIndex:0];
+            
+            
+            if (ComCell == nil)
+            {
+                
+                ComCell = [[CommentsTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cell_comments];
+                
+                
+            }
+            ComCell.profileImageView.layer.cornerRadius = ComCell.profileImageView.frame.size.height / 2;
+            ComCell.profileImageView.clipsToBounds = YES;
+
             
             return ComCell;
         }
@@ -276,8 +446,50 @@
         }
     }
     else if (indexPath.section == 1)
+        
+        
     {
-        return 470;
+        
+        CGSize constraint = CGSizeMake(345 - (CELL_CONTENT_MARGIN * 2), 20000.0f);
+        
+        CGSize size = [text sizeWithFont:[UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:24.0] constrainedToSize:constraint lineBreakMode:UILineBreakModeWordWrap];
+        
+        CGFloat height = MAX(size.height, 30.0f);
+        NSLog(@"Dynamic label height====%f",height);
+        NSInteger rHeight = size.height/24;
+        [detailCell.detailinfoTextView1 setText:text];
+        
+        
+        CGFloat fixedWidth = detailCell.detailinfoTextView1.frame.size.width;
+        CGSize newSize = [detailCell.detailinfoTextView1 sizeThatFits:CGSizeMake(fixedWidth, MAXFLOAT)];
+        CGRect newFrame = detailCell.detailinfoTextView1.frame;
+        newFrame.size = CGSizeMake(fmaxf(newSize.width, fixedWidth), newSize.height);
+        [detailCell.detailinfoTextView1 setFrame:(newFrame)];
+        if ([str_TappedLabel isEqualToString:@"yes"])
+        {
+            
+            
+            return 520+detailCell.detailinfoTextView1.frame.size.height-38 - 64;
+            
+            
+            
+            
+        }
+        else
+        {
+            
+            if ((long)rHeight==1)
+            {
+                return 520 - 64;
+            }
+            else
+            {
+                return 520+26-64;
+            }
+            
+            
+        }
+
     }
     else if (indexPath.section == 2)
     {
@@ -405,6 +617,29 @@
         return 40;
     }
     return 0;
+}
+
+-(void)label_Desc_Tapped_ActionDetails:(UIGestureRecognizer *)reconizer
+{
+    
+    if ([str_TappedLabel isEqualToString:@"yes"])
+    {
+        str_TappedLabel=@"no";
+        
+    }
+    else
+    {
+        str_TappedLabel=@"yes";
+        
+    }
+    
+    
+    
+    [self.tableView reloadData];
+    //    [self.tableView  reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
+    //    [self.tableView  endUpdates];
+    
+    
 }
 
 #pragma mark - Button Action
@@ -592,6 +827,9 @@
     transparentView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     transparentView.backgroundColor=[UIColor colorWithRed:30/255.0 green:30/255.0 blue:30/255.0 alpha:0.95];
     
+    NSLog(@"FirstCell=%f",FirstCell.button_threedots.frame.origin.y);
+     NSLog(@"cell two=%f",Cell_two.button_threedots.frame.origin.y);
+    
     UIButton *button1 = [[UIButton alloc]initWithFrame:CGRectMake(8,12, 38, 42)];
     [button1 setImage:[UIImage imageNamed:@"3dots"] forState:UIControlStateNormal];
     [button1 setTag:1];
@@ -610,8 +848,9 @@
     [button3 addTarget:self action:@selector(sectionHeaderTopButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [transparentView addSubview:button3];
     
-    scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0,0,self.view.frame.size.width , self.view.frame.size.height -160)];
+    scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0,160,self.view.frame.size.width , self.view.frame.size.height -160)];
     scrollView.center = transparentView.center;
+    scrollView.backgroundColor = [UIColor whiteColor];
     scrollView.delegate = self;
     scrollView.pagingEnabled = YES;
     

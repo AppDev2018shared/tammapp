@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "TwoImageOnClickTableViewCell.h"
+#import "DetailTableViewCell.h"
+#import "CommentsTableViewCell.h"
+#import "SuggestedTableViewCell.h"
 @interface OnCellClickViewController : UIViewController
 {
     UIView *transparentView,*grayView;
@@ -17,6 +20,10 @@
 
 @property (strong,nonatomic)NSMutableArray * Array_UserInfo;
 @property (nonatomic)NSInteger swipeCount;
+
 @property (strong,nonatomic)TwoImageOnClickTableViewCell * Cell_two;
+@property (strong,nonatomic)DetailTableViewCell * detailCell;
+@property (strong,nonatomic)CommentsTableViewCell * ComCell;
+@property (strong,nonatomic)SuggestedTableViewCell * SuggestCell;
 @property (nonatomic, strong) NSArray *MoreImageArray;
 @end

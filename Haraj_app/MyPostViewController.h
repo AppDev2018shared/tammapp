@@ -8,11 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "EnterPrice.h"
-
+#import "DetailTableViewCell.h"
+#import "CommentsTableViewCell.h"
 @interface MyPostViewController : UIViewController
 {
     UIView *transparentView,*transparentView1,*grayView;
 }
+@property (strong,nonatomic)DetailTableViewCell * detailCell;
+@property (strong,nonatomic)CommentsTableViewCell * ComCell;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 

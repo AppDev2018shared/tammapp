@@ -37,11 +37,11 @@
     NSString *plistPath = [[NSBundle mainBundle]pathForResource:@"UrlName" ofType:@"plist"];
     urlplist = [NSDictionary dictionaryWithContentsOfFile:plistPath];
     
-    NSString *myString = @"Care2Dare";
-    NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] initWithString:myString];
-    NSRange range = [myString rangeOfString:@"Care2"];
-    [attString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:20/255.0 green:245/255.0 blue:115/255.0 alpha:1.0] range:range];
-    Label_TitleName.attributedText = attString;
+ //   NSString *myString = @"Care2Dare";
+ //   NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] initWithString:myString];
+ //   NSRange range = [myString rangeOfString:@"Care2"];
+ //   [attString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:20/255.0 green:245/255.0 blue:115/255.0 alpha:1.0] range:range];
+//    Label_TitleName.attributedText = attString;
     
     CALayer *borderBottom_uname = [CALayer layer];
     borderBottom_uname.backgroundColor = [UIColor whiteColor].CGColor;
@@ -59,15 +59,21 @@
     Button_Login.layer.borderColor=[UIColor whiteColor].CGColor;
     Button_Login.layer.borderWidth=0.5;
     
+    
     view_LoginFB.clipsToBounds=YES;
     view_LoginFB.layer.cornerRadius=5.0f;
     view_LoginFB.layer.borderColor=[UIColor whiteColor].CGColor;
     view_LoginFB.layer.borderWidth=1.0f;
+    UITapGestureRecognizer * LoginFB =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(LoginWithFbAction:)];
+    [view_LoginFB addGestureRecognizer:LoginFB];
+
     
     View_LoginTW.clipsToBounds=YES;
     View_LoginTW.layer.cornerRadius=5.0f;
     View_LoginTW.layer.borderColor=[UIColor whiteColor].CGColor;
     View_LoginTW.layer.borderWidth=1.0f;
+    UITapGestureRecognizer * LoginTW =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(LoginWithTwitterAction:)];
+    [View_LoginTW addGestureRecognizer:LoginTW];
     
     CALayer *borderLeftFb = [CALayer layer];
     borderLeftFb.backgroundColor = [UIColor whiteColor].CGColor;
@@ -117,8 +123,12 @@
 }
 
 
--(IBAction)LoginWithFbAction:(id)sender
-{
+#pragma mark - FB Action
+
+-(void)LoginWithFbAction:(UITapGestureRecognizer *)sender
+    {
+    
+    
     
     [self.view endEditing:YES];
     Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
@@ -221,8 +231,11 @@
     }
    
 }
--(IBAction)LoginWithTwitterAction:(id)sender
-{
+
+#pragma mark - TW Action
+
+-(void)LoginWithTwitterAction:(UITapGestureRecognizer *)sender
+    {
       [self.view endEditing:YES];
     
     

@@ -8,18 +8,17 @@
 
 #import "OnCellClickViewController.h"
 #import "FirstImageViewCell.h"
-#import "DetailInfoCell.h"
-#import "BidAmountCell.h"
-#import "CommentCell.h"
-#import "SuggestedPostCell.h"
 #import "UIImageView+WebCache.h"
+#import "SBJsonParser.h"
+#import "Reachability.h"
+
 
 #define FONT_SIZE 15.0f
 #define CELL_CONTENT_WIDTH self.view.frame.size.width-138
 
 #define CELL_CONTENT_MARGIN 0.0f
 
-@interface OnCellClickViewController ()<UITableViewDataSource, UITableViewDelegate,UIPopoverPresentationControllerDelegate,UIScrollViewDelegate>
+@interface OnCellClickViewController ()<UITableViewDataSource, UITableViewDelegate,UIPopoverPresentationControllerDelegate,UIScrollViewDelegate,UITextFieldDelegate>
 {
     UIView *sectionView;
     
@@ -28,10 +27,15 @@
     UIPageControl *pageControll;
     
     FirstImageViewCell *FirstCell;
-    DetailInfoCell *detailCell;
+   
     NSString *total_image;
     NSURL * imageUrl;
     NSUserDefaults *defaults;
+    
+    NSDictionary *urlplist;
+    NSURLConnection *Connection_MakeOffer;
+    NSMutableData *webData_MakeOffer;
+    NSMutableArray *Array_MakeOffer;
     
     CGFloat newCellHeight;
     CGFloat Xpostion, Ypostion, Xwidth, Yheight, ScrollContentSize,Xpostion_label, Ypostion_label, Xwidth_label, Yheight_label,Cell_DescLabelX,Cell_DescLabelY,Cell_DescLabelW,Cell_DescLabelH,TextView_ViewX,TextView_ViewY,TextView_ViewW,TextView_ViewH;
@@ -39,12 +43,15 @@
     
     NSString *str_LabelCoordinates,*str_TappedLabel;
     NSString *text;
+    
+    UITextField *amountTextField ;
+    UITextView *commentTextView;
 }
 
 @end
 
 @implementation OnCellClickViewController
-@synthesize Array_UserInfo,swipeCount,Cell_two,MoreImageArray;
+@synthesize Array_UserInfo,swipeCount,Cell_two,MoreImageArray,detailCell,ComCell,SuggestCell;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -71,15 +78,17 @@
 //    lineFix.backgroundColor = [UIColor groupTableViewBackgroundColor];
 //    [self.tableView addSubview:lineFix];
     
-    NSLog(@" array info %@",Array_UserInfo);
-   
-    total_image = @"1";
+    NSString *plistPath = [[NSBundle mainBundle]pathForResource:@"UrlName" ofType:@"plist"];
+    urlplist = [NSDictionary dictionaryWithContentsOfFile:plistPath];
 
     
-    
+    NSLog(@" array info %@",Array_UserInfo);
+   
+    total_image = @"2";
+
     str_TappedLabel=@"no";
     str_LabelCoordinates=@"no";
-    text =@"udfgsdfgf iudhgiufd rgfod gfd ggdfhgiudfg fdihgdfiug dfiughfdiug dfihgdfiu gdfiguhdfuigh fdiughdfiugh dfiug hdfiughdfuig ghfdig dfigdf igfdiug fdiughdfiug fdiugh udfihg dfiugh uig dfiughdfuig hfdiugdfiuhgfdig ighfig gdfiughdf ghfdighdfihg fdiughifdu giufdgh i gdfghdfsagf gdsgfih asfdf gdsifui";
+    text =@"udfgsdfgf iudhgiufd rgfod gfd ggdfhgiudfg fdihgdfiug dfiughfdiug dfihgdfiu gdfiguhdfuigh fdiughdfiugh dfiug hdfiughdfuig ghfdig dfigdf igfdiug fdiughdfiug fdiugh udfihg dfiugh uig dfiughdf";
 }
 
 - (void)didReceiveMemoryWarning {
@@ -108,7 +117,13 @@
 //    NSIndexPath *swipedIndexPath = [self.tableView indexPathForRowAtPoint:location];
 //    FirstCell  = [self.tableView cellForRowAtIndexPath:swipedIndexPath];
     
-    swipeCount +=1;
+    if (swipeCount >= 0 && swipeCount < Array_UserInfo.count-1)
+    {
+        swipeCount +=1;
+    
+    
+    
+    
     NSLog(@ "Left= %ld",(long)swipeCount);
   //  imageUrl=[NSURL URLWithString:[[Array_UserInfo valueForKey:@"image_url"] objectAtIndex:swipeCount]];
    
@@ -132,6 +147,14 @@
     
 //        selectedDay++;
 //        [self fetchDataFromWeb];
+    }
+    
+    else
+    {
+        swipeCount =Array_UserInfo.count-1;
+    }
+
+       
 
     
 }
@@ -140,7 +163,17 @@
 {
     
     
-     swipeCount -=1;
+   swipeCount -=1;
+    
+    if (swipeCount < 0)
+    {
+        swipeCount = 0;
+    }
+    else
+    {
+    
+
+    
     NSLog(@ "Right= %ld",(long)swipeCount);
   //  imageUrl=[NSURL URLWithString:[[Array_UserInfo valueForKey:@"image_url"] objectAtIndex:swipeCount]];
    
@@ -160,9 +193,12 @@
             }];
         }];
         
+         ;
+    }
+    
+    
 //        selectedDay--;
 //        [self fetchDataFromWeb];
-    
 
 }
 
@@ -180,23 +216,20 @@
     }
     else if (section == 2)
     {
-        return 1;
+        return 2;
     }
     else if (section == 3)
     {
-        return 2;
-    }
-    else if (section == 4)
-    {
         return 1;
     }
+   
     return 0;
     
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 5;
+    return 4;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -205,6 +238,10 @@
     NSDictionary *dic_request=[Array_UserInfo objectAtIndex:swipeCount];
     NSLog(@"dic= %@",dic_request);
     static NSString *cell_two1=@"Cell_Two";
+    static NSString *cell_details=@"DetailCell";
+    static NSString *cell_comments=@"ComCell";
+    static NSString *cell_suggest=@"PostCell";
+    
     switch (indexPath.section)
     {
                      case 0:
@@ -245,6 +282,7 @@
                 [FirstCell.button_threedots addTarget:self action:@selector(button_threedots_action:) forControlEvents:UIControlEventTouchUpInside];
                 [FirstCell.button_favourite addTarget:self action:@selector(button_favourite_action:) forControlEvents:UIControlEventTouchUpInside];
                 [FirstCell.button_back addTarget:self action:@selector(button_back_action:) forControlEvents:UIControlEventTouchUpInside];
+                
                 return FirstCell;
             }
 
@@ -254,11 +292,36 @@
             
         case 1:
         {
-            detailCell = [tableView dequeueReusableCellWithIdentifier:@"DetailCell"];
+            
+            
+            
+            
+            
+            detailCell = [[[NSBundle mainBundle]loadNibNamed:@"DetailTableViewCell" owner:self options:nil] objectAtIndex:0];
+            
+            
+            
+            
+            if (detailCell == nil)
+            {
+                
+                detailCell = [[DetailTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cell_details];
+                
+                
+            }
+            
+            
+            
+            
+            
+            
+            
             detailCell.locationLabel.text = [dic_request valueForKey:@"city1"];
             detailCell.hashtagLabel.text = [dic_request valueForKey:@"hashtags"];
             [detailCell.hashtagLabel sizeToFit];
             detailCell.postidLabel.text = [NSString stringWithFormat:@"POST ID:%@",[dic_request valueForKey:@"postid"]];//[dic_request valueForKey:@"postid"];
+            [defaults setObject:detailCell.postidLabel.text forKey:@"post-id"];
+            
             detailCell.usernameLabel.text = [dic_request valueForKey:@"usersname"];
             
             NSString *show = [NSString stringWithFormat:@"$%@",[dic_request valueForKey:@"showamount"]];
@@ -267,16 +330,13 @@
             detailCell.titleLabel.text = [dic_request valueForKey:@"title"];
             //detailCell.profileImage.image =
             
-            NSURL * url=[[NSURL alloc]initWithString:[dic_request valueForKey:@"usersprofilepic"]];//[[Array_UserInfo objectAtIndex:0]valueForKey:@"usersprofilepic"];
-            NSData *data = [[NSData alloc]initWithContentsOfURL:url];
+            NSURL *url=[NSURL URLWithString:[dic_request valueForKey:@"usersprofilepic"]];
+            
+            [detailCell.profileImage sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultimg.jpg"] options:SDWebImageRefreshCached];
             detailCell.profileImage.layer.cornerRadius = detailCell.profileImage.frame.size.height / 2;
             detailCell.profileImage.clipsToBounds = YES;
             
-            detailCell.profileImage.image = [UIImage imageWithData:data];
-            
-           // [detailCell.profileImage sd_setImageWithURL:url];
 
-          // [detailCell.profileImage sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"swift.jpg"]options:SDWebImageRefreshCached];
             
             
   //------------------------------------------$$$$$$$$$$$$$$$$$$$______________________________
@@ -297,12 +357,13 @@
                 TextView_ViewW=detailCell.tapView.frame.size.width;
                 TextView_ViewH=detailCell.tapView.frame.size.height;
                 
-                
+                FavIV_Y=(detailCell.view_CordinateViewTapped.frame.origin.y-(detailCell.tapView.frame.origin.y+detailCell.tapView.frame.size.height));
                 
                 NSLog(@"Dynamic label heightc====%f",Cell_DescLabelX);
                 NSLog(@"Dynamic label heightc====%f",Cell_DescLabelY);
                 NSLog(@"Dynamic label heightc====%f",Cell_DescLabelW);
                 NSLog(@"Dynamic label heightc====%f",Cell_DescLabelH);
+                  NSLog(@"FavIV_Y====%f",FavIV_Y);
                 
                 
                 
@@ -394,25 +455,47 @@
             NSLog(@"Dynamic label heightccc====%f",Cell_DescLabelY);
             NSLog(@"Dynamic label heightccc====%f",Cell_DescLabelW);
             NSLog(@"Dynamic label heightccc====%f",Cell_DescLabelH);
+            detailCell.tapView.backgroundColor=[UIColor clearColor];
             
+            [detailCell.view_CordinateViewTapped setFrame:CGRectMake(detailCell.view_CordinateViewTapped.frame.origin.x,(detailCell.tapView.frame.origin.y+detailCell.tapView.frame.size.height)+23,detailCell.view_CordinateViewTapped.frame.size.width, detailCell.view_CordinateViewTapped.frame.size.height)];
+            
+             [detailCell.Button_makeoffer setFrame:CGRectMake(detailCell.Button_makeoffer.frame.origin.x,(detailCell.view_CordinateViewTapped.frame.origin.y+detailCell.view_CordinateViewTapped.frame.size.height),detailCell.Button_makeoffer.frame.size.width, detailCell.Button_makeoffer.frame.size.height)];
+              [detailCell.Button_makeoffer  addTarget:self action:@selector(makeOfferPressed:) forControlEvents:UIControlEventTouchUpInside];
+            
+//            [detailCell.favoriteLabel setFrame:CGRectMake(detailCell.favoriteLabel.frame.origin.x,(detailCell.favoriteImageView.frame.origin.y+detailCell.favoriteImageView.frame.size.height),detailCell.favoriteLabel.frame.size.width, detailCell.favoriteLabel.frame.size.height)];
+            
+         
+//      [detailCell.exipresImageView setFrame:CGRectMake(detailCell.exipresImageView.frame.origin.x,(detailCell.tapView.frame.origin.y+detailCell.tapView.frame.size.height)+FavIV_Y,detailCell.exipresImageView.frame.size.width, detailCell.exipresImageView.frame.size.height)];
+//            
+//            
+//      [detailCell.expiresInLabel setFrame:CGRectMake(detailCell.expiresInLabel.frame.origin.x,(detailCell.exipresImageView.frame.origin.y+detailCell.exipresImageView.frame.size.height),detailCell.expiresInLabel.frame.size.width, detailCell.expiresInLabel.frame.size.height)];
+//            
+//            [detailCell.highestImageView setFrame:CGRectMake(detailCell.highestImageView.frame.origin.x,(detailCell.tapView.frame.origin.y+detailCell.tapView.frame.size.height)+FavIV_Y,detailCell.highestImageView.frame.size.width, detailCell.highestImageView.frame.size.height)];
+//            
+//         [detailCell.highestLabel setFrame:CGRectMake(detailCell.highestLabel.frame.origin.x,(detailCell.highestImageView.frame.origin.y+detailCell.highestImageView.frame.size.height),detailCell.highestLabel.frame.size.width, detailCell.highestLabel.frame.size.height)];
 
            
             return detailCell;
         }
             break;
 
+        
+
         case 2:
         {
-            BidAmountCell *BidCell = [tableView dequeueReusableCellWithIdentifier:@"BidCell"];
-            [BidCell.makeOfferButton  addTarget:self action:@selector(makeOfferPressed:) forControlEvents:UIControlEventTouchUpInside];
+            ComCell = [[[NSBundle mainBundle]loadNibNamed:@"CommentsTableViewCell" owner:self options:nil] objectAtIndex:0];
             
-            return BidCell;
-        }
-            break;
-
-        case 3:
-        {
-            CommentCell *ComCell = [tableView dequeueReusableCellWithIdentifier:@"ComCell"];
+            
+            
+            
+            if (ComCell == nil)
+            {
+                
+                ComCell = [[CommentsTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cell_comments];
+                
+                
+            }
+            
         
             ComCell.profileImageView.layer.cornerRadius = ComCell.profileImageView.frame.size.height / 2;
             ComCell.profileImageView.clipsToBounds = YES;
@@ -422,9 +505,23 @@
         }
             break;
 
-        case 4:
+        case 3:
         {
-            SuggestedPostCell *SuggestCell = [tableView dequeueReusableCellWithIdentifier:@"PostCell"];
+            
+            SuggestCell = [[[NSBundle mainBundle]loadNibNamed:@"SuggestedTableViewCell" owner:self options:nil] objectAtIndex:0];
+            
+            
+            
+            
+            if (SuggestCell == nil)
+            {
+                
+                SuggestCell = [[SuggestedTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cell_suggest];
+                
+                
+            }
+            
+
             
             return SuggestCell;
             
@@ -433,6 +530,7 @@
 
     
     }
+    
     return nil;
 
 }
@@ -482,7 +580,7 @@
         {
             
             
-            return 470+detailCell.detailinfoTextView1.frame.size.height-38;
+            return 520+detailCell.detailinfoTextView1.frame.size.height-38;
             
             
             
@@ -493,11 +591,11 @@
             
             if ((long)rHeight==1)
             {
-                      return 470;
+                      return 520;
             }
             else
             {
-                return 470+26;
+                return 520+26;
             }
             
             
@@ -506,14 +604,11 @@
         
 
     }
+   
     else if (indexPath.section == 2)
     {
-        return 84;
-    }
-    else if (indexPath.section == 3)
-    {
         return 120;
-    }else if (indexPath.section == 4)
+    }else if (indexPath.section == 3)
     {
         return 150;
     }
@@ -553,7 +648,7 @@
         sectionView.tag=section;
         
     }
-    if (section==3)
+    if (section==2)
     {
         sectionView=[[UIView alloc]initWithFrame:CGRectMake(0, 0,self.view.frame.size.width,40)];//36
         [sectionView setBackgroundColor:[UIColor whiteColor]];
@@ -578,7 +673,7 @@
 
     }
     
-    if (section == 4)
+    if (section == 3)
     {
         sectionView=[[UIView alloc]initWithFrame:CGRectMake(0, 0,self.view.frame.size.width,40)];//36
         [sectionView setBackgroundColor:[UIColor whiteColor]];
@@ -594,15 +689,19 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
+    if (section==0)
+    {
+        return 0;
+    }
     if (section==1)
     {
         return 40;
     }
-    if (section==3)
+    if (section==2)
     {
         return 40;
     }
-    if (section==4)
+    if (section==3)
     {
         return 40;
     }
@@ -614,7 +713,7 @@
 
 -(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
-    if (section == 3)
+    if (section == 2)
     {
         
         
@@ -638,7 +737,7 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    if (section == 3)
+    if (section == 2)
     {
         return 40;
     }
@@ -721,7 +820,7 @@
     transparentView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     transparentView.backgroundColor=[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.3];
     
-    grayView=[[UIView alloc]initWithFrame:CGRectMake(50,256, 275, 250)];
+    grayView=[[UIView alloc]initWithFrame:CGRectMake((self.view.frame.size.width-275)/2,self.view.frame.size.width - 250, 275, 250)];
     grayView.layer.cornerRadius=20;
     grayView.clipsToBounds = YES;
     [grayView setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
@@ -744,19 +843,22 @@
     UILabel * label2 = [[UILabel alloc]initWithFrame:CGRectMake(128, 35, 132, 21)];
     label2.font = [UIFont fontWithName:@"SanFranciscoDisplay-Regular" size:10];
     label2.textAlignment = NSTextAlignmentRight;
-    label2.text = @"POST ID:45645648W3";
+    label2.text = [defaults valueForKey:@"post-id"];//@"POST ID:45645648W3";
     label2.textColor = [UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1];
     [grayView addSubview:label2];
     
-    UITextField *textField = [[UITextField alloc]initWithFrame:CGRectMake(17, 60, 243, 40)];
-    textField.textAlignment = NSTextAlignmentRight;
-    textField.font = [UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:22];
-    textField.text = @"$20000";
-    textField.textColor = [UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1];
-    textField.backgroundColor = [UIColor whiteColor];
-    textField.layer.cornerRadius = 4;
-    textField.clipsToBounds = YES;
-    [grayView addSubview:textField];
+    amountTextField = [[UITextField alloc]initWithFrame:CGRectMake(17, 60, 243, 40)];
+    amountTextField.textAlignment = NSTextAlignmentRight;
+    amountTextField.font = [UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:22];
+    amountTextField.text = @"$";
+    amountTextField.textColor = [UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1];
+    amountTextField.backgroundColor = [UIColor whiteColor];
+    amountTextField.layer.cornerRadius = 4;
+    amountTextField.clipsToBounds = YES;
+    amountTextField.delegate = self;
+    amountTextField.keyboardType = UIKeyboardTypeNumberPad;
+    [amountTextField becomeFirstResponder];
+    [grayView addSubview:amountTextField];
     
     UILabel * label3 = [[UILabel alloc]initWithFrame:CGRectMake(52, 108, 208, 21)];
     label3.font = [UIFont fontWithName:@"SanFranciscoDisplay-Regular" size:14];
@@ -764,11 +866,13 @@
     label3.text = @"Add a comment with your offer?";
     [grayView addSubview:label3];
     
-    UITextView *textView = [[UITextView alloc]initWithFrame:CGRectMake(17, 132, 243, 65)];
-    textView.textAlignment = NSTextAlignmentRight;
-    textView.layer.cornerRadius = 4;
-    textView.clipsToBounds = YES;
-    [grayView addSubview:textView];
+    commentTextView = [[UITextView alloc]initWithFrame:CGRectMake(17, 132, 243, 65)];
+    commentTextView.textAlignment = NSTextAlignmentRight;
+    commentTextView.layer.cornerRadius = 4;
+    commentTextView.clipsToBounds = YES;
+    commentTextView.spellCheckingType = NO;
+    commentTextView.autocorrectionType = NO;
+    [grayView addSubview:commentTextView];
     
     
     UIButton *confirm=[[UIButton alloc]initWithFrame:CGRectMake(0, 206, 275, 44)];
@@ -783,9 +887,15 @@
 
     [transparentView addSubview:grayView];
     [self.view addSubview:transparentView];
-
+    
     
 
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    
+    
+    amountTextField.text = [[NSLocale currentLocale] objectForKey:NSLocaleCurrencySymbol];
 }
 
 #pragma mark - PopOver Button Action
@@ -793,6 +903,7 @@
 
 - (void)closedd:(id)sender
 {
+    [self.view endEditing:YES];
  
     transparentView.hidden=YES;
     
@@ -801,7 +912,11 @@
 - (void)confirm:(id)sender
 {
     
+    
+    [self CreateMakeOfferConnection];
     transparentView.hidden=YES;
+    [self.view endEditing:YES];
+    
     
 }
 
@@ -915,12 +1030,168 @@
     
     
     
-    [self.tableView beginUpdates];
-    [self.tableView  reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
-    [self.tableView  endUpdates];
+    [self.tableView reloadData];
+//    [self.tableView  reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
+//    [self.tableView  endUpdates];
     
     
 }
+#pragma mark - NSURL CONNECTION
+-(void)CreateMakeOfferConnection
+{
+    
+    NSLog(@"createButtonPressed");
+    Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
+    if (networkStatus == NotReachable)
+    {
+        
+        
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"No Internet" message:@"Please make sure you have internet connectivity in order to access." preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction *action)
+                                   {
+                                       exit(0);
+                                   }];
+        
+        [alertController addAction:actionOk];
+        [self presentViewController:alertController animated:YES completion:nil];
+        
+        
+        
+        
+    }
+    else
+    {
+        
+        NSURL *url;//=[NSURL URLWithString:[urlplist valueForKey:@"singup"]];
+        NSString *  urlStr=[urlplist valueForKey:@"makeoffer"];
+        url =[NSURL URLWithString:urlStr];
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+        
+        [request setHTTPMethod:@"POST"];//Web API Method
+        
+        [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+        
+        
+        NSString *postid= @"postid";
+        NSString *postidVal = detailCell.postidLabel.text;    //[defaults valueForKey:@"postid"];
+        NSString *userid= @"userid";
+        NSString *useridVal =[defaults valueForKey:@"userid"];
+        
+        
+        NSString *askingpriceValString = [NSString stringWithFormat:@"%@",amountTextField.text];
+        askingpriceValString = [askingpriceValString substringFromIndex:1];
+        NSString *offerAmount= @"offeramount";
+        NSString *offerAmountVal = askingpriceValString;   //[defaults valueForKey:@"amountEntered"];
+        
+        NSString *comment= @"comment";
+        NSString *commentVal =commentTextView.text;//[defaults valueForKey:@"commentEntered"];
+        
+        NSString *reqStringFUll=[NSString stringWithFormat:@"%@=%@&%@=%@&%@=%@&%@=%@",postid,postidVal,userid,useridVal,offerAmount,offerAmountVal,comment,commentVal];
+        
+        
+        //converting  string into data bytes and finding the lenght of the string.
+        NSData *requestData = [NSData dataWithBytes:[reqStringFUll UTF8String] length:[reqStringFUll length]];
+        [request setHTTPBody: requestData];
+        
+        Connection_MakeOffer = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+        {
+            if( Connection_MakeOffer)
+            {
+                webData_MakeOffer =[[NSMutableData alloc]init];
+                
+                
+            }
+            else
+            {
+                NSLog(@"theConnection is NULL");
+            }
+        }
+        
+    }
+
+    
+}
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+{
+    
+    NSLog(@"connnnnnnnnnnnnnn=%@",connection);
+    
+    if(connection==Connection_MakeOffer)
+    {
+        [webData_MakeOffer setLength:0];
+        
+        
+    }
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+{
+    if(connection==Connection_MakeOffer)
+    {
+        [webData_MakeOffer appendData:data];
+    }
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection
+{
+    
+    if (connection==Connection_MakeOffer)
+    {
+        
+        Array_MakeOffer=[[NSMutableArray alloc]init];
+        SBJsonParser *objSBJsonParser = [[SBJsonParser alloc]init];
+        Array_MakeOffer=[objSBJsonParser objectWithData:webData_MakeOffer];
+        NSString * ResultString=[[NSString alloc]initWithData:webData_MakeOffer encoding:NSUTF8StringEncoding];
+        //  Array_LodingPro=[NSJSONSerialization JSONObjectWithData:webData_LodingPro options:kNilOptions error:nil];
+        
+        ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+        ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\t" withString:@""];
+        
+        NSLog(@"cc %@",Array_MakeOffer);
+        NSLog(@"registration_status %@",[[Array_MakeOffer objectAtIndex:0]valueForKey:@"registration_status"]);
+        NSLog(@"ResultString %@",ResultString);
+        if ([ResultString isEqualToString:@"done"])
+        {
+            
+            
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Offer Accepted" message:@"Thank-you for making your offer. You will be informed if you win the bid or if someone outbids you." preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                               style:UIAlertActionStyleDefault
+                                                             handler:nil];
+            [alertController addAction:actionOk];
+            [self presentViewController:alertController animated:YES completion:nil];
+            
+        }
+        else if ([ResultString isEqualToString:@"inserterror"])
+        {
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops" message:@"TWe encountered some error, please try again." preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                               style:UIAlertActionStyleDefault
+                                                             handler:nil];
+            [alertController addAction:actionOk];
+            [self presentViewController:alertController animated:YES completion:nil];
+        }
+        else if ([ResultString isEqualToString:@"amountless"])
+        {
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Offer Rejected" message:@"Your offer is less than the previous highest offer. Please increase your amount and bid again. Thank-you." preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                               style:UIAlertActionStyleDefault
+                                                             handler:nil];
+            [alertController addAction:actionOk];
+            [self presentViewController:alertController animated:YES completion:nil];
+        }
+
+    }
+}
+
+
 
 @end
 

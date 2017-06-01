@@ -21,6 +21,7 @@
 #import "Reachability.h"
 
 
+
 @interface PropertyViewController ()<UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UICollectionViewDelegate,FRGWaterfallCollectionViewDelegate>
 {
     
@@ -306,9 +307,7 @@
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     OnCellClickViewController * set=[mainStoryboard instantiateViewControllerWithIdentifier:@"OnCellClickViewController"];
     
-    // MyPostViewController * set=[mainStoryboard instantiateViewControllerWithIdentifier:@"MyPostViewController"];
-    
-    
+    // OnCellClickNewViewController * set=[mainStoryboard instantiateViewControllerWithIdentifier:@"OnCellClickNewViewController"];
     
     CATransition *transition = [CATransition animation];
     transition.duration = 0.3;

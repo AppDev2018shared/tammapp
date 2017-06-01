@@ -12,11 +12,13 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *facebookButton;
 @property (weak, nonatomic) IBOutlet UIButton *twitterButton;
-@property (weak, nonatomic) IBOutlet UILabel *termLabel;
+@property(nonatomic,weak)IBOutlet UILabel * Label_TermsAndCon;
+
 
 - (IBAction)facebookAction:(id)sender;
 - (IBAction)twitterAction:(id)sender;
-- (IBAction)termsAction:(id)sender;
+- (IBAction)Login_Action:(id)sender;
+- (IBAction)CreateAccount_Action:(id)sender;
 
 
 

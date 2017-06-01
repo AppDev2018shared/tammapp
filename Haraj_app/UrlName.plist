@@ -8,5 +8,7 @@
 	<string>http://www.tammapp.com/app/loginsignup.php</string>
 	<key>viewpost</key>
 	<string>http://www.tammapp.com/app/viewposts.php</string>
+	<key>makeoffer</key>
+	<string>http://www.tammapp.com/app/makeoffer.php</string>
 </dict>
 </plist>

@@ -13,6 +13,10 @@
 #import <TwitterKit/TwitterKit.h>
 #import <Fabric/Fabric.h>
 #import "UIView+RNActivityView.h"
+#import "FRHyperLabel.h"
+#import "LoginPageViewController.h"
+#import "SignUpViewController.h"
+
 
 @interface LoginWithViewController ()
 {
@@ -20,11 +24,12 @@
     
     NSMutableArray *fb_friend_id;
 }
+@property (weak, nonatomic) IBOutlet FRHyperLabel *termLabel;
 
 @end
 
 @implementation LoginWithViewController
-@synthesize facebookButton,twitterButton,termLabel;
+@synthesize facebookButton,twitterButton,Label_TermsAndCon;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -44,6 +49,52 @@
     twitterButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
     
     
+
+//    NSString *string = @"by signing in, you agree to our Terms";
+//    NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] initWithString:string];
+//    NSRange range = [string rangeOfString:@"Terms"];
+//    [attString addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:12.0] range:range];
+//   
+//    
+//    label.attributedText = attString;
+//    
+//    
+//    
+
+    
+    FRHyperLabel *label = self.termLabel;
+    label.numberOfLines = 0;
+    label.textColor = [UIColor whiteColor];
+    label.textAlignment = NSTextAlignmentCenter;
+    [label setFont:[UIFont fontWithName:@"San Francisco Display" size:12]];
+    
+    //Step 1: Define a normal attributed string for non-link texts
+    
+    NSString *string = @"by signing in, you agree to our Terms & Conditions";
+    
+    NSDictionary *attributes = @{NSForegroundColorAttributeName: [UIColor colorWithRed:(40/255.0) green:40/255.0 blue:40/255.0 alpha:1],NSFontAttributeName: [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote]};
+    
+    
+    label.attributedText = [[NSAttributedString alloc]initWithString:string attributes:attributes];
+    
+    //Step 2: Define a selection handler block
+    
+    void(^handler)(FRHyperLabel *label, NSString *substring) = ^(FRHyperLabel *label, NSString *substring)
+    {
+        
+        if ([substring isEqualToString:@"Terms & Conditions"])
+        {
+            
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://play-date.ae/terms.html"]];
+            
+        }
+        
+    };
+    
+    //Step 3: Add link substrings
+    
+    [label setLinksForSubstrings:@[@"Terms & Conditions"] withLinkHandler:handler];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -51,15 +102,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 - (IBAction)facebookAction:(id)sender {
     FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];
@@ -207,4 +249,18 @@
     
      [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://play-date.ae/terms.html"]];
 }
+- (IBAction)Login_Action:(id)sender
+{
+    
+    LoginPageViewController *loginController=[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginPageViewController"];
+    [self.navigationController pushViewController:loginController animated:YES];
+    
+}
+- (IBAction)CreateAccount_Action:(id)sender
+{
+    SignUpViewController *SignController=[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"SignUpViewController"];
+    [self.navigationController pushViewController:SignController animated:YES];
+}
+
+
 @end
