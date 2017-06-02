@@ -71,7 +71,7 @@
     
     //Add a right swipe gesture recognizer
     recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self
-                                                           action:@selector(ssshandleSwipeRight:)];
+                                                           action:@selector(handleSwipeRight:)];
     [recognizer setDirection:(UISwipeGestureRecognizerDirectionRight)];
     [self.tableView addGestureRecognizer:recognizer];
     
@@ -121,8 +121,6 @@
     if (swipeCount >= 0 && swipeCount < Array_UserInfo.count-1)
     {
         swipeCount +=1;
-    
-    
     
     
     NSLog(@ "Left= %ld",(long)swipeCount);
@@ -337,17 +335,12 @@
             
             
             
-            
-            
-            
-            
             detailCell.locationLabel.text = [dic_request valueForKey:@"city1"];
             detailCell.hashtagLabel.text = [dic_request valueForKey:@"hashtags"];
-            [detailCell.hashtagLabel sizeToFit];
-            detailCell.postidLabel.text = [NSString stringWithFormat:@"POST ID:%@",[dic_request valueForKey:@"postid"]];//[dic_request valueForKey:@"postid"];
+            detailCell.postidLabel.text = [NSString stringWithFormat:@"POST ID:%@",[dic_request valueForKey:@"postid"]];
             [defaults setObject:detailCell.postidLabel.text forKey:@"post-id"];
-            
             detailCell.usernameLabel.text = [dic_request valueForKey:@"usersname"];
+            
             
             NSString *show = [NSString stringWithFormat:@"$%@",[dic_request valueForKey:@"showamount"]];
             detailCell.priceLabel.text = show;//[dic_request valueForKey:@"showamount"];
@@ -428,8 +421,6 @@
                     [detailCell.detailinfoTextView setFrame:CGRectMake(Cell_DescLabelX,Cell_DescLabelY, Cell_DescLabelW,Cell_DescLabelH)];
                     
                     
-                    
-                    
                 }
                 else if ((long)rHeight==2)
                 {
@@ -447,9 +438,6 @@
                     detailCell.detailinfoTextView.textContainer.lineBreakMode = NSLineBreakByTruncatingTail;
                     UITapGestureRecognizer *label_Desc_Tapped =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(label_Desc_Tapped_ActionDetails:)];
                     [detailCell.tapView addGestureRecognizer:label_Desc_Tapped];
-                    
-                    
-
                     
                     [detailCell.tapView setFrame:CGRectMake(TextView_ViewX,TextView_ViewY, TextView_ViewW,TextView_ViewH*2)];
                     
@@ -487,18 +475,6 @@
              [detailCell.Button_makeoffer setFrame:CGRectMake(detailCell.Button_makeoffer.frame.origin.x,(detailCell.view_CordinateViewTapped.frame.origin.y+detailCell.view_CordinateViewTapped.frame.size.height),detailCell.Button_makeoffer.frame.size.width, detailCell.Button_makeoffer.frame.size.height)];
               [detailCell.Button_makeoffer  addTarget:self action:@selector(makeOfferPressed:) forControlEvents:UIControlEventTouchUpInside];
             
-//            [detailCell.favoriteLabel setFrame:CGRectMake(detailCell.favoriteLabel.frame.origin.x,(detailCell.favoriteImageView.frame.origin.y+detailCell.favoriteImageView.frame.size.height),detailCell.favoriteLabel.frame.size.width, detailCell.favoriteLabel.frame.size.height)];
-            
-         
-//      [detailCell.exipresImageView setFrame:CGRectMake(detailCell.exipresImageView.frame.origin.x,(detailCell.tapView.frame.origin.y+detailCell.tapView.frame.size.height)+FavIV_Y,detailCell.exipresImageView.frame.size.width, detailCell.exipresImageView.frame.size.height)];
-//            
-//            
-//      [detailCell.expiresInLabel setFrame:CGRectMake(detailCell.expiresInLabel.frame.origin.x,(detailCell.exipresImageView.frame.origin.y+detailCell.exipresImageView.frame.size.height),detailCell.expiresInLabel.frame.size.width, detailCell.expiresInLabel.frame.size.height)];
-//            
-//            [detailCell.highestImageView setFrame:CGRectMake(detailCell.highestImageView.frame.origin.x,(detailCell.tapView.frame.origin.y+detailCell.tapView.frame.size.height)+FavIV_Y,detailCell.highestImageView.frame.size.width, detailCell.highestImageView.frame.size.height)];
-//            
-//         [detailCell.highestLabel setFrame:CGRectMake(detailCell.highestLabel.frame.origin.x,(detailCell.highestImageView.frame.origin.y+detailCell.highestImageView.frame.size.height),detailCell.highestLabel.frame.size.width, detailCell.highestLabel.frame.size.height)];
-
            
             return detailCell;
         }
@@ -508,6 +484,7 @@
 
         case 2:
         {
+            
             ComCell = [[[NSBundle mainBundle]loadNibNamed:@"CommentsTableViewCell" owner:self options:nil] objectAtIndex:0];
             
             
@@ -560,9 +537,8 @@
 
 }
 
-- (void)myAction{
-    
-    
+- (void)myAction
+{
     
 }
 
@@ -616,7 +592,7 @@
             
             if ((long)rHeight==1)
             {
-                      return 520;
+                 return 520;
             }
             else
             {
@@ -633,7 +609,8 @@
     else if (indexPath.section == 2)
     {
         return 120;
-    }else if (indexPath.section == 3)
+    }
+    else if (indexPath.section == 3)
     {
         return 150;
     }
@@ -677,6 +654,7 @@
     {
         sectionView=[[UIView alloc]initWithFrame:CGRectMake(0, 0,self.view.frame.size.width,40)];//36
         [sectionView setBackgroundColor:[UIColor whiteColor]];
+        
         UIButton *button1 = [[UIButton alloc]initWithFrame:CGRectMake(10, 10, 150, 40)];
         [button1 setTitle:@"Post a Comment" forState:UIControlStateNormal];
         [button1 setTitleColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1] forState:UIControlStateNormal];
@@ -690,9 +668,6 @@
         comment.text = @"Comments";
         comment.textColor = [UIColor lightGrayColor];
         [sectionView addSubview:comment];
-
-        
-
         sectionView.tag=section;
 
 
