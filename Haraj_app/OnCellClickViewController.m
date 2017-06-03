@@ -583,9 +583,6 @@
             
             return 520+detailCell.detailinfoTextView1.frame.size.height-38;
             
-            
-            
-            
         }
         else
         {
@@ -596,7 +593,7 @@
             }
             else
             {
-                return 520+26;
+                return 520+56;
             }
             
             

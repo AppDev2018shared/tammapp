@@ -100,5 +100,11 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Permission to access microphone</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Permission to access Camera</string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Permission to access Media</string>
 </dict>
 </plist>

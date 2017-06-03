@@ -10,5 +10,7 @@
 	<string>http://www.tammapp.com/app/viewposts.php</string>
 	<key>makeoffer</key>
 	<string>http://www.tammapp.com/app/makeoffer.php</string>
+	<key>savepicture</key>
+	<string>http://www.tammapp.com/app/savepicture.php</string>
 </dict>
 </plist>

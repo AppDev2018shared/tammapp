@@ -12,28 +12,42 @@
 #import "MoreDetailCell.h"
 #import "SBJsonParser.h"
 #import "Reachability.h"
+#import "UIView+RNActivityView.h"
+#import "MHFacebookImageViewer.h"
+#import "UIImageView+MHFacebookImageViewer.h"
 
 
 
-@interface PostingViewController ()<UITableViewDataSource, UITableViewDelegate,UIScrollViewDelegate,UIActionSheetDelegate,UITextViewDelegate,UITextFieldDelegate>
+
+@interface PostingViewController ()<UITableViewDataSource, UITableViewDelegate,UIScrollViewDelegate,UIActionSheetDelegate,UITextViewDelegate,UITextFieldDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,NSURLConnectionDelegate>
 {
     MoreDetailCell *moreCell;
     AddImageCell *imageCell;
     ProductDetailCell *detailCell;
     NSUserDefaults * defaults;
     UIImage *chosenImage ;
-    UIImageView *imageView;
-    UIImagePickerController *imagePicker;
+    UIImageView *imageView,*Image_View;
+    UIImagePickerController *imagePicker, *cameraUI, *pcker1;
     NSInteger count,imageCount;
-    NSMutableArray *imageArray;
+    NSMutableArray *imageArray, *array_MediaTypes, *array_VideoUrl,* Array_mediaTypeId, *ImageId;
     int x ;
-    UILabel *sellingPlaceholder,*hashPlaceholder,*morePlaceholder;
+    UILabel *sellingPlaceholder,*hashPlaceholder,*morePlaceholder,*Label_confirm1;
+    
+    UIView * transperentViewIndicator,*whiteView1,* transperentViewIndicator11,*whiteView111;
+    UIActivityIndicatorView *indicatorAlert;
     
     NSDictionary *urlplist;
-    NSURLConnection *Connection_Create;
-    NSMutableData *webData_Create;
-    NSMutableArray *Array_Create;
-    NSString *postIDValue;
+    NSURLConnection *Connection_Create, *Connection_Media;
+    NSMutableData *webData_Create, *webData_Media;
+    NSMutableArray *Array_Create, *Array_Media,*Array_RemovePicture;
+    NSString *postIDValue ,*mediaTypeVal,* ImageNSdata,*ImageNSdataThumb, *encodedImage, *encodedImageThumb, *mediaIdStr, *imageTag;
+    
+    UIImage *FrameImage;
+    NSNumber *Vedio_Height,*Vedio_Width;
+    NSData *imageData,*imageDataThumb;
+    MPMoviePlayerViewController *movieController ;
+    NSInteger indexCount;
+
     
 }
 
@@ -45,9 +59,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    indexCount = 0;
     imageCount = 0;
     count = 0;
     imageArray = [[NSMutableArray alloc]init];
+    array_MediaTypes = [[NSMutableArray alloc]init];
+    array_VideoUrl = [[NSMutableArray alloc]init];
+    Array_mediaTypeId= [[NSMutableArray alloc]init];
+    ImageId = [[NSMutableArray alloc]init];
+
+    Image_View = [[UIImageView alloc]init];
+   
+    
     defaults = [[NSUserDefaults alloc]init];
     [defaults setObject:@"NO" forKey:@"CallPressed"];
 
@@ -109,7 +132,85 @@
     NSLog(@"postIDValue %@",postIDValue);
     
 
+   
     
+    transperentViewIndicator=[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    transperentViewIndicator.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5];
+    
+    whiteView1=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 110,110)];
+    whiteView1.center=transperentViewIndicator.center;
+    [whiteView1 setBackgroundColor:[UIColor blackColor]];
+    whiteView1.layer.cornerRadius=9;
+    indicatorAlert = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    indicatorAlert.frame=CGRectMake((whiteView1.frame.size.width/2)-10, (whiteView1.frame.size.height/2)-15, 20, 20);
+    [indicatorAlert startAnimating];
+    [indicatorAlert setColor:[UIColor whiteColor]];
+    
+    Label_confirm1=[[UILabel alloc]initWithFrame:CGRectMake(0,(indicatorAlert.frame.size.height+indicatorAlert.frame.origin.y)+5, whiteView1.frame.size.width, 40)];
+    
+    
+    Label_confirm1.text=@"Preparing...";
+    Label_confirm1.font=[UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:16.0];
+    Label_confirm1.textColor=[UIColor whiteColor];
+    Label_confirm1.textAlignment=NSTextAlignmentCenter;
+    
+    
+    [whiteView1 addSubview:indicatorAlert];
+    
+    [whiteView1 addSubview:Label_confirm1];
+    
+    [transperentViewIndicator addSubview:whiteView1];
+    
+    
+    
+//    
+//    transperentViewIndicator11=[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+//    transperentViewIndicator11.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5];
+//    
+//    whiteView111=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 150,150)];
+//    whiteView111.center=transperentViewIndicator11.center;
+//    [whiteView111 setBackgroundColor:[UIColor blackColor]];
+//    whiteView111.layer.cornerRadius=9;
+//    //   indicatorAlert = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+//    //    indicatorAlert.frame=CGRectMake(40, 40, 20, 20);
+//    //    [indicatorAlert startAnimating];
+//    //    [indicatorAlert setColor:[UIColor whiteColor]];
+//    
+//    Label_confirm11=[[UILabel alloc]initWithFrame:CGRectMake(0, 50, 150, 40)];
+//    
+//    [Label_confirm11 setFont:[UIFont systemFontOfSize:12]];
+//    Label_confirm11.text=@"0 %";
+//    Label_confirm11.font=[UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:40.0];
+//    Label_confirm11.textColor=[UIColor whiteColor];
+//    Label_confirm11.textAlignment=NSTextAlignmentCenter;
+//    
+//    Label_confirm=[[UILabel alloc]initWithFrame:CGRectMake(0, 110, 150, 28)];
+//    
+//    [Label_confirm setFont:[UIFont systemFontOfSize:12]];
+//    Label_confirm.text=@"Creating...";
+//    Label_confirm.font=[UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:20.0];
+//    Label_confirm.textColor=[UIColor whiteColor];
+//    Label_confirm.textAlignment=NSTextAlignmentCenter;
+//    
+//    Button_close=[[UIButton alloc]initWithFrame:CGRectMake(whiteView111.frame.size.width-23, -4, 28,28)];
+//    Button_close.layer.cornerRadius=Button_close.frame.size.height/2;
+//    
+//    Button_close.backgroundColor=[UIColor whiteColor];
+//    [Button_close setTitle:@"X" forState:UIControlStateNormal];
+//    [Button_close setTitleColor:[UIColor redColor]forState:UIControlStateNormal];
+//    Button_close.titleLabel.font=[UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:14.0];
+//    [Button_close addTarget:self action:@selector(UploadinView_Close:) forControlEvents:UIControlEventTouchUpInside];
+//    [whiteView111 addSubview:Button_close];
+//    [whiteView111 addSubview:Label_confirm];
+//    [whiteView111 addSubview:Label_confirm11];
+//    
+//    [transperentViewIndicator11 addSubview:whiteView111];
+//    
+//    [self.view addSubview:transperentViewIndicator11];
+//    
+    transperentViewIndicator11.hidden=YES;
+    
+
     
     
 }
@@ -119,6 +220,10 @@
 }
 -(void)galleryButtonPressed:(id)sender
 {
+    mediaTypeVal = @"IMAGE";
+   
+    
+    
     NSLog(@"galleryButtonPressed Pressed");
 
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary])
@@ -126,10 +231,73 @@
         UIImagePickerController *picker = [[UIImagePickerController alloc] init];
         picker.delegate = self;
         [picker setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
-        picker.allowsEditing = true;
+        picker.allowsEditing = NO;
         [self presentViewController:picker animated:true completion:nil];
     }
 }
+
+-(void)videoButtonPressed:(id)sender
+{
+    mediaTypeVal = @"VIDEO";
+   
+    NSLog(@"videoButtonPressed Pressed");
+    [self startCameraControllerFromViewController: self
+                                    usingDelegate: self];
+    
+}
+-(void)cameraButtonPressed:(id)sender
+{
+     mediaTypeVal = @"IMAGE";
+   
+    
+    NSLog(@"cameraButtonPressed Pressed");
+    
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+    {
+        UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+        picker.delegate = self;
+        picker.allowsEditing = NO;
+        picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        [self presentViewController:picker animated:true completion:nil];
+    }
+}
+
+- (BOOL) startCameraControllerFromViewController: (UIViewController*) controller
+                                   usingDelegate: (id <UIImagePickerControllerDelegate,
+                                                   UINavigationControllerDelegate>) delegate {
+    
+    if (([UIImagePickerController isSourceTypeAvailable:
+          UIImagePickerControllerSourceTypeCamera] == NO)
+        || (delegate == nil)
+        || (controller == nil))
+        return NO;
+    // UIImage *flippedImage = [UIImage imageWithCGImage:picture.CGImage scale:picture.scale orientation:UIImageOrientationLeftMirrored];
+    
+    cameraUI = [[UIImagePickerController alloc] init];
+    cameraUI.sourceType = UIImagePickerControllerSourceTypeCamera;
+    
+    
+    // Displays a control that allows the user to choose movie capture
+    cameraUI.mediaTypes = [[NSArray alloc] initWithObjects: (NSString *) kUTTypeMovie, nil];
+    cameraUI.videoQuality = UIImagePickerControllerQualityTypeIFrame1280x720;
+    
+    cameraUI.showsCameraControls = YES;
+    cameraUI.videoMaximumDuration = 60.0f;
+    
+    cameraUI.allowsEditing = NO;
+    
+    cameraUI.delegate = delegate;
+    //    self.videoTimer =  [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(changeValue) userInfo:nil repeats:YES];
+    //    remainingCounts = 60;
+    
+    [controller presentModalViewController: cameraUI animated: YES];
+    return YES;
+}
+
+
+
+
+
 
 
 
@@ -191,7 +359,9 @@
             imageCell = [tableView dequeueReusableCellWithIdentifier:@"ImageCell"];
             
             [imageCell.galleryButton  addTarget:self action:@selector(galleryButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-           
+            [imageCell.videoButton  addTarget:self action:@selector(videoButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+            [imageCell.cameraButton  addTarget:self action:@selector(cameraButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+            
             CGRect workingFrame =  imageCell.scrollView.frame;
             workingFrame.origin.x = 0;
             x =880;
@@ -226,12 +396,51 @@
                 imageView.userInteractionEnabled=YES;
                 imageView.image=[imageArray objectAtIndex:i];
                 
+                
+                
+                
+                
                 UITapGestureRecognizer * ImageTap =[[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                            action:@selector(ImageTapped:)];
                 [imageView addGestureRecognizer:ImageTap];
                 
+                UIImageView *playButton = [[UIImageView alloc]initWithFrame:CGRectMake((imageView.frame.size.width / 2) - 20, (imageView.frame.size.height / 2) - 20, 40, 40)];
+                playButton.backgroundColor = [UIColor clearColor];
+                [playButton setImage:[UIImage imageNamed:@"Play"]];
+                UITapGestureRecognizer * ImageTap1 =[[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                action:@selector(ImageTapped:)];
+                [playButton addGestureRecognizer:ImageTap1];
+                
+                
+                playButton.tag = i;
+                [imageView addSubview:playButton];
+                
+                
+                
                 [imageCell.scrollView addSubview:imageView];
                 [imageCell.contentView bringSubviewToFront:imageView];
+                if ([[array_MediaTypes objectAtIndex:i] isEqualToString:@"VIDEO"])
+                {
+                    playButton.hidden = NO;
+                }
+                else
+                {
+                    playButton.hidden = YES;
+                    
+                }
+                
+                
+                
+                for (int j = 0; j < Array_mediaTypeId.count; j++)
+                    {
+                        if (![[ImageId objectAtIndex:i] isEqualToString:[[Array_mediaTypeId objectAtIndex:j] valueForKey:@"indexid"]])
+                        {
+                            
+                            imageView.alpha = 0.5;
+                            
+                        }
+                        
+                }
 
                 x -= 110;
 
@@ -395,23 +604,88 @@
     
      NSLog(@"Imageview tap==:==%ld", (long)imageView1.tag);
     
+    Image_View = imageView1;
     
-    UIAlertController *alert =[UIAlertController alertControllerWithTitle:@"Do you want to remove selected image?" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertController *alert =[UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
     
-    UIAlertAction *yesAction = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action)
+    UIAlertAction *yesAction = [UIAlertAction actionWithTitle:@"Remove" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action)
                                 {
                                     NSLog(@"Yes button Pressed");
                                     
-                                    [imageArray removeObjectAtIndex:(long)imageView1.tag];
+//                                    [imageArray removeObjectAtIndex:(long)imageView1.tag];
+//                                    [array_MediaTypes removeObjectAtIndex:(long)imageView1.tag];
+//                                    [array_VideoUrl removeObjectAtIndex:(long)imageView1.tag];
+                                  //  NSString *indexStr = [NSString stringWithFormat:@"%d",imageView1.tag];
                                     
+//                                    for (int i =0 ; i < ImageId.count; i++)
+//                                    {
+                                        for (int j=0; j < Array_mediaTypeId.count; j++)
+                                        {
+                                            if ([[[Array_mediaTypeId objectAtIndex:j] valueForKey:@"indexid"] isEqualToString:[ImageId objectAtIndex:imageView1.tag]])
+                                            {
+                                                mediaIdStr = [[Array_mediaTypeId objectAtIndex:j] valueForKey:@"indexid"];
+                                                
+                                                [Array_mediaTypeId removeObjectAtIndex:j];
+                                                [imageArray removeObjectAtIndex:(long)imageView1.tag];
+                                                [array_MediaTypes removeObjectAtIndex:(long)imageView1.tag];
+                                                [array_VideoUrl removeObjectAtIndex:(long)imageView1.tag];
+
+                                                [self removePictureConnection];
+                                                break;
+                                            }
+                                       // }
+                                        
+                                        
+                                        
+                                    }
+                
                                     [self.tableView reloadData];
+                                    
                                     
                                 }];
     
     [alert addAction:yesAction];
+    
+    UIAlertAction *playAlert;
+    
+    if ([[array_MediaTypes objectAtIndex:imageView1.tag] isEqualToString:@"IMAGE"])
+    {
 
-    UIAlertAction *noAction =[UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action)
+
+       playAlert =[UIAlertAction actionWithTitle:@"View" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
+                              
+                              {
+                                  [self displayImage:Image_View withImage:imageView1.image];
+                                  
+                                  
+                                  NSLog(@"playAlert button Pressed");
+                                  
+                              }];
+    }
+    else
+    {
+       
+        playAlert =[UIAlertAction actionWithTitle:@"Play" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
+                                   
+                                   {
+                                       movieController = [[MPMoviePlayerViewController alloc] initWithContentURL:[array_VideoUrl objectAtIndex:imageView1.tag ]];
+                                       
+                                       
+                                       [self presentMoviePlayerViewControllerAnimated:movieController];
+                                       [movieController.moviePlayer prepareToPlay];
+                                       [movieController.moviePlayer play];
+                                       
+                                       NSLog(@"playAlert button Pressed");
+                                       
+                                   }];
+    
+    }
+    
+    [alert addAction:playAlert];
+    
+    
+    UIAlertAction *cancelAction =[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action)
                               
                               {
                                   
@@ -419,11 +693,21 @@
                                   
                               }];
     
-    [alert addAction:noAction];
+    [alert addAction:cancelAction];
+    
     
     [self presentViewController:alert animated:YES completion:nil];
+    
+    
+}
+
+- (void) displayImage:(UIImageView*)imageView withImage:(UIImage*)image
+{
+    [Image_View setImage:image];
+    [Image_View setupImageViewer1];
    
 }
+
 
 -(void)sliderChanged:(UISlider*)sender{
    
@@ -467,24 +751,262 @@
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    // UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
-    
-    chosenImage = info[UIImagePickerControllerOriginalImage];
     
     
-    [imageArray addObject:chosenImage];
+    if ([mediaTypeVal isEqualToString:@"VIDEO"])
+    {
+       
+        
+        self.videoURL = info[UIImagePickerControllerMediaURL];
+        
+        
+        
+        mediaTypeVal=@"VIDEO";
+        self.videoURL = info[UIImagePickerControllerMediaURL];
+        
+        [array_VideoUrl addObject:self.videoURL];
+        
+        NSData* videoData = [NSData dataWithContentsOfFile:[self.videoURL path]];
+        int videoSize = [videoData length]/1024/1024;
+        
+        
+        NSLog(@"data size==%d",videoSize);
+        
+        
+        AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:self.videoURL options:nil];
+        
+        
+        AVAssetImageGenerator *generateImg = [[AVAssetImageGenerator alloc] initWithAsset:asset];
+        generateImg.appliesPreferredTrackTransform = YES;
+        NSError *error = NULL;
+        CMTime time = CMTimeMake(1, 7);
+        CGImageRef refImg = [generateImg copyCGImageAtTime:time actualTime:NULL error:&error];
+        NSLog(@"error==%@, Refimage==%@", error, refImg);
+        
+        
+        FrameImage= [[UIImage alloc] initWithCGImage:refImg];
+        [imageArray addObject:FrameImage];
+        [array_MediaTypes addObject:mediaTypeVal];
+        
+        
+        NSLog(@"FrameImage height size==%f",FrameImage.size.height);
+        NSLog(@"FrameImage width %fze==%f",FrameImage.size.width);
+        
+        
+        
+        if (FrameImage.size.height > FrameImage.size.width)
+        {
+            Vedio_Height=@960;
+            Vedio_Width=@540;
+        }
+        else
+        {
+            Vedio_Height=@540;
+            Vedio_Width=@960;
+        }
+        
+        
+        
+        pcker1=picker;
+        
+        [self RecordingVediosImagepicker];
+        
+        
+        
+    }
+    else
+    {
+        
+        [array_VideoUrl addObject:@""];
+       
+        //chosenImage = info[UIImagePickerControllerEditedImage];
+        chosenImage = info[UIImagePickerControllerOriginalImage];
+        
+          [imageArray addObject:chosenImage];
+        [array_MediaTypes addObject:mediaTypeVal];
+      //  NSData *imageData = UIImageJPEGRepresentation(chosenImage, 0.5);
+        
+        imageData = UIImageJPEGRepresentation(chosenImage, 0.5);
+        
+        // ImageNSdata = [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+        
+        ImageNSdata = [Base64 encode:imageData];
+        
+        
+        encodedImage = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,(CFStringRef)ImageNSdata,NULL,(CFStringRef)@"!*'\"();:@&=+$,/?%#[]% ",CFStringConvertNSStringEncodingToEncoding(NSUTF8StringEncoding)));
+        
+        
+        [[self navigationController] dismissViewControllerAnimated:YES completion:nil];
+        [picker dismissViewControllerAnimated:YES completion:NULL];
+        
+        
+        //[self viewImgCrop];
+        // [[self navigationController] dismissViewControllerAnimated:YES completion:nil];
+    }
     
-    self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1];
-    self.navigationController.navigationBar.barTintColor =[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1];
+    indexCount +=1;
+    [ImageId addObject:[NSString stringWithFormat:@"%d",indexCount]];
     
-    [picker dismissViewControllerAnimated:YES completion:nil];
     
-    NSLog(@" image=%lu",(unsigned long)imageArray.count);
-    NSLog(@" image=%@",imageArray);
- 
-    [self.tableView reloadData];
+     [self.tableView reloadData];
+    [self postMediaConnection];
+}
+
+-(void)RecordingVediosImagepicker
+{
+    [pcker1.view addSubview:transperentViewIndicator];
+    
+    NSString *finalVideoURLString = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    finalVideoURLString = [finalVideoURLString stringByAppendingPathComponent:@"compressedVideo.mp4"];
+    NSFileManager *manager = [NSFileManager defaultManager];
+    [manager createDirectoryAtPath:finalVideoURLString withIntermediateDirectories:YES attributes:nil error:nil];
+    [manager removeItemAtPath:finalVideoURLString error:nil];
+    
+    NSURL *outputVideoUrl = ([[NSURL URLWithString:finalVideoURLString] isFileURL] == 1)?([NSURL URLWithString:finalVideoURLString]):([NSURL fileURLWithPath:finalVideoURLString]); // Url Should be a file Url, so here we check and convert it into a file Url
+    
+    
+    
+    SDAVAssetExportSession *compressionEncoder = [SDAVAssetExportSession.alloc initWithAsset:[AVAsset assetWithURL:_videoURL]]; // provide inputVideo Url Here
+    compressionEncoder.outputFileType = AVFileTypeMPEG4;
+    compressionEncoder.outputURL = outputVideoUrl;
+    compressionEncoder.shouldOptimizeForNetworkUse = YES;//Provide output video Url here
+    compressionEncoder.videoSettings = @
+    {
+    AVVideoCodecKey: AVVideoCodecH264,
+    AVVideoWidthKey: Vedio_Width,   //Set your resolution width here
+    AVVideoHeightKey: Vedio_Height,  //set your resolution height here
+    AVVideoCompressionPropertiesKey: @
+        {
+        AVVideoAverageBitRateKey: @2000000, // Give your bitrate here for lower size give low values
+        AVVideoProfileLevelKey: AVVideoProfileLevelH264High40,
+        },
+    };
+    compressionEncoder.audioSettings = @
+    {
+    AVFormatIDKey: @(kAudioFormatMPEG4AAC),
+    AVNumberOfChannelsKey: @2,
+    AVSampleRateKey: @44100,
+    AVEncoderBitRateKey: @128000,
+    };
+    
+    [compressionEncoder exportAsynchronouslyWithCompletionHandler:^
+     {
+         if (compressionEncoder.status == AVAssetExportSessionStatusCompleted)
+         {
+             NSLog(@"Compression Export Completed Successfully");
+             
+             NSData* videoData = [NSData dataWithContentsOfFile:[outputVideoUrl path]];
+             int videoSize = [videoData length]/1024/1024;
+             
+             // [self.videoURL path]
+             NSLog(@"data size path==%d",videoSize);
+             
+             imageData=[NSData dataWithContentsOfFile:[outputVideoUrl path]];
+             // ImageNSdata = [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+             
+             ImageNSdata = [Base64 encode:imageData];
+             
+             encodedImage = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,(CFStringRef)ImageNSdata,NULL,(CFStringRef)@"!*'\"();:@&=+$,/?%#[]% ",CFStringConvertNSStringEncodingToEncoding(NSUTF8StringEncoding)));
+             
+             
+             self.videoController = [[MPMoviePlayerController alloc] init];
+             
+             [self.videoController setContentURL:outputVideoUrl];
+             
+             
+             
+             [self.videoController setScalingMode:MPMovieScalingModeAspectFill];
+             _videoController.fullscreen=YES;
+             _videoController.allowsAirPlay=NO;
+             _videoController.shouldAutoplay=YES;
+             
+             
+             
+             imageDataThumb = UIImageJPEGRepresentation(FrameImage, 1.0);
+             
+             
+             ImageNSdataThumb = [Base64 encode:imageDataThumb];
+             
+             
+             encodedImageThumb = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,(CFStringRef)ImageNSdataThumb,NULL,(CFStringRef)@"!*'\"();:@&=+$,/?%#[]% ",CFStringConvertNSStringEncodingToEncoding(NSUTF8StringEncoding)));
+             
+             [pcker1.view hideActivityViewWithAfterDelay:1];
+             
+             [pcker1 dismissViewControllerAnimated:YES completion:NULL];
+             
+             
+         }
+         else if (compressionEncoder.status == AVAssetExportSessionStatusCancelled)
+         {
+             NSLog(@"Compression Export Canceled");
+             
+             NSLog(@"Compression Failed==%@",compressionEncoder.error);
+             UIAlertController * alert=[UIAlertController
+                                        
+                                        alertControllerWithTitle:@"Compression Canceled" message:@"Compression Export Canceled. Please try again." preferredStyle:UIAlertControllerStyleAlert];
+             
+             UIAlertAction* yesButton = [UIAlertAction
+                                         actionWithTitle:@"ReCompress"
+                                         style:UIAlertActionStyleDefault
+                                         handler:^(UIAlertAction * action)
+                                         {
+                                             [self.view hideActivityViewWithAfterDelay:0];
+                                             [self RecordingVediosImagepicker];
+                                             
+                                         }];
+             UIAlertAction* noButton = [UIAlertAction
+                                        actionWithTitle:@"Cancel"
+                                        style:UIAlertActionStyleDefault
+                                        handler:^(UIAlertAction * action)
+                                        {
+                                            [self.view hideActivityViewWithAfterDelay:0];
+                                            [pcker1 dismissViewControllerAnimated:YES completion:NULL];
+                                            
+                                        }];
+             
+             [alert addAction:yesButton];
+             [alert addAction:noButton];
+             
+             [self presentViewController:alert animated:YES completion:nil];
+             
+         }
+         else
+         {
+             NSLog(@"Compression Failed==%@",compressionEncoder.error);
+             UIAlertController * alert=[UIAlertController
+                                        
+                                        alertControllerWithTitle:@"Compression Error" message:@"Could not compress your video. Please try again." preferredStyle:UIAlertControllerStyleAlert];
+             
+             UIAlertAction* yesButton = [UIAlertAction
+                                         actionWithTitle:@"ReCompress"
+                                         style:UIAlertActionStyleDefault
+                                         handler:^(UIAlertAction * action)
+                                         {
+                                             [self.view hideActivityViewWithAfterDelay:0];
+                                             [self RecordingVediosImagepicker];
+                                             
+                                         }];
+             UIAlertAction* noButton = [UIAlertAction
+                                        actionWithTitle:@"Cancel"
+                                        style:UIAlertActionStyleDefault
+                                        handler:^(UIAlertAction * action)
+                                        {
+                                            [self.view hideActivityViewWithAfterDelay:0];
+                                            [pcker1 dismissViewControllerAnimated:YES completion:NULL];
+                                            
+                                        }];
+             
+             [alert addAction:yesButton];
+             [alert addAction:noButton];
+             
+             [self presentViewController:alert animated:YES completion:nil];
+             
+         }
+     }];
+    
     
 }
+
 
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
@@ -612,9 +1134,118 @@
 }
 
 #pragma mark - NSURL CONNECTION
+
+-(void)postMediaConnection
+{
+    
+    NSLog(@"createButtonPressed");
+    Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
+    if (networkStatus == NotReachable)
+    {
+        
+        
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"No Internet" message:@"Please make sure you have internet connectivity in order to access." preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction *action)
+                                   {
+                                       exit(0);
+                                   }];
+        
+        [alertController addAction:actionOk];
+        [self presentViewController:alertController animated:YES completion:nil];
+        
+        
+        
+        
+    }
+    else
+    {
+        
+        NSURL *url;//=[NSURL URLWithString:[urlplist valueForKey:@"singup"]];
+        NSString *  urlStr=[urlplist valueForKey:@"savepicture"];
+        url =[NSURL URLWithString:urlStr];
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+        
+        [request setHTTPMethod:@"POST"];//Web API Method
+        
+        [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+        
+        
+        NSString *postid= @"postid";
+        NSString *postidVal = postIDValue;
+        
+        NSString *userid= @"userid";
+        NSString *useridVal =[defaults valueForKey:@"userid"];
+        
+        NSString *indexid= @"indexid";
+        NSString *indexidVal =[NSString stringWithFormat:@"%d",indexCount];
+        
+        
+        NSString *media= @"media";
+        NSString *mediaVal =encodedImage;
+        
+        NSString *mediathumbnail= @"mediathumbnail";
+        NSString *mediathumbnailVal = encodedImageThumb;
+        
+        NSString *mediatype= @"mediatype";
+        NSString *mediatypeVal = mediaTypeVal;
+        
+        NSString *height= @"height";
+        NSString *heightVal =[NSString stringWithFormat:@"%@",Vedio_Height];
+        NSString *width= @"width";
+        NSString *widthVal = [NSString stringWithFormat:@"%@",Vedio_Width];;
+        
+        
+        NSString *reqStringFUll=[NSString stringWithFormat:@"%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@",postid,postidVal,userid,useridVal,indexid,indexidVal,media,mediaVal,mediathumbnail,mediathumbnailVal,mediatype,mediatypeVal,height,heightVal,width,widthVal];
+        
+        
+        //converting  string into data bytes and finding the lenght of the string.
+        NSData *requestData = [NSData dataWithBytes:[reqStringFUll UTF8String] length:[reqStringFUll length]];
+        [request setHTTPBody: requestData];
+        
+        Connection_Media = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+        {
+            if( Connection_Media)
+            {
+                webData_Media =[[NSMutableData alloc]init];
+                
+                
+            }
+            else
+            {
+                NSLog(@"theConnection is NULL");
+            }
+        }
+        
+    }
+
+    
+    
+}
+
+
+
+
 -(void)CreatePostConnection
 {
     
+}
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+{
+    if (error)
+    {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Server Error" message:@"Successfully Posted Post" preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:nil];
+        [alertController addAction:actionOk];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
 }
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
@@ -627,6 +1258,13 @@
         
         
     }
+    if(connection==Connection_Media)
+    {
+        [webData_Media setLength:0];
+        
+        
+    }
+
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
@@ -634,6 +1272,10 @@
     if(connection==Connection_Create)
     {
         [webData_Create appendData:data];
+    }
+    if(connection==Connection_Media)
+    {
+        [webData_Media appendData:data];
     }
 }
 
@@ -669,6 +1311,241 @@
             
         }
     }
+    if (connection==Connection_Media)
+    {
+        
+        Array_Media=[[NSMutableArray alloc]init];
+        SBJsonParser *objSBJsonParser = [[SBJsonParser alloc]init];
+        Array_Media=[objSBJsonParser objectWithData:webData_Media];
+        NSString * ResultString=[[NSString alloc]initWithData:webData_Media encoding:NSUTF8StringEncoding];
+        //  Array_LodingPro=[NSJSONSerialization JSONObjectWithData:webData_LodingPro options:kNilOptions error:nil];
+        
+        ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+        ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\t" withString:@""];
+        
+        NSLog(@"Array_Media %@",Array_Media);
+     
+        NSLog(@"Array_Media_ResultString %@",ResultString);
+        if (Array_Media != 0)
+        {
+            
+            
+    
+                
+//                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"done" message:@"Successfully Posted Post" preferredStyle:UIAlertControllerStyleAlert];
+//                
+//                UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+//                                                                   style:UIAlertActionStyleDefault
+//                                                                 handler:nil];
+//                [alertController addAction:actionOk];
+            
+           //     [self presentViewController:alertController animated:YES completion:nil];
+                [Array_mediaTypeId addObject:[Array_Media objectAtIndex:0]];
+            
+            
+            
+            [self.tableView reloadData];
+            
+                
+        
+            
+        }
+        
+
+        else if ([ResultString isEqualToString:@"nouserid"])
+        {
+            
+           UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"nouserid" message:@"Successfully Posted Post" preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                              style:UIAlertActionStyleDefault
+                                                            handler:nil];
+            [alertController addAction:actionOk];
+            
+            [self presentViewController:alertController animated:YES completion:nil];
+            
+       }
+        else if ([ResultString isEqualToString:@"nomedia"])
+        {
+            
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"nomedia" message:@"Successfully Posted Post" preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                               style:UIAlertActionStyleDefault
+                                                             handler:nil];
+            [alertController addAction:actionOk];
+            
+            [self presentViewController:alertController animated:YES completion:nil];
+            
+        }
+
+         else if ([ResultString isEqualToString:@"imageerror"])
+        {
+            
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"imageerror" message:@"Successfully Posted Post" preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                               style:UIAlertActionStyleDefault
+                                                             handler:nil];
+            [alertController addAction:actionOk];
+            
+            [self presentViewController:alertController animated:YES completion:nil];
+            
+        }
+
+        else if ([ResultString isEqualToString:@"error"])
+        {
+            
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"error" message:@"Successfully Posted Post" preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                               style:UIAlertActionStyleDefault
+                                                             handler:nil];
+            [alertController addAction:actionOk];
+            
+            [self presentViewController:alertController animated:YES completion:nil];
+            
+        }
+        else
+        {
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"server issues" message:@"Successfully Posted Post" preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                               style:UIAlertActionStyleDefault
+                                                             handler:nil];
+            [alertController addAction:actionOk];
+            
+            [self presentViewController:alertController animated:YES completion:nil];
+        }
+       
+    }
+
+}
+
+-(void)removePictureConnection
+{
+    [self.view endEditing:YES];
+    Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
+    if (networkStatus == NotReachable)
+    {
+        
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"No Internet" message:@"Please make sure you have internet connectivity in order to access Care2dare." preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                           style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
+                                   {
+                                       exit(0);
+                                   }];
+        
+        [alertController addAction:actionOk];
+        
+        UIWindow *alertWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+        alertWindow.rootViewController = [[UIViewController alloc] init];
+        alertWindow.windowLevel = UIWindowLevelAlert + 1;
+        [alertWindow makeKeyAndVisible];
+        [alertWindow.rootViewController presentViewController:alertController animated:YES completion:nil];
+        
+        
+    }
+    else
+    {
+        
+        
+        NSString *userid= @"userid";
+        NSString *useridVal =[defaults valueForKey:@"userid"];
+        
+        NSString *postid= @"postid";
+        NSString *postidVal =[defaults valueForKey:@"postid"];
+        
+        NSString *media= @"media";
+        NSString *mediaVal =encodedImage;
+
+        
+        NSString *reqStringFUll=[NSString stringWithFormat:@"%@=%@",userid,useridVal];
+        
+        
+        
+#pragma mark - swipe sesion
+        
+        NSURLSession *session = [NSURLSession sessionWithConfiguration: [NSURLSessionConfiguration defaultSessionConfiguration] delegate: nil delegateQueue: [NSOperationQueue mainQueue]];
+        
+        NSURL *url;
+        NSString *  urlStrLivecount=[urlplist valueForKey:@"profile_explore"];;
+        url =[NSURL URLWithString:urlStrLivecount];
+        
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+        
+        [request setHTTPMethod:@"POST"];//Web API Method
+        
+        [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+        
+        request.HTTPBody = [reqStringFUll dataUsingEncoding:NSUTF8StringEncoding];
+        
+        
+        
+        NSURLSessionDataTask *dataTask =[session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
+                                         {
+                                             if(data)
+                                             {
+                                                 NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+                                                 NSInteger statusCode = httpResponse.statusCode;
+                                                 if(statusCode == 200)
+                                                 {
+                                                     
+                                                     Array_RemovePicture=[[NSMutableArray alloc]init];
+                                                     SBJsonParser *objSBJsonParser = [[SBJsonParser alloc]init];
+                                                     Array_RemovePicture=[objSBJsonParser objectWithData:data];
+                                                     
+                                                     NSString * ResultString=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+                                                     
+                                                     //Array_LodingPro=[NSJSONSerialization JSONObjectWithData:webData_Swipe options:kNilOptions error:nil];
+                                                     
+                                                     ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+                                                     
+                                                     ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\t" withString:@""];
+                                                     
+                                                     NSLog(@"Array_AllData %@",Array_RemovePicture);
+                                                     
+                                                     
+                                                     NSLog(@"Array_AllData ResultString %@",ResultString);
+                                                     
+                                                     
+                                                     if (Array_RemovePicture.count !=0)
+                                                     {
+                                                     }
+                                                     
+                                                     if ([ResultString isEqualToString:@"nouserid"])
+                                                     {
+                                                   
+                                                         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops" message:@"Your account does not exist or seems to have been suspended. Please contact admin." preferredStyle:UIAlertControllerStyleAlert];
+                                                         
+                                                         UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                                                                            style:UIAlertActionStyleDefault handler:nil];
+                                                         [alertController addAction:actionOk];
+                                                         [self presentViewController:alertController animated:YES completion:nil];
+                                                         
+                                                         
+                                                     }
+                                                 }
+                                                 
+                                                 else
+                                                 {
+                                                     NSLog(@" error login1 ---%ld",(long)statusCode);
+                                                     
+                                                 }
+                                                 
+                                             }
+                                             else if(error)
+                                             {
+                                                 
+                                                 NSLog(@"error login2.......%@",error.description);
+                                                 
+                                             }
+                                         }];
+        [dataTask resume];
+    }
+    
 }
 
 @end
