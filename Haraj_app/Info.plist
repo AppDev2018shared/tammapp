@@ -106,5 +106,7 @@
 	<string>Permission to access Camera</string>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>Permission to access Media</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Permission to access Location</string>
 </dict>
 </plist>

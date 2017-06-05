@@ -111,7 +111,7 @@
 -(IBAction)SignUpViewBack:(id)sender
 {
     LoginPageViewController *loginController=[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginPageViewController"];
-    [self.navigationController pushViewController:loginController animated:YES];
+    [self.navigationController pushViewController:loginController animated:NO];
     
 }
 -(IBAction)LoginWithFbAction:(id)sender

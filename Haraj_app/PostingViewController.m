@@ -15,6 +15,8 @@
 #import "UIView+RNActivityView.h"
 #import "MHFacebookImageViewer.h"
 #import "UIImageView+MHFacebookImageViewer.h"
+#import "UIImageView+WebCache.h"
+#import <CoreLocation/CoreLocation.h>
 
 
 
@@ -30,7 +32,7 @@
     UIImagePickerController *imagePicker, *cameraUI, *pcker1;
     NSInteger count,imageCount;
     NSMutableArray *imageArray, *array_MediaTypes, *array_VideoUrl,* Array_mediaTypeId, *ImageId;
-    int x ;
+    
     UILabel *sellingPlaceholder,*hashPlaceholder,*morePlaceholder,*Label_confirm1;
     
     UIView * transperentViewIndicator,*whiteView1,* transperentViewIndicator11,*whiteView111;
@@ -40,13 +42,13 @@
     NSURLConnection *Connection_Create, *Connection_Media;
     NSMutableData *webData_Create, *webData_Media;
     NSMutableArray *Array_Create, *Array_Media,*Array_RemovePicture;
-    NSString *postIDValue ,*mediaTypeVal,* ImageNSdata,*ImageNSdataThumb, *encodedImage, *encodedImageThumb, *mediaIdStr, *imageTag;
+    NSString *postIDValue ,*mediaTypeVal,* ImageNSdata,*ImageNSdataThumb, *encodedImage, *encodedImageThumb, *mediaIdStr, *imageTag, *removeIndexCount;
     
     UIImage *FrameImage;
     NSNumber *Vedio_Height,*Vedio_Width;
     NSData *imageData,*imageDataThumb;
     MPMoviePlayerViewController *movieController ;
-    NSInteger indexCount;
+    NSInteger indexCount , x;
 
     
 }
@@ -210,20 +212,28 @@
 //    
     transperentViewIndicator11.hidden=YES;
     
+    
+    NSLocale *abc =[NSLocale currentLocale];
+    NSString * xyz = [abc objectForKey:NSLocaleCountryCode];
+    NSLog(@" country code%@",xyz);
+    
+    NSString * xyz1 = [abc displayNameForKey:NSLocaleCountryCode value:xyz];
+    NSLog(@" country name %@",xyz1);
+    
 
     
     
 }
 
--(void)tap:(UITapGestureRecognizer *)tapRec{
+-(void)tap:(UITapGestureRecognizer *)tapRec
+{
     [[self view] endEditing: YES];
 }
+
 -(void)galleryButtonPressed:(id)sender
 {
+    
     mediaTypeVal = @"IMAGE";
-   
-    
-    
     NSLog(@"galleryButtonPressed Pressed");
 
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary])
@@ -238,8 +248,8 @@
 
 -(void)videoButtonPressed:(id)sender
 {
+    
     mediaTypeVal = @"VIDEO";
-   
     NSLog(@"videoButtonPressed Pressed");
     [self startCameraControllerFromViewController: self
                                     usingDelegate: self];
@@ -247,9 +257,9 @@
 }
 -(void)cameraButtonPressed:(id)sender
 {
-     mediaTypeVal = @"IMAGE";
-   
     
+    
+    mediaTypeVal = @"IMAGE";
     NSLog(@"cameraButtonPressed Pressed");
     
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
@@ -260,6 +270,7 @@
         picker.sourceType = UIImagePickerControllerSourceTypeCamera;
         [self presentViewController:picker animated:true completion:nil];
     }
+    
 }
 
 - (BOOL) startCameraControllerFromViewController: (UIViewController*) controller
@@ -291,6 +302,7 @@
     //    remainingCounts = 60;
     
     [controller presentModalViewController: cameraUI animated: YES];
+    
     return YES;
 }
 
@@ -303,20 +315,20 @@
 
 -(void)OnClick_btn:(UIBarButtonItem *)button
 {
+    
     CATransition *transition = [CATransition animation];
     transition.duration = 0.3;
     transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
     transition.type = kCATransitionPush;
     transition.subtype = kCATransitionFromRight;
     [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
-    
     [self.navigationController popToRootViewControllerAnimated:YES];
 
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
-   self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:(247.0f/255.0f) green:(247.0f/255.0f) blue:(247.0f/255.0f) alpha:1];
+  // self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:(247.0f/255.0f) green:(247.0f/255.0f) blue:(247.0f/255.0f) alpha:1];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -364,11 +376,11 @@
             
             CGRect workingFrame =  imageCell.scrollView.frame;
             workingFrame.origin.x = 0;
-            x =880;
+            x = (imageArray.count *110) - 100;
             
             [imageCell.scrollView setPagingEnabled:YES];
-            [imageCell.scrollView setContentOffset:CGPointMake(1000-375, 0)];
-            [imageCell.scrollView setContentSize:CGSizeMake(1000, workingFrame.size.height)];
+            [imageCell.scrollView setContentOffset:CGPointMake((imageArray.count *110)-375, 0)];
+            [imageCell.scrollView setContentSize:CGSizeMake((imageArray.count *110), workingFrame.size.height)];
             
             if (imageArray.count>3)
             {
@@ -400,21 +412,20 @@
                 
                 
                 
-                UITapGestureRecognizer * ImageTap =[[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                           action:@selector(ImageTapped:)];
-                [imageView addGestureRecognizer:ImageTap];
+//                UITapGestureRecognizer * ImageTap =[[UITapGestureRecognizer alloc] initWithTarget:self
+//                                                                                           action:@selector(ImageTapped:)];
+//                [imageView addGestureRecognizer:ImageTap];
                 
                 UIImageView *playButton = [[UIImageView alloc]initWithFrame:CGRectMake((imageView.frame.size.width / 2) - 20, (imageView.frame.size.height / 2) - 20, 40, 40)];
                 playButton.backgroundColor = [UIColor clearColor];
                 [playButton setImage:[UIImage imageNamed:@"Play"]];
-                UITapGestureRecognizer * ImageTap1 =[[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                action:@selector(ImageTapped:)];
-                [playButton addGestureRecognizer:ImageTap1];
-                
-                
+//                UITapGestureRecognizer * ImageTap1 =[[UITapGestureRecognizer alloc] initWithTarget:self
+//                                                                                action:@selector(ImageTapped:)];
+//                [playButton addGestureRecognizer:ImageTap1];
                 playButton.tag = i;
                 [imageView addSubview:playButton];
                 
+              
                 
                 
                 [imageCell.scrollView addSubview:imageView];
@@ -430,14 +441,46 @@
                 }
                 
                 
-                
+                NSLog(@"INDEXC OF image arrsy=%d",i);
                 for (int j = 0; j < Array_mediaTypeId.count; j++)
                     {
-                        if (![[ImageId objectAtIndex:i] isEqualToString:[[Array_mediaTypeId objectAtIndex:j] valueForKey:@"indexid"]])
+                        NSLog(@"INDEXC OF image arrsy=%d",j);
+                        NSLog(@"INDEXC OF imageiii arrsy=%d",i);
+                        NSLog(@"Array_mediaTypeId OF values arrsy=%@",[[Array_mediaTypeId objectAtIndex:j] valueForKey:@"indexid"]);
+                         NSLog(@"ImageId OF values ImageId=%@",[ImageId objectAtIndex:i]);
+
+                        if ([[ImageId objectAtIndex:i] isEqualToString:[[Array_mediaTypeId objectAtIndex:j] valueForKey:@"indexid"]])
                         {
+                            NSLog(@"INDEXC OF image arrsy11111=%d",j);
+                            NSLog(@"INDEXC OF imageiii arrsy1111=%d",i);
+                            NSLog(@"Array_mediaTypeId OF values1111 arrsy1111=%@",[[Array_mediaTypeId objectAtIndex:j] valueForKey:@"indexid"]);
+                            NSLog(@"ImageId OF values ImageId111111=%@",[ImageId objectAtIndex:i]);
+
+                            UITapGestureRecognizer * ImageTap =[[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                                       action:@selector(ImageTapped:)];
+                            [imageView addGestureRecognizer:ImageTap];
                             
+                                            UITapGestureRecognizer * ImageTap1 =[[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                                            action:@selector(ImageTapped:)];
+                                            [playButton addGestureRecognizer:ImageTap1];
+
+
+                            imageView.alpha = 1;
+                            break;
+                            
+                        }
+                        else
+                            
+                        {
+                            UITapGestureRecognizer * ImageTap =[[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                                       action:@selector(ImageTappedRemove:)];
+                            [imageView addGestureRecognizer:ImageTap];
+                            
+                            UITapGestureRecognizer * ImageTap1 =[[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                                            action:@selector(ImageTappedRemove:)];
+                            [playButton addGestureRecognizer:ImageTap1];
+
                             imageView.alpha = 0.5;
-                            
                         }
                         
                 }
@@ -446,6 +489,7 @@
 
             }
             
+           
           return imageCell;
             
         }
@@ -456,6 +500,22 @@
             
             detailCell.profileImageView.layer.cornerRadius = detailCell.profileImageView.frame.size.height / 2;
             detailCell.profileImageView.clipsToBounds = YES;
+            
+            NSURL *url=[NSURL URLWithString:[defaults valueForKey:@"profileimage"]];
+            
+            [detailCell.profileImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultimg.jpg"] options:SDWebImageRefreshCached];
+            
+            detailCell.usernameLabel.text = [defaults valueForKey:@"UserName"];
+            
+            NSString *locationstr = [NSString stringWithFormat:@"%@,%@",[defaults valueForKey:@"Cityname"],[defaults valueForKey:@"Countryname"]];
+            
+            
+            detailCell.locationLabel.text = locationstr;
+            
+           
+
+          
+            
             
             //Selling textview
             
@@ -630,6 +690,8 @@
                                                 [imageArray removeObjectAtIndex:(long)imageView1.tag];
                                                 [array_MediaTypes removeObjectAtIndex:(long)imageView1.tag];
                                                 [array_VideoUrl removeObjectAtIndex:(long)imageView1.tag];
+                                                [ImageId removeObjectAtIndex:(long)imageView1.tag];
+
 
                                                 [self removePictureConnection];
                                                 break;
@@ -701,6 +763,54 @@
     
 }
 
+-(void)ImageTappedRemove:(UITapGestureRecognizer *)sender
+{
+    
+    UIGestureRecognizer *recognizer = (UIGestureRecognizer*)sender;
+    
+    UIImageView *imageView1 = (UIImageView *)recognizer.view;
+    
+    NSLog(@"Imageview tap==:==%ld", (long)imageView1.tag);
+    
+    Image_View = imageView1;
+    
+    UIAlertController *alert =[UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    
+    UIAlertAction *yesAction = [UIAlertAction actionWithTitle:@"Remove" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action)
+                                {
+                                    NSLog(@"Yes button Pressed");
+                                    
+                                    //                                    [imageArray removeObjectAtIndex:(long)imageView1.tag];
+                                    //                                    [array_MediaTypes removeObjectAtIndex:(long)imageView1.tag];
+                                    //                                    [array_VideoUrl removeObjectAtIndex:(long)imageView1.tag];
+                                    //  NSString *indexStr = [NSString stringWithFormat:@"%d",imageView1.tag];
+                                    
+                                    //                                    for (int i =0 ; i < ImageId.count; i++)
+                                    //                                    {
+                                   
+                                            [imageArray removeObjectAtIndex:(long)imageView1.tag];
+                                            [array_MediaTypes removeObjectAtIndex:(long)imageView1.tag];
+                                            [array_VideoUrl removeObjectAtIndex:(long)imageView1.tag];
+                                            [ImageId removeObjectAtIndex:(long)imageView1.tag];
+                                    
+                                            removeIndexCount =  [ImageId objectAtIndex:(long)imageView1.tag];
+
+                                    
+                                    [self.tableView reloadData];
+                                    
+                                    
+                                }];
+    
+    [alert addAction:yesAction];
+    
+        
+    [self presentViewController:alert animated:YES completion:nil];
+    
+    
+}
+
+
 - (void) displayImage:(UIImageView*)imageView withImage:(UIImage*)image
 {
     [Image_View setImage:image];
@@ -767,6 +877,7 @@
         [array_VideoUrl addObject:self.videoURL];
         
         NSData* videoData = [NSData dataWithContentsOfFile:[self.videoURL path]];
+        
         int videoSize = [videoData length]/1024/1024;
         
         
@@ -1460,9 +1571,13 @@
         
         NSString *media= @"media";
         NSString *mediaVal =encodedImage;
+        
+        NSString *indexid= @"indexid";
+        
+
 
         
-        NSString *reqStringFUll=[NSString stringWithFormat:@"%@=%@",userid,useridVal];
+        NSString *reqStringFUll=[NSString stringWithFormat:@"%@=%@&%@=%@&%@=%@&%@=%@",userid,useridVal,postid,postidVal,media,mediaVal,indexid,removeIndexCount];
         
         
         
@@ -1471,7 +1586,7 @@
         NSURLSession *session = [NSURLSession sessionWithConfiguration: [NSURLSessionConfiguration defaultSessionConfiguration] delegate: nil delegateQueue: [NSOperationQueue mainQueue]];
         
         NSURL *url;
-        NSString *  urlStrLivecount=[urlplist valueForKey:@"profile_explore"];;
+        NSString *  urlStrLivecount=[urlplist valueForKey:@"removepicture"];;
         url =[NSURL URLWithString:urlStrLivecount];
         
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
@@ -1513,6 +1628,10 @@
                                                      
                                                      if (Array_RemovePicture.count !=0)
                                                      {
+                                                         NSInteger serverid = [[[Array_RemovePicture objectAtIndex:0]valueForKey:@"indexid"] integerValue];
+                                                         [ImageId removeObjectAtIndex:serverid];
+                                                         [self.tableView reloadData];
+
                                                      }
                                                      
                                                      if ([ResultString isEqualToString:@"nouserid"])

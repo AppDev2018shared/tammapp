@@ -12,13 +12,20 @@
 #import <Fabric/Fabric.h>
 #import <TwitterKit/TwitterKit.h>
 #import "Reachability.h"
+#import <CoreLocation/CoreLocation.h>
 #import "MainNavigationController.h"
 #import "HomeNavigationController.h"
 #import "LoginWithViewController.h"
 
-@interface AppDelegate ()
+@interface AppDelegate ()<CLLocationManagerDelegate>
 {
     NSUserDefaults *defaults;
+    CLLocationManager *locationManager ;
+    CLGeocoder *geocoder;
+    CLPlacemark *placemark;
+    
+    NSString *channelIDglobal;
+    BOOL location;
 
 }
 
@@ -88,6 +95,21 @@
     }
     
     
+    
+    location = true;
+    defaults=[[NSUserDefaults alloc]init];
+    
+    
+    locationManager = [[CLLocationManager alloc] init] ;
+    geocoder = [[CLGeocoder alloc] init];
+    locationManager.delegate = self;
+    locationManager.desiredAccuracy =kCLLocationAccuracyThreeKilometers; //kCLLocationAccuracyNearestTenMeters;
+    [locationManager requestWhenInUseAuthorization];
+    [locationManager startUpdatingLocation];
+
+
+    
+    
     return YES;
 }
 
@@ -137,8 +159,98 @@
                                                           openURL:url sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]
                                                        annotation:options[UIApplicationOpenURLOptionsAnnotationKey]];
     
-
-  
+ 
 }
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
+{
+    NSLog(@"didUpdateToLocation: %@", newLocation);
+    CLLocation *currentLocation = newLocation;
+    
+    
+    
+    
+    //
+    //    if (currentLocation != nil) {
+    //        longitudeLabel.text = [NSString stringWithFormat:@"%.8f", currentLocation.coordinate.longitude];
+    //        latitudeLabel.text = [NSString stringWithFormat:@"%.8f", currentLocation.coordinate.latitude];
+    //    }
+    
+    // Reverse Geocoding
+    NSLog(@"Resolving the Address");
+    [geocoder reverseGeocodeLocation:currentLocation completionHandler:^(NSArray *placemarks, NSError *error)
+     {
+         NSLog(@"Found placemarks: %@, error: %@", placemarks, error);
+         if (error == nil && [placemarks count] > 0) {
+             placemark = [placemarks lastObject];
+             NSLog(@"placemark.ISOcountryCode %@",placemark.ISOcountryCode);
+             NSLog(@"placemark.country %@",placemark.country);
+             NSLog(@"placemark.postalCode %@",placemark.postalCode);
+             NSLog(@"placemark.administrativeArea %@",placemark.administrativeArea);
+             NSLog(@"placemark.locality %@",placemark.locality);
+             NSLog(@"placemark.subLocality %@",placemark.subLocality);
+             NSLog(@"placemark.subThoroughfare %@",placemark.subThoroughfare);
+             
+             
+             NSLog(@"placemark.subThoroughfare %@",[defaults valueForKey:@"Cityname"]);
+             
+             
+             if (placemark.locality !=nil && placemark.country !=nil)
+             {
+            
+                
+                 [defaults setObject:placemark.locality forKey:@"Cityname"];
+                 [defaults setObject:placemark.country forKey:@"Countryname"];
+                 [defaults synchronize];
+                 
+                 
+                 
+                 [locationManager stopUpdatingLocation];
+             }
+             
+             
+         }
+         else
+         {
+             NSLog(@"%@", error.debugDescription);
+         }
+     } ];
+}
+-(void)locationManager:(CLLocationManager *)manager didFailWithError:(nonnull NSError *)error
+{
+    if([CLLocationManager locationServicesEnabled])
+    {
+        NSLog(@"Location Services Enabled");
+        if([CLLocationManager authorizationStatus]==kCLAuthorizationStatusDenied)
+        {
+            location = false;
+            
+            
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"App Permission Denied" message:@"To re-enable, please go to Settings and turn on Location Service for this app." preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                               style:UIAlertActionStyleDefault
+                                                             handler:^(UIAlertAction *action)
+                                       {
+                                           [alertController dismissViewControllerAnimated:YES completion:nil];
+                                           [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];
+                                       }];
+            
+            [alertController addAction:actionOk];
+            
+            UIWindow *alertWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+            alertWindow.rootViewController = [[UIViewController alloc] init];
+            alertWindow.windowLevel = UIWindowLevelAlert + 1;
+            [alertWindow makeKeyAndVisible];
+            [alertWindow.rootViewController presentViewController:alertController animated:YES completion:nil];
+            
+        }
+        
+        
+    }
+    
+}
+
+
 
 @end

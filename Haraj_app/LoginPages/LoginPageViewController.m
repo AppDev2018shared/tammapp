@@ -214,6 +214,11 @@
                              
                              profile_picFb= [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large",Fbid];
                              
+                             [defaults setObject:nameFb forKey:@"UserName"];
+                             [defaults setObject:profile_picFb forKey:@"ProImg"];
+                             [defaults synchronize];
+
+                             
                              NSLog(@"my url DataFBB=%@",result);
                              regTypeVal =@"FACEBOOK";
                              
@@ -287,6 +292,11 @@
                   genderfb=@"";
                   profile_picFb=[Array_sinupFb valueForKey:@"profile_image_url"];
                   
+                  
+                  [defaults setObject:nameFb forKey:@"UserName"];
+                  [defaults setObject:profile_picFb forKey:@"ProImg"];
+                  [defaults synchronize];
+
                   
                   
                   [self TwitterFriendsList];
@@ -761,7 +771,8 @@ else
                                         
                                         
         [defaults setObject:@"yes" forKey:@"LoginView"];
-                                        [defaults synchronize];
+                                        
+        [defaults synchronize];
                                         
                                         
         HomeNavigationController *loginController=[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"HomeNavigationController"];

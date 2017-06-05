@@ -12,5 +12,7 @@
 	<string>http://www.tammapp.com/app/makeoffer.php</string>
 	<key>savepicture</key>
 	<string>http://www.tammapp.com/app/savepicture.php</string>
+	<key>removepicture</key>
+	<string>http://www.tammapp.com/app/removepicture.php</string>
 </dict>
 </plist>

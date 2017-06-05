@@ -111,6 +111,7 @@
 		61D3767A1EBC868000BA02D4 /* SanFranciscoDisplay-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 61D376731EBC867F00BA02D4 /* SanFranciscoDisplay-Regular.otf */; };
 		61D3767B1EBC868000BA02D4 /* SanFranciscoDisplay-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 61D376741EBC867F00BA02D4 /* SanFranciscoDisplay-Semibold.otf */; };
 		61D3767C1EBC868000BA02D4 /* SanFranciscoDisplay-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 61D376751EBC867F00BA02D4 /* SanFranciscoDisplay-Thin.otf */; };
+		61D9FFFA1EE5635E0020755D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61D9FFF91EE5635D0020755D /* CoreLocation.framework */; };
 		61E015F41ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E015F21ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.m */; };
 		61E015F51ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61E015F31ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.xib */; };
 		61ED095A1EB85369008EAFB7 /* YSLContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61ED09571EB85369008EAFB7 /* YSLContainerViewController.m */; };
@@ -340,6 +341,7 @@
 		61D376731EBC867F00BA02D4 /* SanFranciscoDisplay-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SanFranciscoDisplay-Regular.otf"; sourceTree = "<group>"; };
 		61D376741EBC867F00BA02D4 /* SanFranciscoDisplay-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SanFranciscoDisplay-Semibold.otf"; sourceTree = "<group>"; };
 		61D376751EBC867F00BA02D4 /* SanFranciscoDisplay-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SanFranciscoDisplay-Thin.otf"; sourceTree = "<group>"; };
+		61D9FFF91EE5635D0020755D /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		61E015F11ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwoImageOnClickTableViewCell.h; sourceTree = "<group>"; };
 		61E015F21ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwoImageOnClickTableViewCell.m; sourceTree = "<group>"; };
 		61E015F31ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TwoImageOnClickTableViewCell.xib; sourceTree = "<group>"; };
@@ -436,6 +438,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				61D9FFFA1EE5635E0020755D /* CoreLocation.framework in Frameworks */,
 				61739F9C1EE2929E00018CF1 /* CoreMedia.framework in Frameworks */,
 				61739F9A1EE2929100018CF1 /* MediaPlayer.framework in Frameworks */,
 				61739F981EE2928900018CF1 /* MobileCoreServices.framework in Frameworks */,
@@ -636,6 +639,7 @@
 		61271E061EBDD7EB0082E504 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				61D9FFF91EE5635D0020755D /* CoreLocation.framework */,
 				61739F9B1EE2929E00018CF1 /* CoreMedia.framework */,
 				61739F991EE2929100018CF1 /* MediaPlayer.framework */,
 				61739F971EE2928900018CF1 /* MobileCoreServices.framework */,
