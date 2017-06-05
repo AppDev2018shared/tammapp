@@ -112,6 +112,7 @@
 		61D3767B1EBC868000BA02D4 /* SanFranciscoDisplay-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 61D376741EBC867F00BA02D4 /* SanFranciscoDisplay-Semibold.otf */; };
 		61D3767C1EBC868000BA02D4 /* SanFranciscoDisplay-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 61D376751EBC867F00BA02D4 /* SanFranciscoDisplay-Thin.otf */; };
 		61D9FFFA1EE5635E0020755D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61D9FFF91EE5635D0020755D /* CoreLocation.framework */; };
+		61D9FFFC1EE5735B0020755D /* icontamm.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 61D9FFFB1EE5735B0020755D /* icontamm.jpg */; };
 		61E015F41ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E015F21ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.m */; };
 		61E015F51ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61E015F31ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.xib */; };
 		61ED095A1EB85369008EAFB7 /* YSLContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61ED09571EB85369008EAFB7 /* YSLContainerViewController.m */; };
@@ -342,6 +343,7 @@
 		61D376741EBC867F00BA02D4 /* SanFranciscoDisplay-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SanFranciscoDisplay-Semibold.otf"; sourceTree = "<group>"; };
 		61D376751EBC867F00BA02D4 /* SanFranciscoDisplay-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SanFranciscoDisplay-Thin.otf"; sourceTree = "<group>"; };
 		61D9FFF91EE5635D0020755D /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		61D9FFFB1EE5735B0020755D /* icontamm.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = icontamm.jpg; path = ../../icontamm.jpg; sourceTree = "<group>"; };
 		61E015F11ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwoImageOnClickTableViewCell.h; sourceTree = "<group>"; };
 		61E015F21ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwoImageOnClickTableViewCell.m; sourceTree = "<group>"; };
 		61E015F31ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TwoImageOnClickTableViewCell.xib; sourceTree = "<group>"; };
@@ -607,6 +609,7 @@
 		61271D3F1EBD927C0082E504 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				61D9FFFB1EE5735B0020755D /* icontamm.jpg */,
 				61B8C8841EC1E61100954A68 /* steve.jpeg */,
 				61271D401EBD928C0082E504 /* facebook.png */,
 				61271D411EBD928C0082E504 /* facebook@2x.png */,
@@ -1102,6 +1105,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				61D376781EBC868000BA02D4 /* SanFranciscoDisplay-Light.otf in Resources */,
+				61D9FFFC1EE5735B0020755D /* icontamm.jpg in Resources */,
 				61B8C8851EC1E61100954A68 /* steve.jpeg in Resources */,
 				61271D471EBD928C0082E504 /* facebook@2x.png in Resources */,
 				61271D4B1EBD928C0082E504 /* twitter@3x.png in Resources */,

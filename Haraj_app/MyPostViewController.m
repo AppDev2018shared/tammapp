@@ -48,7 +48,7 @@
     // Do any additional setup after loading the view.
     
     
-    total_image = @"2";
+  
     defaults = [[NSUserDefaults alloc]init];
     
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
@@ -71,7 +71,7 @@
     
     str_TappedLabel=@"no";
     str_LabelCoordinates=@"no";
-    text =@"udfgsdfgf iudhgiufd rgfod gfd ggdfhgiudfg fdihgdfiug dfiughfdiug dfihgdfiu gdfiguhdfuigh fdiughdfiugh dfiug hdfiughdfuig ghfdig dfigdf igfdiug fdiughdfiug fdiugh udfihg dfiugh uig dfiughdf";
+    text = [[Array_UserInfo objectAtIndex:swipeCount]valueForKey:@"description"];
     
 }
 

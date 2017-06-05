@@ -91,7 +91,7 @@ static const CGFloat kYSLScrollMenuViewHeight = 40;
     [self.view addSubview:_menuView];
     [_menuView setShadowView];
     
-    [self scrollMenuViewSelectedIndex:3];  //0
+    [self scrollMenuViewSelectedIndex:0];  //0
 }
 
 #pragma mark -- private

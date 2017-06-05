@@ -75,6 +75,9 @@
     
     defaults = [[NSUserDefaults alloc]init];
     [defaults setObject:@"NO" forKey:@"CallPressed"];
+    
+    [defaults setObject:@"1" forKey:@"slival"];
+    [defaults synchronize];
 
     
     self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1];
@@ -162,6 +165,7 @@
     [whiteView1 addSubview:Label_confirm1];
     
     [transperentViewIndicator addSubview:whiteView1];
+    
     
     
     
@@ -1173,14 +1177,25 @@
         NSString *titleVal =detailCell.sellingTextview.text;// [defaults valueForKey:@"title"];
         NSString *allowcalls= @"allowcalls";
         NSString *allowcallsVal = [defaults valueForKey:@"CallPressed"];
+        
         NSString *enddays= @"enddays";
         NSString *enddaysVal = [defaults valueForKey:@"slival"];
         
-        NSString *askingpriceValString = [NSString stringWithFormat:@"%@",moreCell.askingPriceTextField.text];
-        askingpriceValString = [askingpriceValString substringFromIndex:1];
-        NSString *askingprice= @"askingprice";
-        NSString *askingpriceVal =askingpriceValString;
         
+        NSString *askingprice;
+        NSString *askingpriceVal;
+        if ([moreCell.askingPriceTextField.text isEqualToString:@""])
+        {
+            askingprice= @"askingprice";
+            askingpriceVal = @"0" ;
+        }
+            else
+        {
+            NSString *askingpriceValString = [NSString stringWithFormat:@"%@",moreCell.askingPriceTextField.text];
+            askingpriceValString = [askingpriceValString substringFromIndex:1];
+            askingprice= @"askingprice";
+            askingpriceVal =askingpriceValString;
+        }
         NSString *description= @"description";
         NSString *descriptionVal = moreCell.moreTextView.text;//[defaults valueForKey:@"description"];
         NSString *hashtags= @"hashtags";
@@ -1220,7 +1235,7 @@
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     
     
-    moreCell.askingPriceTextField.text = [[NSLocale currentLocale] objectForKey:NSLocaleCurrencySymbol];
+    moreCell.askingPriceTextField.text = @"$";//[[NSLocale currentLocale] objectForKey:NSLocaleCurrencySymbol];
 }
 
 -(void)callButtonPressed:(id)sender
@@ -1416,7 +1431,23 @@
             
             UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
                                                                style:UIAlertActionStyleDefault
-                                                             handler:nil];
+                                                             handler:^(UIAlertAction *action)
+                                       {
+                                           
+                                           CATransition *transition = [CATransition animation];
+                                           transition.duration = 0.3;
+                                           transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+                                           transition.type = kCATransitionPush;
+                                           transition.subtype = kCATransitionFromRight;
+                                           [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
+                                           
+                                           [self.navigationController popViewControllerAnimated:YES];
+                                           
+                                           
+                                       }];
+
+            
+            
             [alertController addAction:actionOk];
             [self presentViewController:alertController animated:YES completion:nil];
             

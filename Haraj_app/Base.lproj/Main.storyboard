@@ -55,7 +55,7 @@
             <objects>
                 <navigationController storyboardIdentifier="HomeNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="3Yh-ps-osH" customClass="HomeNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="45N-9l-Y3Z">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="45N-9l-Y3Z">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -479,7 +479,7 @@
             <objects>
                 <navigationController storyboardIdentifier="MainNavigationController" automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="EIm-hX-R5N" customClass="MainNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="QqY-iC-hys">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="QqY-iC-hys">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -520,7 +520,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="176" height="286"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9rO-rZ-2fi">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9rO-rZ-2fi">
                                                     <frame key="frameInset" minX="11" minY="4" width="150" height="187"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
                                                 </imageView>
@@ -568,7 +568,7 @@
                                                 </imageView>
                                             </subviews>
                                         </view>
-                                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <size key="customSize" width="176" height="286"/>
                                         <connections>
                                             <outlet property="bidAmountLabel" destination="gRr-rV-xSg" id="EMu-PB-FgA"/>
@@ -588,7 +588,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="176" height="231"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="photoicon.png" translatesAutoresizingMaskIntoConstraints="NO" id="t2M-mQ-fwd">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="photoicon.png" translatesAutoresizingMaskIntoConstraints="NO" id="t2M-mQ-fwd">
                                                     <frame key="frameInset" minX="11" minY="4" width="150" height="128"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
                                                 </imageView>
@@ -632,7 +632,7 @@
                                                 </imageView>
                                             </subviews>
                                         </view>
-                                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <size key="customSize" width="176" height="231"/>
                                         <connections>
                                             <outlet property="bidAmountLabel" destination="Rd7-no-2Mb" id="RhC-xb-kdN"/>
@@ -974,7 +974,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ImageCell" rowHeight="436" id="X15-u9-J1S" userLabel="FirstImageView Cell" customClass="FirstImageViewCell">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ImageCell" rowHeight="436" id="X15-u9-J1S" userLabel="FirstImageView Cell" customClass="FirstImageViewCell">
                                         <rect key="frame" x="0.0" y="28" width="375" height="436"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="X15-u9-J1S" id="FYz-pS-OAT">
@@ -1023,7 +1023,7 @@
                                             <outlet property="image_play" destination="cSK-yu-Rpq" id="D2F-r0-oiG"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DetailCell" rowHeight="470" id="Sn7-Jc-a3B" userLabel="Detail Info Cell" customClass="DetailInfoCell">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="DetailCell" rowHeight="470" id="Sn7-Jc-a3B" userLabel="Detail Info Cell" customClass="DetailInfoCell">
                                         <rect key="frame" x="0.0" y="464" width="375" height="470"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Sn7-Jc-a3B" id="J5s-nz-yZO">
@@ -1155,7 +1155,7 @@
                                             <outlet property="usernameLabel" destination="nZC-Lk-Dvc" id="VVg-rQ-R2x"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ComCell" rowHeight="120" id="yLE-KL-492" userLabel="Comments Cell" customClass="CommentCell">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ComCell" rowHeight="120" id="yLE-KL-492" userLabel="Comments Cell" customClass="CommentCell">
                                         <rect key="frame" x="0.0" y="934" width="375" height="120"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yLE-KL-492" id="CuA-2A-6bh">
@@ -1236,7 +1236,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ImageCell" rowHeight="271" id="Q1V-rH-b6A" userLabel="Add image cell" customClass="AddImageCell">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ImageCell" rowHeight="271" id="Q1V-rH-b6A" userLabel="Add image cell" customClass="AddImageCell">
                                         <rect key="frame" x="0.0" y="28" width="375" height="271"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Q1V-rH-b6A" id="GsY-FO-Xdb">
@@ -1280,7 +1280,7 @@
                                             <outlet property="videoButton" destination="Bqf-mm-k6R" id="iek-FN-3cw"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ProductCell" rowHeight="243" id="d8G-nb-Mpz" userLabel="Product detail cell" customClass="ProductDetailCell">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ProductCell" rowHeight="243" id="d8G-nb-Mpz" userLabel="Product detail cell" customClass="ProductDetailCell">
                                         <rect key="frame" x="0.0" y="299" width="375" height="243"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="d8G-nb-Mpz" id="bab-9H-N3F">
@@ -1345,7 +1345,7 @@
                                             <outlet property="usernameLabel" destination="3io-bn-44U" id="hZq-F0-Xay"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MoreCell" rowHeight="520" id="dBK-0K-t9d" userLabel="More detail cell" customClass="MoreDetailCell">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MoreCell" rowHeight="520" id="dBK-0K-t9d" userLabel="More detail cell" customClass="MoreDetailCell">
                                         <rect key="frame" x="0.0" y="542" width="375" height="520"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dBK-0K-t9d" id="OCM-gT-tfU">
@@ -1534,6 +1534,7 @@
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JPt-9f-gfp">
                                                     <frame key="frameInset" minX="11" minY="4" width="150" height="187"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Jeedah" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lp6-Cm-Wby">
                                                     <frame key="frameInset" minX="20" minY="202" width="42" height="15"/>
@@ -1579,7 +1580,7 @@
                                                 </imageView>
                                             </subviews>
                                         </view>
-                                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <size key="customSize" width="176" height="286"/>
                                         <connections>
                                             <outlet property="bidAmountLabel" destination="1VX-Eh-CPl" id="gwE-dt-Mri"/>
@@ -1599,7 +1600,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="176" height="231"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="photoicon.png" translatesAutoresizingMaskIntoConstraints="NO" id="jwj-hU-36M">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jwj-hU-36M">
                                                     <frame key="frameInset" minX="11" minY="4" width="150" height="128"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
                                                 </imageView>
@@ -1643,7 +1644,7 @@
                                                 </imageView>
                                             </subviews>
                                         </view>
-                                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <size key="customSize" width="176" height="231"/>
                                         <connections>
                                             <outlet property="bidAmountLabel" destination="Ivk-Vr-IDa" id="LjS-cx-l3T"/>
@@ -1709,7 +1710,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="176" height="286"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rrW-7a-pkE">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rrW-7a-pkE">
                                                     <frame key="frameInset" minX="11" minY="4" width="150" height="187"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
                                                 </imageView>
@@ -1757,7 +1758,7 @@
                                                 </imageView>
                                             </subviews>
                                         </view>
-                                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <size key="customSize" width="176" height="286"/>
                                         <connections>
                                             <outlet property="bidAmountLabel" destination="g2W-A5-Ghx" id="XvU-Jf-k7u"/>
@@ -1777,7 +1778,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="176" height="231"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="photoicon.png" translatesAutoresizingMaskIntoConstraints="NO" id="e20-xl-06d">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e20-xl-06d">
                                                     <frame key="frameInset" minX="11" minY="4" width="150" height="128"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
                                                 </imageView>
@@ -1821,7 +1822,7 @@
                                                 </imageView>
                                             </subviews>
                                         </view>
-                                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <size key="customSize" width="176" height="231"/>
                                         <connections>
                                             <outlet property="bidAmountLabel" destination="dcA-Hv-FpV" id="Rr4-4J-BP0"/>
@@ -1887,7 +1888,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="176" height="286"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KWg-Bx-Ir5">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KWg-Bx-Ir5">
                                                     <frame key="frameInset" minX="11" minY="4" width="150" height="187"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
                                                 </imageView>
@@ -1935,7 +1936,7 @@
                                                 </imageView>
                                             </subviews>
                                         </view>
-                                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <size key="customSize" width="176" height="286"/>
                                         <connections>
                                             <outlet property="bidAmountLabel" destination="SoI-rP-fVy" id="4Su-yl-uam"/>
@@ -1955,7 +1956,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="176" height="231"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="photoicon.png" translatesAutoresizingMaskIntoConstraints="NO" id="5fN-nL-Xvb">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="photoicon.png" translatesAutoresizingMaskIntoConstraints="NO" id="5fN-nL-Xvb">
                                                     <frame key="frameInset" minX="11" minY="4" width="150" height="128"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
                                                 </imageView>
@@ -1999,7 +2000,7 @@
                                                 </imageView>
                                             </subviews>
                                         </view>
-                                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <size key="customSize" width="176" height="231"/>
                                         <connections>
                                             <outlet property="bidAmountLabel" destination="sWk-KA-6c0" id="YwR-Q7-VQu"/>
@@ -2063,7 +2064,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="176" height="286"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h6J-Dr-fHF">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h6J-Dr-fHF">
                                                     <frame key="frameInset" minX="11" minY="4" width="150" height="187"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
                                                 </imageView>
@@ -2111,7 +2112,7 @@
                                                 </imageView>
                                             </subviews>
                                         </view>
-                                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <size key="customSize" width="176" height="286"/>
                                         <connections>
                                             <outlet property="bidAmountLabel" destination="R37-kP-Cyy" id="heN-0Q-48S"/>
@@ -2131,7 +2132,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="176" height="231"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="photoicon.png" translatesAutoresizingMaskIntoConstraints="NO" id="5GO-8o-AoC">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="photoicon.png" translatesAutoresizingMaskIntoConstraints="NO" id="5GO-8o-AoC">
                                                     <frame key="frameInset" minX="11" minY="4" width="150" height="128"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
                                                 </imageView>
@@ -2175,7 +2176,7 @@
                                                 </imageView>
                                             </subviews>
                                         </view>
-                                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <size key="customSize" width="176" height="231"/>
                                         <connections>
                                             <outlet property="bidAmountLabel" destination="Cv7-Ak-Gll" id="ka7-o2-NZq"/>
@@ -2241,7 +2242,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="176" height="286"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yIE-Rh-2JA">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yIE-Rh-2JA">
                                                     <frame key="frameInset" minX="11" minY="4" width="150" height="187"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
                                                 </imageView>
@@ -2289,7 +2290,7 @@
                                                 </imageView>
                                             </subviews>
                                         </view>
-                                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <size key="customSize" width="176" height="286"/>
                                         <connections>
                                             <outlet property="bidAmountLabel" destination="KD6-ly-ZnQ" id="KMu-eL-bpD"/>
@@ -2309,7 +2310,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="176" height="231"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="photoicon.png" translatesAutoresizingMaskIntoConstraints="NO" id="0qV-uX-aty">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="photoicon.png" translatesAutoresizingMaskIntoConstraints="NO" id="0qV-uX-aty">
                                                     <frame key="frameInset" minX="11" minY="4" width="150" height="128"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
                                                 </imageView>
@@ -2353,7 +2354,7 @@
                                                 </imageView>
                                             </subviews>
                                         </view>
-                                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <size key="customSize" width="176" height="231"/>
                                         <connections>
                                             <outlet property="bidAmountLabel" destination="VRe-ra-oxI" id="pqG-9D-uEk"/>
@@ -2419,7 +2420,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="176" height="286"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oTJ-Cb-7eb">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oTJ-Cb-7eb">
                                                     <frame key="frameInset" minX="11" minY="4" width="150" height="187"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
                                                 </imageView>
@@ -2467,7 +2468,7 @@
                                                 </imageView>
                                             </subviews>
                                         </view>
-                                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <size key="customSize" width="176" height="286"/>
                                         <connections>
                                             <outlet property="bidAmountLabel" destination="ZsF-3h-faW" id="Jdn-6D-sVt"/>
@@ -2487,7 +2488,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="176" height="231"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="photoicon.png" translatesAutoresizingMaskIntoConstraints="NO" id="bWO-rz-vSy">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="photoicon.png" translatesAutoresizingMaskIntoConstraints="NO" id="bWO-rz-vSy">
                                                     <frame key="frameInset" minX="11" minY="4" width="150" height="128"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
                                                 </imageView>
@@ -2531,7 +2532,7 @@
                                                 </imageView>
                                             </subviews>
                                         </view>
-                                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <size key="customSize" width="176" height="231"/>
                                         <connections>
                                             <outlet property="bidAmountLabel" destination="wIY-Pv-8kd" id="68h-tU-Nxe"/>
@@ -2597,7 +2598,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="176" height="286"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cvl-XQ-Q4I">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cvl-XQ-Q4I">
                                                     <frame key="frameInset" minX="11" minY="4" width="150" height="187"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
                                                 </imageView>
@@ -2645,7 +2646,7 @@
                                                 </imageView>
                                             </subviews>
                                         </view>
-                                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <size key="customSize" width="176" height="286"/>
                                         <connections>
                                             <outlet property="bidAmountLabel" destination="TyT-tt-m6r" id="90f-Jc-8Nh"/>
@@ -2665,7 +2666,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="176" height="231"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="photoicon.png" translatesAutoresizingMaskIntoConstraints="NO" id="g5q-Vc-SVW">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="photoicon.png" translatesAutoresizingMaskIntoConstraints="NO" id="g5q-Vc-SVW">
                                                     <frame key="frameInset" minX="11" minY="4" width="150" height="128"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
                                                 </imageView>
@@ -2709,7 +2710,7 @@
                                                 </imageView>
                                             </subviews>
                                         </view>
-                                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <size key="customSize" width="176" height="231"/>
                                         <connections>
                                             <outlet property="bidAmountLabel" destination="5Cl-ow-qCm" id="PSr-xV-B05"/>

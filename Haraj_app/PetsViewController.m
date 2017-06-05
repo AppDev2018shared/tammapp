@@ -243,24 +243,28 @@
     NSDictionary *dic_request=[Array_Pets objectAtIndex:indexPath.row];
     NSLog(@"dic= %@",dic_request);
     
-    //  NSURL * url=[NSURL URLWithString:[[array valueForKey:@"image_url"] objectAtIndex:indexPath.row]];
-    
-    if (indexPath.item % 2 == 0 )//|| indexPath.item % 4 == 3)
+    if([NSNull null] ==[[Array_Pets  objectAtIndex:0]valueForKey:@"mediatype"] ||[[dic_request valueForKey:@"mediatype"] isEqualToString:@"VIDEO"])
     {
+//    if ([[dic_request valueForKey:@"mediatype"] isEqualToString:@"VIDEO"]  )
+//    {
         PatternViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"PatternCell" forIndexPath:indexPath];
         
-        if ([[dic_request valueForKey:@"mediaurl"] isEqual:[NSNull null]])
+        NSURL * url=[NSURL URLWithString:[dic_request valueForKey:@"mediaurl"]];
+        if([NSNull null] ==[dic_request valueForKey:@"mediaurl"])
         {
+            
             cell.videoImageView.image =[UIImage imageNamed:@"defaultpostimg.jpg"];
             cell.playImageView.image = [UIImage imageNamed:@""];
         }
         else
         {
-            cell.videoImageView.image =[UIImage imageNamed:@"swift.jpg"];
+            [cell.videoImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"]
+                                            options:SDWebImageRefreshCached];
             cell.playImageView.image = [UIImage imageNamed:@"Play"];
             //[cell.videoImageView sd_setImageWithURL:url];
             
         }
+        
         
         
         
@@ -282,6 +286,11 @@
         
         ImageCollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"ImageCell" forIndexPath:indexPath];
         //        [cell.videoImageView sd_setImageWithURL:url];
+        cell.videoImageView.layer.cornerRadius = 10;
+        cell.videoImageView.layer.masksToBounds = YES;
+        NSURL * url=[NSURL URLWithString:[dic_request valueForKey:@"mediaurl"]];
+        [cell.videoImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"]
+                                        options:SDWebImageRefreshCached];
         cell.locationLabel.text = [dic_request valueForKey:@"city1"];
         cell.timeLabel.text = [dic_request valueForKey:@"createtime"];
         NSString *show = [NSString stringWithFormat:@"$%@",[dic_request valueForKey:@"showamount"]];
@@ -300,9 +309,10 @@
 {
     
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    OnCellClickViewController * set=[mainStoryboard instantiateViewControllerWithIdentifier:@"OnCellClickViewController"];
     
-    // MyPostViewController * set=[mainStoryboard instantiateViewControllerWithIdentifier:@"MyPostViewController"];
+    OnCellClickViewController * set1=[mainStoryboard instantiateViewControllerWithIdentifier:@"OnCellClickViewController"];
+    
+     MyPostViewController * set=[mainStoryboard instantiateViewControllerWithIdentifier:@"MyPostViewController"];
     
     
     
@@ -314,13 +324,29 @@
     
     [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
     
-    [self.navigationController pushViewController:set animated:YES];
+   
     
     
     // [self.navigationController pushViewController:set animated:NO];
-    set.Array_UserInfo = Array_Pets;
-    set.swipeCount = indexPath.row;
+   
     
+    if ([[[Array_Pets objectAtIndex:indexPath.row] valueForKey:@"userid1"]isEqualToString:[defaults valueForKey:@"userid"]])
+    {
+        set.Array_UserInfo = Array_Pets;
+        set.swipeCount = indexPath.row;
+
+        [self.navigationController pushViewController:set animated:YES];
+    }
+    else
+    {
+        set1.Array_UserInfo = Array_Pets;
+        set1.swipeCount = indexPath.row;
+
+        [self.navigationController pushViewController:set1 animated:YES];
+        
+    }
+    
+
     
     
     NSLog(@"Selected Index= %lditem",indexPath.row);
@@ -333,13 +359,12 @@
                    layout:(FRGWaterfallCollectionViewLayout *)collectionViewLayout
  heightForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    // return [self.cellHeights[indexPath.section + 1 * indexPath.item] floatValue];
     
-    
+    NSDictionary *dic_request=[Array_Pets objectAtIndex:indexPath.row];
     CGFloat height;
     
     
-    if(indexPath.item % 2 == 0 )//|| indexPath.item % 4 == 3)
+    if ([[dic_request valueForKey:@"mediatype"] isEqualToString:@"VIDEO"]  )
     {
         height = 286.0;
     }

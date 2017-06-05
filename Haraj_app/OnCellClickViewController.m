@@ -85,11 +85,13 @@
     
     NSLog(@" array info %@",Array_UserInfo);
    
-    total_image = @"1";
+   
 
     str_TappedLabel=@"no";
     str_LabelCoordinates=@"no";
-    text =@"udfgsdfgf iudhgiufd rgfod gfd ggdfhgiudfg fdihgdfiug dfiughfdiug dfihgdfiu gdfiguhdfuigh fdiughdfiugh dfiug hdfiughdfuig ghfdig dfigdf igfdiug fdiughdfiug fdiugh udfihg dfiugh uig dfiughdf";
+    
+    text = [[Array_UserInfo objectAtIndex:swipeCount]valueForKey:@"description"];
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -334,7 +336,7 @@
             }
             
             
-            
+            [detailCell.detailinfoTextView setText:text];
             detailCell.locationLabel.text = [dic_request valueForKey:@"city1"];
             detailCell.hashtagLabel.text = [dic_request valueForKey:@"hashtags"];
             detailCell.postidLabel.text = [NSString stringWithFormat:@"POST ID:%@",[dic_request valueForKey:@"postid"]];

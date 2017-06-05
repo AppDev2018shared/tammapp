@@ -70,6 +70,14 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Permission to access Media</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Permission to access Camera</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Permission to access Location</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Permission to access microphone</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Permission to access Photo Library</string>
 	<key>UIAppFonts</key>
@@ -91,22 +99,12 @@
 		<string>armv7</string>
 	</array>
 	<key>UIStatusBarHidden</key>
-	<true/>
+	<false/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Permission to access microphone</string>
-	<key>NSCameraUsageDescription</key>
-	<string>Permission to access Camera</string>
-	<key>NSAppleMusicUsageDescription</key>
-	<string>Permission to access Media</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Permission to access Location</string>
 </dict>
 </plist>
