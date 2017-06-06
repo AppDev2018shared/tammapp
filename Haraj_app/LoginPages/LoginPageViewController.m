@@ -87,7 +87,7 @@
     
     UIFont *arialFont = [UIFont fontWithName:@"San Francisco Display" size:14.0];
     NSDictionary *arialDict = [NSDictionary dictionaryWithObject: arialFont forKey:NSFontAttributeName];
-    NSMutableAttributedString *aAttrString = [[NSMutableAttributedString alloc] initWithString:@"by signing in,you agree to our " attributes: arialDict];
+    NSMutableAttributedString *aAttrString = [[NSMutableAttributedString alloc] initWithString:@"By signing in, you agree to our " attributes: arialDict];
     
     UIFont *VerdanaFont = [UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:16.0];
     NSDictionary *verdanaDict = [NSDictionary dictionaryWithObject:VerdanaFont forKey:NSFontAttributeName];

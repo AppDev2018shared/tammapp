@@ -80,9 +80,9 @@
     
     //Step 1: Define a normal attributed string for non-link texts
     
-    NSString *string = @"by signing in, you agree to our Terms & Conditions";
+    NSString *string = @"By signing in, you agree to our Terms & Conditions";
     
-    NSDictionary *attributes = @{NSForegroundColorAttributeName: [UIColor colorWithRed:(40/255.0) green:40/255.0 blue:40/255.0 alpha:1],NSFontAttributeName: [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote]};
+    NSDictionary *attributes = @{NSForegroundColorAttributeName: [UIColor colorWithRed:(255/255.0) green:255/255.0 blue:255/255.0 alpha:1],NSFontAttributeName: [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote]};
     
     
     label.attributedText = [[NSAttributedString alloc]initWithString:string attributes:attributes];

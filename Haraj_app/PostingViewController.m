@@ -1363,7 +1363,7 @@
 {
     if (error)
     {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Server Error" message:@"Successfully Posted Post" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Server Error" message:@"Error in creating post. Please try again." preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
                                                            style:UIAlertActionStyleDefault
@@ -1427,7 +1427,7 @@
         {
             
             
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"" message:@"Successfully Posted Post" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"" message:@"Your post has been successfully created and posted on the platform. Thank-you!" preferredStyle:UIAlertControllerStyleAlert];
             
             UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
                                                                style:UIAlertActionStyleDefault
@@ -1497,7 +1497,7 @@
         else if ([ResultString isEqualToString:@"nouserid"])
         {
             
-           UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"nouserid" message:@"Successfully Posted Post" preferredStyle:UIAlertControllerStyleAlert];
+           UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"nouserid" message:@"User account has been deleted or has been deactivated. Please contact our team at support@tammapp.com" preferredStyle:UIAlertControllerStyleAlert];
             
             UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
                                                               style:UIAlertActionStyleDefault
@@ -1538,7 +1538,7 @@
         else if ([ResultString isEqualToString:@"error"])
         {
             
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"error" message:@"Successfully Posted Post" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Server Error" message:@"There was an error in creating your post. Please try again." preferredStyle:UIAlertControllerStyleAlert];
             
             UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
                                                                style:UIAlertActionStyleDefault
@@ -1550,7 +1550,7 @@
         }
         else
         {
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"server issues" message:@"Successfully Posted Post" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Server Error" message:@"There was an error in creating your post. Please try again." preferredStyle:UIAlertControllerStyleAlert];
             
             UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
                                                                style:UIAlertActionStyleDefault
@@ -1572,7 +1572,7 @@
     if (networkStatus == NotReachable)
     {
         
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"No Internet" message:@"Please make sure you have internet connectivity in order to access Care2dare." preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"No Internet" message:@"Please make sure you have internet connectivity in order to access Tamm App." preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
                                                            style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)

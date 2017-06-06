@@ -43,9 +43,9 @@
 				<key>KitInfo</key>
 				<dict>
 					<key>consumerKey</key>
-					<string>X287oIrcSqHX86y89JKTjnZLV</string>
+					<string>bB8ASgppAnfalb0BHCwa63dqU</string>
 					<key>consumerSecret</key>
-					<string>iMxhEgXILMA4iB8slKLby5H1xYvV2B7vL1tlzYUjKB588TCnYb</string>
+					<string>AC168EC7WKu588JAp04gZkPop2WHbeaznp5O9JQEldAXSnyiMy</string>
 				</dict>
 				<key>KitName</key>
 				<string>Twitter</string>
@@ -103,8 +103,6 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 </dict>
 </plist>
