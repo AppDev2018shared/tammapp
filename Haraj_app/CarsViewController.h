@@ -13,6 +13,10 @@
 @interface CarsViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (strong,nonatomic)NSMutableArray * Array_Cars1;
+
+
+
 
 
 @end

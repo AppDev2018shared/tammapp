@@ -241,6 +241,24 @@
                 button_arroww=Cell_two.button_back.frame.size.width;
                 button_arrowh=Cell_two.button_back.frame.size.height;
                 
+                if ([[dic_request valueForKey:@"mediatype"] isEqualToString:@"IMAGE"])
+                {
+                    Cell_two.image_play1.hidden = YES;
+                    Cell_two.image_play2.hidden = YES;
+                }
+                else
+                {
+                    
+                    Cell_two.image_play1.hidden = NO;
+                    Cell_two.image_play2.hidden = NO;
+                }
+                
+                NSURL *url=[NSURL URLWithString:[dic_request valueForKey:@"mediaurl"]];
+                
+                [Cell_two.image1 sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
+                
+                [Cell_two.image2 sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
+                
                 return Cell_two;
                 
                 
@@ -263,6 +281,21 @@
                 button_arrowy=FirstCell.button_back.frame.origin.y;
                 button_arroww=FirstCell.button_back.frame.size.width;
                 button_arrowh=FirstCell.button_back.frame.size.height;
+                
+                if ([[dic_request valueForKey:@"mediatype"] isEqualToString:@"IMAGE"])
+                {
+                    FirstCell.image_play.hidden = YES;
+                }
+                else
+                {
+                    
+                    
+                    
+                    FirstCell.image_play.hidden = NO;
+                }
+                
+                NSURL *url=[NSURL URLWithString:[dic_request valueForKey:@"mediaurl"]];
+                [FirstCell.imageView_thumbnails sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
                 return FirstCell;
             }
             
@@ -290,9 +323,10 @@
             detailCell.locationLabel.text = [dic_request valueForKey:@"city1"];
             detailCell.hashtagLabel.text = [dic_request valueForKey:@"hashtags"];
             //NSString *post = [NSString stringWithFormat:@"POST ID:%@",[dic_request valueForKey:@"postid"]];
-            detailCell.postidLabel.text = [NSString stringWithFormat:@"POST ID:%@",[dic_request valueForKey:@"postid"]];
+            detailCell.postidLabel.text = [NSString stringWithFormat:@"POST ID: %@",[dic_request valueForKey:@"postid"]];
             detailCell.usernameLabel.text = [dic_request valueForKey:@"usersname"];
-            
+            detailCell.durationLabel.text = [dic_request valueForKey:@"postdur"];
+
             NSString *show = [NSString stringWithFormat:@"$%@",[dic_request valueForKey:@"showamount"]];
             detailCell.priceLabel.text = show;//[dic_request valueForKey:@"showamount"];
             detailCell.timeLabel.text = [dic_request valueForKey:@"createtime"];

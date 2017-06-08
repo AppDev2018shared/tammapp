@@ -26,5 +26,8 @@
 
 @property (strong, nonatomic) NSURL *videoURL;
 @property (strong, nonatomic) MPMoviePlayerController *videoController;
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+
+-(IBAction)OnClick_btn:(id)sender;
 
 @end

@@ -9,6 +9,8 @@
 
 #import "ViewController.h"
 #import "YSLContainerViewController.h"
+#import "SBJsonParser.h"
+#import "Reachability.h"
 #import "PostingViewController.h"
 #import "CarsViewController.h"
 #import "PropertyViewController.h"
@@ -21,12 +23,20 @@
 
 #import "LGPlusButtonsView.h"
 
-
+//ViewControllerData
 
 @interface ViewController ()<YSLContainerViewControllerDelegate>
 {
     UILabel *titleLabel;
     NSUserDefaults *defaults;
+    CALayer *borderBottom_topheder;
+    
+    UIActivityIndicatorView *activityindicator;
+    
+    NSDictionary *urlplist;
+    NSURLConnection *Connection_ViewPost;
+    NSMutableData *webData_ViewPost;
+    NSMutableArray *Array_ViewPost,*Array_Car,*Array_Property,*Array_Electronics,*Array_Pets,*Array_Furniture,*Array_Others,*Array_Services;
 }
 @property (strong, nonatomic) LGPlusButtonsView *plusButtonsViewMain;
 
@@ -34,68 +44,65 @@
 @end
 
 @implementation ViewController
+@synthesize navigationView,profile,activity,search,location,locationLabel,nameLabel;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    borderBottom_topheder = [CALayer layer];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ViewControllerData) name:@"ViewControllerData" object:nil];
+    
+    NSString *plistPath = [[NSBundle mainBundle]pathForResource:@"UrlName" ofType:@"plist"];
+    urlplist = [NSDictionary dictionaryWithContentsOfFile:plistPath];
+    
     
     defaults = [[NSUserDefaults alloc]init];
-  //  [defaults setObject:@"no" forKey:@"LoginView"];
+//  [defaults setObject:@"no" forKey:@"LoginView"];
     [defaults synchronize];
     
-//    ViewController *mController = [self.storyboard instantiateViewControllerWithIdentifier:@"ViewController"];
-//    
-//    CATransition *transition = [CATransition animation];
-//    transition.duration = 0.3;
-//    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-//    transition.type = kCATransitionPush;
-//    transition.subtype = kCATransitionFromLeft;
-//    
-//    [self.view.layer addAnimation:transition forKey:nil];
-//    
-//    [self.navigationController pushViewController:mController animated:YES];
-
-    
-    // Do any additional setup after loading the view, typically from a nib.
-    // NavigationBar
-    
-    UIBarButtonItem *space = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:self action:nil];
-    space.width = 30;
+    self.navigationController.navigationBar.hidden=YES;
     
     
-    UIButton *profile = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 40, 40)];
+   
     [profile setImage:[UIImage imageNamed:@"Profile"] forState:UIControlStateNormal];
     profile.tag = 1;
     [profile addTarget:self action:@selector(topButton:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *itemProfile = [[UIBarButtonItem alloc]initWithCustomView:profile];
+   
     
-    UIButton *activity = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 40, 40)];
+   
     [activity setImage:[UIImage imageNamed:@"Activity"] forState:UIControlStateNormal];
     activity.tag = 2;
     [activity addTarget:self action:@selector(topButton:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *itemactivity = [[UIBarButtonItem alloc]initWithCustomView:activity];
     
-    UIButton *search = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 40, 40)];
+ 
     [search setImage:[UIImage imageNamed:@"Search"] forState:UIControlStateNormal];
     search.tag = 3;
     [search addTarget:self action:@selector(topButton:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *itemsearch = [[UIBarButtonItem alloc]initWithCustomView:search];
     
-    UIButton *location = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50, 50)];
-    [location setImage:[UIImage imageNamed:@"Location_off"] forState:UIControlStateNormal];
+    
+ 
+    [location setImage:[UIImage imageNamed:@"Location_on"] forState:UIControlStateNormal];
     location.tag = 4;
     [location addTarget:self action:@selector(topButton:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *itemlocation = [[UIBarButtonItem alloc]initWithCustomView:location];
+    [defaults setObject:@"ON" forKey:@"locationPresed"];
     
     
-    UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 12, 50, 30)];
-    nameLabel.text = @"sAPP";
-    nameLabel.textColor = [UIColor blackColor];
-    UIBarButtonItem *itemName = [[UIBarButtonItem alloc]initWithCustomView:nameLabel];
+    locationLabel.textColor = [UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1];
+    locationLabel.text = [defaults valueForKey:@"Cityname"];
+    locationLabel.textAlignment = NSTextAlignmentCenter;
+    locationLabel.font = [UIFont fontWithName:@"SanFranciscoDisplay-Medium" size:14];
+   
     
     
-    self.navigationItem.leftBarButtonItems= [NSArray arrayWithObjects:space,itemProfile,space,itemactivity,space,itemsearch,space,itemlocation,itemName,nil];
+   
+    nameLabel.image = [UIImage imageNamed:@"NameLogo"];
+    nameLabel.contentMode = UIViewContentModeScaleAspectFill;
     
     
+  
+   
+  
+
     
     //View Controllers
     
@@ -126,27 +133,56 @@
     OtherViewController * otherVC=[mainStoryboard instantiateViewControllerWithIdentifier:@"OtherViewController"];
     otherVC.title = @"Other";
     
-    
+    [[self navigationController] setNavigationBarHidden:YES animated:YES];
     
     // ContainerView
     
-    float statusHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
-    float navigationHeight = self.navigationController.navigationBar.frame.size.height;
+    float statusHeight =[[UIApplication sharedApplication] statusBarFrame].size.height;
+    float navigationHeight =self.navigationController.navigationBar.frame.size.height;
     
     YSLContainerViewController *containerVC = [[YSLContainerViewController alloc]initWithControllers:@[allVC,carVC,propertyVC,electronicVC,petsVC,furnitureVC,serviceVC,otherVC]topBarHeight:statusHeight + navigationHeight
                                                             parentViewController:self];
+    
+    //frame added....
+   // containerVC.view.frame = CGRectMake(0,0,containerVC.view.frame.size.width, containerVC.view.frame.size.height);
+    
     containerVC.delegate = self;
-    containerVC.menuItemFont = [UIFont fontWithName:@"Futura-Medium" size:18];
+    containerVC.menuItemFont = [UIFont fontWithName:@"SanFranciscoDisplay-Medium" size:18];
     [self.view addSubview:containerVC.view];
     
     
-   
+    //----Activity Indicator-----------------
+    activityindicator = [[UIActivityIndicatorView alloc]init];
+    activityindicator.activityIndicatorViewStyle  = UIActivityIndicatorViewStyleWhiteLarge;
+    activityindicator.color = [UIColor grayColor] ;
+    [activityindicator startAnimating];
+    activityindicator.center = containerVC.view.center;
+    [containerVC.view addSubview:activityindicator];
     
 
+    
+    [self.view addSubview:navigationView];
+    [self viewPostConnection];
+
+}
+
+- (void) viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    
+    
+    borderBottom_topheder.backgroundColor =[UIColor colorWithRed:241/255.0 green:241/255.0 blue:241/255.0 alpha:1.0].CGColor;
+    borderBottom_topheder.frame = CGRectMake(0, navigationView.frame.size.height-1, navigationView.frame.size.width,1);
+    [navigationView.layer addSublayer:borderBottom_topheder];
+    
 }
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    borderBottom_topheder.backgroundColor =[UIColor colorWithRed:241/255.0 green:241/255.0 blue:241/255.0 alpha:1.0].CGColor;
+    borderBottom_topheder.frame = CGRectMake(0, navigationView.frame.size.height-1, navigationView.frame.size.width,1);
+    [navigationView.layer addSublayer:borderBottom_topheder];
+
     
     _plusButtonsViewMain = [LGPlusButtonsView plusButtonsViewWithNumberOfButtons:8
                                                          firstButtonIsPlusButton:YES
@@ -287,6 +323,8 @@
   
     [self.view addSubview:_plusButtonsViewMain];
     
+ 
+    
 }
 
 
@@ -333,7 +371,61 @@
     }
     else
     {
-    NSLog(@"location Button Pressed");
+        if ([[defaults valueForKey:@"locationPresed"] isEqualToString:@"ON"])
+        {
+            [location setImage:[UIImage imageNamed:@"Location_off"] forState:UIControlStateNormal];
+            locationLabel.hidden = YES;
+            [defaults setObject:@"OFF" forKey:@"locationPresed"];
+            
+                    }
+        else
+        {
+            [location setImage:[UIImage imageNamed:@"Location_on"] forState:UIControlStateNormal];
+            locationLabel.hidden = NO;
+            [defaults setObject:@"ON" forKey:@"locationPresed"];
+//            NSDictionary *arrayCar_Info =
+//            [NSDictionary dictionaryWithObjectsAndKeys:Array_Car,@"", nil];
+//            
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"arrayCar_Info" object:self userInfo:arrayCar_Info];
+
+        }
+        
+        NSDictionary *arrayCar_Info7 =
+        [NSDictionary dictionaryWithObjectsAndKeys:Array_ViewPost,@"", nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"arrayall_Info" object:self userInfo:arrayCar_Info7];
+        
+        NSDictionary *arrayCar_Info =
+        [NSDictionary dictionaryWithObjectsAndKeys:Array_Car,@"", nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"arrayCar_Info" object:self userInfo:arrayCar_Info];
+        
+        NSDictionary *arrayCar_Info6 =
+        [NSDictionary dictionaryWithObjectsAndKeys:Array_Property,@"", nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"arrayproperty_Info" object:self userInfo:arrayCar_Info6];
+        
+        NSDictionary *arrayCar_Info1 =
+        [NSDictionary dictionaryWithObjectsAndKeys:Array_Electronics,@"", nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"arrayelectronic_Info" object:self userInfo:arrayCar_Info1];
+        
+        NSDictionary *arrayCar_Info2 =
+        [NSDictionary dictionaryWithObjectsAndKeys:Array_Pets,@"", nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"arraypets_Info" object:self userInfo:arrayCar_Info2];
+        
+        NSDictionary *arrayCar_Info3 =
+        [NSDictionary dictionaryWithObjectsAndKeys:Array_Furniture,@"", nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"arrayfur_Info" object:self userInfo:arrayCar_Info3];
+        
+        NSDictionary *arrayCar_Info4 =
+        [NSDictionary dictionaryWithObjectsAndKeys:Array_Services,@"", nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"arrayservice_Info" object:self userInfo:arrayCar_Info4];
+        
+        NSDictionary *arrayCar_Info5 =
+        [NSDictionary dictionaryWithObjectsAndKeys:Array_Others,@"", nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"arrayother_Info" object:self userInfo:arrayCar_Info5];
+        
+        [self viewPostConnection];
+        
+        NSLog(@"location Button Pressed");
+        
     }
 }
 
@@ -345,8 +437,6 @@
     
     
     
-      
-    
     [controller viewWillAppear:YES];
 }
 
@@ -354,5 +444,299 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark - NSURL Connection
+
+-(void)viewPostConnection
+{
+    Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
+    if (networkStatus == NotReachable)
+    {
+        
+        
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"No Internet" message:@"Please make sure you have internet connectivity in order to access." preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction *action)
+                                   {
+                                       exit(0);
+                                   }];
+        
+        [alertController addAction:actionOk];
+        [self presentViewController:alertController animated:YES completion:nil];
+        
+        
+        
+        
+    }
+    else
+    {
+        
+        NSURL *url;//=[NSURL URLWithString:[urlplist valueForKey:@"singup"]];
+        NSString *  urlStr=[urlplist valueForKey:@"viewpost"];
+        url =[NSURL URLWithString:urlStr];
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+        
+        [request setHTTPMethod:@"POST"];//Web API Method
+        
+        [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+        
+        
+        
+        NSString *userid= @"userid";
+        NSString *useridVal =[defaults valueForKey:@"userid"];
+        
+        NSString *location1= @"location";
+        NSString *location1Val = [defaults valueForKey:@"locationPresed"];
+        
+        NSString *city= @"city";
+        NSString *cityVal = [defaults valueForKey:@"Cityname"];
+        NSString *country= @"country";
+        NSString *countryVal =[defaults valueForKey:@"Countryname"];
+        
+        NSString *reqStringFUll=[NSString stringWithFormat:@"%@=%@&%@=%@&%@=%@&%@=%@",userid,useridVal,location1,location1Val,city,cityVal,country,countryVal];
+        
+        
+        //converting  string into data bytes and finding the lenght of the string.
+        NSData *requestData = [NSData dataWithBytes:[reqStringFUll UTF8String] length:[reqStringFUll length]];
+        [request setHTTPBody: requestData];
+        
+        Connection_ViewPost = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+        {
+            if( Connection_ViewPost)
+            {
+                webData_ViewPost =[[NSMutableData alloc]init];
+                
+                
+            }
+            else
+            {
+                NSLog(@"theConnection is NULL");
+            }
+        }
+        
+    }
+    
+}
+
+#pragma mark - NSURL CONNECTION Methods
+
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+{
+    
+    NSLog(@"connnnnnnnnnnnnnn=%@",connection);
+    
+    if(connection==Connection_ViewPost)
+    {
+        [webData_ViewPost setLength:0];
+        
+        
+    }
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+{
+    if(connection==Connection_ViewPost)
+    {
+        [webData_ViewPost appendData:data];
+    }
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection
+{
+    
+    if (connection==Connection_ViewPost)
+    {
+        
+        Array_ViewPost=[[NSMutableArray alloc]init];
+        Array_Car = [[NSMutableArray alloc]init];
+        Array_Property= [[NSMutableArray alloc]init];
+        Array_Electronics=[[NSMutableArray alloc]init];
+        Array_Furniture=[[NSMutableArray alloc]init];
+        Array_Pets=[[NSMutableArray alloc]init];
+        Array_Services=[[NSMutableArray alloc]init];
+        Array_Others=[[NSMutableArray alloc]init];
+      
+        SBJsonParser *objSBJsonParser = [[SBJsonParser alloc]init];
+        Array_ViewPost=[objSBJsonParser objectWithData:webData_ViewPost];
+        NSString * ResultString=[[NSString alloc]initWithData:webData_ViewPost encoding:NSUTF8StringEncoding];
+        
+        ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+        ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\t" withString:@""];
+        
+        NSLog(@"cc %@",Array_ViewPost);
+        NSLog(@"count= %lu",(unsigned long)Array_ViewPost.count);
+        NSLog(@"registration_status %@",[[Array_ViewPost objectAtIndex:0]valueForKey:@"registration_status"]);
+        NSLog(@"ResultString %@",ResultString);
+        
+        if ([ResultString isEqualToString:@"noposts"])
+        {
+            activityindicator.hidden = YES;
+            [activityindicator stopAnimating];
+            
+//            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"" message:@"No post availables" preferredStyle:UIAlertControllerStyleAlert];
+//            
+//            UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+//                                                               style:UIAlertActionStyleDefault
+//                                                             handler:nil];
+//            [alertController addAction:actionOk];
+//            [self presentViewController:alertController animated:YES completion:nil];
+            
+        }
+        
+        if (Array_ViewPost.count != 0)
+        {
+            activityindicator.hidden = YES;
+            [activityindicator stopAnimating];
+            
+            for (int i=0; i<Array_ViewPost.count; i++)
+            {
+                if ([[[Array_ViewPost objectAtIndex:i]valueForKey:@"category"]isEqualToString:@"car"])
+                {
+                    
+                    
+                    [Array_Car addObject:[Array_ViewPost objectAtIndex:i]];
+                    
+                    NSLog(@"Array car = %@",Array_Car);
+                    
+                }
+                if ([[[Array_ViewPost objectAtIndex:i]valueForKey:@"category"]isEqualToString:@"property"])
+                {
+                    
+                    
+                    [Array_Property addObject:[Array_ViewPost objectAtIndex:i]];
+                    
+                }
+                if ([[[Array_ViewPost objectAtIndex:i]valueForKey:@"category"]isEqualToString:@"electronics"])
+                {
+                    
+                    
+                    [Array_Electronics addObject:[Array_ViewPost objectAtIndex:i]];
+                    NSLog(@"Car array = %@",Array_Electronics);
+                    
+                }
+                if ([[[Array_ViewPost objectAtIndex:i]valueForKey:@"category"]isEqualToString:@"pets"])
+                {
+                    
+                    
+                    [Array_Pets addObject:[Array_ViewPost objectAtIndex:i]];
+                    NSLog(@"Car array = %@",Array_Pets);
+                    
+                }
+                
+                if ([[[Array_ViewPost objectAtIndex:i]valueForKey:@"category"]isEqualToString:@"furniture"])
+                {
+                    
+                    
+                    [Array_Furniture addObject:[Array_ViewPost objectAtIndex:i]];
+                    NSLog(@"Car array = %@",Array_Furniture);
+                    
+                }
+                
+                if ([[[Array_ViewPost objectAtIndex:i]valueForKey:@"category"]isEqualToString:@"others"])
+                {
+                    
+                    
+                    [Array_Others addObject:[Array_ViewPost objectAtIndex:i]];
+                    NSLog(@"Car array = %@",Array_Others);
+                    
+                }
+                if ([[[Array_ViewPost objectAtIndex:i]valueForKey:@"category"]isEqualToString:@"services"])
+                {
+                    
+                    
+                    [Array_Services addObject:[Array_ViewPost objectAtIndex:i]];
+                    NSLog(@"Car array = %@",Array_Services);
+                    
+                }
+            }
+            
+            
+            // all NSNotificationCenter defaultCenter callings
+            
+            NSDictionary *arrayCar_Info1 =
+            [NSDictionary dictionaryWithObjectsAndKeys:Array_ViewPost,@"arrayall_Data", nil];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"arrayall_Info" object:self userInfo:arrayCar_Info1];
+            
+            if (Array_Car.count != 0)
+            {
+                
+                NSDictionary *arrayCar_Info =
+                [NSDictionary dictionaryWithObjectsAndKeys:Array_Car,@"arrayCar_Data", nil];
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"arrayCar_Info" object:self userInfo:arrayCar_Info];
+            }
+            else
+            {
+                
+            }
+            if (Array_Property.count != 0)
+            {
+                
+                NSDictionary *arrayCar_Info =
+                [NSDictionary dictionaryWithObjectsAndKeys:Array_Property,@"arrayproperty_Data", nil];
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"arrayproperty_Info" object:self userInfo:arrayCar_Info];
+            }
+            if (Array_Electronics.count != 0)
+            {
+                
+                NSDictionary *arrayCar_Info =
+                [NSDictionary dictionaryWithObjectsAndKeys:Array_Electronics,@"arrayelectronic_Data", nil];
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"arrayelectronic_Info" object:self userInfo:arrayCar_Info];
+            }
+            if (Array_Pets.count != 0)
+            {
+                
+                NSDictionary *arrayCar_Info =
+                [NSDictionary dictionaryWithObjectsAndKeys:Array_Pets,@"arraypets_Data", nil];
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"arraypets_Info" object:self userInfo:arrayCar_Info];
+            }
+            if (Array_Furniture.count != 0)
+            {
+                
+                NSDictionary *arrayCar_Info =
+                [NSDictionary dictionaryWithObjectsAndKeys:Array_Furniture,@"arrayfur_Data", nil];
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"arrayfur_Info" object:self userInfo:arrayCar_Info];
+            }
+            if (Array_Services.count != 0)
+            {
+                
+                NSDictionary *arrayCar_Info =
+                [NSDictionary dictionaryWithObjectsAndKeys:Array_Services,@"arrayservice_Data", nil];
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"arrayservice_Info" object:self userInfo:arrayCar_Info];
+            }
+            if (Array_Others.count != 0)
+            {
+                
+                NSDictionary *arrayCar_Info =
+                [NSDictionary dictionaryWithObjectsAndKeys:Array_Others,@"arrayother_Data", nil];
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"arrayother_Info" object:self userInfo:arrayCar_Info];
+            }
+            
+        }
+       
+               
+        
+        
+        
+    }
+}
+
+-(void)ViewControllerData
+{
+    [self viewPostConnection];
+    
+}
+
+
 
 @end

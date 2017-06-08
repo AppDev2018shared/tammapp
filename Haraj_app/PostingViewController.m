@@ -57,6 +57,7 @@
 @end
 
 @implementation PostingViewController
+@synthesize nameLabel;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -86,30 +87,12 @@
    // NSString *nameStr = [NSString stringWithFormat:@"POST YOUR %@",self.name];
 
     
-    UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 8, 50, 30)];
+   
     
     nameLabel.text = [NSString stringWithFormat:@"Post your %@",self.name];
     nameLabel.font = [UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:26];
-    [nameLabel sizeToFit];
     nameLabel.textColor = [UIColor whiteColor];
-    self.navigationItem.titleView = nameLabel;
-    
-    // self.navigationItem.title = @"POST YOUR CAR";
-    
-    
-    
-    self.navigationItem.leftBarButtonItem=nil;
-    self.navigationItem.hidesBackButton =YES;
-    
-    UIBarButtonItem *btn = [[UIBarButtonItem alloc]
-                                initWithTitle:@""
-                                style:UIBarButtonItemStylePlain
-                                target:self
-                                action:@selector(OnClick_btn:)];
-    [btn setImage:[UIImage imageNamed:@"Whitearrow"]];
-    
-    btn.tintColor= [UIColor whiteColor];
-    self.navigationItem.rightBarButtonItem = btn;
+   
     
     UITapGestureRecognizer *tapRec = [[UITapGestureRecognizer alloc]
                                       initWithTarget:self action:@selector(tap:)];
@@ -130,10 +113,10 @@
     NSLog(@" Random String=%@",randomString);
     
     NSDateFormatter *dateFormatter=[[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyyMMddHHmmss"];
+    [dateFormatter setDateFormat:@"yyMMddHHmmss"];
     // or @"yyyy-MM-dd hh:mm:ss a" if you prefer the time with AM/PM
     NSLog(@" date=%@",[dateFormatter stringFromDate:[NSDate date]]);
-    postIDValue = [NSString stringWithFormat:@"M%@%@",[dateFormatter stringFromDate:[NSDate date]],randomString];
+    postIDValue = [NSString stringWithFormat:@"P%@%@",[dateFormatter stringFromDate:[NSDate date]],randomString];
     NSLog(@"postIDValue %@",postIDValue);
     
 
@@ -224,9 +207,26 @@
     NSString * xyz1 = [abc displayNameForKey:NSLocaleCountryCode value:xyz];
     NSLog(@" country name %@",xyz1);
     
+    sellingPlaceholder = [[UILabel alloc]initWithFrame:(CGRectMake(140, 42, 200, 21))];
+    hashPlaceholder = [[UILabel alloc]initWithFrame:(CGRectMake(120, 35, 225, 21))];
+
+    
 
     
     
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    UIBarButtonItem *btn = [[UIBarButtonItem alloc]
+                            initWithTitle:@""
+                            style:UIBarButtonItemStylePlain
+                            target:self
+                            action:@selector(OnClick_btn:)];
+    [btn setImage:[UIImage imageNamed:@"Whitearrow"]];
+    
+    btn.tintColor= [UIColor whiteColor];
+    self.navigationItem.rightBarButtonItem = btn;
+
 }
 
 -(void)tap:(UITapGestureRecognizer *)tapRec
@@ -317,7 +317,7 @@
 
 
 
--(void)OnClick_btn:(UIBarButtonItem *)button
+-(IBAction)OnClick_btn:(id)sender
 {
     
     CATransition *transition = [CATransition animation];
@@ -332,13 +332,15 @@
 
 -(void)viewWillDisappear:(BOOL)animated
 {
-  // self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:(247.0f/255.0f) green:(247.0f/255.0f) blue:(247.0f/255.0f) alpha:1];
+   self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:(247.0f/255.0f) green:(247.0f/255.0f) blue:(247.0f/255.0f) alpha:1];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark - TableView DataSource and Delegate Methods
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -380,11 +382,19 @@
             
             CGRect workingFrame =  imageCell.scrollView.frame;
             workingFrame.origin.x = 0;
-            x = (imageArray.count *110) - 100;
-            
-            [imageCell.scrollView setPagingEnabled:YES];
+             x = (imageArray.count *110) - 100;
             [imageCell.scrollView setContentOffset:CGPointMake((imageArray.count *110)-375, 0)];
             [imageCell.scrollView setContentSize:CGSizeMake((imageArray.count *110), workingFrame.size.height)];
+            if(x<=339)
+            {
+                x=imageCell.scrollView.frame.size.width-110;
+                [imageCell.scrollView setContentOffset:CGPointMake((3 *100)-375, 0)];
+                [imageCell.scrollView setContentSize:CGSizeMake((3 *100), workingFrame.size.height)];
+            }
+           
+            
+            [imageCell.scrollView setPagingEnabled:YES];
+          
             
             if (imageArray.count>3)
             {
@@ -411,9 +421,6 @@
                 [imageView setTag:i];
                 imageView.userInteractionEnabled=YES;
                 imageView.image=[imageArray objectAtIndex:i];
-                
-                
-                
                 
                 
 //                UITapGestureRecognizer * ImageTap =[[UITapGestureRecognizer alloc] initWithTarget:self
@@ -492,7 +499,7 @@
                 x -= 110;
 
             }
-            
+            x=0;
            
           return imageCell;
             
@@ -511,24 +518,26 @@
             
             detailCell.usernameLabel.text = [defaults valueForKey:@"UserName"];
             
-            NSString *locationstr = [NSString stringWithFormat:@"%@,%@",[defaults valueForKey:@"Cityname"],[defaults valueForKey:@"Countryname"]];
+            NSString *locationstr = [NSString stringWithFormat:@"%@, %@",[defaults valueForKey:@"Cityname"],[defaults valueForKey:@"Countryname"]];
             
             
             detailCell.locationLabel.text = locationstr;
+//             detailCell.sellingTextview.delegate=self;
             
-           
-
-          
+            if ([detailCell.sellingTextview.text isEqualToString:@"What are you selling?"] || [detailCell.sellingTextview.text isEqualToString:@""] )
+            {
+                detailCell.sellingTextview.text = @"What are you selling?";
+                detailCell.sellingTextview.textColor = [UIColor blackColor];
+                sellingPlaceholder.hidden = NO;
+    
+                moreCell.createButton.enabled = NO;
+                moreCell .createButton.backgroundColor = [UIColor lightGrayColor];
+            }
+     
             
+            [detailCell.sellingTextview setAutocorrectionType:UITextAutocorrectionTypeNo];
             
-            //Selling textview
-            
-            detailCell.sellingTextview.delegate=self;
-            detailCell.sellingTextview.text = @"What are you selling?";
-            detailCell.sellingTextview.textColor = [UIColor blackColor];
-            
-            
-            sellingPlaceholder = [[UILabel alloc]initWithFrame:(CGRectMake(140, 42, 200, 21))];
+//            sellingPlaceholder = [[UILabel alloc]initWithFrame:(CGRectMake(140, 42, 200, 21))];
             sellingPlaceholder.text = @"This is your post headline";
             sellingPlaceholder.textColor = [UIColor lightGrayColor];
             sellingPlaceholder.textAlignment = NSTextAlignmentRight;
@@ -537,11 +546,18 @@
             
             
             detailCell.hashTextView.delegate=self;
+            
+            if ([detailCell.hashTextView.text isEqualToString:@"Add some #Hashtags"] || [detailCell.hashTextView.text isEqualToString:@""] )
+            {
+
+            
             detailCell.hashTextView.text = @"Add some #Hashtags";
             detailCell.hashTextView.textColor = [UIColor blackColor];
+            }
             detailCell.sellingTextview.tag = 2;
+            [detailCell.hashTextView setAutocorrectionType:UITextAutocorrectionTypeNo];
             
-            hashPlaceholder = [[UILabel alloc]initWithFrame:(CGRectMake(120, 35, 225, 21))];
+//            hashPlaceholder = [[UILabel alloc]initWithFrame:(CGRectMake(120, 35, 225, 21))];
             hashPlaceholder.text = @"i.e. #retro#car#gold#classic";
             hashPlaceholder.textColor = [UIColor lightGrayColor];
             hashPlaceholder.textAlignment = NSTextAlignmentRight;
@@ -550,6 +566,7 @@
 
             
             return detailCell;
+            
         }
             break;
             
@@ -566,13 +583,23 @@
             moreCell.slider.tag = 1;
             
             moreCell.moreTextView.delegate =self;
+            
+            if ([moreCell.moreTextView.text isEqualToString:@"Tell us more about the product"] || [moreCell.moreTextView.text isEqualToString:@""] )
+            {
+                
+
             moreCell.moreTextView.text = @"Tell us more about the product";
             moreCell.moreTextView.textColor = [UIColor blackColor];
-            
+            }
+            [detailCell.hashTextView setAutocorrectionType:UITextAutocorrectionTypeNo];
+
             [moreCell.createButton  addTarget:self action:@selector(createButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
             [moreCell.callButton  addTarget:self action:@selector(callButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-
-
+            
+           
+            
+           
+            
             
             return moreCell;
         }
@@ -582,21 +609,74 @@
     return nil;
 }
 
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section==0)
+    {
+        return 271;
+    }
+    else if (indexPath.section == 1)
+    {
+        return 243;
+    }
+    else if (indexPath.section == 2)
+    {
+        return 520;
+    }
+    
+    
+    return 0;
+    
+}
+
+
+
+#pragma mark - UITextView and UITextField Delegates
+- (void)textViewDidChange:(UITextView *)textView
+{
+    if ([textView.text isEqualToString:@"What are you selling?"] || [textView.text isEqualToString:@""])
+    {
+        textView.text = @"";
+        sellingPlaceholder.hidden = YES;
+        moreCell.createButton.enabled = NO;
+        //   moreCell.createButton.backgroundColor = [UIColor greenColor];
+        [moreCell.createButton setBackgroundColor:[UIColor lightGrayColor]];
+        
+    }
+    else
+    {
+        sellingPlaceholder.hidden = YES;
+        moreCell.createButton.enabled = YES;
+        //   moreCell.createButton.backgroundColor = [UIColor greenColor];
+        [moreCell.createButton setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
+    }
+}
 -(void)textViewDidBeginEditing:(UITextView *)textView
 {
     
     if ([textView isEqual: detailCell.sellingTextview])
     {
-         if ([textView.text isEqualToString:@"What are you selling?"])
+         if ([textView.text isEqualToString:@"What are you selling?"] || [textView.text isEqualToString:@""])
          {
              textView.text = @"";
              sellingPlaceholder.hidden = YES;
+             moreCell.createButton.enabled = NO;
+             [moreCell.createButton setBackgroundColor:[UIColor lightGrayColor]];
+
          }
+        else
+        {
+            sellingPlaceholder.hidden = YES;
+            moreCell.createButton.enabled = YES;
+            [moreCell.createButton setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
+        }
+        
+        
     }
     
     else if ([textView isEqual: detailCell.hashTextView])
     {
-    
        if ([textView.text isEqualToString:@"Add some #Hashtags"] )
         {
         textView.text = @"";
@@ -624,6 +704,8 @@
         {
             textView.text = @"What are you selling?";
             sellingPlaceholder.hidden = NO;
+            moreCell.createButton.enabled = NO;
+            moreCell .createButton.backgroundColor = [UIColor lightGrayColor];
         }
     }
     
@@ -658,6 +740,102 @@
     
     return YES;
 }
+
+//-(BOOL)textViewShouldBeginEditing:(UITextView *)textView
+//{
+//    
+//    if  ([textView isEqual:detailCell.hashTextView] || [textView isEqual:detailCell.sellingTextview] )
+//    {
+//        self.tableView.frame= CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.frame.size.height - 240);
+//        NSIndexPath *indexPath =[NSIndexPath indexPathForRow:0 inSection:1];
+//        [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+//    }
+//    else if ([textView isEqual:moreCell.moreTextView])
+//    {
+//        self.tableView.frame= CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.frame.size.height - 240);
+//        NSIndexPath *indexPath =[NSIndexPath indexPathForRow:0 inSection:2];
+//        [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+//   
+//        
+//    }
+//   
+//    return YES;
+//}
+//
+//-(BOOL)textViewShouldEndEditing:(UITextView *)textView
+//{
+//    if  ([textView isEqual:detailCell.hashTextView] || [textView isEqual:detailCell.sellingTextview] )
+//    {
+//        self.tableView.frame= CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.frame.size.height + 240);
+//        NSIndexPath *indexPath =[NSIndexPath indexPathForRow:0 inSection:1];
+//        [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+//    }
+//    
+//    else if ([textView isEqual:moreCell.moreTextView])
+//    {
+//        self.tableView.frame= CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.frame.size.height + 240);
+//        NSIndexPath *indexPath =[NSIndexPath indexPathForRow:0 inSection:2];
+//        [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+//        
+//        
+//    }
+//
+//    
+//
+//    return YES;
+//}
+
+-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    
+    
+    if  ([textField isEqual:moreCell.askingPriceTextField])
+    {
+    self.tableView.frame= CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.frame.size.height - 220);
+    NSIndexPath *indexPath =[NSIndexPath indexPathForRow:0 inSection:2];
+    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    }
+    
+    return YES;
+
+    
+}
+-(BOOL)textFieldShouldEndEditing:(UITextField *)textField
+{
+    if  ([textField isEqual:moreCell.askingPriceTextField])
+    {
+        self.tableView.frame= CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.frame.size.height + 220);
+        NSIndexPath *indexPath =[NSIndexPath indexPathForRow:0 inSection:2];
+        [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    }
+    
+    return YES;
+    
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    
+    if (moreCell.askingPriceTextField.text.length  == 0)
+    {
+        moreCell.askingPriceTextField.text = @"$";
+    }
+   // moreCell.askingPriceTextField.text = @"$";//[[NSLocale currentLocale] objectForKey:NSLocaleCurrencySymbol];
+}
+
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    NSString *newText = [moreCell.askingPriceTextField.text stringByReplacingCharactersInRange:range withString:string];
+    
+    if (![newText hasPrefix:@"$"])
+    {
+        return NO;
+    }
+    
+    // Default:
+    return YES;
+}
+
+#pragma mark - Image Tapped Functionality
 
 -(void)ImageTapped:(UITapGestureRecognizer *)sender
 {
@@ -822,6 +1000,7 @@
    
 }
 
+#pragma mark - Slider Functionality for days
 
 -(void)sliderChanged:(UISlider*)sender{
    
@@ -842,30 +1021,11 @@
     }
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (indexPath.section==0)
-    {
-        return 271;
-    }
-    else if (indexPath.section == 1)
-    {
-        return 243;
-    }
-    else if (indexPath.section == 2)
-    {
-        return 520;
-    }
-    
-    
-    return 0;
-    
-}
-
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    
+    self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1];
+    self.navigationController.navigationBar.barTintColor =[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1];
     
     if ([mediaTypeVal isEqualToString:@"VIDEO"])
     {
@@ -898,10 +1058,10 @@
         CGImageRef refImg = [generateImg copyCGImageAtTime:time actualTime:NULL error:&error];
         NSLog(@"error==%@, Refimage==%@", error, refImg);
         
-        
+        [array_MediaTypes addObject:mediaTypeVal];
         FrameImage= [[UIImage alloc] initWithCGImage:refImg];
         [imageArray addObject:FrameImage];
-        [array_MediaTypes addObject:mediaTypeVal];
+        
         
         
         NSLog(@"FrameImage height size==%f",FrameImage.size.height);
@@ -960,7 +1120,7 @@
     }
     
     indexCount +=1;
-    [ImageId addObject:[NSString stringWithFormat:@"%d",indexCount]];
+    [ImageId addObject:[NSString stringWithFormat:@"%ld",(long)indexCount]];
     
     
      [self.tableView reloadData];
@@ -1120,6 +1280,8 @@
      }];
     
     
+
+    
 }
 
 
@@ -1133,6 +1295,8 @@
 
 -(void)createButtonPressed:(id)sender
 {
+    [detailCell.hashTextView resignFirstResponder];
+    
     NSLog(@"createButtonPressed");
     Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
     NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
@@ -1184,29 +1348,58 @@
         
         NSString *askingprice;
         NSString *askingpriceVal;
+        
         if ([moreCell.askingPriceTextField.text isEqualToString:@""])
         {
             askingprice= @"askingprice";
             askingpriceVal = @"0" ;
         }
-            else
+        else
         {
             NSString *askingpriceValString = [NSString stringWithFormat:@"%@",moreCell.askingPriceTextField.text];
             askingpriceValString = [askingpriceValString substringFromIndex:1];
             askingprice= @"askingprice";
             askingpriceVal =askingpriceValString;
         }
-        NSString *description= @"description";
-        NSString *descriptionVal = moreCell.moreTextView.text;//[defaults valueForKey:@"description"];
-        NSString *hashtags= @"hashtags";
-        NSString *hashtagsVal = detailCell.hashTextView.text;//[defaults valueForKey:@"hashtags"];
+        
+        NSString *description;
+        NSString *descriptionVal;
+        if ([ moreCell.moreTextView.text isEqualToString:@"Tell us more about the product"] )
+        {
+          description= @"description";
+          descriptionVal = @"";
+            
+        }
+        else
+        {
+            description= @"description";
+            descriptionVal = moreCell.moreTextView.text;
+        }
+        
+        
+        NSString *hashtags;
+        NSString *hashtagsVal;
+        if ([detailCell.hashTextView.text isEqualToString:@"Add some #Hashtags"])
+        {
+            hashtags= @"hashtags";
+            hashtagsVal = @"";
+                
+        }
+        else
+        {
+            hashtags= @"hashtags";
+            hashtagsVal = detailCell.hashTextView.text;
+            
+        }
+        
         NSString *city= @"city";
-        NSString *cityVal = @"mumbai";//[defaults valueForKey:@"city"];
+        NSString *cityVal = [defaults valueForKey:@"Cityname"];
         NSString *country= @"country";
-        NSString *countryVal = @"India";//[defaults valueForKey:@"country"];
+        NSString *countryVal =[defaults valueForKey:@"Countryname"];
+        
         NSString *category= @"category";
-        NSString *categoryVal = self.name;//[defaults valueForKey:@"category"];
-
+        NSString *categoryVal = self.name;
+        
         
         NSString *reqStringFUll=[NSString stringWithFormat:@"%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@",postid,postidVal,userid,useridVal,title,titleVal,allowcalls,allowcallsVal,enddays,enddaysVal,askingprice,askingpriceVal,description,descriptionVal,hashtags,hashtagsVal,city,cityVal,country,countryVal,category,categoryVal];
         
@@ -1231,11 +1424,6 @@
         
     }
     
-}
-- (void)textFieldDidBeginEditing:(UITextField *)textField {
-    
-    
-    moreCell.askingPriceTextField.text = @"$";//[[NSLocale currentLocale] objectForKey:NSLocaleCurrencySymbol];
 }
 
 -(void)callButtonPressed:(id)sender
@@ -1433,12 +1621,13 @@
                                                                style:UIAlertActionStyleDefault
                                                              handler:^(UIAlertAction *action)
                                        {
-                                           
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"ViewControllerData" object:self userInfo:nil];
                                            CATransition *transition = [CATransition animation];
                                            transition.duration = 0.3;
                                            transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
                                            transition.type = kCATransitionPush;
                                            transition.subtype = kCATransitionFromRight;
+                                           
                                            [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
                                            
                                            [self.navigationController popViewControllerAnimated:YES];

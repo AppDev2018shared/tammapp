@@ -16,7 +16,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *bidImageView;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *bidAmountLabel;
-
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 
 

@@ -42,17 +42,19 @@
 @end
 
 @implementation CarsViewController
+@synthesize Array_Cars1;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ArrayCarData:) name:@"arrayCar_Info" object:nil];
     
-    
+        
     defaults = [[NSUserDefaults alloc]init];
     NSString *plistPath = [[NSBundle mainBundle]pathForResource:@"UrlName" ofType:@"plist"];
     urlplist = [NSDictionary dictionaryWithContentsOfFile:plistPath];
 
-    
+    [[self navigationController] setNavigationBarHidden:YES animated:YES];
     
     FRGWaterfallCollectionViewLayout *cvLayout = [[FRGWaterfallCollectionViewLayout alloc] init];
     cvLayout.delegate = self;
@@ -62,17 +64,19 @@
     cvLayout.stickyHeader = YES;
     
     [self.collectionView setCollectionViewLayout:cvLayout];
-    [self.collectionView reloadData];
+   [self.collectionView reloadData];
     
     
-    [self viewPostConnection];
+   // [self viewPostConnection];
 
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    [self viewPostConnection];
-    [[self navigationController] setNavigationBarHidden:NO animated:YES];
+  //  [self viewPostConnection];
+     
+
+    [[self navigationController] setNavigationBarHidden:YES animated:YES];
 }
 
 
@@ -247,9 +251,9 @@
 
     if([NSNull null] ==[[Array_Car  objectAtIndex:0]valueForKey:@"mediatype"] || [[dic_request valueForKey:@"mediatype"] isEqualToString:@"VIDEO"])
     {
-
-//    if ([[dic_request valueForKey:@"mediatype"] isEqualToString:@"VIDEO"]  )
-//    {
+        
+        //    if ([[dic_request valueForKey:@"mediatype"] isEqualToString:@"VIDEO"]  )
+        //    {
         PatternViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"PatternCell" forIndexPath:indexPath];
         
         NSURL * url=[NSURL URLWithString:[dic_request valueForKey:@"mediaurl"]];
@@ -264,10 +268,8 @@
             [cell.videoImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"]
                                             options:SDWebImageRefreshCached];
             cell.playImageView.image = [UIImage imageNamed:@"Play"];
-            //[cell.videoImageView sd_setImageWithURL:url];
             
         }
-        
         
         
         cell.videoImageView.layer.cornerRadius = 10;
@@ -283,6 +285,7 @@
         cell.videoImageView.layer.masksToBounds = YES;
         
         return cell;
+        
     }
     else
     {
@@ -362,12 +365,12 @@
     
     if ([[dic_request valueForKey:@"mediatype"] isEqualToString:@"VIDEO"]  )
     {
-        height = 286.0;
+        height = 300.0;
     }
     else
     {
         
-        height = 231.0;
+        height = 250.0;
         
     }
     return height;
@@ -390,6 +393,17 @@ heightForHeaderAtIndexPath:(NSIndexPath *)indexPath
         }
     }
     return _cellHeights;
+}
+-(void)ArrayCarData: (NSNotification*) notification
+{
+    
+    
+    Array_Car = [[NSMutableArray alloc]init];
+    Array_Car = [[notification userInfo] objectForKey:@"arrayCar_Data"];
+    
+     NSLog(@"gsafdgh%@",notification);
+     NSLog(@"Array notification car data===%@",Array_Car);
+    [self.collectionView reloadData];
 }
 
 

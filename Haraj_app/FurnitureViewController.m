@@ -49,11 +49,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-   
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ArrayfurData:) name:@"arrayfur_Info" object:nil];
     defaults = [[NSUserDefaults alloc]init];
     NSString *plistPath = [[NSBundle mainBundle]pathForResource:@"UrlName" ofType:@"plist"];
     urlplist = [NSDictionary dictionaryWithContentsOfFile:plistPath];
-    
+    [[self navigationController] setNavigationBarHidden:YES animated:YES];
     
     FRGWaterfallCollectionViewLayout *cvLayout = [[FRGWaterfallCollectionViewLayout alloc] init];
     cvLayout.delegate = self;
@@ -69,7 +69,7 @@
     
     
        
-    [self viewPostConnection];
+   // [self viewPostConnection];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -223,8 +223,8 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    [self viewPostConnection];
-    [[self navigationController] setNavigationBarHidden:NO animated:YES];
+   // [self viewPostConnection];
+   [[self navigationController] setNavigationBarHidden:YES animated:YES];
 }
 
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
@@ -361,12 +361,12 @@
     
     if ([[dic_request valueForKey:@"mediatype"] isEqualToString:@"VIDEO"]  )
     {
-        height = 286.0;
+        height = 300.0;
     }
     else
     {
         
-        height = 231.0;
+        height = 250.0;
         
     }
     return height;
@@ -391,7 +391,17 @@ heightForHeaderAtIndexPath:(NSIndexPath *)indexPath
     return _cellHeights;
 }
 
-
+-(void)ArrayfurData: (NSNotification*) notification
+{
+    Array_Furniture = [[NSMutableArray alloc]init];
+    // arrayCar_Data
+    //arrayCar_Info
+    Array_Furniture = [[notification userInfo] objectForKey:@"arrayfur_Data"];
+    
+    NSLog(@"Array_Furniture%@",notification);
+    NSLog(@"Array_FurnitureArray_Furniture===%@",Array_Furniture);
+    [self.collectionView reloadData];
+}
 
 
 @end

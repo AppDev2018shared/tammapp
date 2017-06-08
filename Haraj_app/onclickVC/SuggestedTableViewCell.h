@@ -10,4 +10,13 @@
 
 @interface SuggestedTableViewCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UIImageView *sImageView1;
+@property (weak, nonatomic) IBOutlet UIImageView *sImageView2;
+@property (weak, nonatomic) IBOutlet UIImageView *sImageView3;
+@property (weak, nonatomic) IBOutlet UIImageView *sImageView4;
+@property (weak, nonatomic) IBOutlet UIImageView *sImageView5;
+@property (weak, nonatomic) IBOutlet UIImageView *sImageView6;
+
+
+
 @end

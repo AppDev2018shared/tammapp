@@ -46,12 +46,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    [[self navigationController] setNavigationBarHidden:YES animated:YES];
     Array_Electronics = [[NSMutableArray alloc]init];
     defaults = [[NSUserDefaults alloc]init];
     NSString *plistPath = [[NSBundle mainBundle]pathForResource:@"UrlName" ofType:@"plist"];
     urlplist = [NSDictionary dictionaryWithContentsOfFile:plistPath];
 
+
+     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ArrayelectronicData:) name:@"arrayelectronic_Info" object:nil];
+    
+    
     
     FRGWaterfallCollectionViewLayout *cvLayout = [[FRGWaterfallCollectionViewLayout alloc] init];
     cvLayout.delegate = self;
@@ -63,7 +67,7 @@
     [self.collectionView setCollectionViewLayout:cvLayout];
     [self.collectionView reloadData];
 
-    [self viewPostConnection];
+  //  [self viewPostConnection];
  
 }
 
@@ -216,7 +220,7 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-     [[self navigationController] setNavigationBarHidden:NO animated:YES];
+    [[self navigationController] setNavigationBarHidden:YES animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -357,12 +361,12 @@
     
     if ([[dic_request valueForKey:@"mediatype"] isEqualToString:@"VIDEO"] )
     {
-        height = 286.0;
+        height = 300.0;
     }
     else
     {
         
-        height = 231.0;
+        height = 250.0;
         
     }
     return height;
@@ -387,6 +391,17 @@ heightForHeaderAtIndexPath:(NSIndexPath *)indexPath
 }
 
 
+-(void)ArrayelectronicData: (NSNotification*) notification
+{
+    Array_Electronics = [[NSMutableArray alloc]init];
+    // arrayCar_Data
+    //arrayCar_Info
+    Array_Electronics = [[notification userInfo] objectForKey:@"arrayelectronic_Data"];
+    
+    NSLog(@"Array_Electronics%@",notification);
+    NSLog(@"Array_ElectronicsArray_Electronics===%@",Array_Electronics);
+    [self.collectionView reloadData];
+}
 
 
 

@@ -48,8 +48,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-    
+    [[self navigationController] setNavigationBarHidden:YES animated:YES];
+      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ArrayPropertyData:) name:@"arrayproperty_Info" object:nil];
     defaults = [[NSUserDefaults alloc]init];
     NSString *plistPath = [[NSBundle mainBundle]pathForResource:@"UrlName" ofType:@"plist"];
     urlplist = [NSDictionary dictionaryWithContentsOfFile:plistPath];
@@ -66,7 +66,7 @@
     [self.collectionView reloadData];
     
     
-    [self viewPostConnection];
+    //[self viewPostConnection];
 
 
 }
@@ -224,8 +224,8 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-   [self viewPostConnection];
-    [[self navigationController] setNavigationBarHidden:NO animated:YES];
+   //[self viewPostConnection];
+   [[self navigationController] setNavigationBarHidden:YES animated:YES];
 }
 
 
@@ -357,12 +357,12 @@
     
     if ([[dic_request valueForKey:@"mediatype"] isEqualToString:@"VIDEO"]  )
     {
-        height = 286.0;
+        height = 300.0;
     }
     else
     {
         
-        height = 231.0;
+        height = 250.0;
         
     }
     return height;
@@ -386,15 +386,15 @@ heightForHeaderAtIndexPath:(NSIndexPath *)indexPath
     return _cellHeights;
 }
 
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+-(void)ArrayPropertyData: (NSNotification*) notification
+{
+    Array_Property = [[NSMutableArray alloc]init];
+    // arrayCar_Data
+    //arrayCar_Info
+    Array_Property = [[notification userInfo] objectForKey:@"arrayproperty_Data"];
+    
+    NSLog(@"Array_Property%@",notification);
+    NSLog(@"Array Array_Property car data===%@",Array_Property);
+    [self.collectionView reloadData];
 }
-*/
-
 @end

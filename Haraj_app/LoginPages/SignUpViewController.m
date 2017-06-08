@@ -205,6 +205,10 @@
                              
                              NSLog(@"my url DataFBB=%@",result);
                              
+                             [defaults setObject:nameFb forKey:@"UserName"];
+                             [defaults setObject:profile_picFb forKey:@"ProImg"];
+                             [defaults synchronize];
+                             
                              
                              [self FbTwittercommunicationServer];
                              
@@ -261,6 +265,9 @@
                   [self TwitterFriendsList];
                   
                   //[self FbTwittercommunicationServer];
+                  [defaults setObject:nameFb forKey:@"UserName"];
+                  [defaults setObject:profile_picFb forKey:@"ProImg"];
+                  [defaults synchronize];
                   
               }];
              

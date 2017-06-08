@@ -31,7 +31,7 @@ static const CGFloat kYSLScrollMenuViewHeight = 40;
         [parentViewController addChildViewController:self];
         [self didMoveToParentViewController:parentViewController];
         
-        _topBarHeight = topBarHeight;
+        _topBarHeight =topBarHeight;
         _titles = [[NSMutableArray alloc] init];
         _childControllers = [[NSMutableArray alloc] init];
         _childControllers = [controllers mutableCopy];
@@ -190,6 +190,9 @@ static const CGFloat kYSLScrollMenuViewHeight = 40;
         [self.delegate containerViewItemIndex:self.currentIndex currentController:_childControllers[self.currentIndex]];
     }
     [self setChildViewControllerWithCurrentIndex:self.currentIndex];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ViewControllerData" object:self userInfo:nil];
+
 }
 
 @end

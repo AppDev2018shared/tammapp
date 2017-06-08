@@ -33,9 +33,9 @@
     NSUserDefaults *defaults;
     
     NSDictionary *urlplist;
-    NSURLConnection *Connection_MakeOffer;
-    NSMutableData *webData_MakeOffer;
-    NSMutableArray *Array_MakeOffer;
+    NSURLConnection *Connection_MakeOffer, *Connection_SuggestPost;
+    NSMutableData *webData_MakeOffer, *webData_SuggestPost;
+    NSMutableArray *Array_MakeOffer, *Array_SuggestPost;
     
     CGFloat newCellHeight;
     CGFloat Xpostion, Ypostion, Xwidth, Yheight, ScrollContentSize,Xpostion_label, Ypostion_label, Xwidth_label, Yheight_label,Cell_DescLabelX,Cell_DescLabelY,Cell_DescLabelW,Cell_DescLabelH,TextView_ViewX,TextView_ViewY,TextView_ViewW,TextView_ViewH;
@@ -54,14 +54,15 @@
 @implementation OnCellClickViewController
 @synthesize Array_UserInfo,swipeCount,Cell_two,MoreImageArray,detailCell,ComCell,SuggestCell;
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-     defaults = [[NSUserDefaults alloc]init];
+    defaults = [[NSUserDefaults alloc]init];
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
     
-   //  imageUrl=[NSURL URLWithString:[[Array_UserInfo valueForKey:@"image_url"] objectAtIndex:swipeCount]];
+    //  imageUrl=[NSURL URLWithString:[[Array_UserInfo valueForKey:@"image_url"] objectAtIndex:swipeCount]];
     
     //Add a left swipe gesture recognizer
     UISwipeGestureRecognizer *recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self
@@ -75,23 +76,25 @@
     [recognizer setDirection:(UISwipeGestureRecognizerDirectionRight)];
     [self.tableView addGestureRecognizer:recognizer];
     
-//    UIView *lineFix = [[UIView alloc] initWithFrame:CGRectMake(0, 77.5, self.tableView.frame.size.width, 0.5)];
-//    lineFix.backgroundColor = [UIColor groupTableViewBackgroundColor];
-//    [self.tableView addSubview:lineFix];
+    //    UIView *lineFix = [[UIView alloc] initWithFrame:CGRectMake(0, 77.5, self.tableView.frame.size.width, 0.5)];
+    //    lineFix.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    //    [self.tableView addSubview:lineFix];
     
     NSString *plistPath = [[NSBundle mainBundle]pathForResource:@"UrlName" ofType:@"plist"];
     urlplist = [NSDictionary dictionaryWithContentsOfFile:plistPath];
-
+    
     
     NSLog(@" array info %@",Array_UserInfo);
-   
-   
-
+    
+    
+    
     str_TappedLabel=@"no";
     str_LabelCoordinates=@"no";
     
     text = [[Array_UserInfo objectAtIndex:swipeCount]valueForKey:@"description"];
-
+    
+    [self SuggestPostConnection];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -284,13 +287,36 @@
                 button_arrowy=Cell_two.button_back.frame.origin.y;
                 button_arroww=Cell_two.button_back.frame.size.width;
                 button_arrowh=Cell_two.button_back.frame.size.height;
+                
+                
+                if ([[dic_request valueForKey:@"mediatype"] isEqualToString:@"IMAGE"])
+                {
+                    Cell_two.image_play1.hidden = YES;
+                    Cell_two.image_play2.hidden = YES;
+                }
+                else
+                {
+                    
+                    Cell_two.image_play1.hidden = NO;
+                    Cell_two.image_play2.hidden = NO;
+                }
+                
+                NSURL *url=[NSURL URLWithString:[dic_request valueForKey:@"mediaurl"]];
+                
+                [Cell_two.image1 sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
+                
+                [Cell_two.image2 sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
+                
                 return Cell_two;
                 
           
             }
             else
             {
+                
+                
                 FirstCell = [tableView dequeueReusableCellWithIdentifier:@"ImageCell"];
+                
                 [FirstCell.button_threedots addTarget:self action:@selector(button_threedots_action:) forControlEvents:UIControlEventTouchUpInside];
                 [FirstCell.button_favourite addTarget:self action:@selector(button_favourite_action:) forControlEvents:UIControlEventTouchUpInside];
                 [FirstCell.button_back addTarget:self action:@selector(button_back_action:) forControlEvents:UIControlEventTouchUpInside];
@@ -308,6 +334,52 @@
                 button_arroww=FirstCell.button_back.frame.size.width;
                 button_arrowh=FirstCell.button_back.frame.size.height;
                 
+                /*
+                 
+                 if([NSNull null] ==[[Array_Car  objectAtIndex:0]valueForKey:@"mediatype"] || [[dic_request valueForKey:@"mediatype"] isEqualToString:@"VIDEO"])
+                 {
+                 
+                 //    if ([[dic_request valueForKey:@"mediatype"] isEqualToString:@"VIDEO"]  )
+                 //    {
+                 PatternViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"PatternCell" forIndexPath:indexPath];
+                 
+                 NSURL * url=[NSURL URLWithString:[dic_request valueForKey:@"mediaurl"]];
+                 if([NSNull null] ==[dic_request valueForKey:@"mediaurl"])
+                 {
+                 
+                 cell.videoImageView.image =[UIImage imageNamed:@"defaultpostimg.jpg"];
+                 cell.playImageView.image = [UIImage imageNamed:@""];
+                 }
+                 else
+                 {
+                 [cell.videoImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"]
+                 options:SDWebImageRefreshCached];
+                 cell.playImageView.image = [UIImage imageNamed:@"Play"];
+                 //[cell.videoImageView sd_setImageWithURL:url];
+                 
+                 }
+                 
+
+                
+                
+                
+                */
+                
+                if ([[dic_request valueForKey:@"mediatype"] isEqualToString:@"IMAGE"])
+                {
+                    FirstCell.image_play.hidden = YES;
+                }
+                else
+                {
+                    
+                    FirstCell.image_play.hidden = NO;
+                }
+                
+                NSURL *url=[NSURL URLWithString:[dic_request valueForKey:@"mediaurl"]];
+                
+                [FirstCell.imageView_thumbnails sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
+                
+                
                 return FirstCell;
             }
 
@@ -316,16 +388,11 @@
             break;
             
         case 1:
+            
         {
             
             
-            
-            
-            
             detailCell = [[[NSBundle mainBundle]loadNibNamed:@"DetailTableViewCell" owner:self options:nil] objectAtIndex:0];
-            
-            
-            
             
             if (detailCell == nil)
             {
@@ -339,16 +406,18 @@
             [detailCell.detailinfoTextView setText:text];
             detailCell.locationLabel.text = [dic_request valueForKey:@"city1"];
             detailCell.hashtagLabel.text = [dic_request valueForKey:@"hashtags"];
-            detailCell.postidLabel.text = [NSString stringWithFormat:@"POST ID:%@",[dic_request valueForKey:@"postid"]];
-            [defaults setObject:detailCell.postidLabel.text forKey:@"post-id"];
-            detailCell.usernameLabel.text = [dic_request valueForKey:@"usersname"];
+            detailCell.postidLabel.text = [NSString stringWithFormat:@"POST ID: %@",[dic_request valueForKey:@"postid"]];
+            [defaults setObject:[dic_request valueForKey:@"postid"] forKey:@"post-id"];
             
+            
+            detailCell.usernameLabel.text = [dic_request valueForKey:@"usersname"];
+            detailCell.durationLabel.text = [dic_request valueForKey:@"postdur"];
             
             NSString *show = [NSString stringWithFormat:@"$%@",[dic_request valueForKey:@"showamount"]];
             detailCell.priceLabel.text = show;//[dic_request valueForKey:@"showamount"];
             detailCell.timeLabel.text = [dic_request valueForKey:@"createtime"];
             detailCell.titleLabel.text = [dic_request valueForKey:@"title"];
-            //detailCell.profileImage.image =
+            
             
             NSURL *url=[NSURL URLWithString:[dic_request valueForKey:@"usersprofilepic"]];
             
@@ -384,8 +453,6 @@
                 NSLog(@"Dynamic label heightc====%f",Cell_DescLabelW);
                 NSLog(@"Dynamic label heightc====%f",Cell_DescLabelH);
                   NSLog(@"FavIV_Y====%f",FavIV_Y);
-                
-                
                 
             }
 
@@ -508,14 +575,11 @@
             return ComCell;
         }
             break;
-
+#pragma mark -suggest cell
         case 3:
         {
-            
             SuggestCell = [[[NSBundle mainBundle]loadNibNamed:@"SuggestedTableViewCell" owner:self options:nil] objectAtIndex:0];
-            
-            
-            
+
             
             if (SuggestCell == nil)
             {
@@ -524,6 +588,32 @@
                 
                 
             }
+            
+            NSDictionary *dic_request0=[Array_SuggestPost objectAtIndex:0];
+            NSURL *url0=[NSURL URLWithString:[dic_request0 valueForKey:@"mediaurl"]];
+            [SuggestCell.sImageView1 sd_setImageWithURL:url0 placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
+            
+            NSDictionary *dic_request1=[Array_SuggestPost objectAtIndex:1];
+            NSURL *url1=[NSURL URLWithString:[dic_request1 valueForKey:@"mediaurl"]];
+            [SuggestCell.sImageView2 sd_setImageWithURL:url1 placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
+            
+            NSDictionary *dic_request2=[Array_SuggestPost objectAtIndex:2];
+            NSURL *url2=[NSURL URLWithString:[dic_request2 valueForKey:@"mediaurl"]];
+            [SuggestCell.sImageView3 sd_setImageWithURL:url2 placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
+            
+            NSDictionary *dic_request3=[Array_SuggestPost objectAtIndex:3];
+            NSURL *url3=[NSURL URLWithString:[dic_request3 valueForKey:@"mediaurl"]];
+            [SuggestCell.sImageView4 sd_setImageWithURL:url3 placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
+//
+//            NSDictionary *dic_request4=[Array_SuggestPost objectAtIndex:4];
+//            NSURL *url4=[NSURL URLWithString:[dic_request4 valueForKey:@"mediaurl"]];
+//            [SuggestCell.sImageView5 sd_setImageWithURL:url4 placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
+//
+//            NSDictionary *dic_request5=[Array_SuggestPost objectAtIndex:5];
+//            NSURL *url5=[NSURL URLWithString:[dic_request5 valueForKey:@"mediaurl"]];
+//            [SuggestCell.sImageView6 sd_setImageWithURL:url5 placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
+//
+            
             
 
             
@@ -611,7 +701,7 @@
     }
     else if (indexPath.section == 3)
     {
-        return 150;
+        return 280;
     }
     
     return 0;
@@ -842,14 +932,14 @@
     UILabel * label2 = [[UILabel alloc]initWithFrame:CGRectMake(128, 35, 132, 21)];
     label2.font = [UIFont fontWithName:@"SanFranciscoDisplay-Regular" size:10];
     label2.textAlignment = NSTextAlignmentRight;
-    label2.text = [defaults valueForKey:@"post-id"];//@"POST ID:45645648W3";
+    label2.text = [NSString stringWithFormat:@"POST ID: %@",[defaults valueForKey:@"post-id"]];//[defaults valueForKey:@"post-id"];//@"POST ID:45645648W3";
     label2.textColor = [UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1];
     [grayView addSubview:label2];
     
     amountTextField = [[UITextField alloc]initWithFrame:CGRectMake(17, 60, 243, 40)];
     amountTextField.textAlignment = NSTextAlignmentRight;
     amountTextField.font = [UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:22];
-    amountTextField.text = @"$";
+    //amountTextField.text = @"$";
     amountTextField.textColor = [UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1];
     amountTextField.backgroundColor = [UIColor whiteColor];
     amountTextField.layer.cornerRadius = 4;
@@ -891,11 +981,30 @@
 
 }
 
-- (void)textFieldDidBeginEditing:(UITextField *)textField {
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    if (amountTextField.text.length  == 0)
+    {
+        amountTextField.text = @"$";
+    }
     
-    
-    amountTextField.text = [[NSLocale currentLocale] objectForKey:NSLocaleCurrencySymbol];
+    //amountTextField.text = @"$";//[[NSLocale currentLocale] objectForKey:NSLocaleCurrencySymbol];
 }
+
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    NSString *newText = [amountTextField.text stringByReplacingCharactersInRange:range withString:string];
+    
+    if (![newText hasPrefix:@"$"])
+    {
+        return NO;
+    }
+    
+    // Default:
+    return YES;
+    
+}
+
 
 #pragma mark - PopOver Button Action
 
@@ -1040,6 +1149,81 @@
     
 }
 #pragma mark - NSURL CONNECTION
+
+-(void)SuggestPostConnection
+{
+    
+    NSLog(@"createButtonPressed");
+    Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
+    if (networkStatus == NotReachable)
+    {
+        
+        
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"No Internet" message:@"Please make sure you have internet connectivity in order to access." preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction *action)
+                                   {
+                                       exit(0);
+                                   }];
+        
+        [alertController addAction:actionOk];
+        [self presentViewController:alertController animated:YES completion:nil];
+        
+        
+        
+        
+    }
+    else
+    {
+        
+        NSURL *url;//=[NSURL URLWithString:[urlplist valueForKey:@"singup"]];
+        NSString *  urlStr=[urlplist valueForKey:@"suggestpost"];
+        url =[NSURL URLWithString:urlStr];
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+        
+        [request setHTTPMethod:@"POST"];//Web API Method
+        
+        [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+        
+        
+        NSString *postid= @"postid";
+        NSString *postidVal =[defaults valueForKey:@"post-id"];
+        
+        NSString *userid= @"userid";
+        NSString *useridVal =[defaults valueForKey:@"userid"];
+        
+        
+        NSString *reqStringFUll=[NSString stringWithFormat:@"%@=%@&%@=%@",postid,postidVal,userid,useridVal];
+        
+        
+        //converting  string into data bytes and finding the lenght of the string.
+        NSData *requestData = [NSData dataWithBytes:[reqStringFUll UTF8String] length:[reqStringFUll length]];
+        [request setHTTPBody: requestData];
+        
+        Connection_SuggestPost = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+        {
+            if( Connection_SuggestPost)
+            {
+                
+                webData_SuggestPost =[[NSMutableData alloc]init];
+                
+            }
+            else
+            {
+                NSLog(@"theConnection is NULL");
+            }
+        }
+        
+    }
+    
+
+    
+    
+}
+
 -(void)CreateMakeOfferConnection
 {
     
@@ -1080,15 +1264,37 @@
         
         
         NSString *postid= @"postid";
-        NSString *postidVal = detailCell.postidLabel.text;    //[defaults valueForKey:@"postid"];
+        NSString *postidVal =[defaults valueForKey:@"post-id"];
+        
         NSString *userid= @"userid";
         NSString *useridVal =[defaults valueForKey:@"userid"];
         
         
-        NSString *askingpriceValString = [NSString stringWithFormat:@"%@",amountTextField.text];
-        askingpriceValString = [askingpriceValString substringFromIndex:1];
-        NSString *offerAmount= @"offeramount";
-        NSString *offerAmountVal = askingpriceValString;   //[defaults valueForKey:@"amountEntered"];
+        
+        
+        
+        NSString *offerAmount;
+        NSString *offerAmountVal;
+        
+        if ([amountTextField.text isEqualToString:@""])
+        {
+            offerAmount= @"offeramount";
+            offerAmountVal = @"0" ;
+        }
+        else
+        {
+            NSString *askingpriceValString = [NSString stringWithFormat:@"%@",amountTextField.text];
+            askingpriceValString = [askingpriceValString substringFromIndex:1];
+            offerAmount= @"offeramount";
+            offerAmountVal =askingpriceValString;
+        }
+        
+
+//        NSString *askingpriceValString = [NSString stringWithFormat:@"%@",amountTextField.text];
+//        askingpriceValString = [askingpriceValString substringFromIndex:1];
+//        
+//        NSString *offerAmount= @"offeramount";
+//        NSString *offerAmountVal = askingpriceValString;   //[defaults valueForKey:@"amountEntered"];
         
         NSString *comment= @"comment";
         NSString *commentVal =commentTextView.text;//[defaults valueForKey:@"commentEntered"];
@@ -1129,6 +1335,12 @@
         
         
     }
+    if(connection==Connection_SuggestPost)
+    {
+        [webData_SuggestPost setLength:0];
+        
+        
+    }
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
@@ -1136,6 +1348,11 @@
     if(connection==Connection_MakeOffer)
     {
         [webData_MakeOffer appendData:data];
+    }
+    
+    if(connection==Connection_SuggestPost)
+    {
+        [webData_SuggestPost appendData:data];
     }
 }
 
@@ -1192,6 +1409,27 @@
         }
 
     }
+    
+    if (connection == Connection_SuggestPost)
+    {
+        Array_SuggestPost=[[NSMutableArray alloc]init];
+        SBJsonParser *objSBJsonParser = [[SBJsonParser alloc]init];
+        Array_SuggestPost=[objSBJsonParser objectWithData:webData_SuggestPost];
+        NSString * ResultString=[[NSString alloc]initWithData:webData_SuggestPost encoding:NSUTF8StringEncoding];
+        
+        ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+        ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\t" withString:@""];
+        
+        NSLog(@"Array_SuggestPost %@",Array_SuggestPost);
+        
+        NSLog(@"ResultString %@",ResultString);
+        
+        NSLog(@"Array count = %ld",Array_SuggestPost.count);
+
+        
+        
+    }
+    
 }
 
 

@@ -277,15 +277,15 @@
 		614C161D1EC0919200B11A9B /* OnCellClickViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OnCellClickViewController.m; path = ../OnCellClickViewController.m; sourceTree = "<group>"; };
 		614E896D1ECB0A0300C302E6 /* PostingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostingViewController.h; sourceTree = "<group>"; };
 		614E896E1ECB0A0300C302E6 /* PostingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostingViewController.m; sourceTree = "<group>"; };
-		615ED13C1EDEE6AC001E6B0A /* DetailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailTableViewCell.h; sourceTree = "<group>"; };
-		615ED13D1EDEE6AC001E6B0A /* DetailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailTableViewCell.m; sourceTree = "<group>"; };
-		615ED13E1EDEE6AC001E6B0A /* DetailTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailTableViewCell.xib; sourceTree = "<group>"; };
-		615ED1411EDEE6C1001E6B0A /* CommentsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentsTableViewCell.h; sourceTree = "<group>"; };
-		615ED1421EDEE6C1001E6B0A /* CommentsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentsTableViewCell.m; sourceTree = "<group>"; };
-		615ED1431EDEE6C1001E6B0A /* CommentsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentsTableViewCell.xib; sourceTree = "<group>"; };
-		615ED1461EDEE6D2001E6B0A /* SuggestedTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuggestedTableViewCell.h; sourceTree = "<group>"; };
-		615ED1471EDEE6D2001E6B0A /* SuggestedTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuggestedTableViewCell.m; sourceTree = "<group>"; };
-		615ED1481EDEE6D2001E6B0A /* SuggestedTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SuggestedTableViewCell.xib; sourceTree = "<group>"; };
+		615ED13C1EDEE6AC001E6B0A /* DetailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DetailTableViewCell.h; path = onclickVC/DetailTableViewCell.h; sourceTree = "<group>"; };
+		615ED13D1EDEE6AC001E6B0A /* DetailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DetailTableViewCell.m; path = onclickVC/DetailTableViewCell.m; sourceTree = "<group>"; };
+		615ED13E1EDEE6AC001E6B0A /* DetailTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DetailTableViewCell.xib; path = onclickVC/DetailTableViewCell.xib; sourceTree = "<group>"; };
+		615ED1411EDEE6C1001E6B0A /* CommentsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommentsTableViewCell.h; path = onclickVC/CommentsTableViewCell.h; sourceTree = "<group>"; };
+		615ED1421EDEE6C1001E6B0A /* CommentsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommentsTableViewCell.m; path = onclickVC/CommentsTableViewCell.m; sourceTree = "<group>"; };
+		615ED1431EDEE6C1001E6B0A /* CommentsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CommentsTableViewCell.xib; path = onclickVC/CommentsTableViewCell.xib; sourceTree = "<group>"; };
+		615ED1461EDEE6D2001E6B0A /* SuggestedTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SuggestedTableViewCell.h; path = onclickVC/SuggestedTableViewCell.h; sourceTree = "<group>"; };
+		615ED1471EDEE6D2001E6B0A /* SuggestedTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SuggestedTableViewCell.m; path = onclickVC/SuggestedTableViewCell.m; sourceTree = "<group>"; };
+		615ED1481EDEE6D2001E6B0A /* SuggestedTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SuggestedTableViewCell.xib; path = onclickVC/SuggestedTableViewCell.xib; sourceTree = "<group>"; };
 		61739F951EE2928100018CF1 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		61739F971EE2928900018CF1 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		61739F991EE2929100018CF1 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
@@ -342,9 +342,9 @@
 		61D376741EBC867F00BA02D4 /* SanFranciscoDisplay-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SanFranciscoDisplay-Semibold.otf"; sourceTree = "<group>"; };
 		61D376751EBC867F00BA02D4 /* SanFranciscoDisplay-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SanFranciscoDisplay-Thin.otf"; sourceTree = "<group>"; };
 		61D9FFF91EE5635D0020755D /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		61E015F11ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwoImageOnClickTableViewCell.h; sourceTree = "<group>"; };
-		61E015F21ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwoImageOnClickTableViewCell.m; sourceTree = "<group>"; };
-		61E015F31ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TwoImageOnClickTableViewCell.xib; sourceTree = "<group>"; };
+		61E015F11ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwoImageOnClickTableViewCell.h; path = onclickVC/TwoImageOnClickTableViewCell.h; sourceTree = "<group>"; };
+		61E015F21ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwoImageOnClickTableViewCell.m; path = onclickVC/TwoImageOnClickTableViewCell.m; sourceTree = "<group>"; };
+		61E015F31ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TwoImageOnClickTableViewCell.xib; path = onclickVC/TwoImageOnClickTableViewCell.xib; sourceTree = "<group>"; };
 		61ED09561EB85369008EAFB7 /* YSLContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSLContainerViewController.h; sourceTree = "<group>"; };
 		61ED09571EB85369008EAFB7 /* YSLContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YSLContainerViewController.m; sourceTree = "<group>"; };
 		61ED09581EB85369008EAFB7 /* YSLScrollMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSLScrollMenuView.h; sourceTree = "<group>"; };
@@ -516,7 +516,7 @@
 				6181A17D1ED6FF58004E1CEF /* mypostVC */,
 				6181A17E1ED6FF98004E1CEF /* newpostVC */,
 				619229671EC4820A004E67D6 /* pop over views */,
-				61B8C8721EC1A8FB00954A68 /* TableView Cells */,
+				61B8C8721EC1A8FB00954A68 /* OnclickMyPost TableView Cells */,
 				614E89721ECB0B5A00C302E6 /* Posting TableView Cells */,
 				3247807D1EACEE0A00FF4B79 /* Main.storyboard */,
 				324780801EACEE0A00FF4B79 /* Images.xcassets */,
@@ -833,13 +833,25 @@
 			name = "pop over views";
 			sourceTree = "<group>";
 		};
-		61B8C8721EC1A8FB00954A68 /* TableView Cells */ = {
+		61B8C8721EC1A8FB00954A68 /* OnclickMyPost TableView Cells */ = {
 			isa = PBXGroup;
 			children = (
 				61B8C8731EC1AA1800954A68 /* FirstImageViewCell.h */,
 				61B8C8741EC1AA1800954A68 /* FirstImageViewCell.m */,
+				61E015F11ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.h */,
+				61E015F21ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.m */,
+				61E015F31ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.xib */,
+				615ED13C1EDEE6AC001E6B0A /* DetailTableViewCell.h */,
+				615ED13D1EDEE6AC001E6B0A /* DetailTableViewCell.m */,
+				615ED13E1EDEE6AC001E6B0A /* DetailTableViewCell.xib */,
+				615ED1411EDEE6C1001E6B0A /* CommentsTableViewCell.h */,
+				615ED1421EDEE6C1001E6B0A /* CommentsTableViewCell.m */,
+				615ED1431EDEE6C1001E6B0A /* CommentsTableViewCell.xib */,
+				615ED1461EDEE6D2001E6B0A /* SuggestedTableViewCell.h */,
+				615ED1471EDEE6D2001E6B0A /* SuggestedTableViewCell.m */,
+				615ED1481EDEE6D2001E6B0A /* SuggestedTableViewCell.xib */,
 			);
-			name = "TableView Cells";
+			name = "OnclickMyPost TableView Cells";
 			sourceTree = "<group>";
 		};
 		61D3765F1EBC3F6300BA02D4 /* LGPlusButtonsView */ = {
@@ -876,18 +888,6 @@
 			children = (
 				614C161C1EC0919200B11A9B /* OnCellClickViewController.h */,
 				614C161D1EC0919200B11A9B /* OnCellClickViewController.m */,
-				61E015F11ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.h */,
-				61E015F21ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.m */,
-				61E015F31ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.xib */,
-				615ED13C1EDEE6AC001E6B0A /* DetailTableViewCell.h */,
-				615ED13D1EDEE6AC001E6B0A /* DetailTableViewCell.m */,
-				615ED13E1EDEE6AC001E6B0A /* DetailTableViewCell.xib */,
-				615ED1411EDEE6C1001E6B0A /* CommentsTableViewCell.h */,
-				615ED1421EDEE6C1001E6B0A /* CommentsTableViewCell.m */,
-				615ED1431EDEE6C1001E6B0A /* CommentsTableViewCell.xib */,
-				615ED1461EDEE6D2001E6B0A /* SuggestedTableViewCell.h */,
-				615ED1471EDEE6D2001E6B0A /* SuggestedTableViewCell.m */,
-				615ED1481EDEE6D2001E6B0A /* SuggestedTableViewCell.xib */,
 			);
 			path = onclickVC;
 			sourceTree = "<group>";
@@ -1065,7 +1065,7 @@
 					3247806F1EACEE0A00FF4B79 = {
 						CreatedOnToolsVersion = 6.4;
 						DevelopmentTeam = BARZUNFUBS;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Keychain = {
 								enabled = 1;
@@ -1379,7 +1379,8 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = Haraj_app/Haraj_app.entitlements;
-				DEVELOPMENT_TEAM = BARZUNFUBS;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1395,8 +1396,8 @@
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bba.tamm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "6f9c5c05-198f-43da-8bb6-381e60cd1667";
-				PROVISIONING_PROFILE_SPECIFIER = "Tamm Developer";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				STRIP_PNG_TEXT = YES;
 			};
 			name = Debug;
@@ -1408,8 +1409,8 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = Haraj_app/Haraj_app.entitlements;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				DEVELOPMENT_TEAM = BARZUNFUBS;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1425,8 +1426,8 @@
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bba.tamm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e744baf8-ad60-4ad9-9720-372002750906";
-				PROVISIONING_PROFILE_SPECIFIER = "Tamm Appstore";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				STRIP_PNG_TEXT = YES;
 			};
 			name = Release;

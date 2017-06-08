@@ -47,8 +47,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-    
+    [[self navigationController] setNavigationBarHidden:YES animated:YES];
+     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ArraypetsData:) name:@"arraypets_Info" object:nil];
     defaults = [[NSUserDefaults alloc]init];
     NSString *plistPath = [[NSBundle mainBundle]pathForResource:@"UrlName" ofType:@"plist"];
     urlplist = [NSDictionary dictionaryWithContentsOfFile:plistPath];
@@ -64,7 +64,7 @@
     [self.collectionView setCollectionViewLayout:cvLayout];
     [self.collectionView reloadData];
     
-    [self viewPostConnection];
+   //[self viewPostConnection];
     
 }
 
@@ -222,8 +222,8 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    [self viewPostConnection];
-    [[self navigationController] setNavigationBarHidden:NO animated:YES];
+    //[self viewPostConnection];
+    [[self navigationController] setNavigationBarHidden:YES animated:YES];
 }
 
 
@@ -366,12 +366,12 @@
     
     if ([[dic_request valueForKey:@"mediatype"] isEqualToString:@"VIDEO"]  )
     {
-        height = 286.0;
+        height = 300.0;
     }
     else
     {
         
-        height = 231.0;
+        height = 250.0;
         
     }
     return height;
@@ -394,7 +394,17 @@ heightForHeaderAtIndexPath:(NSIndexPath *)indexPath
     }
     return _cellHeights;
 }
-
+-(void)ArraypetsData: (NSNotification*) notification
+{
+    Array_Pets = [[NSMutableArray alloc]init];
+    // arrayCar_Data
+    //arrayCar_Info
+    Array_Pets = [[notification userInfo] objectForKey:@"arraypets_Data"];
+    
+    NSLog(@"Array_Pets%@",notification);
+    NSLog(@"Array_PetsArray_Pets===%@",Array_Pets);
+    [self.collectionView reloadData];
+}
 
 
 

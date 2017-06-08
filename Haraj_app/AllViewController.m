@@ -51,6 +51,10 @@
     
     Array_Car = [[NSMutableArray alloc]init];
     defaults = [[NSUserDefaults alloc]init];
+    
+    self.navigationController.navigationBarHidden=YES;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ArrayallData:) name:@"arrayall_Info" object:nil];
     NSString *plistPath = [[NSBundle mainBundle]pathForResource:@"UrlName" ofType:@"plist"];
     urlplist = [NSDictionary dictionaryWithContentsOfFile:plistPath];
     
@@ -62,13 +66,16 @@
     cvLayout.bottomInset = 10.0f;
     cvLayout.stickyHeader = YES;
     
-    
-    [self viewPostConnection];
+    [[self navigationController] setNavigationBarHidden:YES animated:YES];
+    // [self viewPostConnection];
     
     [self.collectionView setCollectionViewLayout:cvLayout];
     [self.collectionView reloadData];
-
-
+    
+    
+    
+    
+    
 }
 
 
@@ -224,8 +231,8 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    [self viewPostConnection];
-    [[self navigationController] setNavigationBarHidden:NO animated:YES];
+   // [self viewPostConnection];
+   [[self navigationController] setNavigationBarHidden:YES animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -368,12 +375,12 @@
     if ([[dic_request valueForKey:@"mediatype"] isEqualToString:@"VIDEO"] )
         
     {
-        height = 286.0;
+        height = 300.0;
     }
     else
     {
         
-        height = 231.0;
+        height = 250.0;
         
     }
     return height;
@@ -396,10 +403,17 @@ heightForHeaderAtIndexPath:(NSIndexPath *)indexPath
     }
     return _cellHeights;
 }
-
-
-
-
+-(void)ArrayallData: (NSNotification*) notification
+{
+    Array_ViewPost = [[NSMutableArray alloc]init];
+    // arrayCar_Data
+    //arrayCar_Info
+    Array_ViewPost = [[notification userInfo] objectForKey:@"arrayall_Data"];
+    
+    NSLog(@"Array_ViewPost%@",notification);
+    NSLog(@"Array_ViewPostArray_ViewPost===%@",Array_ViewPost);
+    [self.collectionView reloadData];
+}
 
 @end
 
