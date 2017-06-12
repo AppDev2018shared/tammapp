@@ -41,7 +41,7 @@
     CGFloat Xpostion, Ypostion, Xwidth, Yheight, ScrollContentSize,Xpostion_label, Ypostion_label, Xwidth_label, Yheight_label,Cell_DescLabelX,Cell_DescLabelY,Cell_DescLabelW,Cell_DescLabelH,TextView_ViewX,TextView_ViewY,TextView_ViewW,TextView_ViewH;
     CGFloat FavIV_X,FavIV_Y,FavIV_W,FavIV_H,FavLabel_X,FavLabel_Y,FavLabel_W,FavLabel_H;
     
-    NSString *str_LabelCoordinates,*str_TappedLabel;
+    NSString *str_LabelCoordinates,*str_TappedLabel,*str_postid,*str_userid;;
     NSString *text;
     
     UITextField *amountTextField ;
@@ -92,7 +92,8 @@
     str_LabelCoordinates=@"no";
     
     text = [[Array_UserInfo objectAtIndex:swipeCount]valueForKey:@"description"];
-    
+    str_postid= [[Array_UserInfo objectAtIndex:swipeCount]valueForKey:@"postid"];
+    str_userid = [[Array_UserInfo objectAtIndex:swipeCount]valueForKey:@"userid1"];
     [self SuggestPostConnection];
     
 }
@@ -131,7 +132,9 @@
     NSLog(@ "Left= %ld",(long)swipeCount);
   //  imageUrl=[NSURL URLWithString:[[Array_UserInfo valueForKey:@"image_url"] objectAtIndex:swipeCount]];
    
-
+        str_postid= [[Array_UserInfo objectAtIndex:swipeCount]valueForKey:@"postid"];
+        str_userid = [[Array_UserInfo objectAtIndex:swipeCount]valueForKey:@"userid1"];
+         [self SuggestPostConnection];
     
         //to animate the view as new view is loaded
         [UIView animateWithDuration:0.1 animations:^{
@@ -179,6 +182,9 @@
 
     
     NSLog(@ "Right= %ld",(long)swipeCount);
+        str_postid= [[Array_UserInfo objectAtIndex:swipeCount]valueForKey:@"postid"];
+               str_userid = [[Array_UserInfo objectAtIndex:swipeCount]valueForKey:@"userid1"];
+                [self SuggestPostConnection];
   //  imageUrl=[NSURL URLWithString:[[Array_UserInfo valueForKey:@"image_url"] objectAtIndex:swipeCount]];
    
 
@@ -579,7 +585,7 @@
         case 3:
         {
             SuggestCell = [[[NSBundle mainBundle]loadNibNamed:@"SuggestedTableViewCell" owner:self options:nil] objectAtIndex:0];
-
+            
             
             if (SuggestCell == nil)
             {
@@ -589,33 +595,111 @@
                 
             }
             
-            NSDictionary *dic_request0=[Array_SuggestPost objectAtIndex:0];
-            NSURL *url0=[NSURL URLWithString:[dic_request0 valueForKey:@"mediaurl"]];
-            [SuggestCell.sImageView1 sd_setImageWithURL:url0 placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
-            
-            NSDictionary *dic_request1=[Array_SuggestPost objectAtIndex:1];
-            NSURL *url1=[NSURL URLWithString:[dic_request1 valueForKey:@"mediaurl"]];
-            [SuggestCell.sImageView2 sd_setImageWithURL:url1 placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
-            
-            NSDictionary *dic_request2=[Array_SuggestPost objectAtIndex:2];
-            NSURL *url2=[NSURL URLWithString:[dic_request2 valueForKey:@"mediaurl"]];
-            [SuggestCell.sImageView3 sd_setImageWithURL:url2 placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
-            
-            NSDictionary *dic_request3=[Array_SuggestPost objectAtIndex:3];
-            NSURL *url3=[NSURL URLWithString:[dic_request3 valueForKey:@"mediaurl"]];
-            [SuggestCell.sImageView4 sd_setImageWithURL:url3 placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
-//
-//            NSDictionary *dic_request4=[Array_SuggestPost objectAtIndex:4];
-//            NSURL *url4=[NSURL URLWithString:[dic_request4 valueForKey:@"mediaurl"]];
-//            [SuggestCell.sImageView5 sd_setImageWithURL:url4 placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
-//
-//            NSDictionary *dic_request5=[Array_SuggestPost objectAtIndex:5];
-//            NSURL *url5=[NSURL URLWithString:[dic_request5 valueForKey:@"mediaurl"]];
-//            [SuggestCell.sImageView6 sd_setImageWithURL:url5 placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
-//
+            SuggestCell.sImageView1.hidden=YES;
+            SuggestCell.sImageView2.hidden=YES;
+            SuggestCell.sImageView3.hidden=YES;
+            SuggestCell.sImageView4.hidden=YES;
+            SuggestCell.sImageView5.hidden=YES;
+            SuggestCell.sImageView6.hidden=YES;
             
             
-
+            SuggestCell.sImageView1.userInteractionEnabled=YES;
+            SuggestCell.sImageView2.userInteractionEnabled=YES;
+            SuggestCell.sImageView3.userInteractionEnabled=YES;
+            SuggestCell.sImageView4.userInteractionEnabled=YES;
+            SuggestCell.sImageView5.userInteractionEnabled=YES;
+            SuggestCell.sImageView6.userInteractionEnabled=YES;
+            for (int i = 0; i < Array_SuggestPost.count; i++)
+            {
+                
+                if (i == 0)
+                {
+                    
+                    
+                    NSDictionary *dic_request0=[Array_SuggestPost objectAtIndex:0];
+                    NSURL *url0=[NSURL URLWithString:[dic_request0 valueForKey:@"mediaurl"]];
+                    [SuggestCell.sImageView1 sd_setImageWithURL:url0 placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
+                    UITapGestureRecognizer * ImageTap =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ImageTapped:)];
+                    [SuggestCell.sImageView1 addGestureRecognizer:ImageTap];
+                    SuggestCell.sImageView1.hidden=NO;
+                    
+                    
+                }
+                
+                
+                
+                if (i == 1)
+                {
+                    
+                    
+                    NSDictionary *dic_request1=[Array_SuggestPost objectAtIndex:1];
+                    NSURL *url1=[NSURL URLWithString:[dic_request1 valueForKey:@"mediaurl"]];
+                    [SuggestCell.sImageView2 sd_setImageWithURL:url1 placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
+                    UITapGestureRecognizer * ImageTap =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ImageTapped:)];
+                    [SuggestCell.sImageView2 addGestureRecognizer:ImageTap];
+                    SuggestCell.sImageView2.hidden=NO;
+                    
+                    
+                }
+                
+                
+                if (i == 2)
+                {
+                    
+                    
+                    NSDictionary *dic_request2=[Array_SuggestPost objectAtIndex:2];
+                    NSURL *url2=[NSURL URLWithString:[dic_request2 valueForKey:@"mediaurl"]];
+                    [SuggestCell.sImageView3 sd_setImageWithURL:url2 placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
+                    
+                    UITapGestureRecognizer * ImageTap =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ImageTapped:)];
+                    [SuggestCell.sImageView3 addGestureRecognizer:ImageTap];
+                    SuggestCell.sImageView3.hidden=NO;
+                    
+                }
+                
+                if (i == 3)
+                {
+                    
+                    NSDictionary *dic_request3=[Array_SuggestPost objectAtIndex:3];
+                    NSURL *url3=[NSURL URLWithString:[dic_request3 valueForKey:@"mediaurl"]];
+                    [SuggestCell.sImageView4 sd_setImageWithURL:url3 placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
+                    
+                    UITapGestureRecognizer * ImageTap =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ImageTapped:)];
+                    [SuggestCell.sImageView4 addGestureRecognizer:ImageTap];
+                    SuggestCell.sImageView4.hidden=NO;
+                    
+                }
+                
+                if (i == 4)
+                {
+                    
+                    NSDictionary *dic_request4=[Array_SuggestPost objectAtIndex:4];
+                    NSURL *url4=[NSURL URLWithString:[dic_request4 valueForKey:@"mediaurl"]];
+                    [SuggestCell.sImageView5 sd_setImageWithURL:url4 placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
+                    
+                    UITapGestureRecognizer * ImageTap =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ImageTapped:)];
+                    [SuggestCell.sImageView5 addGestureRecognizer:ImageTap];
+                    SuggestCell.sImageView5.hidden=NO;
+                    
+                }
+                
+                
+                if (i == 5)
+                {
+                    
+                    NSDictionary *dic_request5=[Array_SuggestPost objectAtIndex:5];
+                    NSURL *url5=[NSURL URLWithString:[dic_request5 valueForKey:@"mediaurl"]];
+                    [SuggestCell.sImageView6 sd_setImageWithURL:url5 placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
+                    UITapGestureRecognizer * ImageTap =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ImageTapped:)];
+                    [SuggestCell.sImageView6 addGestureRecognizer:ImageTap];
+                    SuggestCell.sImageView6.hidden=NO;
+                }
+                
+            }
+            
+            
+            
+            
             
             return SuggestCell;
             
@@ -1190,10 +1274,10 @@
         
         
         NSString *postid= @"postid";
-        NSString *postidVal =[defaults valueForKey:@"post-id"];
+        NSString *postidVal =str_postid;
         
         NSString *userid= @"userid";
-        NSString *useridVal =[defaults valueForKey:@"userid"];
+        NSString *useridVal =str_userid;
         
         
         NSString *reqStringFUll=[NSString stringWithFormat:@"%@=%@&%@=%@",postid,postidVal,userid,useridVal];
@@ -1425,7 +1509,7 @@
         NSLog(@"ResultString %@",ResultString);
         
         NSLog(@"Array count = %ld",Array_SuggestPost.count);
-
+ [self.tableView reloadData];
         
         
     }

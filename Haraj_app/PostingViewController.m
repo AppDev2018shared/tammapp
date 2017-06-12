@@ -72,7 +72,8 @@
     ImageId = [[NSMutableArray alloc]init];
 
     Image_View = [[UIImageView alloc]init];
-   
+    pcker1=[[UIImagePickerController alloc]init];
+     pcker1.delegate = self;
     
     defaults = [[NSUserDefaults alloc]init];
     [defaults setObject:@"NO" forKey:@"CallPressed"];
@@ -294,7 +295,7 @@
     
     // Displays a control that allows the user to choose movie capture
     cameraUI.mediaTypes = [[NSArray alloc] initWithObjects: (NSString *) kUTTypeMovie, nil];
-    cameraUI.videoQuality = UIImagePickerControllerQualityTypeIFrame1280x720;
+    cameraUI.videoQuality = UIImagePickerControllerQualityType640x480;
     
     cameraUI.showsCameraControls = YES;
     cameraUI.videoMaximumDuration = 60.0f;
@@ -985,7 +986,15 @@
                                 }];
     
     [alert addAction:yesAction];
+    UIAlertAction *cancelAction =[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action)
+                                  
+                                  {
+                                      
+                                      NSLog(@"No button Pressed");
+                                      
+                                  }];
     
+    [alert addAction:cancelAction];
         
     [self presentViewController:alert animated:YES completion:nil];
     
@@ -1207,7 +1216,7 @@
              
              [pcker1.view hideActivityViewWithAfterDelay:1];
              
-             [pcker1 dismissViewControllerAnimated:YES completion:NULL];
+             [pcker1 dismissViewControllerAnimated:YES completion:nil];
              
              
          }
@@ -1235,7 +1244,8 @@
                                         handler:^(UIAlertAction * action)
                                         {
                                             [self.view hideActivityViewWithAfterDelay:0];
-                                            [pcker1 dismissViewControllerAnimated:YES completion:NULL];
+                                            [self dismissModalViewControllerAnimated:YES];
+                                            //[pcker1 dismissViewControllerAnimated:YES completion:NULL];
                                             
                                         }];
              
@@ -1279,7 +1289,8 @@
          }
      }];
     
-    
+    [self dismissModalViewControllerAnimated:YES];
+
 
     
 }
