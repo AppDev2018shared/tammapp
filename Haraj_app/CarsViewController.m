@@ -19,8 +19,8 @@
 #import "Reachability.h"
 #import "OnCellClickViewController.h"
 #import "MyPostViewController.h"
-
-
+#import "AllViewSwapeViewController.h"
+#import "AllViewSwapeViewController.h"
 
 @interface CarsViewController ()<UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UICollectionViewDelegate,FRGWaterfallCollectionViewDelegate>{
     
@@ -256,8 +256,8 @@
         //    {
         PatternViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"PatternCell" forIndexPath:indexPath];
         
-        NSURL * url=[NSURL URLWithString:[dic_request valueForKey:@"mediaurl"]];
-        if([NSNull null] ==[dic_request valueForKey:@"mediaurl"])
+        NSURL * url=[NSURL URLWithString:[dic_request valueForKey:@"mediathumbnailurl"]];
+        if([NSNull null] ==[dic_request valueForKey:@"mediathumbnailurl"])
         {
             
             cell.videoImageView.image =[UIImage imageNamed:@"defaultpostimg.jpg"];
@@ -293,7 +293,7 @@
         ImageCollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"ImageCell" forIndexPath:indexPath];
         cell.videoImageView.layer.cornerRadius = 10;
         cell.videoImageView.layer.masksToBounds = YES;
-        NSURL * url=[NSURL URLWithString:[dic_request valueForKey:@"mediaurl"]];
+        NSURL * url=[NSURL URLWithString:[dic_request valueForKey:@"mediathumbnailurl"]];
         [cell.videoImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"]
                                         options:SDWebImageRefreshCached];
         cell.locationLabel.text = [dic_request valueForKey:@"city1"];
@@ -314,11 +314,10 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    OnCellClickViewController * set1=[mainStoryboard instantiateViewControllerWithIdentifier:@"OnCellClickViewController"];
-    
-     MyPostViewController * set=[mainStoryboard instantiateViewControllerWithIdentifier:@"MyPostViewController"];
+    AllViewSwapeViewController * set1=[mainStoryboard instantiateViewControllerWithIdentifier:@"AllViewSwapeViewController"];
     
     
+    // OnCellClickNewViewController * set=[mainStoryboard instantiateViewControllerWithIdentifier:@"OnCellClickNewViewController"];
     
     CATransition *transition = [CATransition animation];
     transition.duration = 0.3;
@@ -328,26 +327,12 @@
     
     [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
     
-//    [self.navigationController pushViewController:set animated:YES];
+    set1.Array_Alldata = Array_Car;
+    set1.tuchedIndex = indexPath.row;
+    [self.navigationController pushViewController:set1 animated:YES];
     
+    NSLog(@"Selected Index= %lditem",(long)indexPath.row);
     
-    // [self.navigationController pushViewController:set animated:NO];
-    if ([[[Array_Car objectAtIndex:indexPath.row] valueForKey:@"userid1"]isEqualToString:[defaults valueForKey:@"userid"]])
-    {
-        set.Array_UserInfo = Array_Car;
-        set.swipeCount = indexPath.row;
-        
-        [self.navigationController pushViewController:set animated:YES];
-    }
-    else
-    {
-        set1.Array_UserInfo = Array_Car;
-        set1.swipeCount = indexPath.row;
-        
-        [self.navigationController pushViewController:set1 animated:YES];
-        
-    }
-    NSLog(@"Selected Index= %lditem",indexPath.row);
 }
 
 

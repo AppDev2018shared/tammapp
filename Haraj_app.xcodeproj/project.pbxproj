@@ -152,6 +152,8 @@
 		61F56CD31ECD75A10031E9C1 /* ELCAssetTablePicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61F56CC71ECD75A10031E9C1 /* ELCAssetTablePicker.xib */; };
 		61F56CD41ECD75A10031E9C1 /* Overlay.png in Resources */ = {isa = PBXBuildFile; fileRef = 61F56CC81ECD75A10031E9C1 /* Overlay.png */; };
 		61F56CD51ECD75A10031E9C1 /* Overlay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61F56CC91ECD75A10031E9C1 /* Overlay@2x.png */; };
+		9A13F3561EEE9DB40069219E /* YSLContainerViewController1.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A13F3531EEE9DB40069219E /* YSLContainerViewController1.m */; };
+		9A13F35A1EEE9DE90069219E /* AllViewSwapeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A13F3591EEE9DE90069219E /* AllViewSwapeViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -431,6 +433,10 @@
 		61F56CC71ECD75A10031E9C1 /* ELCAssetTablePicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ELCAssetTablePicker.xib; sourceTree = "<group>"; };
 		61F56CC81ECD75A10031E9C1 /* Overlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Overlay.png; sourceTree = "<group>"; };
 		61F56CC91ECD75A10031E9C1 /* Overlay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Overlay@2x.png"; sourceTree = "<group>"; };
+		9A13F3521EEE9DB40069219E /* YSLContainerViewController1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSLContainerViewController1.h; sourceTree = "<group>"; };
+		9A13F3531EEE9DB40069219E /* YSLContainerViewController1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YSLContainerViewController1.m; sourceTree = "<group>"; };
+		9A13F3581EEE9DE90069219E /* AllViewSwapeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllViewSwapeViewController.h; sourceTree = "<group>"; };
+		9A13F3591EEE9DE90069219E /* AllViewSwapeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllViewSwapeViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -494,6 +500,7 @@
 		324780721EACEE0A00FF4B79 /* Haraj_app */ = {
 			isa = PBXGroup;
 			children = (
+				9A13F3501EEE9D460069219E /* AllScrollTable */,
 				614C15BC1EC02E9700B11A9B /* Haraj_app.entitlements */,
 				61F56CB21ECD75A10031E9C1 /* ELCImagePicker */,
 				614C160B1EC0730C00B11A9B /* Layout */,
@@ -886,6 +893,7 @@
 		61E015F01ED6BB6B0037C72C /* onclickVC */ = {
 			isa = PBXGroup;
 			children = (
+				9A13F3511EEE9DB40069219E /* AllTablescroll */,
 				614C161C1EC0919200B11A9B /* OnCellClickViewController.h */,
 				614C161D1EC0919200B11A9B /* OnCellClickViewController.m */,
 			);
@@ -1013,6 +1021,24 @@
 				61F56CC91ECD75A10031E9C1 /* Overlay@2x.png */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		9A13F3501EEE9D460069219E /* AllScrollTable */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = AllScrollTable;
+			sourceTree = "<group>";
+		};
+		9A13F3511EEE9DB40069219E /* AllTablescroll */ = {
+			isa = PBXGroup;
+			children = (
+				9A13F3581EEE9DE90069219E /* AllViewSwapeViewController.h */,
+				9A13F3591EEE9DE90069219E /* AllViewSwapeViewController.m */,
+				9A13F3521EEE9DB40069219E /* YSLContainerViewController1.h */,
+				9A13F3531EEE9DB40069219E /* YSLContainerViewController1.m */,
+			);
+			path = AllTablescroll;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1212,6 +1238,7 @@
 				61E015F41ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.m in Sources */,
 				614C16161EC0739900B11A9B /* FRGWaterfallDecorationReusableView.m in Sources */,
 				614C15EC1EC039C100B11A9B /* SBJsonParser.m in Sources */,
+				9A13F35A1EEE9DE90069219E /* AllViewSwapeViewController.m in Sources */,
 				61F56CD01ECD75A10031E9C1 /* ELCOverlayImageView.m in Sources */,
 				61ED09A71EB85D42008EAFB7 /* UIImageView+HighlightedWebCache.m in Sources */,
 				61D3766A1EBC3F6300BA02D4 /* LGPlusButtonsView.m in Sources */,
@@ -1223,6 +1250,7 @@
 				61EDCA051ECB2DF40036A250 /* AddImageCell.m in Sources */,
 				61ED099C1EB85D42008EAFB7 /* SDImageCache.m in Sources */,
 				61F56CCA1ECD75A10031E9C1 /* ELCAlbumPickerController.m in Sources */,
+				9A13F3561EEE9DB40069219E /* YSLContainerViewController1.m in Sources */,
 				61D376681EBC3F6300BA02D4 /* LGPlusButton.m in Sources */,
 				61487FF51ED2ED42009CEF9B /* ServicesViewController.m in Sources */,
 				614C16141EC0739900B11A9B /* FRGWaterfallCollectionViewCell.m in Sources */,

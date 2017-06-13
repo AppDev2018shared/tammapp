@@ -19,7 +19,7 @@
 #import "MyPostViewController.h"
 #import "SBJsonParser.h"
 #import "Reachability.h"
-
+#import "AllViewSwapeViewController.h"
 @interface OtherViewController ()<UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UICollectionViewDelegate,FRGWaterfallCollectionViewDelegate>
 {
     
@@ -246,8 +246,8 @@
 //    {
         PatternViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"PatternCell" forIndexPath:indexPath];
         
-        NSURL * url=[NSURL URLWithString:[dic_request valueForKey:@"mediaurl"]];
-        if([NSNull null] ==[dic_request valueForKey:@"mediaurl"])
+        NSURL * url=[NSURL URLWithString:[dic_request valueForKey:@"mediathumbnailurl"]];
+        if([NSNull null] ==[dic_request valueForKey:@"mediathumbnailurl"])
         {
             
             cell.videoImageView.image =[UIImage imageNamed:@"defaultpostimg.jpg"];
@@ -284,7 +284,7 @@
         ImageCollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"ImageCell" forIndexPath:indexPath];
         cell.videoImageView.layer.cornerRadius = 10;
         cell.videoImageView.layer.masksToBounds = YES;
-        NSURL * url=[NSURL URLWithString:[dic_request valueForKey:@"mediaurl"]];
+        NSURL * url=[NSURL URLWithString:[dic_request valueForKey:@"mediathumbnailurl"]];
         [cell.videoImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"]
                                         options:SDWebImageRefreshCached];
         
@@ -306,11 +306,10 @@
 {
     
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    OnCellClickViewController * set1=[mainStoryboard instantiateViewControllerWithIdentifier:@"OnCellClickViewController"];
-    
-    MyPostViewController * set=[mainStoryboard instantiateViewControllerWithIdentifier:@"MyPostViewController"];
+    AllViewSwapeViewController * set1=[mainStoryboard instantiateViewControllerWithIdentifier:@"AllViewSwapeViewController"];
     
     
+    // OnCellClickNewViewController * set=[mainStoryboard instantiateViewControllerWithIdentifier:@"OnCellClickNewViewController"];
     
     CATransition *transition = [CATransition animation];
     transition.duration = 0.3;
@@ -320,27 +319,11 @@
     
     [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
     
+    set1.Array_Alldata = Array_Others;
+    set1.tuchedIndex = indexPath.row;
+    [self.navigationController pushViewController:set1 animated:YES];
     
-    
-    
-    if ([[[Array_Others objectAtIndex:indexPath.row] valueForKey:@"userid1"]isEqualToString:[defaults valueForKey:@"userid"]])
-    {
-        set.Array_UserInfo = Array_Others;
-        set.swipeCount = indexPath.row;
-        
-        [self.navigationController pushViewController:set animated:YES];
-    }
-    else
-    {
-        set1.Array_UserInfo = Array_Others;
-        set1.swipeCount = indexPath.row;
-        
-        [self.navigationController pushViewController:set1 animated:YES];
-        
-    }
-    
-    
-    NSLog(@"Selected Index= %lditem",indexPath.row);
+    NSLog(@"Selected Index= %lditem",(long)indexPath.row);
 }
 
 

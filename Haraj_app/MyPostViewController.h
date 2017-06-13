@@ -21,5 +21,7 @@
 
 @property (strong,nonatomic)NSMutableArray * Array_UserInfo;
 @property (nonatomic)NSInteger swipeCount;
+
+@property (strong,nonatomic)NSMutableArray * Array_All_UserInfo;
 @property (nonatomic, strong) NSArray *MoreImageArray;
 @end

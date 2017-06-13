@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (strong,nonatomic)NSMutableArray * Array_UserInfo;
+@property (strong,nonatomic)NSMutableArray * Array_All_UserInfo;
 @property (nonatomic)NSInteger swipeCount;
 
 @property (strong,nonatomic)TwoImageOnClickTableViewCell * Cell_two;

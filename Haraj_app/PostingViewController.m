@@ -1123,7 +1123,7 @@
         [[self navigationController] dismissViewControllerAnimated:YES completion:nil];
         [picker dismissViewControllerAnimated:YES completion:NULL];
         
-        
+        [self postMediaConnection];
         //[self viewImgCrop];
         // [[self navigationController] dismissViewControllerAnimated:YES completion:nil];
     }
@@ -1133,7 +1133,7 @@
     
     
      [self.tableView reloadData];
-    [self postMediaConnection];
+    
 }
 
 -(void)RecordingVediosImagepicker
@@ -1217,7 +1217,7 @@
              [pcker1.view hideActivityViewWithAfterDelay:1];
              
              [pcker1 dismissViewControllerAnimated:YES completion:nil];
-             
+             [self postMediaConnection];
              
          }
          else if (compressionEncoder.status == AVAssetExportSessionStatusCancelled)

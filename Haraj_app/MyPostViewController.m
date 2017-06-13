@@ -25,7 +25,7 @@
     FirstImageViewCell *FirstCell;
     NSURL * imageUrl;
     NSUserDefaults *defaults;
-    NSString *total_image;
+    NSInteger total_image;
     
     CGFloat Xpostion, Ypostion, Xwidth, Yheight, ScrollContentSize,Xpostion_label, Ypostion_label, Xwidth_label, Yheight_label,Cell_DescLabelX,Cell_DescLabelY,Cell_DescLabelW,Cell_DescLabelH,TextView_ViewX,TextView_ViewY,TextView_ViewW,TextView_ViewH;
     CGFloat button_threeDotsx,button_threeDotsy,button_threeDotsw,button_threeDotsh,button_favx,button_favy,button_favw,button_favh,button_arrowx,button_arrowy,button_arroww,button_arrowh;
@@ -41,7 +41,7 @@
 @end
 
 @implementation MyPostViewController
-@synthesize Array_UserInfo,swipeCount,MoreImageArray,Cell_two,detailCell,ComCell;
+@synthesize Array_UserInfo,swipeCount,MoreImageArray,Cell_two,detailCell,ComCell,Array_All_UserInfo;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -53,26 +53,23 @@
     
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
     
-  //  imageUrl=[NSURL URLWithString:[[Array_UserInfo valueForKey:@"image_url"] objectAtIndex:swipeCount]];
-    
-    //Add a left swipe gesture recognizer
-    UISwipeGestureRecognizer *recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self
-                                                                                     action:@selector(handleSwipeLeft:)];
-    [recognizer setDirection:(UISwipeGestureRecognizerDirectionLeft)];
-    [self.tableView addGestureRecognizer:recognizer];
-    
-    //Add a right swipe gesture recognizer
-    recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self
-                                                           action:@selector(handleSwipeRight:)];
-    [recognizer setDirection:(UISwipeGestureRecognizerDirectionRight)];
-    [self.tableView addGestureRecognizer:recognizer];
-    
+        total_image=[[Array_UserInfo  valueForKey:@"mediacount"] integerValue];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(Hide_Popover) name:@"HidePopOver" object:nil];
     
     str_TappedLabel=@"no";
     str_LabelCoordinates=@"no";
-    text = [[Array_UserInfo objectAtIndex:swipeCount]valueForKey:@"description"];
+    text = [Array_UserInfo valueForKey:@"description"];
     
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    NSLog(@" array info %ld",(long)self.view.tag);
+    NSLog(@" Array_All_UserInfo viewwillappear %@",Array_All_UserInfo);
+//    str_postid= [[Array_All_UserInfo objectAtIndex:(long)self.view.tag] valueForKey:@"postid"];
+//    str_userid =[[Array_All_UserInfo objectAtIndex:(long)self.view.tag] valueForKey:@"userid1"];
+    NSLog(@" str_postid viewwillappear %@", [[Array_All_UserInfo objectAtIndex:(long)self.view.tag] valueForKey:@"postid"]);
+    NSLog(@" str_userid viewwillappear %@",[[Array_All_UserInfo objectAtIndex:(long)self.view.tag] valueForKey:@"userid1"]);
+  
 }
 
 #pragma mark - UIScrollView Delegate
@@ -91,83 +88,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-- (void)handleSwipeLeft:(UISwipeGestureRecognizer *)gestureRecognizer
-{
-        
-//    swipeCount +=1;
-//    NSLog(@ "Left= %ld",(long)swipeCount);
-//   // imageUrl=[NSURL URLWithString:[[Array_UserInfo valueForKey:@"image_url"] objectAtIndex:swipeCount]];
-    
-    if (swipeCount >= 0 && swipeCount < Array_UserInfo.count-1)
-    {
-        swipeCount +=1;
-        
-    //to animate the view as new view is loaded
-    [UIView animateWithDuration:0.1 animations:^{
-        
-        self.tableView.frame = CGRectMake( -self.tableView.frame.size.width, self.tableView.frame.origin.y , self.tableView.frame.size.width, self.tableView.frame.size.height);
-        // [self loadData];
-        [self.tableView reloadData];
-        
-        
-    } completion:^(BOOL finished) {
-        self.tableView.frame = CGRectMake( self.tableView.frame.size.width,self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.frame.size.height);
-        
-        [UIView animateWithDuration:0.3 animations:^{
-            self.tableView.frame = CGRectMake(0.0, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.frame.size.height);
-        }];
-    }];
-    
-    //        selectedDay++;
-    //        [self fetchDataFromWeb];
-    }
-    
-    else
-    {
-        swipeCount =Array_UserInfo.count-1;
-    }
-
-    
-    
-}
-
-- (void)handleSwipeRight:(UISwipeGestureRecognizer *)gestureRecognizer
-{
-    
-    
-    swipeCount -=1;
-    
-    if (swipeCount < 0)
-    {
-        swipeCount = 0;
-    }
-    else
-    {
-
-    NSLog(@ "Right= %ld",(long)swipeCount);
-  //  imageUrl=[NSURL URLWithString:[[Array_UserInfo valueForKey:@"image_url"] objectAtIndex:swipeCount]];
-    
-    //to animate the view as new view is loaded
-    [UIView animateWithDuration:0.1 animations:^{
-        
-        self.tableView.frame = CGRectMake(  self.tableView.frame.size.width,  self.tableView.frame.origin.y ,  self.tableView.frame.size.width,  self.tableView.frame.size.height);
-        // [self loadData];
-        [self.tableView reloadData];
-        
-    } completion:^(BOOL finished) {
-        self.tableView.frame = CGRectMake( - self.tableView.frame.size.width, self.tableView.frame.origin.y,  self.tableView.frame.size.width,  self.tableView.frame.size.height);
-        
-        [UIView animateWithDuration:0.3 animations:^{
-            self.tableView.frame = CGRectMake(0.0,  self.tableView.frame.origin.y,  self.tableView.frame.size.width,  self.tableView.frame.size.height);
-        }];
-    }];
-    }
-    //        selectedDay--;
-    //        [self fetchDataFromWeb];
-    
-    
-}
-
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0)
@@ -180,6 +100,7 @@
     }
     else if (section == 2)
     {
+        
         return 1;
     }
     
@@ -198,15 +119,15 @@
     static NSString *CellIdentifier = @"Cell";
     static NSString *cell_details=@"DetailCell";
     static NSString *cell_comments=@"ComCell";
-    NSDictionary *dic_request=[Array_UserInfo objectAtIndex:swipeCount];
-    NSLog(@"dic= %@",dic_request);
+//    NSDictionary *dic_request=[Array_UserInfo objectAtIndex:swipeCount];
+//    NSLog(@"dic= %@",dic_request);
     static NSString *cell_two1=@"Cell_Two";
     switch (indexPath.section)
     {
         case 0:
         {
             
-            if ([total_image isEqualToString:@"2"])
+            if (total_image >=2)
             {
                 
                 Cell_two = [[[NSBundle mainBundle]loadNibNamed:@"TwoImageOnClickTableViewCell" owner:self options:nil] objectAtIndex:0];
@@ -241,7 +162,7 @@
                 button_arroww=Cell_two.button_back.frame.size.width;
                 button_arrowh=Cell_two.button_back.frame.size.height;
                 
-                if ([[dic_request valueForKey:@"mediatype"] isEqualToString:@"IMAGE"])
+                if ([[Array_UserInfo valueForKey:@"mediatype"] isEqualToString:@"IMAGE"])
                 {
                     Cell_two.image_play1.hidden = YES;
                     Cell_two.image_play2.hidden = YES;
@@ -253,11 +174,12 @@
                     Cell_two.image_play2.hidden = NO;
                 }
                 
-                NSURL *url=[NSURL URLWithString:[dic_request valueForKey:@"mediaurl"]];
+                NSURL *url=[NSURL URLWithString:[Array_UserInfo valueForKey:@"mediathumbnailurl"]];
+                 NSURL *url1=[NSURL URLWithString:[Array_UserInfo valueForKey:@"mediathumbnailurl1"]];
                 
                 [Cell_two.image1 sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
                 
-                [Cell_two.image2 sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
+                [Cell_two.image2 sd_setImageWithURL:url1 placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
                 
                 return Cell_two;
                 
@@ -282,7 +204,7 @@
                 button_arroww=FirstCell.button_back.frame.size.width;
                 button_arrowh=FirstCell.button_back.frame.size.height;
                 
-                if ([[dic_request valueForKey:@"mediatype"] isEqualToString:@"IMAGE"])
+                if ([[Array_UserInfo valueForKey:@"mediatype"] isEqualToString:@"IMAGE"])
                 {
                     FirstCell.image_play.hidden = YES;
                 }
@@ -294,7 +216,7 @@
                     FirstCell.image_play.hidden = NO;
                 }
                 
-                NSURL *url=[NSURL URLWithString:[dic_request valueForKey:@"mediaurl"]];
+                NSURL *url=[NSURL URLWithString:[Array_UserInfo valueForKey:@"mediaurl"]];
                 [FirstCell.imageView_thumbnails sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
                 return FirstCell;
             }
@@ -320,20 +242,20 @@
             
             
 
-            detailCell.locationLabel.text = [dic_request valueForKey:@"city1"];
-            detailCell.hashtagLabel.text = [dic_request valueForKey:@"hashtags"];
+            detailCell.locationLabel.text = [Array_UserInfo valueForKey:@"city1"];
+            detailCell.hashtagLabel.text = [Array_UserInfo valueForKey:@"hashtags"];
             //NSString *post = [NSString stringWithFormat:@"POST ID:%@",[dic_request valueForKey:@"postid"]];
-            detailCell.postidLabel.text = [NSString stringWithFormat:@"POST ID: %@",[dic_request valueForKey:@"postid"]];
-            detailCell.usernameLabel.text = [dic_request valueForKey:@"usersname"];
-            detailCell.durationLabel.text = [dic_request valueForKey:@"postdur"];
+            detailCell.postidLabel.text = [NSString stringWithFormat:@"POST ID: %@",[Array_UserInfo valueForKey:@"postid"]];
+            detailCell.usernameLabel.text = [Array_UserInfo valueForKey:@"usersname"];
+            detailCell.durationLabel.text = [Array_UserInfo valueForKey:@"postdur"];
 
-            NSString *show = [NSString stringWithFormat:@"$%@",[dic_request valueForKey:@"showamount"]];
+            NSString *show = [NSString stringWithFormat:@"$%@",[Array_UserInfo valueForKey:@"showamount"]];
             detailCell.priceLabel.text = show;//[dic_request valueForKey:@"showamount"];
-            detailCell.timeLabel.text = [dic_request valueForKey:@"createtime"];
-            detailCell.titleLabel.text = [dic_request valueForKey:@"title"];
+            detailCell.timeLabel.text = [Array_UserInfo valueForKey:@"createtime"];
+            detailCell.titleLabel.text = [Array_UserInfo valueForKey:@"title"];
             //detailCell.profileImage.image =
             
-            NSURL *url=[NSURL URLWithString:[dic_request valueForKey:@"usersprofilepic"]];
+            NSURL *url=[NSURL URLWithString:[Array_UserInfo valueForKey:@"usersprofilepic"]];
             
             [detailCell.profileImage sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultimg.jpg"] options:SDWebImageRefreshCached];
             detailCell.profileImage.layer.cornerRadius = detailCell.profileImage.frame.size.height / 2;
@@ -495,7 +417,7 @@
 {
     if (indexPath.section==0)
     {
-        if ([total_image isEqualToString:@"2"])
+        if (total_image >=2)
         {
             return 275;
         }
@@ -803,8 +725,18 @@
     transition.subtype = kCATransitionFromRight;
     [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
     
-    [self.navigationController popToRootViewControllerAnimated:YES];
-    
+//    if ([[defaults valueForKey:@"imagetapped"] isEqualToString:@"yes"])
+//    {
+//        [defaults setObject:@"no" forKey:@"imagetapped"];
+//        [defaults synchronize];
+        [self.navigationController popViewControllerAnimated:YES];
+        
+//    }
+//    else
+//    {
+//        [self.navigationController popToRootViewControllerAnimated:YES];
+//    }
+//    
     
 }
 
