@@ -13,6 +13,14 @@
 #import "Reachability.h"
 #import "MyPostViewController.h"
 #import "OnCellClickViewController.h"
+#import "MoreImageScrollViewController.h"
+#import <MediaPlayer/MediaPlayer.h>
+#import <MobileCoreServices/UTCoreTypes.h>
+#import <AssetsLibrary/AssetsLibrary.h>
+#import "SDAVAssetExportSession.h"
+#import <AVFoundation/AVFoundation.h>
+#import "MHFacebookImageViewer.h"
+#import "UIImageView+MHFacebookImageViewer.h"
 #define FONT_SIZE 15.0f
 #define CELL_CONTENT_WIDTH self.view.frame.size.width-138
 
@@ -25,7 +33,7 @@
     UIScrollView *scrollView;
     UIImageView *imageView;
     UIPageControl *pageControll;
-    
+   
     FirstImageViewCell *FirstCell;
    
     NSInteger total_image;
@@ -35,7 +43,7 @@
     NSDictionary *urlplist;
     NSURLConnection *Connection_MakeOffer, *Connection_SuggestPost;
     NSMutableData *webData_MakeOffer, *webData_SuggestPost;
-    NSMutableArray *Array_MakeOffer, *Array_SuggestPost;
+    NSMutableArray *Array_MakeOffer, *Array_SuggestPost,*Array_Moreimages;
     NSString * back_Arrow_Check;
     
     CGFloat newCellHeight;
@@ -48,6 +56,7 @@
     UITextField *amountTextField ;
     UITextView *commentTextView;
      CGFloat button_threeDotsx,button_threeDotsy,button_threeDotsw,button_threeDotsh,button_favx,button_favy,button_favw,button_favh,button_arrowx,button_arrowy,button_arroww,button_arrowh;
+     MPMoviePlayerViewController *movieController ;
 }
 
 @end
@@ -191,7 +200,17 @@
                 [Cell_two.button_favourite addTarget:self action:@selector(button_favourite_action:) forControlEvents:UIControlEventTouchUpInside];
                 [Cell_two.button_back addTarget:self action:@selector(button_back_action:) forControlEvents:UIControlEventTouchUpInside];
                 UITapGestureRecognizer * moreTap =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(MoreImage:)];
-                Cell_two.countLabel.text = @"15";
+                if (total_image>=3)
+                {
+                    Cell_two.bgView.hidden=NO;
+                    Cell_two.countLabel.text =[NSString stringWithFormat:@"%d",total_image-2];
+                }
+                else
+                {
+                    Cell_two.bgView.hidden=YES;
+                    
+                }
+
                 [Cell_two.bgView addGestureRecognizer:moreTap];
                 
                 button_threeDotsx=Cell_two.button_threedots.frame.origin.x;
@@ -211,12 +230,22 @@
                 if ([[Array_UserInfo valueForKey:@"mediatype"] isEqualToString:@"IMAGE"])
                 {
                     Cell_two.image_play1.hidden = YES;
-                    Cell_two.image_play2.hidden = YES;
+                   
                 }
                 else
                 {
                     
                     Cell_two.image_play1.hidden = NO;
+                   
+                }
+                
+                if ([[Array_UserInfo valueForKey:@"mediatype1"] isEqualToString:@"IMAGE"])
+                {
+                    
+                    Cell_two.image_play2.hidden = YES;
+                }
+                else
+                {
                     Cell_two.image_play2.hidden = NO;
                 }
                 
@@ -226,6 +255,29 @@
                 [Cell_two.image1 sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
                 
                 [Cell_two.image2 sd_setImageWithURL:url1 placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
+                
+                Cell_two.image1.userInteractionEnabled=YES;
+                Cell_two.image1.tag=swipeCount;
+                UITapGestureRecognizer *imageTap1 =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(MoreImage:)];
+                [Cell_two.image1 addGestureRecognizer:imageTap1];
+                
+                Cell_two.image2.userInteractionEnabled=YES;
+                Cell_two.image2.tag=swipeCount;
+                UITapGestureRecognizer *imageTap2 =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(MoreImage:)];
+                [Cell_two.image2 addGestureRecognizer:imageTap2];
+                
+                Cell_two.image_play1.userInteractionEnabled=YES;
+                Cell_two.image_play1.tag=swipeCount;
+                UITapGestureRecognizer *imageTap3 =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(MoreImage:)];
+                [Cell_two.image_play1 addGestureRecognizer:imageTap3];
+                
+                Cell_two.image_play2.userInteractionEnabled=YES;
+                Cell_two.image_play2.tag=swipeCount;
+                UITapGestureRecognizer *imageTap4 =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(MoreImage:)];
+                [Cell_two.image_play2 addGestureRecognizer:imageTap4];
+                
+                
+                
                 
                 return Cell_two;
                 
@@ -254,37 +306,7 @@
                 button_arroww=FirstCell.button_back.frame.size.width;
                 button_arrowh=FirstCell.button_back.frame.size.height;
                 
-                /*
-                 
-                 if([NSNull null] ==[[Array_Car  objectAtIndex:0]valueForKey:@"mediatype"] || [[dic_request valueForKey:@"mediatype"] isEqualToString:@"VIDEO"])
-                 {
-                 
-                 //    if ([[dic_request valueForKey:@"mediatype"] isEqualToString:@"VIDEO"]  )
-                 //    {
-                 PatternViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"PatternCell" forIndexPath:indexPath];
-                 
-                 NSURL * url=[NSURL URLWithString:[dic_request valueForKey:@"mediaurl"]];
-                 if([NSNull null] ==[dic_request valueForKey:@"mediaurl"])
-                 {
-                 
-                 cell.videoImageView.image =[UIImage imageNamed:@"defaultpostimg.jpg"];
-                 cell.playImageView.image = [UIImage imageNamed:@""];
-                 }
-                 else
-                 {
-                 [cell.videoImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"]
-                 options:SDWebImageRefreshCached];
-                 cell.playImageView.image = [UIImage imageNamed:@"Play"];
-                 //[cell.videoImageView sd_setImageWithURL:url];
-                 
-                 }
-                 
-
-                
-                
-                
-                */
-                
+              
                 if ([[Array_UserInfo valueForKey:@"mediatype"] isEqualToString:@"IMAGE"])
                 {
                     FirstCell.image_play.hidden = YES;
@@ -295,9 +317,15 @@
                     FirstCell.image_play.hidden = NO;
                 }
                 
-                NSURL *url=[NSURL URLWithString:[Array_UserInfo valueForKey:@"mediaurl"]];
+                NSURL *url=[NSURL URLWithString:[Array_UserInfo valueForKey:@"mediathumbnailurl"]];
                 
                 [FirstCell.imageView_thumbnails sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
+                
+                
+                FirstCell.imageView_thumbnails.userInteractionEnabled=YES;
+                FirstCell.imageView_thumbnails.tag=swipeCount;
+                UITapGestureRecognizer *imageTap4 =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(MoreImage:)];
+                [FirstCell.imageView_thumbnails addGestureRecognizer:imageTap4];
                 
                 
                 return FirstCell;
@@ -897,7 +925,12 @@
     else
     {
         NSLog(@"Whitearrow Pressed");
+        
+        
 
+       
+        
+ [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewEnable" object:self userInfo:nil];
 //        CATransition *transition = [CATransition animation];
 //        transition.duration = 0.3;
 //        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
@@ -1094,6 +1127,8 @@
 {
 #pragma mark- --more image scroll view
     
+      [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewDisable" object:self userInfo:nil];
+    
     transparentView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     transparentView.backgroundColor=[UIColor colorWithRed:30/255.0 green:30/255.0 blue:30/255.0 alpha:0.95];
     
@@ -1124,9 +1159,10 @@
     scrollView.delegate = self;
     scrollView.pagingEnabled = YES;
     
-    MoreImageArray = [[NSArray alloc] initWithObjects:@"1.png", @"2.png", @"3.png", nil];
+   
     
-    for (int i = 0; i < [MoreImageArray count]; i++ ) {
+    for (int i = 0; i < total_image; i++ )
+    {
         int page = scrollView.contentOffset.x / scrollView.frame.size.width;
         
         CGRect frame;
@@ -1135,34 +1171,285 @@
         frame.size = scrollView.frame.size;
         
         imageView = [[UIImageView alloc] initWithFrame:frame];
-        // imageView.image = [UIImage imageNamed:[imageArray objectAtIndex:i]];
-        // imageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[[Array_UserInfo valueForKey:@"image_url"] objectAtIndex:swipeCount + i]]]];
-        //  [FirstCell.imageView sd_setImageWithURL:imageUrl];
-        imageView.contentMode = UIViewContentModeCenter;
-        imageView.contentMode = UIViewContentModeScaleAspectFit;
+        imageView.userInteractionEnabled=YES;
+        imageView.clipsToBounds=YES;
+        imageView.contentMode = UIViewContentModeScaleAspectFill;
+        imageView.tag=i;
         
+         UIButton* playButton=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50, 50)];
+        playButton.tag=i;
+        [playButton setImage:[UIImage imageNamed:@"Play"] forState:UIControlStateNormal];
+        playButton.center=imageView.center;
+        playButton.backgroundColor=[UIColor clearColor];
         [scrollView addSubview:imageView];
+        [scrollView addSubview:playButton];
         
         NSLog (@"page %d",page);
+        playButton.hidden = YES;
+      
+        if (i==0)
+        {
+              NSURL *url=[NSURL URLWithString:[Array_UserInfo valueForKey:@"mediathumbnailurl"]];
+             [imageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
+            if ([[Array_UserInfo valueForKey:@"mediatype"] isEqualToString:@"VIDEO"])
+            {
+             
+                playButton.hidden = NO;
+                
+            }
+        }
+        else if (i==1)
+        {
+      
+        NSURL *url1=[NSURL URLWithString:[Array_UserInfo valueForKey:@"mediathumbnailurl1"]];
+        
+        [imageView sd_setImageWithURL:url1 placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
+            if ([[Array_UserInfo valueForKey:@"mediatype1"] isEqualToString:@"VIDEO"])
+            {
+                playButton.hidden = NO;
+            
+                
+            }
+
+        }
+        else
+        {
+            NSURL *url1=[NSURL URLWithString:@""];
+            
+            [imageView sd_setImageWithURL:url1 placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
+           playButton.hidden = YES;
+           
+        }
+        
+        
+ 
         
     }
     scrollView.contentSize = CGSizeMake(scrollView.frame.size.
-                                        width *[MoreImageArray count],
+                                        width *total_image,
                                         scrollView.frame.size.height);
     
     pageControll = [[UIPageControl alloc]init];
     pageControll.frame = CGRectMake(375/2-20, transparentView.frame.size.height - 100, 40, 10);
-    pageControll.numberOfPages = MoreImageArray.count;
+    if (total_image>=2)
+    {
+         pageControll.hidden=NO;;
+        pageControll.numberOfPages = total_image;
+    }
+    else
+    {
+        pageControll.hidden=YES;;
+    }
     pageControll.currentPage = 0;
     [pageControll setPageIndicatorTintColor:[UIColor grayColor]];
     
     [transparentView addSubview:scrollView];
     [transparentView addSubview:pageControll];
     [self.view addSubview:transparentView];
+   
+    [self Communication_moreImage];
+}
+-(void)Communication_moreImage
+{
+   
+    
+    NSString *postid= @"postid";
+    NSString *postidVal =[Array_UserInfo  valueForKey:@"postid"];
+    
+    NSString *userid= @"userid";
+    NSString *useridVal =[defaults valueForKey:@"userid"];
+    
+    
+    NSString *reqStringFUll=[NSString stringWithFormat:@"%@=%@&%@=%@",postid,postidVal,userid,useridVal];
+    
+    
+    
+#pragma mark - swipe sesion
+    
+    NSURLSession *session = [NSURLSession sessionWithConfiguration: [NSURLSessionConfiguration defaultSessionConfiguration] delegate: nil delegateQueue: [NSOperationQueue mainQueue]];
+    
+    NSURL *url;
+    NSString *  urlStrLivecount=[urlplist valueForKey:@"postimages"];;
+    url =[NSURL URLWithString:urlStrLivecount];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    
+    [request setHTTPMethod:@"POST"];//Web API Method
+    
+    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    
+    request.HTTPBody = [reqStringFUll dataUsingEncoding:NSUTF8StringEncoding];
+    
+    
+    
+    NSURLSessionDataTask *dataTask =[session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
+                                     {
+                                         
+                                         if(data)
+                                         {
+                                             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+                                             NSInteger statusCode = httpResponse.statusCode;
+                                             if(statusCode == 200)
+                                             {
+                                                 
+                                                 Array_Moreimages=[[NSMutableArray alloc]init];
+                                                 SBJsonParser *objSBJsonParser = [[SBJsonParser alloc]init];
+                                                 Array_Moreimages=[objSBJsonParser objectWithData:data];
+                                                 NSString * ResultString=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+                                                 //        Array_LodingPro=[NSJSONSerialization JSONObjectWithData:webData_Swipe options:kNilOptions error:nil];
+                                                 
+                                                 ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+                                                 ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\t" withString:@""];
+                    NSLog(@"array_loginarray_login %@",Array_Moreimages);
+                                                 
+       NSLog(@"array_login ResultString %@",ResultString);
+         if ([ResultString isEqualToString:@"nullerror"])
+                 {
+                     
+                     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops" message:@" " preferredStyle:UIAlertControllerStyleAlert];
+                                                     
+                UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
+                            [alertController addAction:actionOk];
+                    [self presentViewController:alertController animated:YES completion:nil];
+                                                     
+                                                     
+                    }
+                       if ([ResultString isEqualToString:@"noimages"])
+                        {
+                            
+                            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+                                                     
+                                UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
+                        [alertController addAction:actionOk];
+                        [self presentViewController:alertController animated:YES completion:nil];
+                                                     
+                                                     
+                }
+                if(Array_Moreimages.count !=0)
+                {
+                    for(UIImageView* view in scrollView.subviews)
+                    {
+                        
+                        [view removeFromSuperview];
+                        
+                    }
+                    for(UIButton* view in scrollView.subviews)
+                    {
+                        
+                        [view removeFromSuperview];
+                        
+                    }
+
+                    
+                    for (int i = 0; i < Array_Moreimages.count; i++ )
+                    {
+                        int page = scrollView.contentOffset.x / scrollView.frame.size.width;
+                        
+                        CGRect frame;
+                        frame.origin.x = scrollView.frame.size.width * i;
+                        frame.origin.y = 0;
+                        frame.size = scrollView.frame.size;
+                        
+                        imageView = [[UIImageView alloc] initWithFrame:frame];
+                        imageView.userInteractionEnabled=YES;
+                        imageView.clipsToBounds=YES;
+                        imageView.contentMode = UIViewContentModeScaleAspectFill;
+                        imageView.tag=i;
+                        
+                         UIButton* playButton=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50, 50)];
+                        [playButton setImage:[UIImage imageNamed:@"Play"] forState:UIControlStateNormal];
+                        playButton.center=imageView.center;
+                        playButton.tag=i;
+                        playButton.backgroundColor=[UIColor clearColor];
+                        [scrollView addSubview:imageView];
+                        [scrollView addSubview:playButton];
+                        
+                        
+                        NSLog (@"page %d",page);
+                       playButton.hidden = YES;
+                  
+                        
+                        NSURL *url=[NSURL URLWithString:[[Array_Moreimages objectAtIndex:i] valueForKey:@"mediathumbnailurl"]];
+                        [imageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
+                        
+                        
+                        
+                        if ([[[Array_Moreimages objectAtIndex:i] valueForKey:@"mediatype"] isEqualToString:@"VIDEO"])
+                        {
+                          
+                           playButton.hidden = NO;
+                            playButton.userInteractionEnabled=YES;
+                            UITapGestureRecognizer * ImageTap =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ImageTappedscroll:)];
+                            [imageView addGestureRecognizer:ImageTap];
+                            UITapGestureRecognizer * ImageTap1 =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ImageTappedscroll:)];
+                            [playButton addGestureRecognizer:ImageTap1];
+                            
+                        }
+                        else
+                        {
+                            [self displayImage:imageView withImage:imageView.image];
+                            playButton.hidden = YES;
+                    
+                        }
+                        
+                        
+                        
+                    }
+                    
+                    scrollView.contentSize = CGSizeMake(scrollView.frame.size.width *Array_Moreimages.count,scrollView.frame.size.height);
+                    
+                    pageControll.frame = CGRectMake(375/2-20, transparentView.frame.size.height - 100, 40, 10);
+                    pageControll.numberOfPages = Array_Moreimages.count;
+                    pageControll.currentPage = 0;
+                    
+                    
+                    
+                }
+                                                 
+                                                 
+                                                 
+                                        }
+                                             
+                            else
+                                             {
+                                    NSLog(@" error login1 ---%ld",(long)statusCode);
+                                                
+                                             }
+                                             
+                                             
+                                         }
+                                         else if(error)
+                                         {
+                                            
+                                             NSLog(@"error login2.......%@",error.description);
+                                         }
+                                         
+                                         
+                                     }];
+    [dataTask resume];
     
 }
-
-
+-(void)ImageTappedscroll:(UIGestureRecognizer *)reconizer
+{
+    UIGestureRecognizer *rec = (UIGestureRecognizer*)reconizer;
+    
+    UIImageView *imageView1 = (UIImageView *)rec.view;
+    NSLog(@"ImageTappedscroll ImageTappedscroll==%ld", (long)imageView1.tag);
+    NSURL *url=[NSURL URLWithString:[[Array_Moreimages objectAtIndex:(long)imageView1.tag]valueForKey:@"mediaurl"]];
+    movieController = [[MPMoviePlayerViewController alloc] initWithContentURL:url];
+    
+    
+    
+    [self presentMoviePlayerViewControllerAnimated:movieController];
+    [movieController.moviePlayer prepareToPlay];
+    [movieController.moviePlayer play];
+}
+- (void) displayImage:(UIImageView*)imageView withImage:(UIImage*)image
+{
+    [imageView setImage:image];
+    [imageView setupImageViewer];
+    
+}
 -(void)label_Desc_Tapped_ActionDetails:(UIGestureRecognizer *)reconizer
 {
     

@@ -55,6 +55,9 @@ static const CGFloat kYSLScrollMenuViewHeight = 40;
     // setupViews
     UIView *viewCover = [[UIView alloc]init];
     [self.view addSubview:viewCover];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ScrollView_Disable:) name:@"ScrollViewDisable" object:nil];
+      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ScrollView_Enable:) name:@"ScrollViewEnable" object:nil];
+    
     
     // ContentScrollview setup
     _contentScrollView = [[UIScrollView alloc]init];
@@ -180,5 +183,12 @@ static const CGFloat kYSLScrollMenuViewHeight = 40;
     }
     [self setChildViewControllerWithCurrentIndex:self.currentIndex];
 }
-
+-(void)ScrollView_Disable:(NSNotification *)notification
+{
+    [_contentScrollView setScrollEnabled:NO];
+}
+-(void)ScrollView_Enable:(NSNotification *)notification
+{
+    [_contentScrollView setScrollEnabled:YES];
+}
 @end

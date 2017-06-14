@@ -27,7 +27,11 @@
       NSLog(@"All dataArray==%@",Array_Alldata);
     
     [super viewDidLoad];
+    
+    
     defaults=[[NSUserDefaults alloc]init];
+     
+    
     UIBarButtonItem *space = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:self action:nil];
     space.width = 30;
     
@@ -190,7 +194,6 @@
     
     [controller viewWillAppear:YES];
 }
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
