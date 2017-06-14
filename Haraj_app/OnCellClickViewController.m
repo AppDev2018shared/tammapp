@@ -62,7 +62,7 @@
 @end
 
 @implementation OnCellClickViewController
-@synthesize Array_UserInfo,swipeCount,Cell_two,MoreImageArray,detailCell,ComCell,SuggestCell,Array_All_UserInfo;
+@synthesize Array_UserInfo,swipeCount,Cell_two,MoreImageArray,detailCell,ComCell,SuggestCell,Array_All_UserInfo,cell_postcomments;
 
 - (void)viewDidLoad
 {
@@ -148,9 +148,14 @@
     }
     else if (section == 2)
     {
-        return 2;
+        return 1;
     }
     else if (section == 3)
+    {
+        return 2;
+    }
+   
+    else if (section == 4)
     {
         return 1;
     }
@@ -161,7 +166,7 @@
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 4;
+    return 5;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -173,7 +178,7 @@
     static NSString *cell_details=@"DetailCell";
     static NSString *cell_comments=@"ComCell";
     static NSString *cell_suggest=@"PostCell";
-    
+        static NSString *post_comments=@"PostCell1";
     switch (indexPath.section)
     {
                      case 0:
@@ -500,9 +505,31 @@
         }
             break;
 
-        
-
         case 2:
+        {
+            
+            cell_postcomments = [[[NSBundle mainBundle]loadNibNamed:@"PostHeaderTableViewCell" owner:self options:nil] objectAtIndex:0];
+            
+            
+            
+            
+            if (cell_postcomments == nil)
+            {
+                
+                cell_postcomments = [[PostHeaderTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:post_comments];
+                
+                
+            }
+            
+            
+            
+            
+            
+            return cell_postcomments;
+        }
+            break;
+
+        case 3:
         {
             
             ComCell = [[[NSBundle mainBundle]loadNibNamed:@"CommentsTableViewCell" owner:self options:nil] objectAtIndex:0];
@@ -527,8 +554,9 @@
         }
             break;
 #pragma mark -suggest cell
-        case 3:
+        case 4:
         {
+            
             SuggestCell = [[[NSBundle mainBundle]loadNibNamed:@"SuggestedTableViewCell" owner:self options:nil] objectAtIndex:0];
             
             
@@ -708,7 +736,7 @@
         {
             
             
-            return 520+detailCell.detailinfoTextView1.frame.size.height-38;
+            return 456+detailCell.detailinfoTextView1.frame.size.height-38;
             
         }
         else
@@ -716,11 +744,11 @@
             
             if ((long)rHeight==1)
             {
-                 return 520;
+                 return 456;
             }
             else
             {
-                return 520+56;
+                return 456 ;
             }
             
             
@@ -729,12 +757,16 @@
         
 
     }
-   
     else if (indexPath.section == 2)
+    {
+        return 30;
+    }
+
+    else if (indexPath.section == 3)
     {
         return 120;
     }
-    else if (indexPath.section == 3)
+    else if (indexPath.section == 4)
     {
         if (Array_SuggestPost.count==0)
         {
@@ -788,28 +820,43 @@
     }
     if (section==2)
     {
-        sectionView=[[UIView alloc]initWithFrame:CGRectMake(0, 0,self.view.frame.size.width,40)];//36
+        
+        sectionView=[[UIView alloc]initWithFrame:CGRectMake(0, 0,self.view.frame.size.width,64)];
         [sectionView setBackgroundColor:[UIColor whiteColor]];
         
-        UIButton *button1 = [[UIButton alloc]initWithFrame:CGRectMake(10, 10, 150, 40)];
-        [button1 setTitle:@"Post a Comment" forState:UIControlStateNormal];
-        [button1 setTitleColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1] forState:UIControlStateNormal];
+        UIButton *button1 = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
+        [button1 setTitle:@"MAKE AN OFFER" forState:UIControlStateNormal];
+        button1.titleLabel.font = [UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:22];
+    
+        [button1 setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
+        [button1 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [button1 setTag:1];
-        [button1 addTarget:self action:@selector(postCommentButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [button1 addTarget:self action:@selector(makeOfferPressed:) forControlEvents:UIControlEventTouchUpInside];
         [sectionView addSubview:button1];
         
         
-        
-        UILabel *comment = [[UILabel alloc]initWithFrame:CGRectMake(self.view.frame.size.width - 100, 10, 150, 40)];
-        comment.text = @"Comments";
-        comment.textColor = [UIColor lightGrayColor];
-        [sectionView addSubview:comment];
-        sectionView.tag=section;
+//        sectionView=[[UIView alloc]initWithFrame:CGRectMake(0, 0,self.view.frame.size.width,40)];//36
+//        [sectionView setBackgroundColor:[UIColor whiteColor]];
+//        
+//        UIButton *button1 = [[UIButton alloc]initWithFrame:CGRectMake(10, 10, 150, 40)];
+//        [button1 setTitle:@"Post a Comment" forState:UIControlStateNormal];
+//        [button1 setTitleColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1] forState:UIControlStateNormal];
+//        [button1 setTag:1];
+//        [button1 addTarget:self action:@selector(postCommentButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+//        [sectionView addSubview:button1];
+//        
+//        
+//        
+//        UILabel *comment = [[UILabel alloc]initWithFrame:CGRectMake(self.view.frame.size.width - 100, 10, 150, 40)];
+//        comment.text = @"Comments";
+//        comment.textColor = [UIColor lightGrayColor];
+//        [sectionView addSubview:comment];
+//        sectionView.tag=section;
 
 
     }
     
-    if (section == 3)
+    if (section == 4)
     {
         sectionView=[[UIView alloc]initWithFrame:CGRectMake(0, 0,self.view.frame.size.width,40)];//36
         [sectionView setBackgroundColor:[UIColor whiteColor]];
@@ -835,9 +882,13 @@
     }
     if (section==2)
     {
-        return 40;
+         return 64;
     }
     if (section==3)
+    {
+        return 0;
+    }
+    if (section==4)
     {
         if (Array_SuggestPost.count==0)
         {
@@ -856,7 +907,8 @@
 
 -(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
-    if (section == 2)
+
+    if (section == 3)
     {
         
         
@@ -880,7 +932,12 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    if (section == 2)
+    
+    if (section == 1)
+    {
+        return 0;
+    }
+    if (section == 3)
     {
         return 40;
     }
@@ -1154,7 +1211,7 @@
     [transparentView addSubview:button3];
     
     scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0,160,self.view.frame.size.width , self.view.frame.size.height -160)];
-    scrollView.backgroundColor = [UIColor greenColor];
+    scrollView.backgroundColor = [UIColor clearColor];
     scrollView.center = transparentView.center;
     scrollView.delegate = self;
     scrollView.pagingEnabled = YES;

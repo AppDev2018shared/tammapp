@@ -152,6 +152,8 @@
 		61F56CD31ECD75A10031E9C1 /* ELCAssetTablePicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61F56CC71ECD75A10031E9C1 /* ELCAssetTablePicker.xib */; };
 		61F56CD41ECD75A10031E9C1 /* Overlay.png in Resources */ = {isa = PBXBuildFile; fileRef = 61F56CC81ECD75A10031E9C1 /* Overlay.png */; };
 		61F56CD51ECD75A10031E9C1 /* Overlay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61F56CC91ECD75A10031E9C1 /* Overlay@2x.png */; };
+		9A09B8C21EF1672C00421BF7 /* PostHeaderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A09B8C01EF1672C00421BF7 /* PostHeaderTableViewCell.m */; };
+		9A09B8C31EF1672C00421BF7 /* PostHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A09B8C11EF1672C00421BF7 /* PostHeaderTableViewCell.xib */; };
 		9A13F3561EEE9DB40069219E /* YSLContainerViewController1.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A13F3531EEE9DB40069219E /* YSLContainerViewController1.m */; };
 		9A13F35A1EEE9DE90069219E /* AllViewSwapeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A13F3591EEE9DE90069219E /* AllViewSwapeViewController.m */; };
 		9AEB1F0A1EF1020E00BD9DEF /* MoreImageScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB1F091EF1020E00BD9DEF /* MoreImageScrollViewController.m */; };
@@ -434,6 +436,9 @@
 		61F56CC71ECD75A10031E9C1 /* ELCAssetTablePicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ELCAssetTablePicker.xib; sourceTree = "<group>"; };
 		61F56CC81ECD75A10031E9C1 /* Overlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Overlay.png; sourceTree = "<group>"; };
 		61F56CC91ECD75A10031E9C1 /* Overlay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Overlay@2x.png"; sourceTree = "<group>"; };
+		9A09B8BF1EF1672B00421BF7 /* PostHeaderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostHeaderTableViewCell.h; sourceTree = "<group>"; };
+		9A09B8C01EF1672C00421BF7 /* PostHeaderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostHeaderTableViewCell.m; sourceTree = "<group>"; };
+		9A09B8C11EF1672C00421BF7 /* PostHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostHeaderTableViewCell.xib; sourceTree = "<group>"; };
 		9A13F3521EEE9DB40069219E /* YSLContainerViewController1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSLContainerViewController1.h; sourceTree = "<group>"; };
 		9A13F3531EEE9DB40069219E /* YSLContainerViewController1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YSLContainerViewController1.m; sourceTree = "<group>"; };
 		9A13F3581EEE9DE90069219E /* AllViewSwapeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllViewSwapeViewController.h; sourceTree = "<group>"; };
@@ -854,6 +859,9 @@
 				615ED13C1EDEE6AC001E6B0A /* DetailTableViewCell.h */,
 				615ED13D1EDEE6AC001E6B0A /* DetailTableViewCell.m */,
 				615ED13E1EDEE6AC001E6B0A /* DetailTableViewCell.xib */,
+				9A09B8BF1EF1672B00421BF7 /* PostHeaderTableViewCell.h */,
+				9A09B8C01EF1672C00421BF7 /* PostHeaderTableViewCell.m */,
+				9A09B8C11EF1672C00421BF7 /* PostHeaderTableViewCell.xib */,
 				615ED1411EDEE6C1001E6B0A /* CommentsTableViewCell.h */,
 				615ED1421EDEE6C1001E6B0A /* CommentsTableViewCell.m */,
 				615ED1431EDEE6C1001E6B0A /* CommentsTableViewCell.xib */,
@@ -1151,6 +1159,7 @@
 				613171101EC5BB2000E3BD4C /* EnterPrice.xib in Resources */,
 				614C161B1EC07E4600B11A9B /* play.png in Resources */,
 				61ED09B31EB865EF008EAFB7 /* photoicon.png in Resources */,
+				9A09B8C31EF1672C00421BF7 /* PostHeaderTableViewCell.xib in Resources */,
 				61D3767B1EBC868000BA02D4 /* SanFranciscoDisplay-Semibold.otf in Resources */,
 				61271D491EBD928C0082E504 /* twitter.png in Resources */,
 				61D3767A1EBC868000BA02D4 /* SanFranciscoDisplay-Regular.otf in Resources */,
@@ -1259,6 +1268,7 @@
 				9A13F3561EEE9DB40069219E /* YSLContainerViewController1.m in Sources */,
 				61D376681EBC3F6300BA02D4 /* LGPlusButton.m in Sources */,
 				61487FF51ED2ED42009CEF9B /* ServicesViewController.m in Sources */,
+				9A09B8C21EF1672C00421BF7 /* PostHeaderTableViewCell.m in Sources */,
 				614C16141EC0739900B11A9B /* FRGWaterfallCollectionViewCell.m in Sources */,
 				614C15F11EC039C100B11A9B /* SBJsonStreamWriter.m in Sources */,
 				61ED09A01EB85D42008EAFB7 /* SDWebImageDownloaderOperation.m in Sources */,

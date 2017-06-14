@@ -11,6 +11,7 @@
 #import "DetailTableViewCell.h"
 #import "CommentsTableViewCell.h"
 #import "SuggestedTableViewCell.h"
+#import "PostHeaderTableViewCell.h"
 @interface OnCellClickViewController : UIViewController
 {
     UIView *transparentView,*grayView;
@@ -26,5 +27,7 @@
 @property (strong,nonatomic)DetailTableViewCell * detailCell;
 @property (strong,nonatomic)CommentsTableViewCell * ComCell;
 @property (strong,nonatomic)SuggestedTableViewCell * SuggestCell;
+
+@property (strong,nonatomic)PostHeaderTableViewCell * cell_postcomments;
 @property (nonatomic, strong) NSArray *MoreImageArray;
 @end

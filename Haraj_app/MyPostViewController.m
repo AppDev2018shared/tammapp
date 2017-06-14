@@ -265,8 +265,14 @@
                     FirstCell.image_play.hidden = NO;
                 }
                 
-                NSURL *url=[NSURL URLWithString:[Array_UserInfo valueForKey:@"mediaurl"]];
+                NSURL *url=[NSURL URLWithString:[Array_UserInfo valueForKey:@"mediathumbnailurl"]];
                 [FirstCell.imageView_thumbnails sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
+                
+                FirstCell.imageView_thumbnails.userInteractionEnabled=YES;
+                FirstCell.imageView_thumbnails.tag=swipeCount;
+                UITapGestureRecognizer *imageTap4 =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(MoreImage:)];
+                [FirstCell.imageView_thumbnails addGestureRecognizer:imageTap4];
+                
                 return FirstCell;
             }
             
@@ -891,7 +897,7 @@
     [transparentView addSubview:button3];
     
     scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0,160,self.view.frame.size.width , self.view.frame.size.height -160)];
-    scrollView.backgroundColor = [UIColor greenColor];
+    scrollView.backgroundColor = [UIColor clearColor];
     scrollView.center = transparentView.center;
     scrollView.delegate = self;
     scrollView.pagingEnabled = YES;

@@ -18,5 +18,7 @@
 	<string>http://www.tammapp.com/app/suggestedposts.php</string>
 	<key>postimages</key>
 	<string>http://www.tammapp.com/app/postimages.php</string>
+	<key>cancelpost</key>
+	<string>http://www.tammapp.com/app/cancelpost.php</string>
 </dict>
 </plist>
