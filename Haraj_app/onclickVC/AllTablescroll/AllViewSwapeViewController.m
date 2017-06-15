@@ -90,7 +90,7 @@
             serviceVC.Array_UserInfo=[Array_Alldata objectAtIndex:i];
             serviceVC.swipeCount=i;
             serviceVC.title =[NSString stringWithFormat:@"%@%d",@"Service",i];
-            serviceVC.view.backgroundColor=[UIColor redColor];
+           // serviceVC.view.backgroundColor=[UIColor redColor];
             serviceVC.view.tag=i;
             serviceVC.Array_All_UserInfo=Array_Alldata;
             [view111 addObject:serviceVC];
@@ -104,7 +104,7 @@
             serviceVC.Array_UserInfo=[Array_Alldata objectAtIndex:i];
             serviceVC.swipeCount=i;
             serviceVC.title =[NSString stringWithFormat:@"%@%d",@"Service",i];
-            serviceVC.view.backgroundColor=[UIColor redColor];
+           // serviceVC.view.backgroundColor=[UIColor redColor];
             serviceVC.view.tag=i;
             serviceVC.Array_All_UserInfo=Array_Alldata;
             [view111 addObject:serviceVC];
@@ -152,9 +152,6 @@
     transition.subtype = kCATransitionFromLeft;
     
     [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
-    
-    
-    
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"HidePlusButton" object:self userInfo:nil];
     

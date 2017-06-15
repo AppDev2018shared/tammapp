@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface PostHeaderTableViewCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UIButton *Button_action;
+@property (weak, nonatomic) IBOutlet UIButton *Button_PostComments;
 @end

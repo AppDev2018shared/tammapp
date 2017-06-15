@@ -21,6 +21,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "MHFacebookImageViewer.h"
 #import "UIImageView+MHFacebookImageViewer.h"
+#import "EnterComment.h"
 #define FONT_SIZE 15.0f
 #define CELL_CONTENT_WIDTH self.view.frame.size.width-138
 
@@ -28,11 +29,13 @@
 
 @interface OnCellClickViewController ()<UITableViewDataSource, UITableViewDelegate,UIPopoverPresentationControllerDelegate,UIScrollViewDelegate,UITextFieldDelegate>
 {
-    UIView *sectionView;
+    UIView *sectionView, *transparentView1;
     
     UIScrollView *scrollView;
     UIImageView *imageView;
     UIPageControl *pageControll;
+    
+    NSString *nochats;
    
     FirstImageViewCell *FirstCell;
    
@@ -43,7 +46,7 @@
     NSDictionary *urlplist;
     NSURLConnection *Connection_MakeOffer, *Connection_SuggestPost;
     NSMutableData *webData_MakeOffer, *webData_SuggestPost;
-    NSMutableArray *Array_MakeOffer, *Array_SuggestPost,*Array_Moreimages;
+    NSMutableArray *Array_MakeOffer, *Array_SuggestPost,*Array_Moreimages, *Array_Chats;
     NSString * back_Arrow_Check;
     
     CGFloat newCellHeight;
@@ -91,6 +94,13 @@
                 str_userid =[Array_UserInfo valueForKey:@"userid1"];
                 [self SuggestPostConnection];
     }
+    
+    nochats = @"";
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(Hide_EnterCommentPopover) name:@"HideEnterCommentPopOver" object:nil];
+    
+
 
     
 }
@@ -111,7 +121,11 @@
    NSLog(@" str_postid viewwillappear %@", [[Array_All_UserInfo objectAtIndex:(long)self.view.tag] valueForKey:@"postid"]);
     NSLog(@" str_userid viewwillappear %@",[[Array_All_UserInfo objectAtIndex:(long)self.view.tag] valueForKey:@"userid1"]);
     [self SuggestPostConnection];
+           [self ChatCommentConnection];
     }
+    
+ 
+
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -152,7 +166,24 @@
     }
     else if (section == 3)
     {
-        return 2;
+        if (Array_Chats.count == 0)
+        {
+            return 1;
+            
+        }
+        else
+        {
+            if (Array_Chats.count <= 1)
+            {
+                return 1;
+            }
+            else
+            {
+            return 2;
+            }
+  
+        }
+        
     }
    
     else if (section == 4)
@@ -176,7 +207,11 @@
 //    NSLog(@"dic= %@",dic_request);
     static NSString *cell_two1=@"Cell_Two";
     static NSString *cell_details=@"DetailCell";
+    
+    
+    
     static NSString *cell_comments=@"ComCell";
+    
     static NSString *cell_suggest=@"PostCell";
         static NSString *post_comments=@"PostCell1";
     switch (indexPath.section)
@@ -192,13 +227,10 @@
                 Cell_two = [[[NSBundle mainBundle]loadNibNamed:@"TwoImageOnClickTableViewCell" owner:self options:nil] objectAtIndex:0];
                 
                 
-                
-                
                 if (Cell_two == nil)
                 {
                     
                     Cell_two = [[TwoImageOnClickTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cell_two1];
-                    
                     
                 }
                 [Cell_two.button_threedots addTarget:self action:@selector(button_threedots_action:) forControlEvents:UIControlEventTouchUpInside];
@@ -521,7 +553,7 @@
                 
             }
             
-            
+            [cell_postcomments.Button_PostComments addTarget:self action:@selector(postCommentButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
             
             
             
@@ -548,11 +580,110 @@
         
             ComCell.profileImageView.layer.cornerRadius = ComCell.profileImageView.frame.size.height / 2;
             ComCell.profileImageView.clipsToBounds = YES;
+            
+            
+            if (Array_Chats.count == 0 )
+            {
+                ComCell.commentmsgLabel.text = @"No Chats available";
+                ComCell.usernameLabel.hidden = YES;
+                ComCell.durationLabel.hidden = YES;
+                ComCell.profileImageView.hidden = YES;
+                ComCell.commentmsgLabel.hidden = YES;
+                ComCell.commentofferLabel.hidden = YES;
+
+                
+                UILabel * label = [[UILabel alloc]initWithFrame:CGRectMake(ComCell.frame.origin.x, ComCell.frame.origin.y, ComCell.frame.size.width, ComCell.frame.size.height)];
+                label.text = @" No Chats Available";
+                label.textAlignment = NSTextAlignmentCenter;
+                [label setFont:[UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:20]];
+                [ComCell addSubview:label];
+                [ComCell bringSubviewToFront:label];
+            }
+            else
+            {
+                if ([[[Array_Chats objectAtIndex:indexPath.row] valueForKey:@"messagetype"] isEqualToString:@"TEXT"])
+                {
+                    ComCell.usernameLabel.hidden = NO;
+                    ComCell.durationLabel.hidden = NO;
+                    ComCell.profileImageView.hidden = NO;
+                    ComCell.commentmsgLabel.hidden = NO;
+                    ComCell.commentofferLabel.hidden = YES;
+                    
+                    [ComCell.profileImageView setFrame:CGRectMake(ComCell.frame.size.width - ComCell.profileImageView.frame.size.width - 8 , ComCell.profileImageView.frame.origin.y, ComCell.profileImageView.frame.size.width, ComCell.profileImageView.frame.size.height)];
+                    
+                    [ComCell.durationLabel setFrame:CGRectMake(8, ComCell.durationLabel.frame.origin.y, (ComCell.profileImageView.frame.origin.x - 8)/3, ComCell.usernameLabel.frame.size.height)];
+                    
+                    [ComCell.usernameLabel setFrame:CGRectMake(ComCell.durationLabel.frame.origin.x +ComCell.durationLabel.frame.size.width+ 8, ComCell.usernameLabel.frame.origin.y, (ComCell.frame.size.width - ((ComCell.durationLabel.frame.origin.x + 8+ComCell.durationLabel.frame.size.width)+(ComCell.profileImageView.frame.size.width + 16))) , ComCell.usernameLabel.frame.size.height)];
+                    
+                    
+                    [ComCell.commentofferLabel setFrame:CGRectMake(8, ComCell.commentofferLabel.frame.origin.y, ComCell.frame.size.width - 16, ComCell.commentofferLabel.frame.size.height)];
+                    
+                    [ComCell.commentmsgLabel setFrame:CGRectMake(8, ComCell.commentofferLabel.frame.origin.y, ComCell.frame.size.width - 16, ComCell.commentmsgLabel.frame.size.height)];
+                    
+                    NSLog(@"frame user label==%f",(ComCell.frame.size.width - ((ComCell.durationLabel.frame.origin.x + 8+ComCell.durationLabel.frame.size.width)+(ComCell.profileImageView.frame.size.width + 16))));
+                
+                    ComCell.durationLabel.text = [[Array_Chats objectAtIndex:indexPath.row]valueForKey:@"chatdur"];
+                    ComCell.usernameLabel.text = [[Array_Chats objectAtIndex:indexPath.row]valueForKey:@"name"];
+                    ComCell.commentmsgLabel.text = [[Array_Chats objectAtIndex:indexPath.row]valueForKey:@"message"];
+                    
+                    NSURL *url=[NSURL URLWithString:[[Array_Chats objectAtIndex:indexPath.row]valueForKey:@"profileimage"]];
+                    
+                    
+                    [ComCell.profileImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
+                    
+                    
+
+
+                    
+                }
+                
+                if ([[[Array_Chats objectAtIndex:indexPath.row]valueForKey:@"messagetype"] isEqualToString:@"OFFER"])
+                {
+                    
+                    ComCell.usernameLabel.hidden = NO;
+                    ComCell.durationLabel.hidden = NO;
+                    ComCell.profileImageView.hidden = NO;
+                    ComCell.commentmsgLabel.hidden = NO;
+                    ComCell.commentofferLabel.hidden = NO;
+                    
+                    [ComCell.profileImageView setFrame:CGRectMake(ComCell.frame.size.width - ComCell.profileImageView.frame.size.width - 8 , ComCell.profileImageView.frame.origin.y, ComCell.profileImageView.frame.size.width, ComCell.profileImageView.frame.size.height)];
+                    
+                    [ComCell.durationLabel setFrame:CGRectMake(8, ComCell.durationLabel.frame.origin.y, (ComCell.profileImageView.frame.origin.x - 8)/3, ComCell.usernameLabel.frame.size.height)];
+                    
+                    [ComCell.usernameLabel setFrame:CGRectMake(ComCell.durationLabel.frame.origin.x +ComCell.durationLabel.frame.size.width+ 8, ComCell.usernameLabel.frame.origin.y, (ComCell.frame.size.width - ((ComCell.durationLabel.frame.origin.x + 8+ComCell.durationLabel.frame.size.width)+(ComCell.profileImageView.frame.size.width + 16))) , ComCell.usernameLabel.frame.size.height)];
+                    
+                    
+                    [ComCell.commentofferLabel setFrame:CGRectMake(8, ComCell.commentofferLabel.frame.origin.y, ComCell.frame.size.width - 16, ComCell.commentofferLabel.frame.size.height)];
+                    
+                    [ComCell.commentmsgLabel setFrame:CGRectMake(8, ComCell.commentmsgLabel.frame.origin.y, ComCell.frame.size.width - 16, ComCell.commentmsgLabel.frame.size.height)];
+                    
+                    NSLog(@"frame user label==%f",(ComCell.frame.size.width - ((ComCell.durationLabel.frame.origin.x + 8+ComCell.durationLabel.frame.size.width)+(ComCell.profileImageView.frame.size.width + 16))));
+                    
+                    NSString * offerComment = [NSString stringWithFormat:@"Made an offer: $%@",[[Array_Chats objectAtIndex:indexPath.row]valueForKey:@"amount"]];
+                    
+                    ComCell.commentofferLabel.text = offerComment;//[[Array_Chats objectAtIndex:indexPath.row]valueForKey:@"amount"] ;
+                    ComCell.durationLabel.text = [[Array_Chats objectAtIndex:indexPath.row]valueForKey:@"chatdur"];
+                    ComCell.usernameLabel.text = [[Array_Chats objectAtIndex:indexPath.row]valueForKey:@"name"];
+                    ComCell.commentmsgLabel.text = [[Array_Chats objectAtIndex:indexPath.row]valueForKey:@"message"];
+                    
+                    NSURL *url=[NSURL URLWithString:[[Array_Chats objectAtIndex:indexPath.row]valueForKey:@"profileimage"]];
+                   
+                    
+                    [ComCell.profileImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
+                    
+
+                }
+
+                }
+                return ComCell;
+            }
+            
+             break;
 
             
-            return ComCell;
-        }
-            break;
+            
+    
+    
 #pragma mark -suggest cell
         case 4:
         {
@@ -759,12 +890,32 @@
     }
     else if (indexPath.section == 2)
     {
-        return 30;
+        return 45;
     }
 
     else if (indexPath.section == 3)
     {
-        return 120;
+        if (Array_Chats.count == 0)
+        {
+            return 100;
+           
+        }
+        else
+            
+        {
+            if ([[[Array_Chats objectAtIndex:indexPath.row ] valueForKey:@"messagetype"] isEqualToString:@"TEXT"])
+            {
+                return 103;
+
+            }
+            else
+            {
+                return 142;
+
+            }
+            
+            
+        }
     }
     else if (indexPath.section == 4)
     {
@@ -939,7 +1090,14 @@
     }
     if (section == 3)
     {
-        return 40;
+        if ([nochats isEqualToString:@"nochat"])
+        {
+            return 0;
+        }
+        else
+        {
+            return 40;
+        }
     }
     return 0;
 }
@@ -1010,7 +1168,23 @@
     
    NSLog(@"post comment Pressed");
     
+    transparentView1=[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    transparentView1.backgroundColor=[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.3];
+    NSArray *nibContents = [[NSBundle mainBundle] loadNibNamed:@"EnterComment" owner:self options:nil];
+    UIView *myView = [nibContents objectAtIndex:0];
+    myView.center=transparentView1.center;
+    myView.layer.cornerRadius = 10;
+    myView.clipsToBounds = YES;
+    [transparentView1 addSubview:myView];
+    [self.view addSubview:transparentView1];
+    
 }
+- (void)Hide_EnterCommentPopover
+{
+    transparentView1.hidden= YES;
+}
+
+
 
 -(void)seeCommentButtonPressed:(id)sender
 {
@@ -1530,6 +1704,113 @@
     
 }
 #pragma mark - NSURL CONNECTION
+
+-(void)ChatCommentConnection
+{
+    
+    
+//    NSString *postid= @"postid";
+//    NSString *postidVal =str_postid;
+//    
+//    NSString *userid= @"userid";
+//    NSString *useridVal =str_userid;
+    
+    NSString *postid= @"postid";
+    NSString *postidVal =str_postid;//[defaults valueForKey:@"post-id"];
+    
+    NSString *userid= @"userid";
+    NSString *useridVal =str_userid;//[defaults valueForKey:@"userid"];
+
+    
+    NSString *reqStringFUll=[NSString stringWithFormat:@"%@=%@&%@=%@",postid,postidVal,userid,useridVal];
+    
+    
+    
+#pragma mark - swipe sesion
+    
+    NSURLSession *session = [NSURLSession sessionWithConfiguration: [NSURLSessionConfiguration defaultSessionConfiguration] delegate: nil delegateQueue: [NSOperationQueue mainQueue]];
+    
+    NSURL *url;
+    NSString *  urlStrLivecount=[urlplist valueForKey:@"chatcomments"];;
+    url =[NSURL URLWithString:urlStrLivecount];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    
+    [request setHTTPMethod:@"POST"];//Web API Method
+    
+    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    
+    request.HTTPBody = [reqStringFUll dataUsingEncoding:NSUTF8StringEncoding];
+    
+    
+    
+    NSURLSessionDataTask *dataTask =[session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
+                                     {
+                                         
+                                         if(data)
+                                         {
+                                             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+                                             NSInteger statusCode = httpResponse.statusCode;
+                                             if(statusCode == 200)
+                                             {
+                                                 
+                                                 Array_Chats=[[NSMutableArray alloc]init];
+                                                 SBJsonParser *objSBJsonParser = [[SBJsonParser alloc]init];
+                                                 Array_Chats =[objSBJsonParser objectWithData:data];
+                                                 
+                                                
+                                                 
+                                                 NSString * ResultString=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+                                                 
+                                                 ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+                                                 ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\t" withString:@""];
+                                                 
+                                                 NSLog(@"Array_Chats %@",Array_Chats);
+                                                 
+                                                 if ([ResultString isEqualToString:@"nochat"])
+                                                 {
+                                                     nochats = ResultString;
+                                                     
+                                                     
+                                                     [self.tableView reloadData];
+                                                     
+
+                                                     
+                                                     
+                                                 }
+                                                 
+                                                 if ( Array_Chats.count != 0)
+                                                 {
+                                                     nochats = @"";
+                                                     [self.tableView reloadData];
+
+                                                 }
+
+                                                 
+                                                 
+                                                 
+                                             }
+                                             
+                                             
+                                             else
+                                             {
+                                                 NSLog(@" error login1 ---%ld",(long)statusCode);
+                                                 
+                                             }
+                                             
+                                             
+                                         }
+                                         else if(error)
+                                         {
+                                             
+                                             NSLog(@"error login2.......%@",error.description);
+                                         }
+                                         
+                                         
+                                     }];
+    [dataTask resume];
+    
+    }
 
 -(void)SuggestPostConnection
 {

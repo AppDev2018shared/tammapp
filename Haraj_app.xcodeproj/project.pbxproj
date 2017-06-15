@@ -156,6 +156,8 @@
 		9A09B8C31EF1672C00421BF7 /* PostHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A09B8C11EF1672C00421BF7 /* PostHeaderTableViewCell.xib */; };
 		9A13F3561EEE9DB40069219E /* YSLContainerViewController1.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A13F3531EEE9DB40069219E /* YSLContainerViewController1.m */; };
 		9A13F35A1EEE9DE90069219E /* AllViewSwapeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A13F3591EEE9DE90069219E /* AllViewSwapeViewController.m */; };
+		9AD3F1A01EF2851E005A215D /* EnterComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AD3F19F1EF2851E005A215D /* EnterComment.m */; };
+		9AD3F1A21EF28542005A215D /* EnterComment.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AD3F1A11EF28542005A215D /* EnterComment.xib */; };
 		9AEB1F0A1EF1020E00BD9DEF /* MoreImageScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB1F091EF1020E00BD9DEF /* MoreImageScrollViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -443,6 +445,9 @@
 		9A13F3531EEE9DB40069219E /* YSLContainerViewController1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YSLContainerViewController1.m; sourceTree = "<group>"; };
 		9A13F3581EEE9DE90069219E /* AllViewSwapeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllViewSwapeViewController.h; sourceTree = "<group>"; };
 		9A13F3591EEE9DE90069219E /* AllViewSwapeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllViewSwapeViewController.m; sourceTree = "<group>"; };
+		9AD3F19E1EF2851E005A215D /* EnterComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnterComment.h; sourceTree = "<group>"; };
+		9AD3F19F1EF2851E005A215D /* EnterComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnterComment.m; sourceTree = "<group>"; };
+		9AD3F1A11EF28542005A215D /* EnterComment.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EnterComment.xib; sourceTree = "<group>"; };
 		9AEB1F081EF1020E00BD9DEF /* MoreImageScrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreImageScrollViewController.h; sourceTree = "<group>"; };
 		9AEB1F091EF1020E00BD9DEF /* MoreImageScrollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreImageScrollViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -844,6 +849,9 @@
 				6131710C1EC5BB0A00E3BD4C /* EnterPrice.h */,
 				6131710D1EC5BB0A00E3BD4C /* EnterPrice.m */,
 				6131710F1EC5BB2000E3BD4C /* EnterPrice.xib */,
+				9AD3F19E1EF2851E005A215D /* EnterComment.h */,
+				9AD3F19F1EF2851E005A215D /* EnterComment.m */,
+				9AD3F1A11EF28542005A215D /* EnterComment.xib */,
 			);
 			name = "pop over views";
 			sourceTree = "<group>";
@@ -1179,6 +1187,7 @@
 				61D376771EBC868000BA02D4 /* SanFranciscoDisplay-Heavy.otf in Resources */,
 				615ED1401EDEE6AC001E6B0A /* DetailTableViewCell.xib in Resources */,
 				324780811EACEE0A00FF4B79 /* Images.xcassets in Resources */,
+				9AD3F1A21EF28542005A215D /* EnterComment.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1278,6 +1287,7 @@
 				614C15F31EC039C100B11A9B /* SBJsonStreamWriterState.m in Sources */,
 				61ED099A1EB85D42008EAFB7 /* MKAnnotationView+WebCache.m in Sources */,
 				614C15CB1EC0389200B11A9B /* SignUpViewController.m in Sources */,
+				9AD3F1A01EF2851E005A215D /* EnterComment.m in Sources */,
 				61ED09A51EB85D42008EAFB7 /* UIImage+MultiFormat.m in Sources */,
 				61ED09A91EB85D42008EAFB7 /* UIView+WebCacheOperation.m in Sources */,
 				61ED099D1EB85D42008EAFB7 /* SDWebImageCompat.m in Sources */,
