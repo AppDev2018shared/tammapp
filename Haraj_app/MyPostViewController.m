@@ -684,6 +684,8 @@
 {
     if ([sender tag]== 1)
     {
+       [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewDisable" object:self userInfo:nil];
+        
         NSLog(@"Item Sold Pressed");
 
         transparentView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
@@ -802,14 +804,14 @@
 
 - (void)closedd:(id)sender
 {
-    
+      [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewEnable" object:self userInfo:nil];
     transparentView.hidden=YES;
     
 }
 
 - (void)confirm:(id)sender
 {
-    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewDisable" object:self userInfo:nil];
     transparentView1=[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     transparentView1.backgroundColor=[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.3];
     NSArray *nibContents = [[NSBundle mainBundle] loadNibNamed:@"EnterPrice" owner:self options:nil];
@@ -825,6 +827,7 @@
 }
 - (void)Hide_Popover
 {
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewEnable" object:self userInfo:nil];
     transparentView1.hidden= YES;
 }
 

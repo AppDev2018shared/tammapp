@@ -8,7 +8,9 @@
 
 #import "EnterComment.h"
 
+
 @implementation EnterComment
+@synthesize commentTextView,placeholderLabel;
 
 /*
 // Only override drawRect: if you perform custom drawing.
@@ -23,6 +25,11 @@
     self = [super initWithFrame:frame];
     if (self) {
         //init code
+        
+       
+        
+                
+        
     }
     return self;
 }
@@ -31,6 +38,7 @@
 {
     if (self = [super initWithCoder:aDecoder]) {
         [self setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
+       
     }
     
     return self;
@@ -40,8 +48,11 @@
 
 - (IBAction)closeButton_Action:(id)sender
 {
-      [[NSNotificationCenter defaultCenter] postNotificationName:@"HideEnterCommentPopOver" object:self userInfo:nil];
+    [self endEditing:YES];
+   [[NSNotificationCenter defaultCenter] postNotificationName:@"HideEnterCommentPopOver" object:self userInfo:nil];
+   
 }
+
 - (IBAction)submitButton_Action:(id)sender
 {
     

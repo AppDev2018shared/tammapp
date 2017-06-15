@@ -27,7 +27,7 @@
 
 #define CELL_CONTENT_MARGIN 0.0f
 
-@interface OnCellClickViewController ()<UITableViewDataSource, UITableViewDelegate,UIPopoverPresentationControllerDelegate,UIScrollViewDelegate,UITextFieldDelegate>
+@interface OnCellClickViewController ()<UITableViewDataSource, UITableViewDelegate,UIPopoverPresentationControllerDelegate,UIScrollViewDelegate,UITextFieldDelegate,UITextViewDelegate>
 {
     UIView *sectionView, *transparentView1;
     
@@ -46,7 +46,7 @@
     NSDictionary *urlplist;
     NSURLConnection *Connection_MakeOffer, *Connection_SuggestPost;
     NSMutableData *webData_MakeOffer, *webData_SuggestPost;
-    NSMutableArray *Array_MakeOffer, *Array_SuggestPost,*Array_Moreimages, *Array_Chats;
+    NSMutableArray *Array_MakeOffer, *Array_SuggestPost,*Array_Moreimages, *Array_Chats, *Array_Comments;
     NSString * back_Arrow_Check;
     
     CGFloat newCellHeight;
@@ -57,7 +57,8 @@
     NSString *text;
     
     UITextField *amountTextField ;
-    UITextView *commentTextView;
+    UITextView *commentTextView, *commentPostTextView1;
+    UILabel * postplaceholderLabel;
      CGFloat button_threeDotsx,button_threeDotsy,button_threeDotsw,button_threeDotsh,button_favx,button_favy,button_favw,button_favh,button_arrowx,button_arrowy,button_arroww,button_arrowh;
      MPMoviePlayerViewController *movieController ;
 }
@@ -177,9 +178,13 @@
             {
                 return 1;
             }
+            else if(Array_Chats.count == 2)
+            {
+            return 2 ;
+            }
             else
             {
-            return 2;
+                return 3;
             }
   
         }
@@ -580,6 +585,8 @@
         
             ComCell.profileImageView.layer.cornerRadius = ComCell.profileImageView.frame.size.height / 2;
             ComCell.profileImageView.clipsToBounds = YES;
+             [ComCell.commentofferLabel setFont:[UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:20]];
+             [ComCell.commentmsgLabel setFont:[UIFont fontWithName:@"SanFranciscoDisplay-medium" size:15]];
             
             
             if (Array_Chats.count == 0 )
@@ -592,7 +599,7 @@
                 ComCell.commentofferLabel.hidden = YES;
 
                 
-                UILabel * label = [[UILabel alloc]initWithFrame:CGRectMake(ComCell.frame.origin.x, ComCell.frame.origin.y, ComCell.frame.size.width, ComCell.frame.size.height)];
+                UILabel * label = [[UILabel alloc]initWithFrame:CGRectMake(ComCell.frame.origin.x, ComCell.frame.origin.y, self.view.frame.size.width, ComCell.frame.size.height)];
                 label.text = @" No Chats Available";
                 label.textAlignment = NSTextAlignmentCenter;
                 [label setFont:[UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:20]];
@@ -609,18 +616,18 @@
                     ComCell.commentmsgLabel.hidden = NO;
                     ComCell.commentofferLabel.hidden = YES;
                     
-                    [ComCell.profileImageView setFrame:CGRectMake(ComCell.frame.size.width - ComCell.profileImageView.frame.size.width - 8 , ComCell.profileImageView.frame.origin.y, ComCell.profileImageView.frame.size.width, ComCell.profileImageView.frame.size.height)];
+                    [ComCell.profileImageView setFrame:CGRectMake(self.view.frame.size.width - ComCell.profileImageView.frame.size.width - 8 , ComCell.profileImageView.frame.origin.y, ComCell.profileImageView.frame.size.width, ComCell.profileImageView.frame.size.height)];
                     
                     [ComCell.durationLabel setFrame:CGRectMake(8, ComCell.durationLabel.frame.origin.y, (ComCell.profileImageView.frame.origin.x - 8)/3, ComCell.usernameLabel.frame.size.height)];
                     
-                    [ComCell.usernameLabel setFrame:CGRectMake(ComCell.durationLabel.frame.origin.x +ComCell.durationLabel.frame.size.width+ 8, ComCell.usernameLabel.frame.origin.y, (ComCell.frame.size.width - ((ComCell.durationLabel.frame.origin.x + 8+ComCell.durationLabel.frame.size.width)+(ComCell.profileImageView.frame.size.width + 16))) , ComCell.usernameLabel.frame.size.height)];
+                    [ComCell.usernameLabel setFrame:CGRectMake(ComCell.durationLabel.frame.origin.x +ComCell.durationLabel.frame.size.width+ 8, ComCell.usernameLabel.frame.origin.y, (self.view.frame.size.width - ((ComCell.durationLabel.frame.origin.x + 8+ComCell.durationLabel.frame.size.width)+(ComCell.profileImageView.frame.size.width + 16))) , ComCell.usernameLabel.frame.size.height)];
                     
                     
-                    [ComCell.commentofferLabel setFrame:CGRectMake(8, ComCell.commentofferLabel.frame.origin.y, ComCell.frame.size.width - 16, ComCell.commentofferLabel.frame.size.height)];
+                    [ComCell.commentofferLabel setFrame:CGRectMake(8, ComCell.commentofferLabel.frame.origin.y, self.view.frame.size.width - 16, ComCell.commentofferLabel.frame.size.height)];
                     
-                    [ComCell.commentmsgLabel setFrame:CGRectMake(8, ComCell.commentofferLabel.frame.origin.y, ComCell.frame.size.width - 16, ComCell.commentmsgLabel.frame.size.height)];
+                    [ComCell.commentmsgLabel setFrame:CGRectMake(8, ComCell.commentofferLabel.frame.origin.y, self.view.frame.size.width - 16, ComCell.commentmsgLabel.frame.size.height)];
                     
-                    NSLog(@"frame user label==%f",(ComCell.frame.size.width - ((ComCell.durationLabel.frame.origin.x + 8+ComCell.durationLabel.frame.size.width)+(ComCell.profileImageView.frame.size.width + 16))));
+                    NSLog(@"frame user label==%f",(self.view.frame.size.width - ((ComCell.durationLabel.frame.origin.x + 8+ComCell.durationLabel.frame.size.width)+(ComCell.profileImageView.frame.size.width + 16))));
                 
                     ComCell.durationLabel.text = [[Array_Chats objectAtIndex:indexPath.row]valueForKey:@"chatdur"];
                     ComCell.usernameLabel.text = [[Array_Chats objectAtIndex:indexPath.row]valueForKey:@"name"];
@@ -631,9 +638,6 @@
                     
                     [ComCell.profileImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
                     
-                    
-
-
                     
                 }
                 
@@ -646,20 +650,22 @@
                     ComCell.commentmsgLabel.hidden = NO;
                     ComCell.commentofferLabel.hidden = NO;
                     
-                    [ComCell.profileImageView setFrame:CGRectMake(ComCell.frame.size.width - ComCell.profileImageView.frame.size.width - 8 , ComCell.profileImageView.frame.origin.y, ComCell.profileImageView.frame.size.width, ComCell.profileImageView.frame.size.height)];
+                    [ComCell.profileImageView setFrame:CGRectMake(self.view.frame.size.width - ComCell.profileImageView.frame.size.width - 8 , ComCell.profileImageView.frame.origin.y, ComCell.profileImageView.frame.size.width, ComCell.profileImageView.frame.size.height)];
                     
                     [ComCell.durationLabel setFrame:CGRectMake(8, ComCell.durationLabel.frame.origin.y, (ComCell.profileImageView.frame.origin.x - 8)/3, ComCell.usernameLabel.frame.size.height)];
                     
-                    [ComCell.usernameLabel setFrame:CGRectMake(ComCell.durationLabel.frame.origin.x +ComCell.durationLabel.frame.size.width+ 8, ComCell.usernameLabel.frame.origin.y, (ComCell.frame.size.width - ((ComCell.durationLabel.frame.origin.x + 8+ComCell.durationLabel.frame.size.width)+(ComCell.profileImageView.frame.size.width + 16))) , ComCell.usernameLabel.frame.size.height)];
+                    [ComCell.usernameLabel setFrame:CGRectMake(ComCell.durationLabel.frame.origin.x +ComCell.durationLabel.frame.size.width+ 8, ComCell.usernameLabel.frame.origin.y, (self.view.frame.size.width - ((ComCell.durationLabel.frame.origin.x + 8+ComCell.durationLabel.frame.size.width)+(ComCell.profileImageView.frame.size.width + 16))) , ComCell.usernameLabel.frame.size.height)];
                     
                     
-                    [ComCell.commentofferLabel setFrame:CGRectMake(8, ComCell.commentofferLabel.frame.origin.y, ComCell.frame.size.width - 16, ComCell.commentofferLabel.frame.size.height)];
+                    [ComCell.commentofferLabel setFrame:CGRectMake(8, ComCell.commentofferLabel.frame.origin.y, self.view.frame.size.width - 16, ComCell.commentofferLabel.frame.size.height)];
                     
-                    [ComCell.commentmsgLabel setFrame:CGRectMake(8, ComCell.commentmsgLabel.frame.origin.y, ComCell.frame.size.width - 16, ComCell.commentmsgLabel.frame.size.height)];
+                    [ComCell.commentmsgLabel setFrame:CGRectMake(8, ComCell.commentmsgLabel.frame.origin.y, self.view.frame.size.width - 16, ComCell.commentmsgLabel.frame.size.height)];
                     
-                    NSLog(@"frame user label==%f",(ComCell.frame.size.width - ((ComCell.durationLabel.frame.origin.x + 8+ComCell.durationLabel.frame.size.width)+(ComCell.profileImageView.frame.size.width + 16))));
+                    NSLog(@"frame user label==%f",(self.view.frame.size.width - ((ComCell.durationLabel.frame.origin.x + 8+ComCell.durationLabel.frame.size.width)+(ComCell.profileImageView.frame.size.width + 16))));
                     
                     NSString * offerComment = [NSString stringWithFormat:@"Made an offer: $%@",[[Array_Chats objectAtIndex:indexPath.row]valueForKey:@"amount"]];
+                    
+                   
                     
                     ComCell.commentofferLabel.text = offerComment;//[[Array_Chats objectAtIndex:indexPath.row]valueForKey:@"amount"] ;
                     ComCell.durationLabel.text = [[Array_Chats objectAtIndex:indexPath.row]valueForKey:@"chatdur"];
@@ -1166,22 +1172,262 @@
 -(void)postCommentButtonPressed:(id)sender
 {
     
+ [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewDisable" object:self userInfo:nil];
+    
    NSLog(@"post comment Pressed");
     
     transparentView1=[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     transparentView1.backgroundColor=[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.3];
-    NSArray *nibContents = [[NSBundle mainBundle] loadNibNamed:@"EnterComment" owner:self options:nil];
-    UIView *myView = [nibContents objectAtIndex:0];
-    myView.center=transparentView1.center;
-    myView.layer.cornerRadius = 10;
-    myView.clipsToBounds = YES;
-    [transparentView1 addSubview:myView];
+
+    grayView=[[UIView alloc]initWithFrame:CGRectMake((self.view.frame.size.width-275)/2,self.view.frame.size.width - 250, 275, 225)];
+    grayView.layer.cornerRadius=20;
+    grayView.clipsToBounds = YES;
+    [grayView setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
+    
+    
+    UIButton *closeview=[[UIButton alloc]initWithFrame:CGRectMake(8, 8, 30, 30)];
+    [closeview setTitle:@"X" forState:UIControlStateNormal];
+    [closeview setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+    [closeview addTarget:self action:@selector(closedd1:)
+        forControlEvents:UIControlEventTouchUpInside];
+    [grayView addSubview:closeview];
+    
+    UILabel * label1 = [[UILabel alloc]initWithFrame:CGRectMake(75, 8, 184, 30)];
+    label1.font = [UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:17];
+    label1.textAlignment = NSTextAlignmentRight;
+    label1.text = @"Post comment";
+    label1.textColor = [UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1];
+    [grayView addSubview:label1];
+    
+    
+    commentPostTextView1 = [[UITextView alloc]initWithFrame:CGRectMake(16, 49, 243, 128)];
+    commentPostTextView1.textAlignment = NSTextAlignmentRight;
+    commentPostTextView1.font = [UIFont fontWithName:@"SanFranciscoDisplay-medium" size:17];
+    commentPostTextView1.layer.cornerRadius = 4;
+    commentPostTextView1.clipsToBounds = YES;
+    commentPostTextView1.spellCheckingType = NO;
+    commentPostTextView1.autocorrectionType = NO;
+    commentPostTextView1.delegate = self;
+    [commentPostTextView1 becomeFirstResponder];
+    
+    [grayView addSubview:commentPostTextView1];
+    
+    postplaceholderLabel = [[UILabel alloc]initWithFrame:CGRectMake(22, 49, 231, 30)];
+    postplaceholderLabel.font = [UIFont fontWithName:@"SanFranciscoDisplay-medium" size:17];
+    postplaceholderLabel.textAlignment = NSTextAlignmentRight;
+    postplaceholderLabel.text = @"Type your comment here...";
+    
+    postplaceholderLabel.textColor = [UIColor lightGrayColor];
+    [grayView bringSubviewToFront:postplaceholderLabel];
+    [grayView addSubview:postplaceholderLabel];
+    
+    UIButton *submit=[[UIButton alloc]initWithFrame:CGRectMake(0, 191, 275, 34)];
+    [submit setTitle:@"SUBMIT" forState:UIControlStateNormal];
+    [submit setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    submit.titleLabel.font = [UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:16];
+    [submit setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
+    [submit addTarget:self action:@selector(submit:) forControlEvents:UIControlEventTouchUpInside];
+    [grayView addSubview:submit];
+    
+    
+    [transparentView1 addSubview:grayView];
+    
     [self.view addSubview:transparentView1];
     
 }
+
+-(void)textViewDidChange:(UITextView *)textView
+{
+    
+    if ([textView.text isEqualToString:@""])
+    {
+        postplaceholderLabel.hidden = NO;
+        
+    }
+    else
+        
+    {
+        postplaceholderLabel.hidden = YES;
+        
+    }
+    
+}
+
+//- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+//{
+//    
+//    if([text isEqualToString:@""])
+//    {
+//        postplaceholderLabel.hidden = NO;
+//        
+//        return NO;
+//    }
+//    
+//    return YES;
+//}
+
+-(void)textViewDidEndEditing:(UITextView *)textView
+{
+    if ([textView.text isEqualToString:@""])
+    {
+        postplaceholderLabel.hidden = NO;
+
+    }
+    else
+        
+    {
+        postplaceholderLabel.hidden = YES;
+
+    }
+}
+
+
+
+- (void)submit:(id)sender
+{
+    
+//     [self.view endEditing:YES];
+//     transparentView1.hidden= YES;
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewEnable" object:self userInfo:nil];
+    
+    [self AddChat_Connection];
+    
+}
+
+-(void)AddChat_Connection
+{
+    
+    
+    
+    NSString *postid= @"postid";
+    NSString *postidVal =str_postid;
+    
+    NSString *userid= @"userid";
+    NSString *useridVal =[defaults valueForKey:@"userid"];
+    
+    NSString *message= @"message";
+    NSString *messageVal =commentPostTextView1.text;
+    
+    NSString *chat= @"chattype";
+    NSString *chattypeVal =@"TEXT";
+
+    
+    NSString *reqStringFUll=[NSString stringWithFormat:@"%@=%@&%@=%@&%@=%@&%@=%@",postid,postidVal,userid,useridVal,message,messageVal,chat,chattypeVal];
+    
+    
+    
+#pragma mark - swipe sesion
+    
+    NSURLSession *session = [NSURLSession sessionWithConfiguration: [NSURLSessionConfiguration defaultSessionConfiguration] delegate: nil delegateQueue: [NSOperationQueue mainQueue]];
+    
+    NSURL *url;
+    NSString *  urlStrLivecount=[urlplist valueForKey:@"addchat"];;
+    url =[NSURL URLWithString:urlStrLivecount];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    
+    [request setHTTPMethod:@"POST"];//Web API Method
+    
+    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    
+    request.HTTPBody = [reqStringFUll dataUsingEncoding:NSUTF8StringEncoding];
+    
+    
+    
+    NSURLSessionDataTask *dataTask =[session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
+                                     {
+                                         
+                                         if(data)
+                                         {
+                                             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+                                             NSInteger statusCode = httpResponse.statusCode;
+                                             if(statusCode == 200)
+                                             {
+                                                 
+                                                 Array_Comments=[[NSMutableArray alloc]init];
+                                                 SBJsonParser *objSBJsonParser = [[SBJsonParser alloc]init];
+                                                 Array_Comments=[objSBJsonParser objectWithData:data];
+                                                 NSString * ResultString=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+                                                ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+                                                 ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\t" withString:@""];
+                                                 NSLog(@"Array_Comments %@",Array_Comments);
+                                                 
+                                                 NSLog(@"array_login ResultString %@",ResultString);
+                                                 if ([ResultString isEqualToString:@"done"])
+                                                 {
+                                                     
+                                                     
+                                                     
+                                                     [self.view endEditing:YES];
+                                                     transparentView1.hidden= YES;
+                                                     [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewEnable" object:self userInfo:nil];
+                                                   
+                                                     
+                                                     
+                                                 }
+                                                 if ([ResultString isEqualToString:@"inserterror"])
+                                                 {
+                                                     
+                                                     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops" message:@"inserterror" preferredStyle:UIAlertControllerStyleAlert];
+                                                     
+                                                     UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
+                                                     [alertController addAction:actionOk];
+                                                     [self presentViewController:alertController animated:YES completion:nil];
+                                                     
+                                                     
+                                                 }
+                                                 if ([ResultString isEqualToString:@"messagenull"])
+                                                 {
+                                                     
+                                                     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops" message:@"messagenull" preferredStyle:UIAlertControllerStyleAlert];
+                                                     
+                                                     UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
+                                                     [alertController addAction:actionOk];
+                                                     [self presentViewController:alertController animated:YES completion:nil];
+                                                     
+                                                     
+                                                 }
+                                                 if ([ResultString isEqualToString:@"nullerror"])
+                                                 {
+                                                     
+                                                     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops" message:@"nullerror" preferredStyle:UIAlertControllerStyleAlert];
+                                                     
+                                                     UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
+                                                     [alertController addAction:actionOk];
+                                                     [self presentViewController:alertController animated:YES completion:nil];
+                                                     
+                                                     
+                                                 }
+                                                 
+                                                 
+                                                 
+                                             }
+                                             
+                                             else
+                                             {
+                                                 NSLog(@" error login1 ---%ld",(long)statusCode);
+                                                 
+                                             }
+                                             
+                                             
+                                         }
+                                         else if(error)
+                                         {
+                                             
+                                             NSLog(@"error login2.......%@",error.description);
+                                         }
+                                         
+                                         
+                                     }];
+    [dataTask resume];
+    
+}
+
 - (void)Hide_EnterCommentPopover
 {
-    transparentView1.hidden= YES;
+    [transparentView1 removeFromSuperview];
+   // transparentView1.hidden= YES;
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewEnable" object:self userInfo:nil];
 }
 
 
@@ -1194,6 +1440,9 @@
 
 -(void)makeOfferPressed:(id)sender
 {
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewDisable" object:self userInfo:nil];
+
     NSLog(@"makeOffer Pressed");
     
     transparentView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
@@ -1263,13 +1512,9 @@
         forControlEvents:UIControlEventTouchUpInside];
     [grayView addSubview:confirm];
 
-
     [transparentView addSubview:grayView];
     [self.view addSubview:transparentView];
     
-    
-    
-
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
@@ -1279,8 +1524,7 @@
         amountTextField.text = @"$";
     }
     
-    //amountTextField.text = @"$";//[[NSLocale currentLocale] objectForKey:NSLocaleCurrencySymbol];
-}
+    }
 
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
@@ -1302,16 +1546,31 @@
 
 - (void)closedd:(id)sender
 {
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewEnable" object:self userInfo:nil];
+    
     [self.view endEditing:YES];
  
     transparentView.hidden=YES;
     
 }
 
+- (void)closedd1:(id)sender
+{
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewEnable" object:self userInfo:nil];
+    
+    [self.view endEditing:YES];
+    
+    transparentView1.hidden=YES;
+    
+}
+
+
 - (void)confirm:(id)sender
 {
     
-    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewEnable" object:self userInfo:nil];
     [self CreateMakeOfferConnection];
     transparentView.hidden=YES;
     [self.view endEditing:YES];

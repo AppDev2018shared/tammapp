@@ -42,8 +42,7 @@
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"HidePopOver" object:self userInfo:nil];
     
-   // [self removeFromSuperview];
-       
+          
     
 }
 @end

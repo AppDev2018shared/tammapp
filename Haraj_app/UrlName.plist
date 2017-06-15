@@ -22,5 +22,7 @@
 	<string>http://www.tammapp.com/app/cancelpost.php</string>
 	<key>chatcomments</key>
 	<string>http://www.tammapp.com/app/chat.php</string>
+	<key>addchat</key>
+	<string>http://www.tammapp.com/app/addchat.php</string>
 </dict>
 </plist>
