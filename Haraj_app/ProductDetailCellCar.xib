@@ -38,12 +38,12 @@
                         <color key="textColor" red="0.0" green="0.56470588239999997" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="steve.jpeg" translatesAutoresizingMaskIntoConstraints="NO" id="g7N-n9-bCC">
-                        <frame key="frameInset" minX="312" minY="8" width="55" height="55"/>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="defaultimg.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="g7N-n9-bCC">
+                        <frame key="frameInset" minX="325" minY="12" width="42" height="42"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Username" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o0L-X2-ciW">
-                        <frame key="frameInset" minX="145" minY="25" width="159" height="21"/>
+                        <frame key="frameInset" minX="147" minY="23" width="170" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" name="SanFranciscoDisplay-Bold" family="San Francisco Display" pointSize="17"/>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -140,6 +140,6 @@
         <image name="Location_on" width="19" height="26"/>
         <image name="Mileage" width="59" height="36"/>
         <image name="Model" width="48" height="47"/>
-        <image name="steve.jpeg" width="660" height="371"/>
+        <image name="defaultimg.jpg" width="200" height="200"/>
     </resources>
 </document>
