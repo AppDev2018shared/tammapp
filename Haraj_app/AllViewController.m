@@ -232,6 +232,11 @@
 -(void)viewWillAppear:(BOOL)animated
 {
    // [self viewPostConnection];
+    
+    [self.collectionView reloadData];
+
+    
+
    [[self navigationController] setNavigationBarHidden:YES animated:YES];
 }
 

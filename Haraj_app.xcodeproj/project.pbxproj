@@ -152,6 +152,10 @@
 		61F56CD31ECD75A10031E9C1 /* ELCAssetTablePicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61F56CC71ECD75A10031E9C1 /* ELCAssetTablePicker.xib */; };
 		61F56CD41ECD75A10031E9C1 /* Overlay.png in Resources */ = {isa = PBXBuildFile; fileRef = 61F56CC81ECD75A10031E9C1 /* Overlay.png */; };
 		61F56CD51ECD75A10031E9C1 /* Overlay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61F56CC91ECD75A10031E9C1 /* Overlay@2x.png */; };
+		61F95A9A1EF5527E00DEE62A /* ProductDetailCellCar.m in Sources */ = {isa = PBXBuildFile; fileRef = 61F95A981EF5527E00DEE62A /* ProductDetailCellCar.m */; };
+		61F95A9B1EF5527E00DEE62A /* ProductDetailCellCar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61F95A991EF5527E00DEE62A /* ProductDetailCellCar.xib */; };
+		61F95A9F1EF5588900DEE62A /* ProductDetailCellProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 61F95A9D1EF5588900DEE62A /* ProductDetailCellProperty.m */; };
+		61F95AA01EF5588900DEE62A /* ProductDetailCellProperty.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61F95A9E1EF5588900DEE62A /* ProductDetailCellProperty.xib */; };
 		9A09B8C21EF1672C00421BF7 /* PostHeaderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A09B8C01EF1672C00421BF7 /* PostHeaderTableViewCell.m */; };
 		9A09B8C31EF1672C00421BF7 /* PostHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A09B8C11EF1672C00421BF7 /* PostHeaderTableViewCell.xib */; };
 		9A13F3561EEE9DB40069219E /* YSLContainerViewController1.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A13F3531EEE9DB40069219E /* YSLContainerViewController1.m */; };
@@ -438,6 +442,12 @@
 		61F56CC71ECD75A10031E9C1 /* ELCAssetTablePicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ELCAssetTablePicker.xib; sourceTree = "<group>"; };
 		61F56CC81ECD75A10031E9C1 /* Overlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Overlay.png; sourceTree = "<group>"; };
 		61F56CC91ECD75A10031E9C1 /* Overlay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Overlay@2x.png"; sourceTree = "<group>"; };
+		61F95A971EF5527D00DEE62A /* ProductDetailCellCar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductDetailCellCar.h; sourceTree = "<group>"; };
+		61F95A981EF5527E00DEE62A /* ProductDetailCellCar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductDetailCellCar.m; sourceTree = "<group>"; };
+		61F95A991EF5527E00DEE62A /* ProductDetailCellCar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductDetailCellCar.xib; sourceTree = "<group>"; };
+		61F95A9C1EF5588900DEE62A /* ProductDetailCellProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductDetailCellProperty.h; sourceTree = "<group>"; };
+		61F95A9D1EF5588900DEE62A /* ProductDetailCellProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductDetailCellProperty.m; sourceTree = "<group>"; };
+		61F95A9E1EF5588900DEE62A /* ProductDetailCellProperty.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductDetailCellProperty.xib; sourceTree = "<group>"; };
 		9A09B8BF1EF1672B00421BF7 /* PostHeaderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostHeaderTableViewCell.h; sourceTree = "<group>"; };
 		9A09B8C01EF1672C00421BF7 /* PostHeaderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostHeaderTableViewCell.m; sourceTree = "<group>"; };
 		9A09B8C11EF1672C00421BF7 /* PostHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostHeaderTableViewCell.xib; sourceTree = "<group>"; };
@@ -768,6 +778,12 @@
 				61EDCA041ECB2DF40036A250 /* AddImageCell.m */,
 				61EDCA061ECB2E270036A250 /* ProductDetailCell.h */,
 				61EDCA071ECB2E270036A250 /* ProductDetailCell.m */,
+				61F95A971EF5527D00DEE62A /* ProductDetailCellCar.h */,
+				61F95A981EF5527E00DEE62A /* ProductDetailCellCar.m */,
+				61F95A991EF5527E00DEE62A /* ProductDetailCellCar.xib */,
+				61F95A9C1EF5588900DEE62A /* ProductDetailCellProperty.h */,
+				61F95A9D1EF5588900DEE62A /* ProductDetailCellProperty.m */,
+				61F95A9E1EF5588900DEE62A /* ProductDetailCellProperty.xib */,
 				61EDCA091ECB2E3F0036A250 /* MoreDetailCell.h */,
 				61EDCA0A1ECB2E3F0036A250 /* MoreDetailCell.m */,
 			);
@@ -1154,12 +1170,14 @@
 				61271D471EBD928C0082E504 /* facebook@2x.png in Resources */,
 				61271D4B1EBD928C0082E504 /* twitter@3x.png in Resources */,
 				614C15C51EC0315500B11A9B /* TwitterKitResources.bundle in Resources */,
+				61F95AA01EF5588900DEE62A /* ProductDetailCellProperty.xib in Resources */,
 				615ED14A1EDEE6D2001E6B0A /* SuggestedTableViewCell.xib in Resources */,
 				61D3767C1EBC868000BA02D4 /* SanFranciscoDisplay-Thin.otf in Resources */,
 				61F56CD31ECD75A10031E9C1 /* ELCAssetTablePicker.xib in Resources */,
 				61271D461EBD928C0082E504 /* facebook.png in Resources */,
 				61739FEF1EE2AF5900018CF1 /* Done.png in Resources */,
 				61E015F51ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.xib in Resources */,
+				61F95A9B1EF5527E00DEE62A /* ProductDetailCellCar.xib in Resources */,
 				61F56CD21ECD75A10031E9C1 /* ELCAssetPicker.xib in Resources */,
 				61271D481EBD928C0082E504 /* facebook@3x.png in Resources */,
 				1B3B632E1EDFDD1B00D57715 /* defaultimg.jpg in Resources */,
@@ -1233,6 +1251,7 @@
 				61ED095B1EB85369008EAFB7 /* YSLScrollMenuView.m in Sources */,
 				61487FF81ED2ED5D009CEF9B /* OtherViewController.m in Sources */,
 				61739FEC1EE2AF5900018CF1 /* AFPropertyListRequestOperation.m in Sources */,
+				61F95A9A1EF5527E00DEE62A /* ProductDetailCellCar.m in Sources */,
 				61ED099E1EB85D42008EAFB7 /* SDWebImageDecoder.m in Sources */,
 				614C161E1EC0919200B11A9B /* OnCellClickViewController.m in Sources */,
 				324780B11EACF17E00FF4B79 /* AllViewController.m in Sources */,
@@ -1269,6 +1288,7 @@
 				61ED099F1EB85D42008EAFB7 /* SDWebImageDownloader.m in Sources */,
 				61739FEE1EE2AF5900018CF1 /* AFXMLRequestOperation.m in Sources */,
 				614C15F01EC039C100B11A9B /* SBJsonStreamParserState.m in Sources */,
+				61F95A9F1EF5588900DEE62A /* ProductDetailCellProperty.m in Sources */,
 				61ED09A21EB85D42008EAFB7 /* SDWebImagePrefetcher.m in Sources */,
 				614C15EF1EC039C100B11A9B /* SBJsonStreamParserAdapter.m in Sources */,
 				61EDCA051ECB2DF40036A250 /* AddImageCell.m in Sources */,

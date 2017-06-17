@@ -8,8 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface EnterPrice : UIView
+@interface EnterPrice : UIView<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *closeButton;
 - (IBAction)closeAction:(id)sender;
+@property (weak, nonatomic) IBOutlet UITextField *priceTextField;
+@property (weak, nonatomic) IBOutlet UILabel *postIdLabel;
+@property (weak, nonatomic) IBOutlet UILabel *caculatedAmountLabel;
+
+@property (weak, nonatomic) IBOutlet UIButton *creditButton;
+@property (weak, nonatomic) IBOutlet UIButton *bankButton;
 
 @end

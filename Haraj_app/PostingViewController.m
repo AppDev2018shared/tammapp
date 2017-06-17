@@ -488,6 +488,8 @@
                 imageView.userInteractionEnabled=YES;
                 imageView.image=[imageArray objectAtIndex:i];
                 
+                imageView.contentMode = UIViewContentModeScaleAspectFill;
+                
                 
 //                UITapGestureRecognizer * ImageTap =[[UITapGestureRecognizer alloc] initWithTarget:self
 //                                                                                           action:@selector(ImageTapped:)];
@@ -717,6 +719,18 @@
         //   moreCell.createButton.backgroundColor = [UIColor greenColor];
         [moreCell.createButton setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
     }
+    
+//    if (textView == detailCell.hashTextView)
+//    
+//    {
+//       if ( [textView.text componentsSeparatedByString:@" "])
+//       {
+//           
+//           textView.text =[textView.text stringByAppendingString:@"#"];
+//           
+//       }
+//        
+//    }
 }
 -(void)textViewDidBeginEditing:(UITextView *)textView
 {
@@ -799,11 +813,26 @@
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
     
-    if([text isEqualToString:@"\n"]) {
+    if([text isEqualToString:@"\n"])
+    {
+        
         [textView resignFirstResponder];
         return NO;
     }
     
+        //if (textView == detailCell.hashTextView)
+    
+       // {
+      //     if ( [textView.text componentsSeparatedByString:@" "])
+       //    {
+    
+        //       textView.text =[textView.text stringByAppendingString:@"#"];
+    //
+       //    }
+            
+     //   }
+
+  
     return YES;
 }
 

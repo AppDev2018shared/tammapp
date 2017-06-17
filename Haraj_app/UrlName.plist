@@ -24,5 +24,7 @@
 	<string>http://www.tammapp.com/app/chat.php</string>
 	<key>addchat</key>
 	<string>http://www.tammapp.com/app/addchat.php</string>
+	<key>itemsold</key>
+	<string>http://www.tammapp.com/app/itemsold.php</string>
 </dict>
 </plist>

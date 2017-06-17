@@ -52,6 +52,7 @@
     CGFloat newCellHeight;
     CGFloat Xpostion, Ypostion, Xwidth, Yheight, ScrollContentSize,Xpostion_label, Ypostion_label, Xwidth_label, Yheight_label,Cell_DescLabelX,Cell_DescLabelY,Cell_DescLabelW,Cell_DescLabelH,TextView_ViewX,TextView_ViewY,TextView_ViewW,TextView_ViewH;
     CGFloat FavIV_X,FavIV_Y,FavIV_W,FavIV_H,FavLabel_X,FavLabel_Y,FavLabel_W,FavLabel_H;
+     CGFloat button_threeDotsx,button_threeDotsy,button_threeDotsw,button_threeDotsh,button_favx,button_favy,button_favw,button_favh,button_arrowx,button_arrowy,button_arroww,button_arrowh;
     
     NSString *str_LabelCoordinates,*str_TappedLabel,*str_postid,*str_userid;;
     NSString *text;
@@ -59,7 +60,9 @@
     UITextField *amountTextField ;
     UITextView *commentTextView, *commentPostTextView1;
     UILabel * postplaceholderLabel;
-     CGFloat button_threeDotsx,button_threeDotsy,button_threeDotsw,button_threeDotsh,button_favx,button_favy,button_favw,button_favh,button_arrowx,button_arrowy,button_arroww,button_arrowh;
+    UIButton *seeCommentButton, *confirmOfferButton, *submitPostButton;
+    
+    
      MPMoviePlayerViewController *movieController ;
 }
 
@@ -101,6 +104,9 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(Hide_EnterCommentPopover) name:@"HideEnterCommentPopOver" object:nil];
     
+    
+     [defaults setObject:@"no" forKey:@"SeeCommentPressed"];
+    
 
 
     
@@ -115,14 +121,15 @@
     }
     else
     {
-     NSLog(@" array info %ld",(long)self.view.tag);
-     NSLog(@" Array_All_UserInfo viewwillappear %@",Array_All_UserInfo);
-    str_postid= [[Array_All_UserInfo objectAtIndex:(long)self.view.tag] valueForKey:@"postid"];
-    str_userid =[[Array_All_UserInfo objectAtIndex:(long)self.view.tag] valueForKey:@"userid1"];
-   NSLog(@" str_postid viewwillappear %@", [[Array_All_UserInfo objectAtIndex:(long)self.view.tag] valueForKey:@"postid"]);
-    NSLog(@" str_userid viewwillappear %@",[[Array_All_UserInfo objectAtIndex:(long)self.view.tag] valueForKey:@"userid1"]);
-    [self SuggestPostConnection];
-           [self ChatCommentConnection];
+        NSLog(@" array info %ld",(long)self.view.tag);
+        NSLog(@" Array_All_UserInfo viewwillappear %@",Array_All_UserInfo);
+        str_postid= [[Array_All_UserInfo objectAtIndex:(long)self.view.tag] valueForKey:@"postid"];
+        str_userid =[[Array_All_UserInfo objectAtIndex:(long)self.view.tag] valueForKey:@"userid1"];
+        NSLog(@" str_postid viewwillappear %@", [[Array_All_UserInfo objectAtIndex:(long)self.view.tag] valueForKey:@"postid"]);
+        NSLog(@" str_userid viewwillappear %@",[[Array_All_UserInfo objectAtIndex:(long)self.view.tag] valueForKey:@"userid1"]);
+        
+        [self SuggestPostConnection];
+        [self ChatCommentConnection];
     }
     
  
@@ -167,27 +174,41 @@
     }
     else if (section == 3)
     {
-        if (Array_Chats.count == 0)
+        if ([[defaults valueForKey:@"SeeCommentPressed"]isEqualToString:@"no"])
         {
-            return 1;
+            
+            if (Array_Chats.count == 0)
+            {
+                return 1;
+                
+            }
+            else
+            {
+                if (Array_Chats.count <= 1)
+                {
+                    return 1;
+                }
+                else if(Array_Chats.count == 2)
+                {
+                    return 2 ;
+                }
+                else
+                {
+                    return 3;
+                }
+                
+            }
+
             
         }
         else
         {
-            if (Array_Chats.count <= 1)
-            {
-                return 1;
-            }
-            else if(Array_Chats.count == 2)
-            {
-            return 2 ;
-            }
-            else
-            {
-                return 3;
-            }
-  
+            
+            return Array_Chats.count;
+            
         }
+        
+        
         
     }
    
@@ -218,7 +239,7 @@
     static NSString *cell_comments=@"ComCell";
     
     static NSString *cell_suggest=@"PostCell";
-        static NSString *post_comments=@"PostCell1";
+    static NSString *post_comments=@"PostCell1";
     switch (indexPath.section)
     {
                      case 0:
@@ -582,11 +603,11 @@
                 
             }
             
-        
+            
             ComCell.profileImageView.layer.cornerRadius = ComCell.profileImageView.frame.size.height / 2;
             ComCell.profileImageView.clipsToBounds = YES;
-             [ComCell.commentofferLabel setFont:[UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:20]];
-             [ComCell.commentmsgLabel setFont:[UIFont fontWithName:@"SanFranciscoDisplay-medium" size:15]];
+            [ComCell.commentofferLabel setFont:[UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:20]];
+            [ComCell.commentmsgLabel setFont:[UIFont fontWithName:@"SanFranciscoDisplay-medium" size:15]];
             
             
             if (Array_Chats.count == 0 )
@@ -597,7 +618,7 @@
                 ComCell.profileImageView.hidden = YES;
                 ComCell.commentmsgLabel.hidden = YES;
                 ComCell.commentofferLabel.hidden = YES;
-
+                
                 
                 UILabel * label = [[UILabel alloc]initWithFrame:CGRectMake(ComCell.frame.origin.x, ComCell.frame.origin.y, self.view.frame.size.width, ComCell.frame.size.height)];
                 label.text = @" No Chats Available";
@@ -628,7 +649,7 @@
                     [ComCell.commentmsgLabel setFrame:CGRectMake(8, ComCell.commentofferLabel.frame.origin.y, self.view.frame.size.width - 16, ComCell.commentmsgLabel.frame.size.height)];
                     
                     NSLog(@"frame user label==%f",(self.view.frame.size.width - ((ComCell.durationLabel.frame.origin.x + 8+ComCell.durationLabel.frame.size.width)+(ComCell.profileImageView.frame.size.width + 16))));
-                
+                    
                     ComCell.durationLabel.text = [[Array_Chats objectAtIndex:indexPath.row]valueForKey:@"chatdur"];
                     ComCell.usernameLabel.text = [[Array_Chats objectAtIndex:indexPath.row]valueForKey:@"name"];
                     ComCell.commentmsgLabel.text = [[Array_Chats objectAtIndex:indexPath.row]valueForKey:@"message"];
@@ -665,7 +686,7 @@
                     
                     NSString * offerComment = [NSString stringWithFormat:@"Made an offer: $%@",[[Array_Chats objectAtIndex:indexPath.row]valueForKey:@"amount"]];
                     
-                   
+                    
                     
                     ComCell.commentofferLabel.text = offerComment;//[[Array_Chats objectAtIndex:indexPath.row]valueForKey:@"amount"] ;
                     ComCell.durationLabel.text = [[Array_Chats objectAtIndex:indexPath.row]valueForKey:@"chatdur"];
@@ -673,16 +694,16 @@
                     ComCell.commentmsgLabel.text = [[Array_Chats objectAtIndex:indexPath.row]valueForKey:@"message"];
                     
                     NSURL *url=[NSURL URLWithString:[[Array_Chats objectAtIndex:indexPath.row]valueForKey:@"profileimage"]];
-                   
+                    
                     
                     [ComCell.profileImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
                     
-
+                    
                 }
-
-                }
-                return ComCell;
+                
             }
+            return ComCell;
+        }
             
              break;
 
@@ -929,7 +950,7 @@
         {
             return 0;
         }
-        else if (Array_SuggestPost.count==3)
+        else if (Array_SuggestPost.count >=1)
         {
             return 140;
         }
@@ -1076,17 +1097,41 @@
         [sectionView addSubview:bottomView];
         
         
-        UIButton *button1 = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width - 160, 0, 150, 40)];
-        [button1 setTitle:@"See all comments" forState:UIControlStateNormal];
-        [button1 setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+        
+        UIButton *button1 = [[UIButton alloc]initWithFrame:CGRectMake(8, 0, 122, 30)];
+        [button1 setTitle:@"Post a comment" forState:UIControlStateNormal];
+        button1.titleLabel.font = [UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:15];
+        [button1 setTitleColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1] forState:UIControlStateNormal];
         [button1 setTag:1];
-        [button1 addTarget:self action:@selector(seeCommentButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [button1 addTarget:self action:@selector(postCommentButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [sectionView addSubview:button1];
+        
+        
+        seeCommentButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width - 170, 0, 160, 40)];
+        
+        if ([[defaults valueForKey:@"SeeCommentPressed"]isEqualToString:@"no"])
+        {
+        [seeCommentButton setTitle:@"See all comments" forState:UIControlStateNormal];
+            button1.hidden = YES;
+
+        }
+        else
+        {
+         [seeCommentButton setTitle:@"See less comments" forState:UIControlStateNormal];
+            button1.hidden = NO;
+
+        }
+        
+        [seeCommentButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+        [seeCommentButton setTag:1];
+        [seeCommentButton addTarget:self action:@selector(seeCommentButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [sectionView addSubview:seeCommentButton];
         
     }
     
     return sectionView;
 }
+
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
     
@@ -1100,6 +1145,13 @@
         {
             return 0;
         }
+        
+        else if(Array_Chats.count < 4)
+        {
+            return 0;
+        }
+        
+        
         else
         {
             return 40;
@@ -1221,13 +1273,17 @@
     [grayView bringSubviewToFront:postplaceholderLabel];
     [grayView addSubview:postplaceholderLabel];
     
-    UIButton *submit=[[UIButton alloc]initWithFrame:CGRectMake(0, 191, 275, 34)];
-    [submit setTitle:@"SUBMIT" forState:UIControlStateNormal];
-    [submit setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    submit.titleLabel.font = [UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:16];
-    [submit setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
-    [submit addTarget:self action:@selector(submit:) forControlEvents:UIControlEventTouchUpInside];
-    [grayView addSubview:submit];
+    submitPostButton=[[UIButton alloc]initWithFrame:CGRectMake(0, 191, 275, 34)];
+    [submitPostButton setTitle:@"SUBMIT" forState:UIControlStateNormal];
+    [submitPostButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    submitPostButton.titleLabel.font = [UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:16];
+    
+    submitPostButton.enabled = NO;
+    [submitPostButton setBackgroundColor:[UIColor grayColor]];
+    
+   // [submitPostButton setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
+    [submitPostButton addTarget:self action:@selector(submit:) forControlEvents:UIControlEventTouchUpInside];
+    [grayView addSubview:submitPostButton];
     
     
     [transparentView1 addSubview:grayView];
@@ -1242,29 +1298,36 @@
     if ([textView.text isEqualToString:@""])
     {
         postplaceholderLabel.hidden = NO;
+        submitPostButton.enabled = NO;
+        [submitPostButton setBackgroundColor:[UIColor grayColor]];
         
     }
     else
         
     {
         postplaceholderLabel.hidden = YES;
+        submitPostButton.enabled = YES;
+        [submitPostButton setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
         
     }
     
+    if (textView == commentTextView)
+    {
+        if ([textView.text isEqualToString:@""])
+        {
+            
+            confirmOfferButton.enabled = NO;
+            [confirmOfferButton setBackgroundColor:[UIColor grayColor]];
+            
+        }
+        else
+        {
+            confirmOfferButton.enabled = YES;
+            [confirmOfferButton setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
+        }
+    }
+    
 }
-
-//- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
-//{
-//    
-//    if([text isEqualToString:@""])
-//    {
-//        postplaceholderLabel.hidden = NO;
-//        
-//        return NO;
-//    }
-//    
-//    return YES;
-//}
 
 -(void)textViewDidEndEditing:(UITextView *)textView
 {
@@ -1286,11 +1349,7 @@
 - (void)submit:(id)sender
 {
     
-//     [self.view endEditing:YES];
-//     transparentView1.hidden= YES;
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewEnable" object:self userInfo:nil];
-    
-    [self AddChat_Connection];
+       [self AddChat_Connection];
     
 }
 
@@ -1361,6 +1420,10 @@
                                                      [self.view endEditing:YES];
                                                      transparentView1.hidden= YES;
                                                      [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewEnable" object:self userInfo:nil];
+                                                     
+                                                      [defaults setObject:@"no" forKey:@"SeeCommentPressed"];
+                                                     
+                                                     [self ChatCommentConnection];
                                                    
                                                      
                                                      
@@ -1399,6 +1462,21 @@
                                                      
                                                  }
                                                  
+                                                 if ([ResultString isEqualToString:@"nopostid"])
+                                                 {
+                                                     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops" message:@"This item is no more available and has probably been sold by the seller." preferredStyle:UIAlertControllerStyleAlert];
+                                                     
+                                                     UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                                                                        style:UIAlertActionStyleDefault
+                                                                                                      handler:nil];
+                                                     [alertController addAction:actionOk];
+                                                     [self presentViewController:alertController animated:YES completion:nil];
+                                                     
+                                                     
+                                                     
+                                                 }
+
+                                                 
                                                  
                                                  
                                              }
@@ -1434,7 +1512,41 @@
 
 -(void)seeCommentButtonPressed:(id)sender
 {
-     NSLog(@"See comment Pressed");
+    
+    
+    
+    if ([[defaults valueForKey:@"SeeCommentPressed"]isEqualToString:@"no"])
+    {
+          [defaults setObject:@"yes" forKey:@"SeeCommentPressed"];
+        
+        [seeCommentButton setTitle:@"See less comments" forState:UIControlStateNormal];
+        
+        [self.tableView reloadData];
+        
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:(Array_Chats.count)-1 inSection:3] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+        
+        
+
+         NSLog(@"See Less Comments");
+        
+        
+    }
+    else
+    {
+        
+        [seeCommentButton setTitle:@"See all comments" forState:UIControlStateNormal];
+
+        [defaults setObject:@"no" forKey:@"SeeCommentPressed"];
+        
+         [self.tableView reloadData];
+        
+        
+         NSLog(@"See all comments");
+    }
+    
+    
+    
+    
     
 }
 
@@ -1481,6 +1593,9 @@
     //amountTextField.text = @"$";
     amountTextField.textColor = [UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1];
     amountTextField.backgroundColor = [UIColor whiteColor];
+    
+    [amountTextField addTarget:self action:@selector(enterInAmountField ) forControlEvents:UIControlEventEditingChanged];
+    
     amountTextField.layer.cornerRadius = 4;
     amountTextField.clipsToBounds = YES;
     amountTextField.delegate = self;
@@ -1500,21 +1615,38 @@
     commentTextView.clipsToBounds = YES;
     commentTextView.spellCheckingType = NO;
     commentTextView.autocorrectionType = NO;
+    commentTextView.delegate = self;
     [grayView addSubview:commentTextView];
     
     
-    UIButton *confirm=[[UIButton alloc]initWithFrame:CGRectMake(0, 206, 275, 44)];
-    [confirm setTitle:@"CONFIRM" forState:UIControlStateNormal];
-    [confirm setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    confirm.titleLabel.font = [UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:16];
-    [confirm setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
-    [confirm addTarget:self action:@selector(confirm:)
+    confirmOfferButton=[[UIButton alloc]initWithFrame:CGRectMake(0, 206, 275, 44)];
+    [confirmOfferButton setTitle:@"CONFIRM" forState:UIControlStateNormal];
+    [confirmOfferButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    confirmOfferButton.titleLabel.font = [UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:16];
+    confirmOfferButton.enabled = NO;
+    [confirmOfferButton setBackgroundColor:[UIColor grayColor]];
+    
+  //  [confirmOfferButton setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
+    
+    [confirmOfferButton addTarget:self action:@selector(confirm:)
         forControlEvents:UIControlEventTouchUpInside];
-    [grayView addSubview:confirm];
-
+    [grayView addSubview:confirmOfferButton];
+    
+    
     [transparentView addSubview:grayView];
     [self.view addSubview:transparentView];
     
+}
+
+-(void)enterInAmountField
+{
+    if ([amountTextField.text isEqualToString:@"$"])
+    {
+        
+        confirmOfferButton.enabled = NO;
+        [confirmOfferButton setBackgroundColor:[UIColor grayColor]];
+        
+    }
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
@@ -1532,9 +1664,15 @@
     
     if (![newText hasPrefix:@"$"])
     {
+        confirmOfferButton.enabled = NO;
+        [confirmOfferButton setBackgroundColor:[UIColor grayColor]];
+        
         return NO;
     }
     
+    confirmOfferButton.enabled = YES;
+    [confirmOfferButton setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
+
     // Default:
     return YES;
     
@@ -1570,10 +1708,11 @@
 - (void)confirm:(id)sender
 {
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewEnable" object:self userInfo:nil];
+   
     [self CreateMakeOfferConnection];
-    transparentView.hidden=YES;
-    [self.view endEditing:YES];
+//     [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewEnable" object:self userInfo:nil];
+//    transparentView.hidden=YES;
+//    [self.view endEditing:YES];
     
     
 }
@@ -2037,6 +2176,20 @@
                                                      
                                                      
                                                  }
+                                                 if ([ResultString isEqualToString:@"nopostid"])
+                                                 {
+                                                     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops" message:@"This item is no more available and has probably been sold by the seller." preferredStyle:UIAlertControllerStyleAlert];
+                                                     
+                                                     UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                                                                        style:UIAlertActionStyleDefault
+                                                                                                      handler:nil];
+                                                     [alertController addAction:actionOk];
+                                                     [self presentViewController:alertController animated:YES completion:nil];
+                                                     
+                                                     
+                                                     
+                                                 }
+
                                                  
                                                  if ( Array_Chats.count != 0)
                                                  {
@@ -2307,10 +2460,16 @@
             [alertController addAction:actionOk];
             [self presentViewController:alertController animated:YES completion:nil];
             
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewEnable" object:self userInfo:nil];
+            transparentView.hidden=YES;
+            [self.view endEditing:YES];
+            
+             [self ChatCommentConnection];
+            
         }
         else if ([ResultString isEqualToString:@"inserterror"])
         {
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops" message:@"TWe encountered some error, please try again." preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops" message:@"The server encountered some error, please try again." preferredStyle:UIAlertControllerStyleAlert];
             
             UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
                                                                style:UIAlertActionStyleDefault
@@ -2328,6 +2487,35 @@
             [alertController addAction:actionOk];
             [self presentViewController:alertController animated:YES completion:nil];
         }
+        
+        else if ([ResultString isEqualToString:@"nullerror"])
+        {
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops" message:@"Please enter the amount that you wish to offer." preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                               style:UIAlertActionStyleDefault
+                                                             handler:nil];
+            [alertController addAction:actionOk];
+            [self presentViewController:alertController animated:YES completion:nil];
+        }
+        
+        if ([ResultString isEqualToString:@"nopostid"])
+        {
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops" message:@"This item is no more available and has probably been sold by the seller." preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                               style:UIAlertActionStyleDefault
+                                                             handler:nil];
+            [alertController addAction:actionOk];
+            [self presentViewController:alertController animated:YES completion:nil];
+            
+            
+            
+        }
+
+
+        
+        
 
     }
     

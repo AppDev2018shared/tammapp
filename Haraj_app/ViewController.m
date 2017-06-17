@@ -323,6 +323,8 @@
   
     [self.view addSubview:_plusButtonsViewMain];
     
+    [self viewPostConnection];
+    
  
     
 }
@@ -377,8 +379,9 @@
             locationLabel.hidden = YES;
             [defaults setObject:@"OFF" forKey:@"locationPresed"];
             
-                    }
+        }
         else
+            
         {
             [location setImage:[UIImage imageNamed:@"Location_on"] forState:UIControlStateNormal];
             locationLabel.hidden = NO;

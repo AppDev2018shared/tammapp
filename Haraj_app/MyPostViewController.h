@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "EnterPrice.h"
 #import "DetailTableViewCell.h"
+#import "PostHeaderTableViewCell.h"
 #import "CommentsTableViewCell.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import <MobileCoreServices/UTCoreTypes.h>
@@ -22,9 +23,9 @@
 
 @property (strong,nonatomic)DetailTableViewCell * detailCell;
 @property (strong,nonatomic)CommentsTableViewCell * ComCell;
+@property (strong,nonatomic)PostHeaderTableViewCell * cell_postcomments;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-
 @property (strong,nonatomic)NSMutableArray * Array_UserInfo;
 @property (nonatomic)NSInteger swipeCount;
 

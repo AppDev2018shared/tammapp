@@ -17,11 +17,11 @@
 #define CELL_CONTENT_WIDTH self.view.frame.size.width-138
 #define CELL_CONTENT_MARGIN 0.0f
 
-@interface MyPostViewController ()<UITableViewDataSource, UITableViewDelegate,UIScrollViewDelegate>
+@interface MyPostViewController ()<UITableViewDataSource, UITableViewDelegate,UIScrollViewDelegate, UITextFieldDelegate,UITextViewDelegate>
 
 {
     MPMoviePlayerViewController *movieController ;
-       NSDictionary *urlplist;
+    NSDictionary *urlplist;
     UIView *sectionView;
     UIScrollView *scrollView;
     UIImageView *imageView;
@@ -30,14 +30,20 @@
     NSURL * imageUrl;
     NSUserDefaults *defaults;
     NSInteger total_image;
-    UIButton* playButton;
+    UIButton* playButton, *seeCommentButton, *submitPostButton;
+    
     CGFloat Xpostion, Ypostion, Xwidth, Yheight, ScrollContentSize,Xpostion_label, Ypostion_label, Xwidth_label, Yheight_label,Cell_DescLabelX,Cell_DescLabelY,Cell_DescLabelW,Cell_DescLabelH,TextView_ViewX,TextView_ViewY,TextView_ViewW,TextView_ViewH;
     CGFloat button_threeDotsx,button_threeDotsy,button_threeDotsw,button_threeDotsh,button_favx,button_favy,button_favw,button_favh,button_arrowx,button_arrowy,button_arroww,button_arrowh;
     CGFloat FavIV_X,FavIV_Y,FavIV_W,FavIV_H,FavLabel_X,FavLabel_Y,FavLabel_W,FavLabel_H;
-    NSMutableArray *Array_Moreimages;
+    
+    NSMutableArray *Array_Moreimages, *Array_Chats, *Array_Comments, *Array_ItemSold;
     NSString *str_LabelCoordinates,*str_TappedLabel;
-    NSString *text;
-
+    NSString *text, *nochats, *paymentmodeStr;
+    UITextView *commentPostTextView1;
+    UILabel *postplaceholderLabel;
+    
+    EnterPrice *myCustomXIBViewObj;
+    
 }
 @property (strong,nonatomic)TwoImageOnClickTableViewCell * Cell_two;
 
@@ -45,7 +51,7 @@
 @end
 
 @implementation MyPostViewController
-@synthesize Array_UserInfo,swipeCount,MoreImageArray,Cell_two,detailCell,ComCell,Array_All_UserInfo;
+@synthesize Array_UserInfo,swipeCount,MoreImageArray,Cell_two,detailCell,ComCell,Array_All_UserInfo,cell_postcomments;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -66,6 +72,11 @@
     str_TappedLabel=@"no";
     str_LabelCoordinates=@"no";
     text = [Array_UserInfo valueForKey:@"description"];
+    nochats = @"";
+    
+//    myCustomXIBViewObj =[[[NSBundle mainBundle] loadNibNamed:@"EnterPrice" owner:self options:nil]objectAtIndex:0];
+//    myCustomXIBViewObj.priceTextField.delegate = self;
+
     
 }
 -(void)viewWillAppear:(BOOL)animated
@@ -77,6 +88,7 @@
     NSLog(@" str_postid viewwillappear %@", [[Array_All_UserInfo objectAtIndex:(long)self.view.tag] valueForKey:@"postid"]);
     NSLog(@" str_userid viewwillappear %@",[[Array_All_UserInfo objectAtIndex:(long)self.view.tag] valueForKey:@"userid1"]);
   
+    [self ChatCommentConnection];
 }
 
 #pragma mark - UIScrollView Delegate
@@ -107,8 +119,46 @@
     }
     else if (section == 2)
     {
-        
         return 1;
+    }
+    else if (section == 3)
+    {
+        if ([[defaults valueForKey:@"SeeCommentPressed"]isEqualToString:@"no"])
+        {
+            
+            if (Array_Chats.count == 0)
+            {
+                return 1;
+                
+            }
+            else
+            {
+                if (Array_Chats.count <= 1)
+                {
+                    return 1;
+                }
+                else if(Array_Chats.count == 2)
+                {
+                    return 2 ;
+                }
+                else
+                {
+                    return 3;
+                }
+                
+            }
+            
+            
+        }
+        else
+        {
+            
+            return Array_Chats.count;
+            
+        }
+        
+        
+        
     }
     
     return 0;
@@ -125,6 +175,7 @@
     
     static NSString *CellIdentifier = @"Cell";
     static NSString *cell_details=@"DetailCell";
+    static NSString *post_comments=@"PostCell1";
     static NSString *cell_comments=@"ComCell";
 //    NSDictionary *dic_request=[Array_UserInfo objectAtIndex:swipeCount];
 //    NSLog(@"dic= %@",dic_request);
@@ -444,6 +495,33 @@
         case 2:
         {
             
+            cell_postcomments = [[[NSBundle mainBundle]loadNibNamed:@"PostHeaderTableViewCell" owner:self options:nil] objectAtIndex:0];
+            
+            
+            
+            
+            if (cell_postcomments == nil)
+            {
+                
+                cell_postcomments = [[PostHeaderTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:post_comments];
+                
+                
+            }
+            
+            [cell_postcomments.Button_PostComments addTarget:self action:@selector(postCommentButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+            
+            
+            
+            return cell_postcomments;
+        }
+            break;
+            
+            
+            
+            
+        case 3:
+        {
+            
             ComCell = [[[NSBundle mainBundle]loadNibNamed:@"CommentsTableViewCell" owner:self options:nil] objectAtIndex:0];
             
             
@@ -454,8 +532,113 @@
                 
                 
             }
+            
             ComCell.profileImageView.layer.cornerRadius = ComCell.profileImageView.frame.size.height / 2;
             ComCell.profileImageView.clipsToBounds = YES;
+            [ComCell.commentofferLabel setFont:[UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:20]];
+            [ComCell.commentmsgLabel setFont:[UIFont fontWithName:@"SanFranciscoDisplay-medium" size:15]];
+            
+            if (Array_Chats.count == 0 )
+            {
+                ComCell.commentmsgLabel.text = @"No Chats available";
+                ComCell.usernameLabel.hidden = YES;
+                ComCell.durationLabel.hidden = YES;
+                ComCell.profileImageView.hidden = YES;
+                ComCell.commentmsgLabel.hidden = YES;
+                ComCell.commentofferLabel.hidden = YES;
+                
+                
+                UILabel * label = [[UILabel alloc]initWithFrame:CGRectMake(ComCell.frame.origin.x, ComCell.frame.origin.y, self.view.frame.size.width, ComCell.frame.size.height)];
+                label.text = @" No Chats Available";
+                label.textAlignment = NSTextAlignmentCenter;
+                [label setFont:[UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:20]];
+                [ComCell addSubview:label];
+                [ComCell bringSubviewToFront:label];
+            }
+            else
+            {
+                if ([[[Array_Chats objectAtIndex:indexPath.row] valueForKey:@"messagetype"] isEqualToString:@"TEXT"])
+                {
+                    ComCell.usernameLabel.hidden = NO;
+                    ComCell.durationLabel.hidden = NO;
+                    ComCell.profileImageView.hidden = NO;
+                    ComCell.commentmsgLabel.hidden = NO;
+                    ComCell.commentofferLabel.hidden = YES;
+                    
+                    [ComCell.profileImageView setFrame:CGRectMake(self.view.frame.size.width - ComCell.profileImageView.frame.size.width - 8 , ComCell.profileImageView.frame.origin.y, ComCell.profileImageView.frame.size.width, ComCell.profileImageView.frame.size.height)];
+                    
+                    [ComCell.durationLabel setFrame:CGRectMake(8, ComCell.durationLabel.frame.origin.y, (ComCell.profileImageView.frame.origin.x - 8)/3, ComCell.usernameLabel.frame.size.height)];
+                    
+                    [ComCell.usernameLabel setFrame:CGRectMake(ComCell.durationLabel.frame.origin.x +ComCell.durationLabel.frame.size.width+ 8, ComCell.usernameLabel.frame.origin.y, (self.view.frame.size.width - ((ComCell.durationLabel.frame.origin.x + 8+ComCell.durationLabel.frame.size.width)+(ComCell.profileImageView.frame.size.width + 16))) , ComCell.usernameLabel.frame.size.height)];
+                    
+                    
+                    [ComCell.commentofferLabel setFrame:CGRectMake(8, ComCell.commentofferLabel.frame.origin.y, self.view.frame.size.width - 16, ComCell.commentofferLabel.frame.size.height)];
+                    
+                    [ComCell.commentmsgLabel setFrame:CGRectMake(8, ComCell.commentofferLabel.frame.origin.y, self.view.frame.size.width - 16, ComCell.commentmsgLabel.frame.size.height)];
+                    
+                    NSLog(@"frame user label==%f",(self.view.frame.size.width - ((ComCell.durationLabel.frame.origin.x + 8+ComCell.durationLabel.frame.size.width)+(ComCell.profileImageView.frame.size.width + 16))));
+                    
+                    ComCell.durationLabel.text = [[Array_Chats objectAtIndex:indexPath.row]valueForKey:@"chatdur"];
+                    ComCell.usernameLabel.text = [[Array_Chats objectAtIndex:indexPath.row]valueForKey:@"name"];
+                    ComCell.commentmsgLabel.text = [[Array_Chats objectAtIndex:indexPath.row]valueForKey:@"message"];
+                    
+                    NSURL *url=[NSURL URLWithString:[[Array_Chats objectAtIndex:indexPath.row]valueForKey:@"profileimage"]];
+                    
+                    
+                    [ComCell.profileImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
+                    
+                    
+                }
+                
+                if ([[[Array_Chats objectAtIndex:indexPath.row]valueForKey:@"messagetype"] isEqualToString:@"OFFER"])
+                {
+                    
+                    ComCell.usernameLabel.hidden = NO;
+                    ComCell.durationLabel.hidden = NO;
+                    ComCell.profileImageView.hidden = NO;
+                    ComCell.commentmsgLabel.hidden = NO;
+                    ComCell.commentofferLabel.hidden = NO;
+                    
+                    [ComCell.profileImageView setFrame:CGRectMake(self.view.frame.size.width - ComCell.profileImageView.frame.size.width - 8 , ComCell.profileImageView.frame.origin.y, ComCell.profileImageView.frame.size.width, ComCell.profileImageView.frame.size.height)];
+                    
+                    [ComCell.durationLabel setFrame:CGRectMake(8, ComCell.durationLabel.frame.origin.y, (ComCell.profileImageView.frame.origin.x - 8)/3, ComCell.usernameLabel.frame.size.height)];
+                    
+                    [ComCell.usernameLabel setFrame:CGRectMake(ComCell.durationLabel.frame.origin.x +ComCell.durationLabel.frame.size.width+ 8, ComCell.usernameLabel.frame.origin.y, (self.view.frame.size.width - ((ComCell.durationLabel.frame.origin.x + 8+ComCell.durationLabel.frame.size.width)+(ComCell.profileImageView.frame.size.width + 16))) , ComCell.usernameLabel.frame.size.height)];
+                    
+                    
+                    [ComCell.commentofferLabel setFrame:CGRectMake(8, ComCell.commentofferLabel.frame.origin.y, self.view.frame.size.width - 16, ComCell.commentofferLabel.frame.size.height)];
+                    
+                    [ComCell.commentmsgLabel setFrame:CGRectMake(8, ComCell.commentmsgLabel.frame.origin.y, self.view.frame.size.width - 16, ComCell.commentmsgLabel.frame.size.height)];
+                    
+                    NSLog(@"frame user label==%f",(self.view.frame.size.width - ((ComCell.durationLabel.frame.origin.x + 8+ComCell.durationLabel.frame.size.width)+(ComCell.profileImageView.frame.size.width + 16))));
+                    
+                    NSString * offerComment = [NSString stringWithFormat:@"Made an offer: $%@",[[Array_Chats objectAtIndex:indexPath.row]valueForKey:@"amount"]];
+                    
+                    
+                    
+                    ComCell.commentofferLabel.text = offerComment;//[[Array_Chats objectAtIndex:indexPath.row]valueForKey:@"amount"] ;
+                    ComCell.durationLabel.text = [[Array_Chats objectAtIndex:indexPath.row]valueForKey:@"chatdur"];
+                    ComCell.usernameLabel.text = [[Array_Chats objectAtIndex:indexPath.row]valueForKey:@"name"];
+                    ComCell.commentmsgLabel.text = [[Array_Chats objectAtIndex:indexPath.row]valueForKey:@"message"];
+                    
+                    NSURL *url=[NSURL URLWithString:[[Array_Chats objectAtIndex:indexPath.row]valueForKey:@"profileimage"]];
+                    
+                    
+                    [ComCell.profileImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
+                    
+                    
+                    //                    NSIndexPath* ipath = [NSIndexPath indexPathForRow:Array_Chats.count-1 inSection:3];
+                    //                    [self.tableView scrollToRowAtIndexPath: ipath atScrollPosition: UITableViewScrollPositionTop animated: YES];
+                    
+                [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+                    
+                    
+                }
+                
+            }
+
+            
+
 
             
             return ComCell;
@@ -527,9 +710,34 @@
         }
 
     }
+    
     else if (indexPath.section == 2)
     {
-        return 120;
+        return 45;
+    }
+    else if (indexPath.section == 3)
+    {
+        if (Array_Chats.count == 0)
+        {
+            return 100;
+            
+        }
+        else
+            
+        {
+            if ([[[Array_Chats objectAtIndex:indexPath.row ] valueForKey:@"messagetype"] isEqualToString:@"TEXT"])
+            {
+                return 103;
+                
+            }
+            else
+            {
+                return 142;
+                
+            }
+            
+            
+        }
     }
    
     
@@ -568,28 +776,6 @@
         sectionView.tag=section;
         
     }
-    if (section==2)
-    {
-        sectionView=[[UIView alloc]initWithFrame:CGRectMake(0, 0,self.view.frame.size.width,40)];//36
-        [sectionView setBackgroundColor:[UIColor whiteColor]];
-        UIButton *button1 = [[UIButton alloc]initWithFrame:CGRectMake(10, 10, 150, 40)];
-        [button1 setTitle:@"Post a Comment" forState:UIControlStateNormal];
-        [button1 setTitleColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1] forState:UIControlStateNormal];
-        [button1 setTag:1];
-        [button1 addTarget:self action:@selector(postCommentButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        [sectionView addSubview:button1];
-        
-        
-        
-        UILabel *comment = [[UILabel alloc]initWithFrame:CGRectMake(self.view.frame.size.width - 100, 10, 150, 40)];
-        comment.text = @"Comments";
-        comment.textColor = [UIColor lightGrayColor];
-        [sectionView addSubview:comment];
-        
-        sectionView.tag=section;
-        
-    }
-    
     
     return sectionView;
     
@@ -600,10 +786,7 @@
     {
         return 40;
     }
-    if (section==2)
-    {
-        return 40;
-    }
+    
     
     return 0;
     
@@ -619,7 +802,7 @@
     }
     
     
-    if (section == 2)
+    if (section == 3)
     {
         
         
@@ -630,12 +813,35 @@
         [sectionView addSubview:bottomView];
         
         
-        UIButton *button1 = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width - 160, 0, 150, 40)];
-        [button1 setTitle:@"See all comments" forState:UIControlStateNormal];
-        [button1 setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+        UIButton *button1 = [[UIButton alloc]initWithFrame:CGRectMake(8, 0, 122, 30)];
+        [button1 setTitle:@"Post a comment" forState:UIControlStateNormal];
+        button1.titleLabel.font = [UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:15];
+        [button1 setTitleColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1] forState:UIControlStateNormal];
         [button1 setTag:1];
-        [button1 addTarget:self action:@selector(seeCommentButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [button1 addTarget:self action:@selector(postCommentButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [sectionView addSubview:button1];
+        
+        
+        seeCommentButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width - 170, 0, 160, 40)];
+        
+        if ([[defaults valueForKey:@"SeeCommentPressed"]isEqualToString:@"no"])
+        {
+            [seeCommentButton setTitle:@"See all comments" forState:UIControlStateNormal];
+            button1.hidden = YES;
+            
+        }
+        else
+        {
+            [seeCommentButton setTitle:@"See less comments" forState:UIControlStateNormal];
+            button1.hidden = NO;
+            
+        }
+        
+        [seeCommentButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+        [seeCommentButton setTag:1];
+        [seeCommentButton addTarget:self action:@selector(seeCommentButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [sectionView addSubview:seeCommentButton];
+        
         
     }
     
@@ -648,9 +854,23 @@
         return 2;
     }
     
-    if (section == 2)
+    if (section == 3)
     {
-        return 40;
+        if ([nochats isEqualToString:@"nochat"])
+        {
+            return 0;
+        }
+        
+        else if(Array_Chats.count < 4)
+        {
+            return 0;
+        }
+        
+        
+        else
+        {
+            return 40;
+        }
     }
     return 0;
 }
@@ -691,7 +911,7 @@
         transparentView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
         transparentView.backgroundColor=[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.3];
         
-        grayView=[[UIView alloc]initWithFrame:CGRectMake(self.view.frame.size.width- 137.5, self.view.frame.size.height - 125, 275, 162)];
+        grayView=[[UIView alloc]initWithFrame:CGRectMake(self.view.frame.size.width - 137.5, self.view.frame.size.width - 250, 275, 162)];
         grayView.center=transparentView.center;
         grayView.layer.cornerRadius=10;
         grayView.clipsToBounds = YES;
@@ -717,10 +937,10 @@
         
         [grayView addSubview:imageView];
         
-        UILabel * label2 = [[UILabel alloc]initWithFrame:CGRectMake(147, 41, 115, 18)];
+        UILabel * label2 = [[UILabel alloc]initWithFrame:CGRectMake(112, 41, 150, 18)];
         label2.font = [UIFont fontWithName:@"SanFranciscoDisplay-Semibold" size:11];
         label2.textAlignment = NSTextAlignmentRight;
-        label2.text = @"POST ID: 3589278W3";
+        label2.text = [NSString stringWithFormat:@"POST ID: %@",[Array_UserInfo  valueForKey:@"postid"]];//@"POST ID: 3589278W3";
         label2.textColor = [UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1];
         [grayView addSubview:label2];
 
@@ -751,8 +971,6 @@
 
         [transparentView addSubview:grayView];
         [self.view addSubview:transparentView];
-        
-
         
         
     }
@@ -809,22 +1027,140 @@
     
 }
 
+
+#pragma mark - EnterPrice XIB
+
 - (void)confirm:(id)sender
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewDisable" object:self userInfo:nil];
     transparentView1=[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     transparentView1.backgroundColor=[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.3];
-    NSArray *nibContents = [[NSBundle mainBundle] loadNibNamed:@"EnterPrice" owner:self options:nil];
-    UIView *myView = [nibContents objectAtIndex:0];
-    myView.center=transparentView1.center;
-    myView.layer.cornerRadius = 10;
-    myView.clipsToBounds = YES;
-    [transparentView1 addSubview:myView];
+    
+    
+//    NSArray *nibContents = [[NSBundle mainBundle] loadNibNamed:@"EnterPrice" owner:self options:nil];
+//    UIView *myView = [nibContents objectAtIndex:0];
+    
+    myCustomXIBViewObj =[[[NSBundle mainBundle] loadNibNamed:@"EnterPrice" owner:self options:nil]objectAtIndex:0];
+    
+    myCustomXIBViewObj.frame = CGRectMake((self.view.frame.size.width- myCustomXIBViewObj.frame.size.width)/2,self.view.frame.size.width - 250, myCustomXIBViewObj.frame.size.width, myCustomXIBViewObj.frame.size.height);
+    
+    
+    [self.view addSubview:myCustomXIBViewObj];
+    
+    [myCustomXIBViewObj.bankButton addTarget:self action:@selector(bankButton_Action:) forControlEvents:UIControlEventTouchUpInside];
+    [myCustomXIBViewObj.creditButton addTarget:self action:@selector(creditButton_Action:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [myCustomXIBViewObj.priceTextField addTarget:self action:@selector(enterInLabel ) forControlEvents:UIControlEventEditingChanged];
+    
+    myCustomXIBViewObj.priceTextField.delegate = self;
+    [myCustomXIBViewObj.priceTextField becomeFirstResponder];
+    myCustomXIBViewObj.postIdLabel.text =[NSString stringWithFormat:@"POST ID: %@",[Array_UserInfo  valueForKey:@"postid"]];
+    myCustomXIBViewObj.layer.cornerRadius = 10;
+    myCustomXIBViewObj.clipsToBounds = YES;
+    
+    [myCustomXIBViewObj setUserInteractionEnabled:YES];
+    UITapGestureRecognizer *viewTapped =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewTapped_Action:)];
+    [myCustomXIBViewObj addGestureRecognizer:viewTapped];
+    
+    [transparentView1 addSubview:myCustomXIBViewObj];
     [self.view addSubview:transparentView1];
     transparentView.hidden=YES;
-  
+    
+    myCustomXIBViewObj.bankButton.enabled = NO;
+    [myCustomXIBViewObj.bankButton setBackgroundColor:[UIColor grayColor]];
+    
+    myCustomXIBViewObj.creditButton.enabled = NO;
+    [myCustomXIBViewObj.creditButton setBackgroundColor:[UIColor grayColor]];
+
+   
+}
+-(void)viewTapped_Action:(UIGestureRecognizer *)reconizer
+{
+    [self.view endEditing:YES];
+}
+
+-(void)enterInLabel
+{
+    NSString *askingpriceValString = [NSString stringWithFormat:@"%@",myCustomXIBViewObj.priceTextField.text];
+    askingpriceValString = [askingpriceValString substringFromIndex:1];
+    
+    float j = [askingpriceValString floatValue];
+    
+    float k = ((0.75*j)/100);
+    
+    myCustomXIBViewObj.caculatedAmountLabel.text =[NSString stringWithFormat:@"$ %0.2f",k]; //[NSString stringWithFormat:@"$ %@",askingpriceValString];
+    
+    if ([myCustomXIBViewObj.priceTextField.text isEqualToString:@"$"])
+    {
+        
+        myCustomXIBViewObj.bankButton.enabled = NO;
+        [myCustomXIBViewObj.bankButton setBackgroundColor:[UIColor grayColor]];
+        myCustomXIBViewObj.creditButton.enabled = NO;
+        [myCustomXIBViewObj.creditButton setBackgroundColor:[UIColor grayColor]];
+        
+    }
+    
+
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    if (myCustomXIBViewObj.priceTextField.text.length == 0)
+    {
+        myCustomXIBViewObj.priceTextField.text = @"$";
+    
+    }
     
 }
+
+
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    NSString *newText = [myCustomXIBViewObj.priceTextField.text stringByReplacingCharactersInRange:range withString:string];
+    
+    if (![newText hasPrefix:@"$"])
+    {
+        
+        myCustomXIBViewObj.bankButton.enabled = NO;
+        [myCustomXIBViewObj.bankButton setBackgroundColor:[UIColor grayColor]];
+        myCustomXIBViewObj.creditButton.enabled = NO;
+        [myCustomXIBViewObj.creditButton setBackgroundColor:[UIColor grayColor]];
+        
+        
+        return NO;
+    }
+    
+    myCustomXIBViewObj.bankButton.enabled = YES;
+    [myCustomXIBViewObj.bankButton setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
+    myCustomXIBViewObj.creditButton.enabled = YES;
+    [myCustomXIBViewObj.creditButton setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
+    
+    
+    
+    // Default:
+    
+    NSLog(@"%lu",textField.text.length);
+    
+    return YES;
+    
+}
+
+-(void)bankButton_Action:(id)sender
+{
+    paymentmodeStr = @"BANK";
+    
+    [self ItemSold_Connection];
+    NSLog(@"Bank button Pressed");
+}
+-(void)creditButton_Action:(id)sender
+{
+    
+    paymentmodeStr = @"CARD";
+    [self ItemSold_Connection];
+    NSLog(@"creditButton_Action Pressed");
+    
+}
+
 - (void)Hide_Popover
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewEnable" object:self userInfo:nil];
@@ -853,16 +1189,295 @@
     
 }
 
+#pragma mark -postCommentButtonPressed
+
 -(void)postCommentButtonPressed:(id)sender
 {
     
     NSLog(@"post comment Pressed");
     
+    transparentView1=[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    transparentView1.backgroundColor=[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.3];
+    
+    grayView=[[UIView alloc]initWithFrame:CGRectMake((self.view.frame.size.width-275)/2,self.view.frame.size.width - 250, 275, 225)];
+    grayView.layer.cornerRadius=20;
+    grayView.clipsToBounds = YES;
+    [grayView setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
+    
+    
+    UIButton *closeview=[[UIButton alloc]initWithFrame:CGRectMake(8, 8, 30, 30)];
+    [closeview setTitle:@"X" forState:UIControlStateNormal];
+    [closeview setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+    [closeview addTarget:self action:@selector(closedd1:)
+        forControlEvents:UIControlEventTouchUpInside];
+    [grayView addSubview:closeview];
+    
+    UILabel * label1 = [[UILabel alloc]initWithFrame:CGRectMake(75, 8, 184, 30)];
+    label1.font = [UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:17];
+    label1.textAlignment = NSTextAlignmentRight;
+    label1.text = @"Post comment";
+    label1.textColor = [UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1];
+    [grayView addSubview:label1];
+    
+    
+    commentPostTextView1 = [[UITextView alloc]initWithFrame:CGRectMake(16, 49, 243, 128)];
+    commentPostTextView1.textAlignment = NSTextAlignmentRight;
+    commentPostTextView1.font = [UIFont fontWithName:@"SanFranciscoDisplay-medium" size:17];
+    commentPostTextView1.layer.cornerRadius = 4;
+    commentPostTextView1.clipsToBounds = YES;
+    commentPostTextView1.spellCheckingType = NO;
+    commentPostTextView1.autocorrectionType = NO;
+    commentPostTextView1.delegate = self;
+    [commentPostTextView1 becomeFirstResponder];
+    
+    [grayView addSubview:commentPostTextView1];
+    
+    postplaceholderLabel = [[UILabel alloc]initWithFrame:CGRectMake(22, 49, 231, 30)];
+    postplaceholderLabel.font = [UIFont fontWithName:@"SanFranciscoDisplay-medium" size:17];
+    postplaceholderLabel.textAlignment = NSTextAlignmentRight;
+    postplaceholderLabel.text = @"Type your comment here...";
+    
+    postplaceholderLabel.textColor = [UIColor lightGrayColor];
+    [grayView bringSubviewToFront:postplaceholderLabel];
+    [grayView addSubview:postplaceholderLabel];
+    
+    submitPostButton=[[UIButton alloc]initWithFrame:CGRectMake(0, 191, 275, 34)];
+    [submitPostButton setTitle:@"SUBMIT" forState:UIControlStateNormal];
+    [submitPostButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    submitPostButton.titleLabel.font = [UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:16];
+    
+    submitPostButton.enabled = NO;
+    [submitPostButton setBackgroundColor:[UIColor grayColor]];
+    
+    // [submitPostButton setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
+    [submitPostButton addTarget:self action:@selector(submit:) forControlEvents:UIControlEventTouchUpInside];
+    [grayView addSubview:submitPostButton];
+    
+    
+    [transparentView1 addSubview:grayView];
+    
+    [self.view addSubview:transparentView1];
 }
+
+- (void)closedd1:(id)sender
+{
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewEnable" object:self userInfo:nil];
+    
+    [self.view endEditing:YES];
+    
+    transparentView1.hidden=YES;
+    
+}
+
+-(void)textViewDidChange:(UITextView *)textView
+{
+    
+    if ([textView.text isEqualToString:@""])
+    {
+        postplaceholderLabel.hidden = NO;
+        submitPostButton.enabled = NO;
+        [submitPostButton setBackgroundColor:[UIColor grayColor]];
+        
+    }
+    else
+        
+    {
+        postplaceholderLabel.hidden = YES;
+        submitPostButton.enabled = YES;
+        [submitPostButton setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
+        
+    }
+}
+
+-(void)textViewDidEndEditing:(UITextView *)textView
+{
+    if ([textView.text isEqualToString:@""])
+    {
+        postplaceholderLabel.hidden = NO;
+        
+    }
+    else
+        
+    {
+        postplaceholderLabel.hidden = YES;
+        
+    }
+}
+- (void)submit:(id)sender
+{
+    
+    [self AddChat_Connection];
+    
+}
+
+#pragma mark - AddChat_Connection
+
+-(void)AddChat_Connection
+{
+    
+    
+    
+    NSString *postid= @"postid";
+    NSString *postidVal =[Array_UserInfo  valueForKey:@"postid"];
+    
+    NSString *userid= @"userid";
+    NSString *useridVal =[defaults valueForKey:@"userid"];
+    
+    NSString *message= @"message";
+    NSString *messageVal =commentPostTextView1.text;
+    
+    NSString *chat= @"chattype";
+    NSString *chattypeVal =@"TEXT";
+    
+    
+    NSString *reqStringFUll=[NSString stringWithFormat:@"%@=%@&%@=%@&%@=%@&%@=%@",postid,postidVal,userid,useridVal,message,messageVal,chat,chattypeVal];
+    
+    
+    
+
+    
+    NSURLSession *session = [NSURLSession sessionWithConfiguration: [NSURLSessionConfiguration defaultSessionConfiguration] delegate: nil delegateQueue: [NSOperationQueue mainQueue]];
+    
+    NSURL *url;
+    NSString *  urlStrLivecount=[urlplist valueForKey:@"addchat"];;
+    url =[NSURL URLWithString:urlStrLivecount];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    
+    [request setHTTPMethod:@"POST"];//Web API Method
+    
+    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    
+    request.HTTPBody = [reqStringFUll dataUsingEncoding:NSUTF8StringEncoding];
+    
+    
+    
+    NSURLSessionDataTask *dataTask =[session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
+                                     {
+                                         
+                                         if(data)
+                                         {
+                                             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+                                             NSInteger statusCode = httpResponse.statusCode;
+                                             if(statusCode == 200)
+                                             {
+                                                 
+                                                 Array_Comments=[[NSMutableArray alloc]init];
+                                                 SBJsonParser *objSBJsonParser = [[SBJsonParser alloc]init];
+                                                 Array_Comments=[objSBJsonParser objectWithData:data];
+                                                 NSString * ResultString=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+                                                 ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+                                                 ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\t" withString:@""];
+                                                 NSLog(@"Array_Comments %@",Array_Comments);
+                                                 
+                                                 NSLog(@"array_login ResultString %@",ResultString);
+                                                 if ([ResultString isEqualToString:@"done"])
+                                                 {
+                                                     
+                                                     
+                                                     
+                                                     [self.view endEditing:YES];
+                                                     transparentView1.hidden= YES;
+                                                     [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewEnable" object:self userInfo:nil];
+                                                     
+                                                     [defaults setObject:@"no" forKey:@"SeeCommentPressed"];
+                                                     
+                                                     [self ChatCommentConnection];
+                                                     
+                                                     
+                                                     
+                                                 }
+                                                 if ([ResultString isEqualToString:@"inserterror"])
+                                                 {
+                                                     
+                                                     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops" message:@"inserterror" preferredStyle:UIAlertControllerStyleAlert];
+                                                     
+                                                     UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
+                                                     [alertController addAction:actionOk];
+                                                     [self presentViewController:alertController animated:YES completion:nil];
+                                                     
+                                                     
+                                                 }
+                                                 if ([ResultString isEqualToString:@"messagenull"])
+                                                 {
+                                                     
+                                                     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops" message:@"messagenull" preferredStyle:UIAlertControllerStyleAlert];
+                                                     
+                                                     UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
+                                                     [alertController addAction:actionOk];
+                                                     [self presentViewController:alertController animated:YES completion:nil];
+                                                     
+                                                     
+                                                 }
+                                                 if ([ResultString isEqualToString:@"nullerror"])
+                                                 {
+                                                     
+                                                     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops" message:@"nullerror" preferredStyle:UIAlertControllerStyleAlert];
+                                                     
+                                                     UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
+                                                     [alertController addAction:actionOk];
+                                                     [self presentViewController:alertController animated:YES completion:nil];
+                                                     
+                                                     
+                                                 }
+                                                 
+                                                 
+                                                 
+                                             }
+                                             
+                                             else
+                                             {
+                                                 NSLog(@" error login1 ---%ld",(long)statusCode);
+                                                 
+                                             }
+                                             
+                                             
+                                         }
+                                         else if(error)
+                                         {
+                                             
+                                             NSLog(@"error login2.......%@",error.description);
+                                         }
+                                         
+                                         
+                                     }];
+    [dataTask resume];
+    
+}
+
 
 -(void)seeCommentButtonPressed:(id)sender
 {
-    NSLog(@"See comment Pressed");
+    
+    
+    
+    if ([[defaults valueForKey:@"SeeCommentPressed"]isEqualToString:@"no"])
+    {
+        [defaults setObject:@"yes" forKey:@"SeeCommentPressed"];
+        
+        [seeCommentButton setTitle:@"See less comments" forState:UIControlStateNormal];
+        
+        [self.tableView reloadData];
+        
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:(Array_Chats.count)-1 inSection:3] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+
+        
+        NSLog(@"See Less Comments");
+        
+        
+    }
+    else
+    {
+        
+        [seeCommentButton setTitle:@"See all comments" forState:UIControlStateNormal];
+        
+        [defaults setObject:@"no" forKey:@"SeeCommentPressed"];
+        
+        [self.tableView reloadData];
+        
+        NSLog(@"See all comments");
+    }
     
 }
 
@@ -1192,4 +1807,273 @@
     [imageView setupImageViewer];
     
 }
+
+#pragma mark - ChatConnectionCommunication
+-(void)ChatCommentConnection
+{
+    
+    
+    //    NSString *postid= @"postid";
+    //    NSString *postidVal =str_postid;
+    //
+    //    NSString *userid= @"userid";
+    //    NSString *useridVal =str_userid;
+    
+    NSString *postid= @"postid";
+    NSString *postidVal =[Array_UserInfo  valueForKey:@"postid"];
+    
+    NSString *userid= @"userid";
+    NSString *useridVal =[defaults valueForKey:@"userid"];
+    
+    
+    NSString *reqStringFUll=[NSString stringWithFormat:@"%@=%@&%@=%@",postid,postidVal,userid,useridVal];
+    
+
+    
+    NSURLSession *session = [NSURLSession sessionWithConfiguration: [NSURLSessionConfiguration defaultSessionConfiguration] delegate: nil delegateQueue: [NSOperationQueue mainQueue]];
+    
+    NSURL *url;
+    NSString *  urlStrLivecount=[urlplist valueForKey:@"chatcomments"];;
+    url =[NSURL URLWithString:urlStrLivecount];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    
+    [request setHTTPMethod:@"POST"];//Web API Method
+    
+    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    
+    request.HTTPBody = [reqStringFUll dataUsingEncoding:NSUTF8StringEncoding];
+    
+    
+    
+    NSURLSessionDataTask *dataTask =[session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
+                                     {
+                                         
+                                         if(data)
+                                         {
+                                             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+                                             NSInteger statusCode = httpResponse.statusCode;
+                                             if(statusCode == 200)
+                                             {
+                                                 
+                                                 Array_Chats=[[NSMutableArray alloc]init];
+                                                 SBJsonParser *objSBJsonParser = [[SBJsonParser alloc]init];
+                                                 Array_Chats =[objSBJsonParser objectWithData:data];
+                                                 
+                                                 
+                                                 
+                                                 NSString * ResultString=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+                                                 
+                                                 ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+                                                 ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\t" withString:@""];
+                                                 
+                                                 NSLog(@"Array_Chats %@",Array_Chats);
+                                                 
+                                                 if ([ResultString isEqualToString:@"nochat"])
+                                                 {
+                                                     nochats = ResultString;
+                                                     
+                                                     
+                                                     [self.tableView reloadData];
+                                                     
+                                                      
+                                                 }
+                                                 
+                                                 if ( Array_Chats.count != 0)
+                                                 {
+                                                     nochats = @"";
+                                                     [self.tableView reloadData];
+                                                     
+                                                 }
+                                                 
+                                                 
+                                                 
+                                                 
+                                             }
+                                             
+                                             
+                                             else
+                                             {
+                                                 NSLog(@" error login1 ---%ld",(long)statusCode);
+                                                 
+                                             }
+                                             
+                                             
+                                         }
+                                         else if(error)
+                                         {
+                                             
+                                             NSLog(@"error login2.......%@",error.description);
+                                         }
+                                         
+                                         
+                                     }];
+    [dataTask resume];
+    
+}
+
+#pragma mark - ItemSold Connection
+-(void)ItemSold_Connection
+{
+    
+    NSString *postid= @"postid";
+    NSString *postidVal =[Array_UserInfo  valueForKey:@"postid"];
+    
+    NSString *userid= @"userid";
+    NSString *useridVal =[defaults valueForKey:@"userid"];
+    
+    
+    
+    NSString *enterPriceString = [NSString stringWithFormat:@"%@",myCustomXIBViewObj.priceTextField.text];
+    enterPriceString = [enterPriceString substringFromIndex:1];
+    
+    NSString *price= @"sellprice";
+    NSString *priceVal = enterPriceString;
+    
+    
+    NSString *transactionString = [NSString stringWithFormat:@"%@",myCustomXIBViewObj.caculatedAmountLabel.text];
+    transactionString = [transactionString substringFromIndex:1];
+    
+    NSString *transaction= @"commission";
+    NSString *transactionVal = transactionString;
+    
+    NSString *paymentmode= @"paymentmode";
+    NSString *paymentmodeVal = paymentmodeStr;
+
+    
+    
+    
+    NSString *reqStringFUll=[NSString stringWithFormat:@"%@=%@&%@=%@&%@=%@&%@=%@&%@=%@",postid,postidVal,userid,useridVal,price,priceVal,transaction,transactionVal,paymentmode,paymentmodeVal];
+    
+    
+    
+    NSURLSession *session = [NSURLSession sessionWithConfiguration: [NSURLSessionConfiguration defaultSessionConfiguration] delegate: nil delegateQueue: [NSOperationQueue mainQueue]];
+    
+    NSURL *url;
+    NSString *  urlStrLivecount=[urlplist valueForKey:@"itemsold"];;
+    url =[NSURL URLWithString:urlStrLivecount];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    
+    [request setHTTPMethod:@"POST"];//Web API Method
+    
+    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    
+    request.HTTPBody = [reqStringFUll dataUsingEncoding:NSUTF8StringEncoding];
+    
+    
+    
+    NSURLSessionDataTask *dataTask =[session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
+                                     {
+                                         
+                                         if(data)
+                                         {
+                                             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+                                             NSInteger statusCode = httpResponse.statusCode;
+                                             if(statusCode == 200)
+                                             {
+                                                 
+                                                 Array_ItemSold=[[NSMutableArray alloc]init];
+                                                 SBJsonParser *objSBJsonParser = [[SBJsonParser alloc]init];
+                                                 Array_ItemSold =[objSBJsonParser objectWithData:data];
+                                                 
+                                                 
+                                                 
+                                                 NSString * ResultString=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+                                                 
+                                                 ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+                                                 ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\t" withString:@""];
+                                                 
+                                                 NSLog(@"Array_ItemSold %@",Array_ItemSold);
+                                                 
+                                                 if ([ResultString isEqualToString:@"done"])
+                                                 {
+                                                     
+                                                     [[NSNotificationCenter defaultCenter] postNotificationName:@"ViewControllerData" object:self userInfo:nil];
+                                                     
+                                                     [self.view endEditing:YES];
+                                                     transparentView1.hidden= YES;
+                                                     [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewEnable" object:self userInfo:nil];
+                                                     
+                                                     CATransition *transition = [CATransition animation];
+                                                     transition.duration = 0.3;
+                                                     transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+                                                     transition.type = kCATransitionPush;
+                                                     transition.subtype = kCATransitionFromRight;
+                                                     [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
+                                                     
+                                                     [self.navigationController popToRootViewControllerAnimated:YES];
+                                                     
+                                                     
+                                                      
+                                                     
+                                                 }
+                                                 if ([ResultString isEqualToString:@"inserterror"])
+                                                 {
+                                                     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops" message:@"The server encountered some error, please try again." preferredStyle:UIAlertControllerStyleAlert];
+                                                     
+                                                     UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                                                                        style:UIAlertActionStyleDefault
+                                                                                                      handler:nil];
+                                                     [alertController addAction:actionOk];
+                                                     [self presentViewController:alertController animated:YES completion:nil];
+                                                                                                          
+                                                     
+                                                 }
+                                                 if ([ResultString isEqualToString:@"nopostid"])
+                                                 {
+                                                     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops" message:@"This item is no more available and has probably been sold by the seller." preferredStyle:UIAlertControllerStyleAlert];
+                                                     
+                                                     UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                                                                        style:UIAlertActionStyleDefault
+                                                                                                      handler:nil];
+                                                     [alertController addAction:actionOk];
+                                                     [self presentViewController:alertController animated:YES completion:nil];
+                                        
+                                                     
+                                                     
+                                                 }
+                                                 
+                                                 if ([ResultString isEqualToString:@"nullerror"])
+                                                 {
+                                                     
+                                                     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops" message:@"Please enter the price at which the item has been sold." preferredStyle:UIAlertControllerStyleAlert];
+                                                     
+                                                     UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                                                                        style:UIAlertActionStyleDefault
+                                                                                                      handler:nil];
+                                                     [alertController addAction:actionOk];
+                                                     [self presentViewController:alertController animated:YES completion:nil];
+                                                     
+                                                 }
+                                                 
+                                                 
+                                                 
+                                                 
+                                                 
+                                                 
+                                             }
+                                             
+                                             
+                                             else
+                                             {
+                                                 NSLog(@" error login1 ---%ld",(long)statusCode);
+                                                 
+                                             }
+                                             
+                                             
+                                         }
+                                         else if(error)
+                                         {
+                                             
+                                             NSLog(@"error login2.......%@",error.description);
+                                         }
+                                         
+                                         
+                                     }];
+    [dataTask resume];
+    
+}
+
+
 @end

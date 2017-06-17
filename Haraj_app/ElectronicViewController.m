@@ -287,7 +287,7 @@
     {
         
         ImageCollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"ImageCell" forIndexPath:indexPath];
-        //        [cell.videoImageView sd_setImageWithURL:url];
+
         NSURL * url=[NSURL URLWithString:[dic_request valueForKey:@"mediathumbnailurl"]];
         [cell.videoImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"]
                                         options:SDWebImageRefreshCached];
@@ -296,6 +296,9 @@
         NSString *show = [NSString stringWithFormat:@"$%@",[dic_request valueForKey:@"showamount"]];
         cell.bidAmountLabel.text = show;
         cell.titleLabel.text = [dic_request valueForKey:@"title"];
+        cell.videoImageView.layer.cornerRadius = 10;
+        cell.videoImageView.layer.masksToBounds = YES;
+
         
         return cell;
     }

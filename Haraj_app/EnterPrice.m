@@ -31,9 +31,14 @@
 {
     if (self = [super initWithCoder:aDecoder]) {
         [self setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
+        [self.priceTextField becomeFirstResponder];
     }
     
     return self;
+}
+-(BOOL)becomeFirstResponder
+{
+    return YES;
 }
 
 
