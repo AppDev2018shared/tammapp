@@ -98,6 +98,10 @@
 		61739FF31EE2AF5900018CF1 /* UIImageView+MHFacebookImageViewer.m in Sources */ = {isa = PBXBuildFile; fileRef = 61739FE61EE2AF5900018CF1 /* UIImageView+MHFacebookImageViewer.m */; };
 		617FD88B1EB9B2DD008B827F /* ImageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 617FD88A1EB9B2DD008B827F /* ImageCollectionViewCell.m */; };
 		617FD8911EB9D6D8008B827F /* PatternViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 617FD8901EB9D6D8008B827F /* PatternViewCell.m */; };
+		618B00041EF91CDD00434650 /* DetailCarTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 618B00021EF91CDC00434650 /* DetailCarTableViewCell.m */; };
+		618B00051EF91CDD00434650 /* DetailCarTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 618B00031EF91CDC00434650 /* DetailCarTableViewCell.xib */; };
+		618B00091EF921A500434650 /* DetailPropertyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 618B00071EF921A500434650 /* DetailPropertyTableViewCell.m */; };
+		618B000A1EF921A500434650 /* DetailPropertyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 618B00081EF921A500434650 /* DetailPropertyTableViewCell.xib */; };
 		61B8C8751EC1AA1800954A68 /* FirstImageViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B8C8741EC1AA1800954A68 /* FirstImageViewCell.m */; };
 		61B8C8851EC1E61100954A68 /* steve.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 61B8C8841EC1E61100954A68 /* steve.jpeg */; };
 		61D376681EBC3F6300BA02D4 /* LGPlusButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D376611EBC3F6300BA02D4 /* LGPlusButton.m */; };
@@ -334,6 +338,12 @@
 		617FD88A1EB9B2DD008B827F /* ImageCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCollectionViewCell.m; sourceTree = "<group>"; };
 		617FD88F1EB9D6D8008B827F /* PatternViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PatternViewCell.h; sourceTree = "<group>"; };
 		617FD8901EB9D6D8008B827F /* PatternViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PatternViewCell.m; sourceTree = "<group>"; };
+		618B00011EF91CDC00434650 /* DetailCarTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailCarTableViewCell.h; sourceTree = "<group>"; };
+		618B00021EF91CDC00434650 /* DetailCarTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailCarTableViewCell.m; sourceTree = "<group>"; };
+		618B00031EF91CDC00434650 /* DetailCarTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailCarTableViewCell.xib; sourceTree = "<group>"; };
+		618B00061EF921A500434650 /* DetailPropertyTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailPropertyTableViewCell.h; sourceTree = "<group>"; };
+		618B00071EF921A500434650 /* DetailPropertyTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailPropertyTableViewCell.m; sourceTree = "<group>"; };
+		618B00081EF921A500434650 /* DetailPropertyTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailPropertyTableViewCell.xib; sourceTree = "<group>"; };
 		61B8C8731EC1AA1800954A68 /* FirstImageViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstImageViewCell.h; sourceTree = "<group>"; };
 		61B8C8741EC1AA1800954A68 /* FirstImageViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirstImageViewCell.m; sourceTree = "<group>"; };
 		61B8C8841EC1E61100954A68 /* steve.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = steve.jpeg; sourceTree = "<group>"; };
@@ -883,6 +893,12 @@
 				615ED13C1EDEE6AC001E6B0A /* DetailTableViewCell.h */,
 				615ED13D1EDEE6AC001E6B0A /* DetailTableViewCell.m */,
 				615ED13E1EDEE6AC001E6B0A /* DetailTableViewCell.xib */,
+				618B00011EF91CDC00434650 /* DetailCarTableViewCell.h */,
+				618B00021EF91CDC00434650 /* DetailCarTableViewCell.m */,
+				618B00031EF91CDC00434650 /* DetailCarTableViewCell.xib */,
+				618B00061EF921A500434650 /* DetailPropertyTableViewCell.h */,
+				618B00071EF921A500434650 /* DetailPropertyTableViewCell.m */,
+				618B00081EF921A500434650 /* DetailPropertyTableViewCell.xib */,
 				9A09B8BF1EF1672B00421BF7 /* PostHeaderTableViewCell.h */,
 				9A09B8C01EF1672C00421BF7 /* PostHeaderTableViewCell.m */,
 				9A09B8C11EF1672C00421BF7 /* PostHeaderTableViewCell.xib */,
@@ -1176,6 +1192,7 @@
 				61F56CD31ECD75A10031E9C1 /* ELCAssetTablePicker.xib in Resources */,
 				61271D461EBD928C0082E504 /* facebook.png in Resources */,
 				61739FEF1EE2AF5900018CF1 /* Done.png in Resources */,
+				618B00051EF91CDD00434650 /* DetailCarTableViewCell.xib in Resources */,
 				61E015F51ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.xib in Resources */,
 				61F95A9B1EF5527E00DEE62A /* ProductDetailCellCar.xib in Resources */,
 				61F56CD21ECD75A10031E9C1 /* ELCAssetPicker.xib in Resources */,
@@ -1199,6 +1216,7 @@
 				61271D4A1EBD928C0082E504 /* twitter@2x.png in Resources */,
 				61F56CD11ECD75A10031E9C1 /* ELCAlbumPickerController.xib in Resources */,
 				61D376791EBC868000BA02D4 /* SanFranciscoDisplay-Medium.otf in Resources */,
+				618B000A1EF921A500434650 /* DetailPropertyTableViewCell.xib in Resources */,
 				613E82FA1ED2B82500B1BC23 /* UrlName.plist in Resources */,
 				61ED09B51EB87ED1008EAFB7 /* swift.jpg in Resources */,
 				61F56CD51ECD75A10031E9C1 /* Overlay@2x.png in Resources */,
@@ -1242,6 +1260,7 @@
 				61487FEC1ED2ECE7009CEF9B /* PropertyViewController.m in Sources */,
 				61ED09A61EB85D42008EAFB7 /* UIImage+WebP.m in Sources */,
 				61739FF31EE2AF5900018CF1 /* UIImageView+MHFacebookImageViewer.m in Sources */,
+				618B00091EF921A500434650 /* DetailPropertyTableViewCell.m in Sources */,
 				61739FA31EE2951100018CF1 /* Base64.m in Sources */,
 				614C15EB1EC039C100B11A9B /* NSObject+SBJson.m in Sources */,
 				61B8C8751EC1AA1800954A68 /* FirstImageViewCell.m in Sources */,
@@ -1306,6 +1325,7 @@
 				614C15ED1EC039C100B11A9B /* SBJsonStreamParser.m in Sources */,
 				614C15F31EC039C100B11A9B /* SBJsonStreamWriterState.m in Sources */,
 				61ED099A1EB85D42008EAFB7 /* MKAnnotationView+WebCache.m in Sources */,
+				618B00041EF91CDD00434650 /* DetailCarTableViewCell.m in Sources */,
 				614C15CB1EC0389200B11A9B /* SignUpViewController.m in Sources */,
 				9AD3F1A01EF2851E005A215D /* EnterComment.m in Sources */,
 				61ED09A51EB85D42008EAFB7 /* UIImage+MultiFormat.m in Sources */,

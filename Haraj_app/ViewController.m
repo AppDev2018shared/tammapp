@@ -62,6 +62,9 @@
     
     self.navigationController.navigationBar.hidden=YES;
     
+    [defaults setObject:@"ON" forKey:@"locationPresed"];
+
+    
     
    
     [profile setImage:[UIImage imageNamed:@"Profile"] forState:UIControlStateNormal];
@@ -81,10 +84,27 @@
     
     
  
-    [location setImage:[UIImage imageNamed:@"Location_on"] forState:UIControlStateNormal];
-    location.tag = 4;
-    [location addTarget:self action:@selector(topButton:) forControlEvents:UIControlEventTouchUpInside];
-    [defaults setObject:@"ON" forKey:@"locationPresed"];
+//    [location setImage:[UIImage imageNamed:@"Location_on"] forState:UIControlStateNormal];
+      location.tag = 4;
+      [location addTarget:self action:@selector(topButton:) forControlEvents:UIControlEventTouchUpInside];
+//    [defaults setObject:@"ON" forKey:@"locationPresed"];
+    
+    if ([[defaults valueForKey:@"locationPresed"] isEqualToString:@"ON"])
+    {
+        [location setImage:[UIImage imageNamed:@"Location_off"] forState:UIControlStateNormal];
+        locationLabel.hidden = YES;
+        [defaults setObject:@"OFF" forKey:@"locationPresed"];
+        
+    }
+    else
+        
+    {
+        [location setImage:[UIImage imageNamed:@"Location_on"] forState:UIControlStateNormal];
+        locationLabel.hidden = NO;
+        [defaults setObject:@"ON" forKey:@"locationPresed"];
+       
+        
+    }
     
     
     locationLabel.textColor = [UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1];

@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "EnterPrice.h"
 #import "DetailTableViewCell.h"
+#import "DetailCarTableViewCell.h"
+#import "DetailPropertyTableViewCell.h"
 #import "PostHeaderTableViewCell.h"
 #import "CommentsTableViewCell.h"
 #import <MediaPlayer/MediaPlayer.h>
@@ -22,6 +24,9 @@
 }
 
 @property (strong,nonatomic)DetailTableViewCell * detailCell;
+@property (strong,nonatomic)DetailCarTableViewCell * detailCellCar;
+@property (strong,nonatomic)DetailPropertyTableViewCell * detailCellProperty;
+
 @property (strong,nonatomic)CommentsTableViewCell * ComCell;
 @property (strong,nonatomic)PostHeaderTableViewCell * cell_postcomments;
 

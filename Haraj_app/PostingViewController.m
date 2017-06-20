@@ -9,6 +9,8 @@
 #import "PostingViewController.h"
 #import "AddImageCell.h"
 #import "ProductDetailCell.h"
+#import "ProductDetailCellCar.h"
+#import "ProductDetailCellProperty.h"
 #import "MoreDetailCell.h"
 #import "SBJsonParser.h"
 #import "Reachability.h"
@@ -42,13 +44,14 @@
     NSURLConnection *Connection_Create, *Connection_Media;
     NSMutableData *webData_Create, *webData_Media;
     NSMutableArray *Array_Create, *Array_Media,*Array_RemovePicture;
-    NSString *postIDValue ,*mediaTypeVal,* ImageNSdata,*ImageNSdataThumb, *encodedImage, *encodedImageThumb, *mediaIdStr, *imageTag, *removeIndexCount;
+    NSString *postIDValue ,*mediaTypeVal,* ImageNSdata,*ImageNSdataThumb, *encodedImage, *encodedImageThumb, *mediaIdStr, *imageTag, *removeIndexCount, *propertyType;
     
     UIImage *FrameImage;
     NSNumber *Vedio_Height,*Vedio_Width;
     NSData *imageData,*imageDataThumb;
     MPMoviePlayerViewController *movieController ;
     NSInteger indexCount , x;
+    UILabel *KMlabel, *Sqmlabel;
 
     
 }
@@ -57,7 +60,7 @@
 @end
 
 @implementation PostingViewController
-@synthesize nameLabel;
+@synthesize nameLabel,Cell_DetailCar,Cell_DetailProperty;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -210,6 +213,18 @@
     
     sellingPlaceholder = [[UILabel alloc]initWithFrame:(CGRectMake(140, 42, 200, 21))];
     hashPlaceholder = [[UILabel alloc]initWithFrame:(CGRectMake(120, 35, 225, 21))];
+    
+    
+    
+    propertyType = @"RENT";
+    [Cell_DetailProperty.rentButton setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
+    [Cell_DetailProperty.rentButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    Cell_DetailProperty.rentButton.titleLabel.font = [UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:22];
+    
+    [Cell_DetailProperty.saleButton setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
+    [Cell_DetailProperty.saleButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    Cell_DetailProperty.saleButton.titleLabel.font = [UIFont fontWithName:@"SanFranciscoDisplay-Regular" size:22];
+
 
     
 
@@ -435,6 +450,11 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
+    static NSString *cell_detailcar=@"CellCar";
+    static NSString *cell_detailproperty=@"CellProperty";
+    
+
+    
     
     switch (indexPath.section)
     {
@@ -574,68 +594,248 @@
         }
             break;
         case 1:
-        {
-            detailCell = [tableView dequeueReusableCellWithIdentifier:@"ProductCell"];
-            
-            detailCell.profileImageView.layer.cornerRadius = detailCell.profileImageView.frame.size.height / 2;
-            detailCell.profileImageView.clipsToBounds = YES;
-            
-            NSURL *url=[NSURL URLWithString:[defaults valueForKey:@"profileimage"]];
-            
-            [detailCell.profileImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultimg.jpg"] options:SDWebImageRefreshCached];
-            
-            detailCell.usernameLabel.text = [defaults valueForKey:@"UserName"];
-            
-            NSString *locationstr = [NSString stringWithFormat:@"%@, %@",[defaults valueForKey:@"Cityname"],[defaults valueForKey:@"Countryname"]];
             
             
-            detailCell.locationLabel.text = locationstr;
-//             detailCell.sellingTextview.delegate=self;
-            
-            if ([detailCell.sellingTextview.text isEqualToString:@"What are you selling?"] || [detailCell.sellingTextview.text isEqualToString:@""] )
+            if ([self.name isEqualToString:@"car"])
             {
-                detailCell.sellingTextview.text = @"What are you selling?";
-                detailCell.sellingTextview.textColor = [UIColor blackColor];
-                sellingPlaceholder.hidden = NO;
-    
-                moreCell.createButton.enabled = NO;
-                moreCell .createButton.backgroundColor = [UIColor lightGrayColor];
+                
+                
+                
+                {
+                    
+                    Cell_DetailCar = [[[NSBundle mainBundle]loadNibNamed:@"ProductDetailCellCar" owner:self options:nil] objectAtIndex:0];
+                    
+                    
+                    
+                    
+                    if (Cell_DetailCar == nil)
+                    {
+                        
+                        Cell_DetailCar = [[ProductDetailCellCar alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cell_detailcar];
+                        
+                        
+                    }
+                    
+                    Cell_DetailCar.profileImageView.layer.cornerRadius = Cell_DetailCar.profileImageView.frame.size.height / 2;
+                    Cell_DetailCar.profileImageView.clipsToBounds = YES;
+                    
+                    NSURL *url=[NSURL URLWithString:[defaults valueForKey:@"profileimage"]];
+                    
+                    [Cell_DetailCar.profileImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultimg.jpg"] options:SDWebImageRefreshCached];
+                    
+                    Cell_DetailCar.usernameLabel.text = [defaults valueForKey:@"UserName"];
+                    
+                    NSString *locationstr = [NSString stringWithFormat:@"%@, %@",[defaults valueForKey:@"Cityname"],[defaults valueForKey:@"Countryname"]];
+                    
+                    
+                    Cell_DetailCar.locationLabel.text = locationstr;
+                    //             detailCell.sellingTextview.delegate=self;
+                    
+                    if ([Cell_DetailCar.sellingTextview.text isEqualToString:@"What are you selling?"] || [Cell_DetailCar.sellingTextview.text isEqualToString:@""] )
+                    {
+                        Cell_DetailCar.sellingTextview.text = @"What are you selling?";
+                        Cell_DetailCar.sellingTextview.textColor = [UIColor blackColor];
+                        sellingPlaceholder.hidden = NO;
+                        
+                        moreCell.createButton.enabled = NO;
+                        moreCell .createButton.backgroundColor = [UIColor lightGrayColor];
+                    }
+                    
+                    
+                    [Cell_DetailCar.sellingTextview setAutocorrectionType:UITextAutocorrectionTypeNo];
+                    
+                    //            sellingPlaceholder = [[UILabel alloc]initWithFrame:(CGRectMake(140, 42, 200, 21))];
+                    sellingPlaceholder.text = @"This is your post headline";
+                    sellingPlaceholder.textColor = [UIColor lightGrayColor];
+                    sellingPlaceholder.textAlignment = NSTextAlignmentRight;
+                    [Cell_DetailCar.sellingTextview addSubview:sellingPlaceholder];
+                    [Cell_DetailCar.contentView bringSubviewToFront:sellingPlaceholder];
+                    
+                    
+                    Cell_DetailCar.hashTextView.delegate=self;
+                    
+                    if ([Cell_DetailCar.hashTextView.text isEqualToString:@"Add some #Hashtags"] || [Cell_DetailCar.hashTextView.text isEqualToString:@""] )
+                    {
+                        
+                        
+                        Cell_DetailCar.hashTextView.text = @"Add some #Hashtags";
+                        Cell_DetailCar.hashTextView.textColor = [UIColor blackColor];
+                    }
+                    Cell_DetailCar.sellingTextview.tag = 2;
+                    [Cell_DetailCar.hashTextView setAutocorrectionType:UITextAutocorrectionTypeNo];
+                    
+                    //           hashPlaceholder = [[UILabel alloc]initWithFrame:(CGRectMake(120, 35, 225, 21))];
+                    hashPlaceholder.text = @"i.e. #retro#car#gold#classic";
+                    hashPlaceholder.textColor = [UIColor lightGrayColor];
+                    hashPlaceholder.textAlignment = NSTextAlignmentRight;
+                    [Cell_DetailCar.hashTextView addSubview:hashPlaceholder];
+                    [Cell_DetailCar.contentView bringSubviewToFront:hashPlaceholder];
+
+                    
+                    
+                    
+                    return Cell_DetailCar;
+                }
+                
             }
-     
-            
-            [detailCell.sellingTextview setAutocorrectionType:UITextAutocorrectionTypeNo];
-            
-//            sellingPlaceholder = [[UILabel alloc]initWithFrame:(CGRectMake(140, 42, 200, 21))];
-            sellingPlaceholder.text = @"This is your post headline";
-            sellingPlaceholder.textColor = [UIColor lightGrayColor];
-            sellingPlaceholder.textAlignment = NSTextAlignmentRight;
-            [detailCell.sellingTextview addSubview:sellingPlaceholder];
-            [detailCell.contentView bringSubviewToFront:sellingPlaceholder];
             
             
-            detailCell.hashTextView.delegate=self;
-            
-            if ([detailCell.hashTextView.text isEqualToString:@"Add some #Hashtags"] || [detailCell.hashTextView.text isEqualToString:@""] )
+            if ([self.name isEqualToString:@"property"])
             {
-
-            
-            detailCell.hashTextView.text = @"Add some #Hashtags";
-            detailCell.hashTextView.textColor = [UIColor blackColor];
+                
+                
+                {
+                    
+                    Cell_DetailProperty = [[[NSBundle mainBundle]loadNibNamed:@"ProductDetailCellProperty" owner:self options:nil] objectAtIndex:0];
+                    
+                    
+                    
+                    
+                    if (Cell_DetailProperty == nil)
+                    {
+                        
+                        Cell_DetailProperty = [[ProductDetailCellProperty alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cell_detailproperty];
+                        
+                        
+                    }
+                    
+                    Cell_DetailProperty.profileImageView.layer.cornerRadius = Cell_DetailProperty.profileImageView.frame.size.height / 2;
+                    Cell_DetailProperty.profileImageView.clipsToBounds = YES;
+                    
+                    NSURL *url=[NSURL URLWithString:[defaults valueForKey:@"profileimage"]];
+                    
+                    [Cell_DetailProperty.profileImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultimg.jpg"] options:SDWebImageRefreshCached];
+                    
+                    Cell_DetailProperty.usernameLabel.text = [defaults valueForKey:@"UserName"];
+                    
+                    NSString *locationstr = [NSString stringWithFormat:@"%@, %@",[defaults valueForKey:@"Cityname"],[defaults valueForKey:@"Countryname"]];
+                    
+                    
+                    Cell_DetailProperty.locationLabel.text = locationstr;
+     //             detailCell.sellingTextview.delegate=self;
+                    
+                    if ([Cell_DetailProperty.sellingTextview.text isEqualToString:@"What are you selling?"] || [Cell_DetailProperty.sellingTextview.text isEqualToString:@""] )
+                    {
+                        Cell_DetailProperty.sellingTextview.text = @"What are you selling?";
+                        Cell_DetailProperty.sellingTextview.textColor = [UIColor blackColor];
+                        sellingPlaceholder.hidden = NO;
+                        
+                        moreCell.createButton.enabled = NO;
+                        moreCell .createButton.backgroundColor = [UIColor lightGrayColor];
+                    }
+                    
+                    
+                    [Cell_DetailProperty.sellingTextview setAutocorrectionType:UITextAutocorrectionTypeNo];
+                    
+                    //            sellingPlaceholder = [[UILabel alloc]initWithFrame:(CGRectMake(140, 42, 200, 21))];
+                    sellingPlaceholder.text = @"This is your post headline";
+                    sellingPlaceholder.textColor = [UIColor lightGrayColor];
+                    sellingPlaceholder.textAlignment = NSTextAlignmentRight;
+                    [Cell_DetailProperty.sellingTextview addSubview:sellingPlaceholder];
+                    [Cell_DetailProperty.contentView bringSubviewToFront:sellingPlaceholder];
+                    
+                    
+                    Cell_DetailProperty.hashTextView.delegate=self;
+                    
+                    if ([Cell_DetailProperty.hashTextView.text isEqualToString:@"Add some #Hashtags"] || [Cell_DetailCar.hashTextView.text isEqualToString:@""] )
+                    {
+                        
+                        
+                        Cell_DetailProperty.hashTextView.text = @"Add some #Hashtags";
+                        Cell_DetailProperty.hashTextView.textColor = [UIColor blackColor];
+                    }
+                    Cell_DetailProperty.sellingTextview.tag = 2;
+                    [Cell_DetailProperty.hashTextView setAutocorrectionType:UITextAutocorrectionTypeNo];
+                    
+       //           hashPlaceholder = [[UILabel alloc]initWithFrame:(CGRectMake(120, 35, 225, 21))];
+                    hashPlaceholder.text = @"i.e. #retro#car#gold#classic";
+                    hashPlaceholder.textColor = [UIColor lightGrayColor];
+                    hashPlaceholder.textAlignment = NSTextAlignmentRight;
+                    [Cell_DetailProperty.hashTextView addSubview:hashPlaceholder];
+                    [Cell_DetailProperty.contentView bringSubviewToFront:hashPlaceholder];
+                    
+                    [Cell_DetailProperty.rentButton  addTarget:self action:@selector(rentButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                    
+                    [Cell_DetailProperty.saleButton  addTarget:self action:@selector(saleButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                    
+                    Cell_DetailProperty.propertySizeTextField.delegate = self;
+                    Cell_DetailProperty.noOfBedroomTextField.delegate = self;
+                    
+                    [Cell_DetailProperty .propertySizeTextField bringSubviewToFront:Cell_DetailProperty];
+                    
+                    
+                    return Cell_DetailProperty;
+                }
             }
-            detailCell.sellingTextview.tag = 2;
-            [detailCell.hashTextView setAutocorrectionType:UITextAutocorrectionTypeNo];
             
-//            hashPlaceholder = [[UILabel alloc]initWithFrame:(CGRectMake(120, 35, 225, 21))];
-            hashPlaceholder.text = @"i.e. #retro#car#gold#classic";
-            hashPlaceholder.textColor = [UIColor lightGrayColor];
-            hashPlaceholder.textAlignment = NSTextAlignmentRight;
-            [detailCell.hashTextView addSubview:hashPlaceholder];
-            [detailCell.contentView bringSubviewToFront:hashPlaceholder];
-
-            
-            return detailCell;
-            
-        }
+            else
+            {
+                
+                {
+                    
+                    
+                    detailCell = [tableView dequeueReusableCellWithIdentifier:@"ProductCell"];
+                    
+                    detailCell.profileImageView.layer.cornerRadius = detailCell.profileImageView.frame.size.height / 2;
+                    detailCell.profileImageView.clipsToBounds = YES;
+                    
+                    NSURL *url=[NSURL URLWithString:[defaults valueForKey:@"profileimage"]];
+                    
+                    [detailCell.profileImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultimg.jpg"] options:SDWebImageRefreshCached];
+                    
+                    detailCell.usernameLabel.text = [defaults valueForKey:@"UserName"];
+                    
+                    NSString *locationstr = [NSString stringWithFormat:@"%@, %@",[defaults valueForKey:@"Cityname"],[defaults valueForKey:@"Countryname"]];
+                    
+                    
+                    detailCell.locationLabel.text = locationstr;
+                    //             detailCell.sellingTextview.delegate=self;
+                    
+                    if ([detailCell.sellingTextview.text isEqualToString:@"What are you selling?"] || [detailCell.sellingTextview.text isEqualToString:@""] )
+                    {
+                        detailCell.sellingTextview.text = @"What are you selling?";
+                        detailCell.sellingTextview.textColor = [UIColor blackColor];
+                        sellingPlaceholder.hidden = NO;
+                        
+                        moreCell.createButton.enabled = NO;
+                        moreCell .createButton.backgroundColor = [UIColor lightGrayColor];
+                    }
+                    
+                    
+                    [detailCell.sellingTextview setAutocorrectionType:UITextAutocorrectionTypeNo];
+                    
+      //            sellingPlaceholder = [[UILabel alloc]initWithFrame:(CGRectMake(140, 42, 200, 21))];
+                    sellingPlaceholder.text = @"This is your post headline";
+                    sellingPlaceholder.textColor = [UIColor lightGrayColor];
+                    sellingPlaceholder.textAlignment = NSTextAlignmentRight;
+                    [detailCell.sellingTextview addSubview:sellingPlaceholder];
+                    [detailCell.contentView bringSubviewToFront:sellingPlaceholder];
+                    
+                    
+                    detailCell.hashTextView.delegate=self;
+                    
+                    if ([detailCell.hashTextView.text isEqualToString:@"Add some #Hashtags"] || [detailCell.hashTextView.text isEqualToString:@""] )
+                    {
+                        
+                        
+                        detailCell.hashTextView.text = @"Add some #Hashtags";
+                        detailCell.hashTextView.textColor = [UIColor blackColor];
+                    }
+                    detailCell.sellingTextview.tag = 2;
+                    [detailCell.hashTextView setAutocorrectionType:UITextAutocorrectionTypeNo];
+                    
+       //           hashPlaceholder = [[UILabel alloc]initWithFrame:(CGRectMake(120, 35, 225, 21))];
+                    hashPlaceholder.text = @"i.e. #retro#car#gold#classic";
+                    hashPlaceholder.textColor = [UIColor lightGrayColor];
+                    hashPlaceholder.textAlignment = NSTextAlignmentRight;
+                    [detailCell.hashTextView addSubview:hashPlaceholder];
+                    [detailCell.contentView bringSubviewToFront:hashPlaceholder];
+                    
+                    
+                    return detailCell;
+                    
+                }
+            }
             break;
             
         case 2:
@@ -686,7 +886,19 @@
     }
     else if (indexPath.section == 1)
     {
-        return 243;
+        
+        if ([self.name isEqualToString:@"car"])
+        {
+            return 338;
+        }
+        else  if ([self.name isEqualToString:@"property"])
+        {
+            return 422;
+        }
+        else
+        {
+            return 243;
+        }
     }
     else if (indexPath.section == 2)
     {
@@ -696,6 +908,36 @@
     
     return 0;
     
+}
+
+
+-(void)rentButtonPressed:(id)sender
+{
+    
+    propertyType = @"RENT";
+    [Cell_DetailProperty.rentButton setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
+    [Cell_DetailProperty.rentButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    Cell_DetailProperty.rentButton.titleLabel.font = [UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:22];
+    
+    [Cell_DetailProperty.saleButton setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
+    [Cell_DetailProperty.saleButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    Cell_DetailProperty.saleButton.titleLabel.font = [UIFont fontWithName:@"SanFranciscoDisplay-Regular" size:22];
+
+    
+}
+-(void)saleButtonPressed:(id)sender
+{
+     propertyType = @"SALE";
+    
+    [Cell_DetailProperty.saleButton setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
+    [Cell_DetailProperty.saleButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    Cell_DetailProperty.saleButton.titleLabel.font = [UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:22];
+    
+    
+    [Cell_DetailProperty.rentButton setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
+    [Cell_DetailProperty.rentButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    Cell_DetailProperty.rentButton.titleLabel.font = [UIFont fontWithName:@"SanFranciscoDisplay-Regular" size:22];
+
 }
 
 
@@ -720,51 +962,116 @@
         [moreCell.createButton setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
     }
     
-//    if (textView == detailCell.hashTextView)
-//    
-//    {
-//       if ( [textView.text componentsSeparatedByString:@" "])
-//       {
-//           
-//           textView.text =[textView.text stringByAppendingString:@"#"];
-//           
-//       }
-//        
-//    }
 }
 -(void)textViewDidBeginEditing:(UITextView *)textView
 {
-    
-    if ([textView isEqual: detailCell.sellingTextview])
+    if ([self.name isEqualToString:@"car"])
     {
-         if ([textView.text isEqualToString:@"What are you selling?"] || [textView.text isEqualToString:@""])
-         {
-             textView.text = @"";
-             sellingPlaceholder.hidden = YES;
-             moreCell.createButton.enabled = NO;
-             [moreCell.createButton setBackgroundColor:[UIColor lightGrayColor]];
-
-         }
-        else
+        
+        
+        if ([textView isEqual: Cell_DetailCar.sellingTextview])
         {
-            sellingPlaceholder.hidden = YES;
-            moreCell.createButton.enabled = YES;
-            [moreCell.createButton setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
+            if ([textView.text isEqualToString:@"What are you selling?"] || [textView.text isEqualToString:@""])
+            {
+                textView.text = @"";
+                sellingPlaceholder.hidden = YES;
+                moreCell.createButton.enabled = NO;
+                [moreCell.createButton setBackgroundColor:[UIColor lightGrayColor]];
+                
+            }
+            else
+            {
+                sellingPlaceholder.hidden = YES;
+                moreCell.createButton.enabled = YES;
+                [moreCell.createButton setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
+            }
+            
+            
+        }
+        
+        else if ([textView isEqual: Cell_DetailCar.hashTextView])
+        {
+            if ([textView.text isEqualToString:@"Add some #Hashtags"] )
+            {
+                textView.text = @"";
+                hashPlaceholder.hidden = YES;
+                textView.textColor = [UIColor grayColor];
+            }
+        }
+    }
+    else if ([self.name isEqualToString:@"property"])
+    {
+        if ([textView isEqual: Cell_DetailProperty.sellingTextview])
+        {
+            if ([textView.text isEqualToString:@"What are you selling?"] || [textView.text isEqualToString:@""])
+            {
+                textView.text = @"";
+                sellingPlaceholder.hidden = YES;
+                moreCell.createButton.enabled = NO;
+                [moreCell.createButton setBackgroundColor:[UIColor lightGrayColor]];
+                
+            }
+            else
+            {
+                sellingPlaceholder.hidden = YES;
+                moreCell.createButton.enabled = YES;
+                [moreCell.createButton setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
+            }
+            
+            
+        }
+        
+        else if ([textView isEqual: Cell_DetailProperty.hashTextView])
+        {
+            if ([textView.text isEqualToString:@"Add some #Hashtags"] )
+            {
+                textView.text = @"";
+                hashPlaceholder.hidden = YES;
+                textView.textColor = [UIColor grayColor];
+            }
         }
         
         
     }
     
-    else if ([textView isEqual: detailCell.hashTextView])
+    else
     {
-       if ([textView.text isEqualToString:@"Add some #Hashtags"] )
+        
+        
+        if ([textView isEqual: detailCell.sellingTextview])
         {
-        textView.text = @"";
-        hashPlaceholder.hidden = YES;
-        textView.textColor = [UIColor grayColor];
+            if ([textView.text isEqualToString:@"What are you selling?"] || [textView.text isEqualToString:@""])
+            {
+                textView.text = @"";
+                sellingPlaceholder.hidden = YES;
+                moreCell.createButton.enabled = NO;
+                [moreCell.createButton setBackgroundColor:[UIColor lightGrayColor]];
+                
+            }
+            else
+            {
+                sellingPlaceholder.hidden = YES;
+                moreCell.createButton.enabled = YES;
+                [moreCell.createButton setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
+            }
+            
+            
         }
+        
+        else if ([textView isEqual: detailCell.hashTextView])
+        {
+            if ([textView.text isEqualToString:@"Add some #Hashtags"] )
+            {
+                textView.text = @"";
+                hashPlaceholder.hidden = YES;
+                textView.textColor = [UIColor grayColor];
+            }
+        }
+        
     }
-    else if ([textView isEqual: moreCell.moreTextView])
+    
+    
+    if ([textView isEqual: moreCell.moreTextView])
     {
         
         if ([textView.text isEqualToString:@"Tell us more about the product"] )
@@ -778,29 +1085,98 @@
 
 -(void)textViewDidEndEditing:(UITextView *)textView
 {
-    if ([textView isEqual: detailCell.sellingTextview])
-    {
-        if ([textView.text isEqualToString:@""])
-        {
-            textView.text = @"What are you selling?";
-            sellingPlaceholder.hidden = NO;
-            moreCell.createButton.enabled = NO;
-            moreCell .createButton.backgroundColor = [UIColor lightGrayColor];
-        }
-    }
     
-    else if ([textView isEqual: detailCell.hashTextView])
+    if ([self.name isEqualToString:@"car"])
     {
         
-        if ([textView.text isEqualToString:@""] )
+        
+        
+        if ([textView isEqual: Cell_DetailCar.sellingTextview])
         {
-            textView.text = @"Add some #Hashtags";
-             textView.textColor = [UIColor blackColor];
-            hashPlaceholder.hidden = NO;
+            if ([textView.text isEqualToString:@""])
+            {
+                textView.text = @"What are you selling?";
+                sellingPlaceholder.hidden = NO;
+                moreCell.createButton.enabled = NO;
+                moreCell .createButton.backgroundColor = [UIColor lightGrayColor];
+            }
         }
+        
+        else if ([textView isEqual: Cell_DetailCar.hashTextView])
+        {
+            
+            if ([textView.text isEqualToString:@""] )
+            {
+                textView.text = @"Add some #Hashtags";
+                textView.textColor = [UIColor blackColor];
+                hashPlaceholder.hidden = NO;
+            }
+        }
+        
     }
+    else if ([self.name isEqualToString:@"property"])
+    {
+        
+        
+        
+        if ([textView isEqual: Cell_DetailProperty.sellingTextview])
+        {
+            if ([textView.text isEqualToString:@""])
+            {
+                textView.text = @"What are you selling?";
+                sellingPlaceholder.hidden = NO;
+                moreCell.createButton.enabled = NO;
+                moreCell .createButton.backgroundColor = [UIColor lightGrayColor];
+            }
+        }
+        
+        else if ([textView isEqual: Cell_DetailProperty.hashTextView])
+        {
+            
+            if ([textView.text isEqualToString:@""] )
+            {
+                textView.text = @"Add some #Hashtags";
+                textView.textColor = [UIColor blackColor];
+                hashPlaceholder.hidden = NO;
+            }
+        }
+        
+    }
+    else
+    {
+        
+        
+        if ([textView isEqual: detailCell.sellingTextview])
+        {
+            if ([textView.text isEqualToString:@""])
+            {
+                textView.text = @"What are you selling?";
+                sellingPlaceholder.hidden = NO;
+                moreCell.createButton.enabled = NO;
+                moreCell .createButton.backgroundColor = [UIColor lightGrayColor];
+            }
+        }
+        
+        else if ([textView isEqual: detailCell.hashTextView])
+        {
+            
+            if ([textView.text isEqualToString:@""] )
+            {
+                textView.text = @"Add some #Hashtags";
+                textView.textColor = [UIColor blackColor];
+                hashPlaceholder.hidden = NO;
+            }
+        }
+
+        
+    }
+
     
-    else if ([textView isEqual: moreCell.moreTextView])
+    
+    
+    
+    
+      if ([textView isEqual: moreCell.moreTextView])
     {
         
         if ([textView.text isEqualToString:@""] )
@@ -820,17 +1196,6 @@
         return NO;
     }
     
-        //if (textView == detailCell.hashTextView)
-    
-       // {
-      //     if ( [textView.text componentsSeparatedByString:@" "])
-       //    {
-    
-        //       textView.text =[textView.text stringByAppendingString:@"#"];
-    //
-       //    }
-            
-     //   }
 
   
     return YES;
@@ -883,6 +1248,22 @@
 -(BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
     
+    if  ([textField isEqual:Cell_DetailCar.mileageTextField])
+    {
+        Cell_DetailCar.mileageTextField.text =@"";
+        KMlabel.frame = CGRectMake(0, 0, 0, 0);
+        KMlabel.hidden = YES;
+       
+    }
+    
+    if  ([textField isEqual:Cell_DetailProperty.propertySizeTextField])
+    {
+        Cell_DetailProperty.propertySizeTextField.text =@"";
+        Sqmlabel.frame = CGRectMake(0, 0, 0, 0);
+        Sqmlabel.hidden = YES;
+        
+    }
+    
     
     if  ([textField isEqual:moreCell.askingPriceTextField])
     {
@@ -914,16 +1295,74 @@
     {
         moreCell.askingPriceTextField.text = @"$";
     }
-   // moreCell.askingPriceTextField.text = @"$";//[[NSLocale currentLocale] objectForKey:NSLocaleCurrencySymbol];
+   
+}
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    
+//    NSString *text =self. Cell_DetailCar.mileageTextField.text;
+//    Cell_DetailCar.mileageTextField.text = [NSString stringWithFormat:@"%@ KM",text];
+//    
+//    Cell_DetailProperty.propertySizeTextField.text = [NSString stringWithFormat:@"%@ (sqm)",Cell_DetailProperty.propertySizeTextField.text];
+    
+    if ([Cell_DetailCar.mileageTextField.text isEqualToString:@""])
+    {
+        KMlabel.frame = CGRectMake(0, 0, 0, 0);
+        KMlabel.hidden = YES;
+        
+    }
+    else
+    {
+    
+    KMlabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
+    KMlabel.text = @" KM";
+    KMlabel.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.0];
+    Cell_DetailCar.mileageTextField.rightViewMode = UITextFieldViewModeAlways;
+    Cell_DetailCar.mileageTextField.rightView = KMlabel;
+    }
+    
+    if ([Cell_DetailProperty.propertySizeTextField.text isEqualToString:@""])
+    {
+        Sqmlabel.frame = CGRectMake(0, 0, 0, 0);
+        Sqmlabel.hidden = YES;
+        
+    }
+    else
+    {
+        
+        Sqmlabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 40, 50)];
+        Sqmlabel.text = @" (Sqm)";
+        Sqmlabel.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.0];
+        Cell_DetailProperty.propertySizeTextField.rightViewMode = UITextFieldViewModeAlways;
+        Cell_DetailProperty.propertySizeTextField.rightView = Sqmlabel;
+    }
+
+    
 }
 
+    
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
+    if ([self.name isEqualToString: @"car"])
+    {
+        
+       
+        
+    }
+    else if ([self.name isEqualToString:@"property"])
+    {
+        
+    }
+    else
+    {
+    
     NSString *newText = [moreCell.askingPriceTextField.text stringByReplacingCharactersInRange:range withString:string];
     
     if (![newText hasPrefix:@"$"])
     {
         return NO;
+    }
+        
     }
     
     // Default:
@@ -1442,18 +1881,106 @@
         NSString *postidVal = postIDValue;    //[defaults valueForKey:@"postid"];
         NSString *userid= @"userid";
         NSString *useridVal =[defaults valueForKey:@"userid"];
-        NSString *title= @"title";
-        NSString *titleVal =detailCell.sellingTextview.text;// [defaults valueForKey:@"title"];
+        
+        
+        NSString *title;
+        NSString *titleVal;
+        NSString *hashtags;
+        NSString *hashtagsVal;
+        
+
+        
+        if ([self.name isEqualToString:@"car"])
+        {
+            
+            title= @"title";
+            titleVal =Cell_DetailCar.sellingTextview.text;
+            if ([Cell_DetailCar.hashTextView.text isEqualToString:@"Add some #Hashtags"])
+            {
+                hashtags= @"hashtags";
+                hashtagsVal = @"";
+                
+            }
+            else
+            {
+                hashtags= @"hashtags";
+                hashtagsVal = Cell_DetailCar.hashTextView.text;
+                
+            }
+            
+        }
+        else if ([self.name isEqualToString:@"property"])
+        {
+            title= @"title";
+            titleVal =Cell_DetailProperty.sellingTextview.text;// [defaults valueForKey:@"title"];
+    
+            if ([Cell_DetailProperty.hashTextView.text isEqualToString:@"Add some #Hashtags"])
+            {
+                hashtags= @"hashtags";
+                hashtagsVal = @"";
+                
+            }
+            else
+            {
+                hashtags= @"hashtags";
+                hashtagsVal = Cell_DetailProperty.hashTextView.text;
+                
+            }
+            
+        }
+        else
+        {
+            
+            title= @"title";
+            titleVal =detailCell.sellingTextview.text;// [defaults valueForKey:@"title"];
+
+            if ([detailCell.hashTextView.text isEqualToString:@"Add some #Hashtags"])
+            {
+                hashtags= @"hashtags";
+                hashtagsVal = @"";
+                
+            }
+            else
+            {
+                hashtags= @"hashtags";
+                hashtagsVal = detailCell.hashTextView.text;
+                
+            }
+            
+            
+            
+        }
+        
+        NSString *carmodel = @"carmodel";
+        NSString *carmodelVal = Cell_DetailCar.modelTextField.text;
+        NSString *carmileage = @"carmileage";
+        NSString *carmileageVal = Cell_DetailCar.mileageTextField.text;
+        
+        
+        NSString *propertytype = @"propertytype";
+        NSString *propertytypeVal = propertyType;
+        
+        NSString *propertysize = @"propertysize";
+        NSString *propertysizeVal = Cell_DetailProperty.propertySizeTextField.text;
+        NSString *noofrooms = @"noofrooms";
+        NSString *noofroomsVal = Cell_DetailProperty.noOfBedroomTextField.text;
+        
+        
+        
+        
+        
+        
+
+        
+        
+        
         NSString *allowcalls= @"allowcalls";
         NSString *allowcallsVal = [defaults valueForKey:@"CallPressed"];
-        
         NSString *enddays= @"enddays";
         NSString *enddaysVal = [defaults valueForKey:@"slival"];
         
-        
         NSString *askingprice;
         NSString *askingpriceVal;
-        
         if ([moreCell.askingPriceTextField.text isEqualToString:@""])
         {
             askingprice= @"askingprice";
@@ -1482,31 +2009,15 @@
         }
         
         
-        NSString *hashtags;
-        NSString *hashtagsVal;
-        if ([detailCell.hashTextView.text isEqualToString:@"Add some #Hashtags"])
-        {
-            hashtags= @"hashtags";
-            hashtagsVal = @"";
-                
-        }
-        else
-        {
-            hashtags= @"hashtags";
-            hashtagsVal = detailCell.hashTextView.text;
-            
-        }
-        
         NSString *city= @"city";
         NSString *cityVal = [defaults valueForKey:@"Cityname"];
         NSString *country= @"country";
         NSString *countryVal =[defaults valueForKey:@"Countryname"];
-        
         NSString *category= @"category";
         NSString *categoryVal = self.name;
         
         
-        NSString *reqStringFUll=[NSString stringWithFormat:@"%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@",postid,postidVal,userid,useridVal,title,titleVal,allowcalls,allowcallsVal,enddays,enddaysVal,askingprice,askingpriceVal,description,descriptionVal,hashtags,hashtagsVal,city,cityVal,country,countryVal,category,categoryVal];
+        NSString *reqStringFUll=[NSString stringWithFormat:@"%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@",postid,postidVal,userid,useridVal,title,titleVal,allowcalls,allowcallsVal,enddays,enddaysVal,askingprice,askingpriceVal,description,descriptionVal,hashtags,hashtagsVal,city,cityVal,country,countryVal,category,categoryVal,carmodel,carmodelVal,carmileage,carmileageVal,propertytype,propertytypeVal,propertysize,propertysizeVal,noofrooms,noofroomsVal];
         
         
         //converting  string into data bytes and finding the lenght of the string.

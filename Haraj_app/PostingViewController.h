@@ -13,6 +13,8 @@
 #import "SDAVAssetExportSession.h"
 #import <AVFoundation/AVFoundation.h>
 #import "Base64.h"
+#import "ProductDetailCellCar.h"
+#import "ProductDetailCellProperty.h"
 
 
 
@@ -29,5 +31,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 
 -(IBAction)OnClick_btn:(id)sender;
+
+
+@property (strong,nonatomic)ProductDetailCellCar * Cell_DetailCar;
+@property (strong,nonatomic)ProductDetailCellProperty * Cell_DetailProperty;
 
 @end

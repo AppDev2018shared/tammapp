@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "TwoImageOnClickTableViewCell.h"
 #import "DetailTableViewCell.h"
+#import "DetailCarTableViewCell.h"
+#import "DetailPropertyTableViewCell.h"
 #import "CommentsTableViewCell.h"
 #import "SuggestedTableViewCell.h"
 #import "PostHeaderTableViewCell.h"
@@ -24,7 +26,14 @@
 @property (nonatomic)NSInteger swipeCount;
 
 @property (strong,nonatomic)TwoImageOnClickTableViewCell * Cell_two;
+
 @property (strong,nonatomic)DetailTableViewCell * detailCell;
+@property (strong,nonatomic)DetailCarTableViewCell * detailCellCar;
+@property (strong,nonatomic)DetailPropertyTableViewCell * detailCellProperty;
+
+
+
+
 @property (strong,nonatomic)CommentsTableViewCell * ComCell;
 @property (strong,nonatomic)SuggestedTableViewCell * SuggestCell;
 
