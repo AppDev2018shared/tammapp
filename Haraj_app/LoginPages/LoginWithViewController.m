@@ -27,7 +27,7 @@
     NSDictionary *urlplist;
     NSMutableArray *array_login;
 
-    NSString *emailFb,*DobFb,*nameFb,*genderfb,*profile_picFb,*Fbid,*regTypeVal,*EmailValidTxt,*Str_fb_friend_id,*Str_fb_friend_id_Count;
+    NSString *emailFb,*DobFb,*nameFb,*genderfb,*profile_picFb,*Fbid,*regTypeVal,*EmailValidTxt,*Str_fb_friend_id,*Str_fb_friend_id_Count,*firstName,*lastName;
     NSMutableArray *fb_friend_id;
 }
 @property (weak, nonatomic) IBOutlet FRHyperLabel *termLabel;
@@ -152,6 +152,8 @@
                          //  nameFb=[NSString stringWithFormat:@"%@%@%@",[result objectForKey:@"first_name"],@" ",[result objectForKey:@"last_name"]];
                          nameFb=[result objectForKey:@"name"];
                          genderfb=[result objectForKey:@"gender"];
+                         firstName = [result objectForKey:@"first_name"];
+                         lastName = [result objectForKey:@"last_name"];
                          
                          
                          NSArray * allKeys = [[result valueForKey:@"friends"]objectForKey:@"data"];
@@ -175,6 +177,9 @@
                          
                          [defaults setObject:nameFb forKey:@"UserName"];
                          [defaults setObject:profile_picFb forKey:@"ProImg"];
+                         [defaults setObject:firstName forKey:@"FirstName"];
+                         [defaults setObject:lastName forKey:@"LastName"];
+                         
                          [defaults synchronize];
 
                          

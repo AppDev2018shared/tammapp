@@ -27,6 +27,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *mileageLabel;
 
 
+@property (weak, nonatomic) IBOutlet UIImageView *favouriteImage;
 
 
 @property (weak, nonatomic) IBOutlet UIButton *Button_makeoffer;

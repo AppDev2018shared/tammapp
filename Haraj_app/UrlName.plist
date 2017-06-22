@@ -26,5 +26,11 @@
 	<string>http://www.tammapp.com/app/addchat.php</string>
 	<key>itemsold</key>
 	<string>http://www.tammapp.com/app/itemsold.php</string>
+	<key>addfavourite</key>
+	<string>http://www.tammapp.com/app/addfavourite.php</string>
+	<key>viewfavourites</key>
+	<string>http://www.tammapp.com/app/viewfavourites.php</string>
+	<key>boostpost</key>
+	<string>http://www.tammapp.com/app/boostpost.php</string>
 </dict>
 </plist>

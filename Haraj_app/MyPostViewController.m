@@ -13,6 +13,7 @@
 #import "SBJsonParser.h"
 #import "MHFacebookImageViewer.h"
 #import "UIImageView+MHFacebookImageViewer.h"
+#import "BoostPost.h"
 #define FONT_SIZE 15.0f
 #define CELL_CONTENT_WIDTH self.view.frame.size.width-138
 #define CELL_CONTENT_MARGIN 0.0f
@@ -36,13 +37,18 @@
     CGFloat button_threeDotsx,button_threeDotsy,button_threeDotsw,button_threeDotsh,button_favx,button_favy,button_favw,button_favh,button_arrowx,button_arrowy,button_arroww,button_arrowh;
     CGFloat FavIV_X,FavIV_Y,FavIV_W,FavIV_H,FavLabel_X,FavLabel_Y,FavLabel_W,FavLabel_H;
     
-    NSMutableArray *Array_Moreimages, *Array_Chats, *Array_Comments, *Array_ItemSold;
-    NSString *str_LabelCoordinates,*str_TappedLabel;
-    NSString *text, *nochats, *paymentmodeStr;
+    NSMutableArray *Array_Moreimages, *Array_Chats, *Array_Comments, *Array_ItemSold, *Array_Favourite,*Array_Boost;
+    NSString *str_LabelCoordinates,*str_TappedLabel, *str_fav;
+    NSString *text, *nochats, *paymentmodeStr,*boostpackVal,*boostAmountVal;
     UITextView *commentPostTextView1;
     UILabel *postplaceholderLabel;
+    BOOL fav;
+
     
     EnterPrice *myCustomXIBViewObj;
+    BoostPost *myBoostXIBViewObj;
+    
+
     
 }
 @property (strong,nonatomic)TwoImageOnClickTableViewCell * Cell_two;
@@ -58,7 +64,18 @@
     // Do any additional setup after loading the view.
     
     
+    
+    
+    UIButton *floatButton=[[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width - 70,self.view.frame.size.height - 70, 60,60)];
+    floatButton.titleLabel.font = [UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:16];
+    [floatButton setImage:[UIImage imageNamed:@"BoostButton"] forState:UIControlStateNormal];
+    [floatButton addTarget:self action:@selector(floatButtonAction:)
+      forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:floatButton];
+    
+    
   
+    
     defaults = [[NSUserDefaults alloc]init];
     
     NSString *plistPath = [[NSBundle mainBundle]pathForResource:@"UrlName" ofType:@"plist"];
@@ -68,6 +85,10 @@
     
         total_image=[[Array_UserInfo  valueForKey:@"mediacount"] integerValue];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(Hide_Popover) name:@"HidePopOver" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(Hide_BoostPopover) name:@"HideBoostPopOver" object:nil];
+    
+    
     
     str_TappedLabel=@"no";
     str_LabelCoordinates=@"no";
@@ -378,6 +399,45 @@
                     detailCellCar.profileImage.layer.cornerRadius = detailCellCar.profileImage.frame.size.height / 2;
                     detailCellCar.profileImage.clipsToBounds = YES;
                     
+                    
+                    detailCellCar.favouriteImage.userInteractionEnabled = YES;
+                    detailCellCar.favouriteImage.tag=swipeCount;
+                    UITapGestureRecognizer *favouriteImage_Tapped =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(favouriteImage_ActionDetails:)];
+                    [detailCellCar.favouriteImage addGestureRecognizer:favouriteImage_Tapped];
+
+                    
+                    
+                    if ([[Array_UserInfo valueForKey:@"favourite"]isEqualToString:@"TRUE"])
+                    {
+                        [detailCellCar.favouriteImage setImage:[UIImage imageNamed:@"FavouriteFill"]];
+                    }
+                    else
+                    {
+                        [detailCellCar.favouriteImage setImage:[UIImage imageNamed:@"Favourite"]];
+                        
+                    }
+                    
+#pragma mark - fdgfhjdgj;
+                    
+                    if (fav)
+                    {
+                        
+                        
+                        if ([str_fav isEqualToString:@"inserted"])
+                        {
+                            [detailCellCar .favouriteImage setImage:[UIImage imageNamed:@"FavouriteFill"]];
+                        }
+                        else
+                        {
+                            [detailCellCar .favouriteImage setImage:[UIImage imageNamed:@"Favourite"]];
+                            
+                        }
+                        
+                        fav = false;
+                        
+                    }
+
+                    
                     //------------------------------------------$$$$$$$$$$$$$$$$$$$______________________________
                     
                     detailCellCar.tapView.userInteractionEnabled=YES;
@@ -554,6 +614,44 @@
                     detailCellProperty.profileImage.layer.cornerRadius = detailCellProperty.profileImage.frame.size.height / 2;
                     detailCellProperty.profileImage.clipsToBounds = YES;
                     
+                    
+                    detailCellProperty.favouriteImage.userInteractionEnabled = YES;
+                    detailCellProperty.favouriteImage.tag=swipeCount;
+                    UITapGestureRecognizer *favouriteImage_Tapped =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(favouriteImage_ActionDetails:)];
+                    [detailCellProperty.favouriteImage addGestureRecognizer:favouriteImage_Tapped];
+
+                    
+                    if ([[Array_UserInfo valueForKey:@"favourite"]isEqualToString:@"TRUE"])
+                    {
+                        [detailCellProperty.favouriteImage setImage:[UIImage imageNamed:@"FavouriteFill"]];
+                    }
+                    else
+                    {
+                        [detailCellProperty.favouriteImage setImage:[UIImage imageNamed:@"Favourite"]];
+                        
+                    }
+                    
+#pragma mark - fdgfhjdgj;
+                    
+                    if (fav)
+                    {
+                        
+                        
+                        if ([str_fav isEqualToString:@"inserted"])
+                        {
+                            [detailCellProperty .favouriteImage setImage:[UIImage imageNamed:@"FavouriteFill"]];
+                        }
+                        else
+                        {
+                            [detailCellProperty .favouriteImage setImage:[UIImage imageNamed:@"Favourite"]];
+                            
+                        }
+                        
+                        fav = false;
+                        
+                    }
+
+                    
                     //------------------------------------------$$$$$$$$$$$$$$$$$$$______________________________
                     
                     detailCellProperty.tapView.userInteractionEnabled=YES;
@@ -726,6 +824,49 @@
                 [detailCell.profileImage sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultimg.jpg"] options:SDWebImageRefreshCached];
                 detailCell.profileImage.layer.cornerRadius = detailCell.profileImage.frame.size.height / 2;
                 detailCell.profileImage.clipsToBounds = YES;
+                
+                
+                detailCell.favouriteImage.userInteractionEnabled = YES;
+                detailCell.favouriteImage.tag=swipeCount;
+                UITapGestureRecognizer *favouriteImage_Tapped =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(favouriteImage_ActionDetails:)];
+                [detailCell.favouriteImage addGestureRecognizer:favouriteImage_Tapped];
+                
+                
+                
+                if ([[Array_UserInfo valueForKey:@"favourite"]isEqualToString:@"TRUE"])
+                {
+                    [detailCell.favouriteImage setImage:[UIImage imageNamed:@"FavouriteFill"]];
+                }
+                else
+                {
+                    [detailCell.favouriteImage setImage:[UIImage imageNamed:@"Favourite"]];
+                    
+                }
+                
+#pragma mark - fdgfhjdgj;
+                
+                if (fav)
+                {
+                    
+                    
+                    if ([str_fav isEqualToString:@"inserted"])
+                    {
+                        [detailCell .favouriteImage setImage:[UIImage imageNamed:@"FavouriteFill"]];
+                    }
+                    else
+                    {
+                        [detailCell .favouriteImage setImage:[UIImage imageNamed:@"Favourite"]];
+                        
+                    }
+                    
+                    fav = false;
+                    
+                }
+                
+                //------------------------------------------$$$$$$$$$$$$$$$$$$$______________________________
+
+                
+                
                 
                 if ([str_LabelCoordinates isEqualToString:@"no"])
                 {
@@ -1618,6 +1759,12 @@
 }
 
 - (void)Hide_Popover
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewEnable" object:self userInfo:nil];
+    transparentView1.hidden= YES;
+}
+
+- (void)Hide_BoostPopover
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewEnable" object:self userInfo:nil];
     transparentView1.hidden= YES;
@@ -2530,6 +2677,357 @@
     [dataTask resume];
     
 }
+
+-(void)favouriteImage_ActionDetails:(UIGestureRecognizer *)reconizer
+{
+    
+    
+    
+    
+    
+    
+    NSLog(@"FAVORITE TAPPED");
+    
+    NSString *postid= @"postid";
+    NSString *postidVal =[Array_UserInfo  valueForKey:@"postid"];
+    
+    NSString *userid= @"userid";
+    NSString *useridVal =[defaults valueForKey:@"userid"];
+    
+    
+    NSString *reqStringFUll=[NSString stringWithFormat:@"%@=%@&%@=%@",postid,postidVal,userid,useridVal];
+    
+    
+    
+#pragma mark - swipe sesion
+    
+    NSURLSession *session = [NSURLSession sessionWithConfiguration: [NSURLSessionConfiguration defaultSessionConfiguration] delegate: nil delegateQueue: [NSOperationQueue mainQueue]];
+    
+    NSURL *url;
+    NSString *  urlStrLivecount=[urlplist valueForKey:@"addfavourite"];;
+    url =[NSURL URLWithString:urlStrLivecount];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    
+    [request setHTTPMethod:@"POST"];//Web API Method
+    
+    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    
+    request.HTTPBody = [reqStringFUll dataUsingEncoding:NSUTF8StringEncoding];
+    
+    
+    
+    NSURLSessionDataTask *dataTask =[session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
+                                     {
+                                         
+                                         if(data)
+                                         {
+                                             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+                                             NSInteger statusCode = httpResponse.statusCode;
+                                             if(statusCode == 200)
+                                             {
+                                                 
+                                                 Array_Favourite=[[NSMutableArray alloc]init];
+                                                 SBJsonParser *objSBJsonParser = [[SBJsonParser alloc]init];
+                                                 Array_Favourite =[objSBJsonParser objectWithData:data];
+                                                 
+                                                 
+                                                 
+                                                 NSString * ResultString=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+                                                 
+                                                 ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+                                                 ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\t" withString:@""];
+                                                 
+                                                 NSLog(@"Array_Favourite %@",Array_Favourite);
+                                                 
+                                                 if ([ResultString isEqualToString:@"inserted"])
+                                                 {
+                                                     
+                                                     str_fav = @"inserted";
+                                                     
+                                                     fav = true;
+                                                     
+                                                     
+                                                     
+                                                     [self.tableView reloadData];
+                                                     
+                                                     
+                                                     
+                                                     
+                                                 }
+                                                 if ([ResultString isEqualToString:@"deleted"])
+                                                 {
+                                                     
+                                                     str_fav = @"deleted";
+                                                     
+                                                     fav = true;
+                                                     
+                                                     [self.tableView reloadData];
+                                                     
+                                                 }
+                                                 
+                                                 
+                                                 
+                                                 
+                                                 
+                                                 
+                                             }
+                                             
+                                             
+                                             else
+                                             {
+                                                 NSLog(@" error login1 ---%ld",(long)statusCode);
+                                                 
+                                             }
+                                             
+                                             
+                                         }
+                                         else if(error)
+                                         {
+                                             
+                                             NSLog(@"error login2.......%@",error.description);
+                                         }
+                                         
+                                         
+                                     }];
+    [dataTask resume];
+    
+    
+}
+
+#pragma mark - Boost
+
+-(void)floatButtonAction:(id)sender
+{
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewDisable" object:self userInfo:nil];
+    transparentView1=[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    transparentView1.backgroundColor=[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.3];
+    
+    myBoostXIBViewObj =[[[NSBundle mainBundle] loadNibNamed:@"BoostPost" owner:self options:nil]objectAtIndex:0];
+    
+    myBoostXIBViewObj.frame = CGRectMake((self.view.frame.size.width- myBoostXIBViewObj.frame.size.width)/2,self.view.frame.size.width - 250, myBoostXIBViewObj.frame.size.width, myBoostXIBViewObj.frame.size.height);
+    
+    
+    [self.view addSubview:myBoostXIBViewObj];
+    
+   
+    
+    myBoostXIBViewObj.postIdLabel.text =[NSString stringWithFormat:@"POST ID: %@",[Array_UserInfo  valueForKey:@"postid"]];
+    myBoostXIBViewObj.layer.cornerRadius = 10;
+    myBoostXIBViewObj.clipsToBounds = YES;
+    
+    [myBoostXIBViewObj.imageViewButton1 setUserInteractionEnabled:YES];
+    UITapGestureRecognizer *viewTapped1 =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewButton1_Action:)];
+    [myBoostXIBViewObj.imageViewButton1 addGestureRecognizer:viewTapped1];
+    
+    [myBoostXIBViewObj.imageViewButton2 setUserInteractionEnabled:YES];
+    UITapGestureRecognizer *viewTapped2 =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewButton2_Action:)];
+    [myBoostXIBViewObj.imageViewButton2 addGestureRecognizer:viewTapped2];
+    
+    [myBoostXIBViewObj.imageViewButton3 setUserInteractionEnabled:YES];
+    UITapGestureRecognizer *viewTapped3 =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewButton3_Action:)];
+    [myBoostXIBViewObj.imageViewButton3 addGestureRecognizer:viewTapped3];
+    
+    
+    [myBoostXIBViewObj.closeButton addTarget:self action:@selector(boostCloseAction:) forControlEvents:UIControlEventTouchUpInside];
+    
+
+    [transparentView1 addSubview:myBoostXIBViewObj];
+    [self.view addSubview:transparentView1];
+    
+}
+
+
+-(void)boostCloseAction:(id)sender
+{
+    
+     [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewEnable" object:self userInfo:nil];
+    transparentView1.hidden = YES;
+    
+}
+
+-(void)imageViewButton1_Action:(UIGestureRecognizer *)reconizer
+{
+    NSLog(@"imageViewButton1_Action");
+    
+    boostpackVal = @"24H";
+    boostAmountVal = @"4";
+    [self boostConnection];
+    
+}
+-(void)imageViewButton2_Action:(UIGestureRecognizer *)reconizer
+{
+    boostpackVal = @"48H";
+    boostAmountVal = @"6";
+    NSLog(@"imageViewButton2_Action");
+    [self boostConnection];
+
+}
+
+
+-(void)imageViewButton3_Action:(UIGestureRecognizer *)reconizer
+{
+    NSLog(@"imageViewButton3_Action");
+    boostpackVal = @"72H";
+    boostAmountVal = @"10";
+    [self boostConnection];
+
+}
+
+-(void)boostConnection
+{
+    NSString *postid= @"postid";
+    NSString *postidVal =[Array_UserInfo  valueForKey:@"postid"];
+    
+    NSString *userid= @"userid";
+    NSString *useridVal =[defaults valueForKey:@"userid"];
+    
+    NSString *boostpack= @"boostpack";
+    
+    
+    NSString *boostamount= @"boostamount";
+    
+    NSString *reqStringFUll=[NSString stringWithFormat:@"%@=%@&%@=%@&%@=%@&%@=%@",postid,postidVal,userid,useridVal,boostpack,boostpackVal,boostamount,boostAmountVal];
+    
+    
+    
+#pragma mark - swipe sesion
+    
+    NSURLSession *session = [NSURLSession sessionWithConfiguration: [NSURLSessionConfiguration defaultSessionConfiguration] delegate: nil delegateQueue: [NSOperationQueue mainQueue]];
+    
+    NSURL *url;
+    NSString *  urlStrLivecount=[urlplist valueForKey:@"boostpost"];;
+    url =[NSURL URLWithString:urlStrLivecount];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    
+    [request setHTTPMethod:@"POST"];//Web API Method
+    
+    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    
+    request.HTTPBody = [reqStringFUll dataUsingEncoding:NSUTF8StringEncoding];
+    
+    
+    
+    NSURLSessionDataTask *dataTask =[session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
+                                     {
+                                         
+                                         if(data)
+                                         {
+                                             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+                                             NSInteger statusCode = httpResponse.statusCode;
+                                             if(statusCode == 200)
+                                             {
+                                                 
+                                                 Array_Boost=[[NSMutableArray alloc]init];
+                                                 SBJsonParser *objSBJsonParser = [[SBJsonParser alloc]init];
+                                                 Array_Boost =[objSBJsonParser objectWithData:data];
+                                                 
+                                                 
+                                                 
+                                                 NSString * ResultString=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+                                                 
+                                                 ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+                                                 ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\t" withString:@""];
+                                                 
+                                                 NSLog(@"Array_Boost %@",Array_Boost);
+                                                 
+                                                 if ([ResultString isEqualToString:@"done"])
+                                                 {
+                                                     
+                                                     transparentView1.hidden = YES;
+                                                      [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewEnable" object:self userInfo:nil];
+                                                     
+                                                     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Boosted" message:@"Thank-you for your payment, your post has been successfully boosted!" preferredStyle:UIAlertControllerStyleAlert];
+                                                     
+                                                     UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                                                                        style:UIAlertActionStyleDefault
+                                                                                                      handler:nil];
+                                                     [alertController addAction:actionOk];
+                                                     [self presentViewController:alertController animated:YES completion:nil];
+
+                                                     
+                                                     
+                                                     
+                                                 }
+                                                 if ([ResultString isEqualToString:@"alreadyboosted"])
+                                                 {
+                                                     
+                                                     transparentView1.hidden = YES;
+                                                     [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewEnable" object:self userInfo:nil];
+                                                     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops" message:@"Your post is already boosted. Please wait for it to get over to boost again." preferredStyle:UIAlertControllerStyleAlert];
+                                                     
+                                                     UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                                                                        style:UIAlertActionStyleDefault
+                                                                                                      handler:nil];
+                                                     [alertController addAction:actionOk];
+                                                     [self presentViewController:alertController animated:YES completion:nil];
+
+                                                     
+                                                    
+                                                     
+                                                 }
+                                                 if ([ResultString isEqualToString:@"inserterror"])
+                                                 {
+                                                     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops" message:@"We encountered an error in boosting your post. Please try again or contact support." preferredStyle:UIAlertControllerStyleAlert];
+                                                     
+                                                     UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                                                                        style:UIAlertActionStyleDefault
+                                                                                                      handler:nil];
+                                                     [alertController addAction:actionOk];
+                                                     [self presentViewController:alertController animated:YES completion:nil];
+
+                                                     
+                                                     
+                                                 }
+                                                 if ([ResultString isEqualToString:@"nopostid"])
+                                                 {
+                                                     transparentView1.hidden = YES;
+                                                     [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewEnable" object:self userInfo:nil];
+                                                     
+                                                     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops" message:@"This item is no more available and cannot be boosted." preferredStyle:UIAlertControllerStyleAlert];
+                                                     
+                                                     UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                                                                        style:UIAlertActionStyleDefault
+                                                                                                      handler:nil];
+                                                     [alertController addAction:actionOk];
+                                                     [self presentViewController:alertController animated:YES completion:nil];
+
+                                                     
+                                                     
+                                                 }
+                                                 
+                                                 
+                                                 
+                                                 
+                                             }
+                                             
+                                             
+                                             else
+                                             {
+                                                 NSLog(@" error login1 ---%ld",(long)statusCode);
+                                                 
+                                             }
+                                             
+                                             
+                                         }
+                                         else if(error)
+                                         {
+                                             
+                                             NSLog(@"error login2.......%@",error.description);
+                                         }
+                                         
+                                         
+                                     }];
+    [dataTask resume];
+    
+    
+
+    
+    
+}
+
 
 
 @end

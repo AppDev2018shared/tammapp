@@ -343,7 +343,8 @@
     set1.tuchedIndex = indexPath.row;
     [self.navigationController pushViewController:set1 animated:YES];
     
-    NSLog(@"Selected Index= %lditem",(long)indexPath.row);}
+    NSLog(@"Selected Index= %lditem",(long)indexPath.row);
+}
 
 
 #pragma mark -Collection Cell layout

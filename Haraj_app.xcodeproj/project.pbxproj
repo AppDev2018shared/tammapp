@@ -18,6 +18,9 @@
 		324780901EACEE0A00FF4B79 /* Haraj_appTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3247808F1EACEE0A00FF4B79 /* Haraj_appTests.m */; };
 		324780B11EACF17E00FF4B79 /* AllViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 324780AF1EACF17E00FF4B79 /* AllViewController.m */; };
 		324780B61EACF1A000FF4B79 /* CarsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 324780B41EACF1A000FF4B79 /* CarsViewController.m */; };
+		61040CDD1EFBBC1800ACE5D6 /* BoostPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61040CDC1EFBBC1800ACE5D6 /* BoostPostViewController.m */; };
+		61040CE01EFBC9D100ACE5D6 /* BoostPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 61040CDF1EFBC9D100ACE5D6 /* BoostPost.m */; };
+		61040CE21EFBC9F300ACE5D6 /* BoostPost.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61040CE11EFBC9F300ACE5D6 /* BoostPost.xib */; };
 		61271D461EBD928C0082E504 /* facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 61271D401EBD928C0082E504 /* facebook.png */; };
 		61271D471EBD928C0082E504 /* facebook@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61271D411EBD928C0082E504 /* facebook@2x.png */; };
 		61271D481EBD928C0082E504 /* facebook@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61271D421EBD928C0082E504 /* facebook@3x.png */; };
@@ -98,6 +101,10 @@
 		61739FF31EE2AF5900018CF1 /* UIImageView+MHFacebookImageViewer.m in Sources */ = {isa = PBXBuildFile; fileRef = 61739FE61EE2AF5900018CF1 /* UIImageView+MHFacebookImageViewer.m */; };
 		617FD88B1EB9B2DD008B827F /* ImageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 617FD88A1EB9B2DD008B827F /* ImageCollectionViewCell.m */; };
 		617FD8911EB9D6D8008B827F /* PatternViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 617FD8901EB9D6D8008B827F /* PatternViewCell.m */; };
+		6185B3AF1EFA3E440051659D /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6185B3AE1EFA3E440051659D /* ProfileViewController.m */; };
+		6185B3B21EFA6AC90051659D /* ChoosePostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6185B3B11EFA6AC90051659D /* ChoosePostViewController.m */; };
+		6185B3B51EFA6C1D0051659D /* FavouriteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6185B3B41EFA6C1D0051659D /* FavouriteViewController.m */; };
+		6185B3B81EFAA2E20051659D /* FavTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6185B3B71EFAA2E20051659D /* FavTableViewCell.m */; };
 		618B00041EF91CDD00434650 /* DetailCarTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 618B00021EF91CDC00434650 /* DetailCarTableViewCell.m */; };
 		618B00051EF91CDD00434650 /* DetailCarTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 618B00031EF91CDC00434650 /* DetailCarTableViewCell.xib */; };
 		618B00091EF921A500434650 /* DetailPropertyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 618B00071EF921A500434650 /* DetailPropertyTableViewCell.m */; };
@@ -200,6 +207,11 @@
 		324780AF1EACF17E00FF4B79 /* AllViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllViewController.m; sourceTree = "<group>"; };
 		324780B31EACF1A000FF4B79 /* CarsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarsViewController.h; sourceTree = "<group>"; };
 		324780B41EACF1A000FF4B79 /* CarsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarsViewController.m; sourceTree = "<group>"; };
+		61040CDB1EFBBC1700ACE5D6 /* BoostPostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoostPostViewController.h; sourceTree = "<group>"; };
+		61040CDC1EFBBC1800ACE5D6 /* BoostPostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoostPostViewController.m; sourceTree = "<group>"; };
+		61040CDE1EFBC9D100ACE5D6 /* BoostPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoostPost.h; sourceTree = "<group>"; };
+		61040CDF1EFBC9D100ACE5D6 /* BoostPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoostPost.m; sourceTree = "<group>"; };
+		61040CE11EFBC9F300ACE5D6 /* BoostPost.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BoostPost.xib; sourceTree = "<group>"; };
 		61271D401EBD928C0082E504 /* facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebook.png; sourceTree = "<group>"; };
 		61271D411EBD928C0082E504 /* facebook@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "facebook@2x.png"; sourceTree = "<group>"; };
 		61271D421EBD928C0082E504 /* facebook@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "facebook@3x.png"; sourceTree = "<group>"; };
@@ -338,6 +350,14 @@
 		617FD88A1EB9B2DD008B827F /* ImageCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCollectionViewCell.m; sourceTree = "<group>"; };
 		617FD88F1EB9D6D8008B827F /* PatternViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PatternViewCell.h; sourceTree = "<group>"; };
 		617FD8901EB9D6D8008B827F /* PatternViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PatternViewCell.m; sourceTree = "<group>"; };
+		6185B3AD1EFA3E440051659D /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
+		6185B3AE1EFA3E440051659D /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
+		6185B3B01EFA6AC90051659D /* ChoosePostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChoosePostViewController.h; sourceTree = "<group>"; };
+		6185B3B11EFA6AC90051659D /* ChoosePostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChoosePostViewController.m; sourceTree = "<group>"; };
+		6185B3B31EFA6C1D0051659D /* FavouriteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavouriteViewController.h; sourceTree = "<group>"; };
+		6185B3B41EFA6C1D0051659D /* FavouriteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavouriteViewController.m; sourceTree = "<group>"; };
+		6185B3B61EFAA2E20051659D /* FavTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavTableViewCell.h; sourceTree = "<group>"; };
+		6185B3B71EFAA2E20051659D /* FavTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavTableViewCell.m; sourceTree = "<group>"; };
 		618B00011EF91CDC00434650 /* DetailCarTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailCarTableViewCell.h; sourceTree = "<group>"; };
 		618B00021EF91CDC00434650 /* DetailCarTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailCarTableViewCell.m; sourceTree = "<group>"; };
 		618B00031EF91CDC00434650 /* DetailCarTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailCarTableViewCell.xib; sourceTree = "<group>"; };
@@ -558,6 +578,7 @@
 				619229671EC4820A004E67D6 /* pop over views */,
 				61B8C8721EC1A8FB00954A68 /* OnclickMyPost TableView Cells */,
 				614E89721ECB0B5A00C302E6 /* Posting TableView Cells */,
+				6185B3AC1EFA3DE80051659D /* Top Bar Screens */,
 				3247807D1EACEE0A00FF4B79 /* Main.storyboard */,
 				324780801EACEE0A00FF4B79 /* Images.xcassets */,
 				324780821EACEE0A00FF4B79 /* LaunchScreen.xib */,
@@ -869,6 +890,23 @@
 			name = newpostVC;
 			sourceTree = "<group>";
 		};
+		6185B3AC1EFA3DE80051659D /* Top Bar Screens */ = {
+			isa = PBXGroup;
+			children = (
+				6185B3AD1EFA3E440051659D /* ProfileViewController.h */,
+				6185B3AE1EFA3E440051659D /* ProfileViewController.m */,
+				6185B3B01EFA6AC90051659D /* ChoosePostViewController.h */,
+				6185B3B11EFA6AC90051659D /* ChoosePostViewController.m */,
+				61040CDB1EFBBC1700ACE5D6 /* BoostPostViewController.h */,
+				61040CDC1EFBBC1800ACE5D6 /* BoostPostViewController.m */,
+				6185B3B31EFA6C1D0051659D /* FavouriteViewController.h */,
+				6185B3B41EFA6C1D0051659D /* FavouriteViewController.m */,
+				6185B3B61EFAA2E20051659D /* FavTableViewCell.h */,
+				6185B3B71EFAA2E20051659D /* FavTableViewCell.m */,
+			);
+			name = "Top Bar Screens";
+			sourceTree = "<group>";
+		};
 		619229671EC4820A004E67D6 /* pop over views */ = {
 			isa = PBXGroup;
 			children = (
@@ -878,6 +916,9 @@
 				9AD3F19E1EF2851E005A215D /* EnterComment.h */,
 				9AD3F19F1EF2851E005A215D /* EnterComment.m */,
 				9AD3F1A11EF28542005A215D /* EnterComment.xib */,
+				61040CDE1EFBC9D100ACE5D6 /* BoostPost.h */,
+				61040CDF1EFBC9D100ACE5D6 /* BoostPost.m */,
+				61040CE11EFBC9F300ACE5D6 /* BoostPost.xib */,
 			);
 			name = "pop over views";
 			sourceTree = "<group>";
@@ -1196,6 +1237,7 @@
 				61E015F51ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.xib in Resources */,
 				61F95A9B1EF5527E00DEE62A /* ProductDetailCellCar.xib in Resources */,
 				61F56CD21ECD75A10031E9C1 /* ELCAssetPicker.xib in Resources */,
+				61040CE21EFBC9F300ACE5D6 /* BoostPost.xib in Resources */,
 				61271D481EBD928C0082E504 /* facebook@3x.png in Resources */,
 				1B3B632E1EDFDD1B00D57715 /* defaultimg.jpg in Resources */,
 				615ED1451EDEE6C1001E6B0A /* CommentsTableViewCell.xib in Resources */,
@@ -1245,6 +1287,7 @@
 				61ED09A41EB85D42008EAFB7 /* UIImage+GIF.m in Sources */,
 				61271D4E1EBD93ED0082E504 /* LoginWithViewController.m in Sources */,
 				614C160A1EC06B5400B11A9B /* ElectronicViewController.m in Sources */,
+				6185B3AF1EFA3E440051659D /* ProfileViewController.m in Sources */,
 				61739FED1EE2AF5900018CF1 /* AFURLConnectionOperation.m in Sources */,
 				61739FEB1EE2AF5900018CF1 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				61739FF21EE2AF5900018CF1 /* MHFacebookImageViewer.m in Sources */,
@@ -1253,6 +1296,7 @@
 				61ED09AB1EB85D42008EAFB7 /* WSLayout.m in Sources */,
 				614C15F41EC039C100B11A9B /* SBJsonTokeniser.m in Sources */,
 				615ED1491EDEE6D2001E6B0A /* SuggestedTableViewCell.m in Sources */,
+				6185B3B51EFA6C1D0051659D /* FavouriteViewController.m in Sources */,
 				61ED095A1EB85369008EAFB7 /* YSLContainerViewController.m in Sources */,
 				614C16171EC0739900B11A9B /* FRGWaterfallHeaderReusableView.m in Sources */,
 				614C16021EC03F1500B11A9B /* HomeNavigationController.m in Sources */,
@@ -1266,6 +1310,7 @@
 				61B8C8751EC1AA1800954A68 /* FirstImageViewCell.m in Sources */,
 				61D3766B1EBC3F6300BA02D4 /* LGPlusButtonsViewShared.m in Sources */,
 				61ED099B1EB85D42008EAFB7 /* NSData+ImageContentType.m in Sources */,
+				61040CE01EFBC9D100ACE5D6 /* BoostPost.m in Sources */,
 				61EDCA0B1ECB2E3F0036A250 /* MoreDetailCell.m in Sources */,
 				61ED095B1EB85369008EAFB7 /* YSLScrollMenuView.m in Sources */,
 				61487FF81ED2ED5D009CEF9B /* OtherViewController.m in Sources */,
@@ -1301,9 +1346,11 @@
 				614C16161EC0739900B11A9B /* FRGWaterfallDecorationReusableView.m in Sources */,
 				614C15EC1EC039C100B11A9B /* SBJsonParser.m in Sources */,
 				9A13F35A1EEE9DE90069219E /* AllViewSwapeViewController.m in Sources */,
+				61040CDD1EFBBC1800ACE5D6 /* BoostPostViewController.m in Sources */,
 				61F56CD01ECD75A10031E9C1 /* ELCOverlayImageView.m in Sources */,
 				61ED09A71EB85D42008EAFB7 /* UIImageView+HighlightedWebCache.m in Sources */,
 				61D3766A1EBC3F6300BA02D4 /* LGPlusButtonsView.m in Sources */,
+				6185B3B81EFAA2E20051659D /* FavTableViewCell.m in Sources */,
 				61ED099F1EB85D42008EAFB7 /* SDWebImageDownloader.m in Sources */,
 				61739FEE1EE2AF5900018CF1 /* AFXMLRequestOperation.m in Sources */,
 				614C15F01EC039C100B11A9B /* SBJsonStreamParserState.m in Sources */,
@@ -1327,6 +1374,7 @@
 				61ED099A1EB85D42008EAFB7 /* MKAnnotationView+WebCache.m in Sources */,
 				618B00041EF91CDD00434650 /* DetailCarTableViewCell.m in Sources */,
 				614C15CB1EC0389200B11A9B /* SignUpViewController.m in Sources */,
+				6185B3B21EFA6AC90051659D /* ChoosePostViewController.m in Sources */,
 				9AD3F1A01EF2851E005A215D /* EnterComment.m in Sources */,
 				61ED09A51EB85D42008EAFB7 /* UIImage+MultiFormat.m in Sources */,
 				61ED09A91EB85D42008EAFB7 /* UIView+WebCacheOperation.m in Sources */,

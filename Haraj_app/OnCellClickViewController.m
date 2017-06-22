@@ -46,7 +46,7 @@
     NSDictionary *urlplist;
     NSURLConnection *Connection_MakeOffer, *Connection_SuggestPost;
     NSMutableData *webData_MakeOffer, *webData_SuggestPost;
-    NSMutableArray *Array_MakeOffer, *Array_SuggestPost,*Array_Moreimages, *Array_Chats, *Array_Comments;
+    NSMutableArray *Array_MakeOffer, *Array_SuggestPost,*Array_Moreimages, *Array_Chats, *Array_Comments,*Array_Favourite;
     NSString * back_Arrow_Check;
     
     CGFloat newCellHeight;
@@ -54,8 +54,10 @@
     CGFloat FavIV_X,FavIV_Y,FavIV_W,FavIV_H,FavLabel_X,FavLabel_Y,FavLabel_W,FavLabel_H;
      CGFloat button_threeDotsx,button_threeDotsy,button_threeDotsw,button_threeDotsh,button_favx,button_favy,button_favw,button_favh,button_arrowx,button_arrowy,button_arroww,button_arrowh;
     
-    NSString *str_LabelCoordinates,*str_TappedLabel,*str_postid,*str_userid;;
+    NSString *str_LabelCoordinates,*str_TappedLabel,*str_postid,*str_userid, *str_fav;
     NSString *text;
+    BOOL fav;
+    
     
     UITextField *amountTextField ;
     UITextView *commentTextView, *commentPostTextView1;
@@ -449,6 +451,45 @@
                     detailCellCar.profileImage.layer.cornerRadius = detailCellCar.profileImage.frame.size.height / 2;
                     detailCellCar.profileImage.clipsToBounds = YES;
                     
+                    detailCellCar.favouriteImage.userInteractionEnabled = YES;
+                    detailCellCar.favouriteImage.tag=swipeCount;
+                    UITapGestureRecognizer *favouriteImage_Tapped =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(favouriteImage_ActionDetails:)];
+                    [detailCellCar.favouriteImage addGestureRecognizer:favouriteImage_Tapped];
+                    
+                    
+                    
+                    if ([[Array_UserInfo valueForKey:@"favourite"]isEqualToString:@"TRUE"])
+                    {
+                        [detailCellCar.favouriteImage setImage:[UIImage imageNamed:@"FavouriteFill"]];
+                    }
+                    else
+                    {
+                        [detailCellCar.favouriteImage setImage:[UIImage imageNamed:@"Favourite"]];
+                        
+                    }
+                    
+#pragma mark - fdgfhjdgj;
+                    
+                    if (fav)
+                    {
+                        
+                        
+                        if ([str_fav isEqualToString:@"inserted"])
+                        {
+                            [detailCellCar .favouriteImage setImage:[UIImage imageNamed:@"FavouriteFill"]];
+                        }
+                        else
+                        {
+                            [detailCellCar .favouriteImage setImage:[UIImage imageNamed:@"Favourite"]];
+                            
+                        }
+                        
+                        fav = false;
+                        
+                    }
+
+                    
+                    
                     //------------------------------------------$$$$$$$$$$$$$$$$$$$______________________________
                     
                     detailCellCar.tapView.userInteractionEnabled=YES;
@@ -625,6 +666,47 @@
                     detailCellProperty.profileImage.layer.cornerRadius = detailCellProperty.profileImage.frame.size.height / 2;
                     detailCellProperty.profileImage.clipsToBounds = YES;
                     
+                    detailCellProperty.favouriteImage.userInteractionEnabled = YES;
+                    detailCellProperty.favouriteImage.tag=swipeCount;
+                    UITapGestureRecognizer *favouriteImage_Tapped =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(favouriteImage_ActionDetails:)];
+                    [detailCellProperty.favouriteImage addGestureRecognizer:favouriteImage_Tapped];
+                    
+                    
+                    
+                    if ([[Array_UserInfo valueForKey:@"favourite"]isEqualToString:@"TRUE"])
+                    {
+                        [detailCellProperty.favouriteImage setImage:[UIImage imageNamed:@"FavouriteFill"]];
+                    }
+                    else
+                    {
+                        [detailCellProperty.favouriteImage setImage:[UIImage imageNamed:@"Favourite"]];
+                        
+                    }
+                    
+#pragma mark - fdgfhjdgj;
+                    
+                    if (fav)
+                    {
+                        
+                        
+                        if ([str_fav isEqualToString:@"inserted"])
+                        {
+                            [detailCellProperty .favouriteImage setImage:[UIImage imageNamed:@"FavouriteFill"]];
+                        }
+                        else
+                        {
+                            [detailCellProperty .favouriteImage setImage:[UIImage imageNamed:@"Favourite"]];
+                            
+                        }
+                        
+                        fav = false;
+                        
+                    }
+
+                    
+                    
+                    
+                    
                     //------------------------------------------$$$$$$$$$$$$$$$$$$$______________________________
                     
                     detailCellProperty.tapView.userInteractionEnabled=YES;
@@ -797,10 +879,48 @@
             detailCell.profileImage.layer.cornerRadius = detailCell.profileImage.frame.size.height / 2;
             detailCell.profileImage.clipsToBounds = YES;
             
+            
+            detailCell.favouriteImage.userInteractionEnabled = YES;
+            detailCell.favouriteImage.tag=swipeCount;
+            UITapGestureRecognizer *favouriteImage_Tapped =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(favouriteImage_ActionDetails:)];
+            [detailCell.favouriteImage addGestureRecognizer:favouriteImage_Tapped];
+            
+            
+            
+            if ([[Array_UserInfo valueForKey:@"favourite"]isEqualToString:@"TRUE"])
+            {
+                [detailCell.favouriteImage setImage:[UIImage imageNamed:@"FavouriteFill"]];
+            }
+            else
+            {
+                [detailCell.favouriteImage setImage:[UIImage imageNamed:@"Favourite"]];
+               
+            }
+            
+#pragma mark - fdgfhjdgj;
+            
+            if (fav)
+            {
+                
+                
+                if ([str_fav isEqualToString:@"inserted"])
+                {
+                    [detailCell .favouriteImage setImage:[UIImage imageNamed:@"FavouriteFill"]];
+                }
+                else
+                {
+                    [detailCell .favouriteImage setImage:[UIImage imageNamed:@"Favourite"]];
+                    
+                }
+                
+                fav = false;
+                
+            }
+            
   //------------------------------------------$$$$$$$$$$$$$$$$$$$______________________________
             
             detailCell.tapView.userInteractionEnabled=YES;
-             detailCell.tapView.tag=swipeCount;
+            detailCell.tapView.tag=swipeCount;
            detailCell.detailinfoTextView.tag=swipeCount;
             UITapGestureRecognizer *label_Desc_Tapped =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(label_Desc_Tapped_ActionDetails:)];
             [detailCell.tapView addGestureRecognizer:label_Desc_Tapped];
@@ -2591,9 +2711,121 @@
     [self.tableView reloadData];
 //    [self.tableView  reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
 //    [self.tableView  endUpdates];
+}
+
+-(void)favouriteImage_ActionDetails:(UIGestureRecognizer *)reconizer
+{
     
+    
+    NSLog(@"FAVORITE TAPPED");
+    
+    NSString *postid= @"postid";
+    NSString *postidVal =str_postid;//[defaults valueForKey:@"post-id"];
+    
+    NSString *userid= @"userid";
+    NSString *useridVal =[defaults valueForKey:@"userid"];
+    
+    
+    NSString *reqStringFUll=[NSString stringWithFormat:@"%@=%@&%@=%@",postid,postidVal,userid,useridVal];
+    
+    
+    
+#pragma mark - swipe sesion
+    
+    NSURLSession *session = [NSURLSession sessionWithConfiguration: [NSURLSessionConfiguration defaultSessionConfiguration] delegate: nil delegateQueue: [NSOperationQueue mainQueue]];
+    
+    NSURL *url;
+    NSString *  urlStrLivecount=[urlplist valueForKey:@"addfavourite"];;
+    url =[NSURL URLWithString:urlStrLivecount];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    
+    [request setHTTPMethod:@"POST"];//Web API Method
+    
+    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    
+    request.HTTPBody = [reqStringFUll dataUsingEncoding:NSUTF8StringEncoding];
+    
+    
+    
+    NSURLSessionDataTask *dataTask =[session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
+                                     {
+                                         
+                                         if(data)
+                                         {
+                                             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+                                             NSInteger statusCode = httpResponse.statusCode;
+                                             if(statusCode == 200)
+                                             {
+                                                 
+                                                 Array_Favourite=[[NSMutableArray alloc]init];
+                                                 SBJsonParser *objSBJsonParser = [[SBJsonParser alloc]init];
+                                                 Array_Favourite =[objSBJsonParser objectWithData:data];
+                                                 
+                                                 
+                                                 
+                                                 NSString * ResultString=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+                                                 
+                                                 ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+                                                 ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\t" withString:@""];
+                                                 
+                                                 NSLog(@"Array_Favourite %@",Array_Favourite);
+                                                 
+                                                 if ([ResultString isEqualToString:@"inserted"])
+                                                 {
+                                                     
+                                                     str_fav = @"inserted";
+                                                     
+                                                     fav = true;
+                                                     
+                                                
+
+                                                     [self.tableView reloadData];
+                                                     
+                                                     
+                                                     
+                                                     
+                                                 }
+                                                 if ([ResultString isEqualToString:@"deleted"])
+                                                 {
+                                                     
+                                                       str_fav = @"deleted";
+                                                     
+                                                     fav = true;
+
+                                                      [self.tableView reloadData];
+                                                     
+                                                 }
+                                                 
+                                                 
+                                                 
+                                                 
+                                                 
+                                                 
+                                             }
+                                             
+                                             
+                                             else
+                                             {
+                                                 NSLog(@" error login1 ---%ld",(long)statusCode);
+                                                 
+                                             }
+                                             
+                                             
+                                         }
+                                         else if(error)
+                                         {
+                                             
+                                             NSLog(@"error login2.......%@",error.description);
+                                         }
+                                         
+                                         
+                                     }];
+    [dataTask resume];
+
     
 }
+
 #pragma mark - NSURL CONNECTION
 
 -(void)ChatCommentConnection

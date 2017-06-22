@@ -162,6 +162,7 @@
                 <outlet property="detailinfoTextView" destination="hfa-8b-fJg" id="ipP-36-fbS"/>
                 <outlet property="detailinfoTextView1" destination="H9h-Li-Iqa" id="God-Ul-bMK"/>
                 <outlet property="durationLabel" destination="95H-sw-0SK" id="rCO-vh-0Nm"/>
+                <outlet property="favouriteImage" destination="XeC-pI-lWt" id="KFR-Af-RGA"/>
                 <outlet property="hashtagLabel" destination="Otb-dq-i2a" id="PQU-eg-HCj"/>
                 <outlet property="locationLabel" destination="zvV-0z-yCU" id="9Tb-Qh-dx2"/>
                 <outlet property="postidLabel" destination="pAw-vF-Ju0" id="kOe-lw-cPV"/>

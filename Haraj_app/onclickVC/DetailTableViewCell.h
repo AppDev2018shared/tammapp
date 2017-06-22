@@ -22,7 +22,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 
-
+@property (weak, nonatomic) IBOutlet UIImageView *favouriteImage;
 
 
 @property (weak, nonatomic) IBOutlet UIButton *Button_makeoffer;

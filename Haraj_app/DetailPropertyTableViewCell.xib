@@ -211,6 +211,7 @@
                 <outlet property="detailinfoTextView" destination="5dR-nR-YDM" id="4gr-i9-jc9"/>
                 <outlet property="detailinfoTextView1" destination="sZs-u8-gEy" id="rqJ-KJ-NH6"/>
                 <outlet property="durationLabel" destination="4hl-1H-4oN" id="GAQ-Fy-HKi"/>
+                <outlet property="favouriteImage" destination="spz-Ai-j4j" id="Oqm-ye-IMm"/>
                 <outlet property="hashtagLabel" destination="nvr-P5-cht" id="5MW-bD-0Qs"/>
                 <outlet property="locationLabel" destination="E7G-hR-ohs" id="VWa-hY-PbV"/>
                 <outlet property="noOfBedroomsLabel" destination="lKN-Cl-K4y" id="F2a-AB-n8j"/>

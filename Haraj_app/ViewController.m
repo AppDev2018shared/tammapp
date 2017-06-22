@@ -20,6 +20,8 @@
 #import "FurnitureViewController.h"
 #import "ServicesViewController.h"
 #import "OtherViewController.h"
+#import "ProfileViewController.h"
+#import "FavouriteViewController.h"
 
 #import "LGPlusButtonsView.h"
 
@@ -37,6 +39,8 @@
     NSURLConnection *Connection_ViewPost;
     NSMutableData *webData_ViewPost;
     NSMutableArray *Array_ViewPost,*Array_Car,*Array_Property,*Array_Electronics,*Array_Pets,*Array_Furniture,*Array_Others,*Array_Services;
+    
+    int favouritesCount;
 }
 @property (strong, nonatomic) LGPlusButtonsView *plusButtonsViewMain;
 
@@ -48,6 +52,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    favouritesCount = 0;
+    
     borderBottom_topheder = [CALayer layer];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ViewControllerData) name:@"ViewControllerData" object:nil];
@@ -62,7 +69,7 @@
     
     self.navigationController.navigationBar.hidden=YES;
     
-    [defaults setObject:@"ON" forKey:@"locationPresed"];
+//    [defaults setObject:@"ON" forKey:@"locationPresed"];
 
     
     
@@ -84,26 +91,25 @@
     
     
  
-//    [location setImage:[UIImage imageNamed:@"Location_on"] forState:UIControlStateNormal];
+     // [location setImage:[UIImage imageNamed:@"Location_off"] forState:UIControlStateNormal];
       location.tag = 4;
       [location addTarget:self action:@selector(topButton:) forControlEvents:UIControlEventTouchUpInside];
-//    [defaults setObject:@"ON" forKey:@"locationPresed"];
+     // [defaults setObject:@"OFF" forKey:@"locationPresed"];
+    
     
     if ([[defaults valueForKey:@"locationPresed"] isEqualToString:@"ON"])
     {
-        [location setImage:[UIImage imageNamed:@"Location_off"] forState:UIControlStateNormal];
-        locationLabel.hidden = YES;
-        [defaults setObject:@"OFF" forKey:@"locationPresed"];
+        [location setImage:[UIImage imageNamed:@"Location_on"] forState:UIControlStateNormal];
+        locationLabel.hidden = NO;
+
         
     }
     else
         
     {
-        [location setImage:[UIImage imageNamed:@"Location_on"] forState:UIControlStateNormal];
-        locationLabel.hidden = NO;
-        [defaults setObject:@"ON" forKey:@"locationPresed"];
-       
         
+        [location setImage:[UIImage imageNamed:@"Location_off"] forState:UIControlStateNormal];
+        locationLabel.hidden = YES;
     }
     
     
@@ -197,6 +203,8 @@
 }
 - (void)viewWillAppear:(BOOL)animated
 {
+     favouritesCount = 0;
+    
     [super viewWillAppear:animated];
     
     borderBottom_topheder.backgroundColor =[UIColor colorWithRed:241/255.0 green:241/255.0 blue:241/255.0 alpha:1.0].CGColor;
@@ -381,6 +389,30 @@
     if ([sender tag]== 1)
     {
         NSLog(@"Profile Button Pressed");
+        
+        
+            UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            ProfileViewController * profile=[mainStoryboard instantiateViewControllerWithIdentifier:@"ProfileViewController"];
+        
+        
+        
+     //   FavouriteViewController * profile=[mainStoryboard instantiateViewControllerWithIdentifier:@"FavouriteViewController"];
+        
+            CATransition *transition = [CATransition animation];
+            transition.duration = 0.3;
+            transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+            transition.type = kCATransitionPush;
+            transition.subtype = kCATransitionFromLeft;
+        
+            [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
+        
+        //    set1.Array_Alldata = Array_ViewPost;
+        //    set1.tuchedIndex = indexPath.row;
+            [self.navigationController pushViewController:profile animated:YES];
+        //    
+        //    NSLog(@"Selected Index= %lditem",(long)indexPath.row);
+        
+        
     }
     
     else if ([sender tag]== 2)
@@ -674,6 +706,20 @@
                     NSLog(@"Car array = %@",Array_Services);
                     
                 }
+                
+                if ([[[Array_ViewPost objectAtIndex:i]valueForKey:@"favourite"]isEqualToString:@"TRUE"])
+                {
+                    
+                    favouritesCount++;
+                    
+                    NSLog(@"favouritesCount %d",favouritesCount);
+                    
+                    [defaults setObject:[NSString stringWithFormat:@"%d",favouritesCount] forKey:@"CountFav"];
+                    
+                    
+                }
+
+                
             }
             
             

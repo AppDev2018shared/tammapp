@@ -196,6 +196,7 @@
                 <outlet property="detailinfoTextView" destination="np0-mn-hzl" id="rWn-Ig-inC"/>
                 <outlet property="detailinfoTextView1" destination="FOy-tY-07L" id="oi1-Kd-DmI"/>
                 <outlet property="durationLabel" destination="Xvd-QD-A1X" id="p5B-KP-Guh"/>
+                <outlet property="favouriteImage" destination="XkO-UD-bvy" id="fOB-0N-gEQ"/>
                 <outlet property="hashtagLabel" destination="GGz-dN-KDe" id="fQA-Xc-Vcl"/>
                 <outlet property="locationLabel" destination="ngD-Ef-8GW" id="a6y-ng-3L2"/>
                 <outlet property="mileageLabel" destination="Yeu-pa-eWm" id="1pv-wA-gqu"/>
