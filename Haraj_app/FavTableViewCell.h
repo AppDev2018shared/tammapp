@@ -17,4 +17,10 @@
 @property (weak, nonatomic) IBOutlet UIImageView *favImageView;
 
 
+//-----------------boost post elements-------------
+
+@property (weak, nonatomic) IBOutlet UIImageView *boostAccessoryView;
+@property (weak, nonatomic) IBOutlet UILabel *boostAccessoryLabel;
+
+
 @end

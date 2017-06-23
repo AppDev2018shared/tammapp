@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface ChoosePostViewController : UIViewController
+{
+    UIView *grayView, *transparentView;
+}
 
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;

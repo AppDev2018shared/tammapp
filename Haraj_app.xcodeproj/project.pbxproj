@@ -21,6 +21,8 @@
 		61040CDD1EFBBC1800ACE5D6 /* BoostPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61040CDC1EFBBC1800ACE5D6 /* BoostPostViewController.m */; };
 		61040CE01EFBC9D100ACE5D6 /* BoostPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 61040CDF1EFBC9D100ACE5D6 /* BoostPost.m */; };
 		61040CE21EFBC9F300ACE5D6 /* BoostPost.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61040CE11EFBC9F300ACE5D6 /* BoostPost.xib */; };
+		611D2C781EFCF16A00804839 /* SalePointsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 611D2C771EFCF16900804839 /* SalePointsViewController.m */; };
+		611D2C7B1EFD0C7300804839 /* SaleCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 611D2C7A1EFD0C7300804839 /* SaleCollectionViewCell.m */; };
 		61271D461EBD928C0082E504 /* facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 61271D401EBD928C0082E504 /* facebook.png */; };
 		61271D471EBD928C0082E504 /* facebook@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61271D411EBD928C0082E504 /* facebook@2x.png */; };
 		61271D481EBD928C0082E504 /* facebook@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61271D421EBD928C0082E504 /* facebook@3x.png */; };
@@ -212,6 +214,10 @@
 		61040CDE1EFBC9D100ACE5D6 /* BoostPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoostPost.h; sourceTree = "<group>"; };
 		61040CDF1EFBC9D100ACE5D6 /* BoostPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoostPost.m; sourceTree = "<group>"; };
 		61040CE11EFBC9F300ACE5D6 /* BoostPost.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BoostPost.xib; sourceTree = "<group>"; };
+		611D2C761EFCF16900804839 /* SalePointsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SalePointsViewController.h; sourceTree = "<group>"; };
+		611D2C771EFCF16900804839 /* SalePointsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SalePointsViewController.m; sourceTree = "<group>"; };
+		611D2C791EFD0C7300804839 /* SaleCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaleCollectionViewCell.h; sourceTree = "<group>"; };
+		611D2C7A1EFD0C7300804839 /* SaleCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaleCollectionViewCell.m; sourceTree = "<group>"; };
 		61271D401EBD928C0082E504 /* facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebook.png; sourceTree = "<group>"; };
 		61271D411EBD928C0082E504 /* facebook@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "facebook@2x.png"; sourceTree = "<group>"; };
 		61271D421EBD928C0082E504 /* facebook@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "facebook@3x.png"; sourceTree = "<group>"; };
@@ -903,6 +909,10 @@
 				6185B3B41EFA6C1D0051659D /* FavouriteViewController.m */,
 				6185B3B61EFAA2E20051659D /* FavTableViewCell.h */,
 				6185B3B71EFAA2E20051659D /* FavTableViewCell.m */,
+				611D2C761EFCF16900804839 /* SalePointsViewController.h */,
+				611D2C771EFCF16900804839 /* SalePointsViewController.m */,
+				611D2C791EFD0C7300804839 /* SaleCollectionViewCell.h */,
+				611D2C7A1EFD0C7300804839 /* SaleCollectionViewCell.m */,
 			);
 			name = "Top Bar Screens";
 			sourceTree = "<group>";
@@ -1293,6 +1303,7 @@
 				61739FF21EE2AF5900018CF1 /* MHFacebookImageViewer.m in Sources */,
 				613171091EC5953000E3BD4C /* MyPostViewController.m in Sources */,
 				614C15F21EC039C100B11A9B /* SBJsonStreamWriterAccumulator.m in Sources */,
+				611D2C781EFCF16A00804839 /* SalePointsViewController.m in Sources */,
 				61ED09AB1EB85D42008EAFB7 /* WSLayout.m in Sources */,
 				614C15F41EC039C100B11A9B /* SBJsonTokeniser.m in Sources */,
 				615ED1491EDEE6D2001E6B0A /* SuggestedTableViewCell.m in Sources */,
@@ -1377,6 +1388,7 @@
 				6185B3B21EFA6AC90051659D /* ChoosePostViewController.m in Sources */,
 				9AD3F1A01EF2851E005A215D /* EnterComment.m in Sources */,
 				61ED09A51EB85D42008EAFB7 /* UIImage+MultiFormat.m in Sources */,
+				611D2C7B1EFD0C7300804839 /* SaleCollectionViewCell.m in Sources */,
 				61ED09A91EB85D42008EAFB7 /* UIView+WebCacheOperation.m in Sources */,
 				61ED099D1EB85D42008EAFB7 /* SDWebImageCompat.m in Sources */,
 				6131710E1EC5BB0A00E3BD4C /* EnterPrice.m in Sources */,

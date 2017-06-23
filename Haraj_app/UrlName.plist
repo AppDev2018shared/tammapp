@@ -32,5 +32,9 @@
 	<string>http://www.tammapp.com/app/viewfavourites.php</string>
 	<key>boostpost</key>
 	<string>http://www.tammapp.com/app/boostpost.php</string>
+	<key>salepoints</key>
+	<string>http://www.tammapp.com/app/salepoints.php</string>
+	<key>payfee</key>
+	<string>http://www.tammapp.com/app/payfee.php</string>
 </dict>
 </plist>

@@ -346,8 +346,18 @@
                 
                 FirstCell.imageView_thumbnails.userInteractionEnabled=YES;
                 FirstCell.imageView_thumbnails.tag=swipeCount;
+                
+                if ([[Array_UserInfo valueForKey:@"mediathumbnailurl"] isEqualToString:@""])
+                {
+                    
+                }
+                else
+                {
+                
                 UITapGestureRecognizer *imageTap4 =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(MoreImage:)];
+                
                 [FirstCell.imageView_thumbnails addGestureRecognizer:imageTap4];
+                }
                 
                 return FirstCell;
             }
@@ -2091,6 +2101,12 @@
 {
 #pragma mark- --more image scroll view
     
+    
+    
+    
+    
+    
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewDisable" object:self userInfo:nil];
     
     transparentView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
@@ -2109,7 +2125,7 @@
     [button2 setImage:[UIImage imageNamed:@"Whitefavourite"] forState:UIControlStateNormal];
     [button2 setTag:2];
     [button2 addTarget:self action:@selector(sectionHeaderTopButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [transparentView addSubview:button2];
+    //[transparentView addSubview:button2];
     
     UIButton *button3 = [[UIButton alloc]initWithFrame:CGRectMake(button_arrowx, button_arrowy, button_arroww, button_arrowh)];
     [button3 setImage:[UIImage imageNamed:@"Whitearrow"] forState:UIControlStateNormal];
@@ -2276,11 +2292,14 @@
                                                  if ([ResultString isEqualToString:@"noimages"])
                                                  {
                                                      
-                                                     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+//                                                     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+//                                                     
+//                                                     UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
+//                                                     [alertController addAction:actionOk];
+//                                                     [self presentViewController:alertController animated:YES completion:nil];
                                                      
-                                                     UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
-                                                     [alertController addAction:actionOk];
-                                                     [self presentViewController:alertController animated:YES completion:nil];
+                                                     transparentView.hidden = YES;
+                                                      [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewEnable" object:self userInfo:nil];
                                                      
                                                      
                                                  }

@@ -11,6 +11,7 @@
 #import "UIImageView+WebCache.h"
 #import "BoostPost.h"
 #import "SBJsonParser.h"
+#import "Reachability.h"
 
 
 @interface BoostPostViewController ()<UITableViewDataSource, UITableViewDelegate>
@@ -22,6 +23,15 @@
     NSMutableArray *Array_Boostphp;
     NSString *boostpackVal,*boostAmountVal, *postIdVal;
     BoostPost *myBoostXIBViewObj;
+    
+    
+    NSURLConnection *Connection_MyViewPost;
+    NSMutableData *webData_MyViewPost;
+    NSMutableArray *Array_MyViewPost;
+
+    
+    
+    
 }
 
 
@@ -40,8 +50,14 @@
    
     NSString *plistPath = [[NSBundle mainBundle]pathForResource:@"UrlName" ofType:@"plist"];
     urlplist = [NSDictionary dictionaryWithContentsOfFile:plistPath];
+    
+    [self viewPostConnection];
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [self viewPostConnection];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -50,7 +66,7 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     
-    return Array_Boost.count;
+    return Array_MyViewPost.count;
     
 }
 
@@ -66,7 +82,7 @@
     
         //   FavouriteCell = [tableView dequeueReusableCellWithIdentifier:@"CellFav"];
     
-        NSDictionary *dic_request=[Array_Boost objectAtIndex:indexPath.row];
+        NSDictionary *dic_request=[Array_MyViewPost objectAtIndex:indexPath.row];
     
     
         FavouriteCell.postImageView.layer.cornerRadius = 10;
@@ -81,6 +97,20 @@
         [FavouriteCell.postImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"]
                                                 options:SDWebImageRefreshCached];
     
+    if ([[dic_request valueForKey:@"boosted"] isEqualToString:@"TRUE"])
+    {
+        FavouriteCell.boostAccessoryView.hidden = NO;
+        FavouriteCell.boostAccessoryLabel.hidden = NO;
+        
+        FavouriteCell.boostAccessoryLabel.text = [dic_request valueForKey:@"boostdur"];
+        
+    }
+    else
+    {
+        FavouriteCell.boostAccessoryView.hidden = YES;
+        FavouriteCell.boostAccessoryLabel.hidden = YES;
+    }
+    
     
     
     
@@ -92,8 +122,10 @@
     
 }
 
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     transparentView1=[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     transparentView1.backgroundColor=[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.3];
     
@@ -106,8 +138,8 @@
     
     
     
-    myBoostXIBViewObj.postIdLabel.text =[NSString stringWithFormat:@"POST ID: %@",[[Array_Boost  valueForKey:@"postid"]objectAtIndex:indexPath.row]];
-    postIdVal = [[Array_Boost  valueForKey:@"postid"]objectAtIndex:indexPath.row];
+    myBoostXIBViewObj.postIdLabel.text =[NSString stringWithFormat:@"POST ID: %@",[[Array_MyViewPost  valueForKey:@"postid"]objectAtIndex:indexPath.row]];
+    postIdVal = [[Array_MyViewPost  valueForKey:@"postid"]objectAtIndex:indexPath.row];
     
     myBoostXIBViewObj.layer.cornerRadius = 10;
     myBoostXIBViewObj.clipsToBounds = YES;
@@ -243,6 +275,8 @@
                                                      [self presentViewController:alertController animated:YES completion:nil];
                                                      
                                                      
+                                                     [self viewPostConnection];
+                                                     
                                                      
                                                      
                                                  }
@@ -353,4 +387,161 @@
     
     
 }
+
+#pragma mark - MyBoostPost connection
+-(void)viewPostConnection
+{
+    
+    Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
+    if (networkStatus == NotReachable)
+    {
+        
+        
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"No Internet" message:@"Please make sure you have internet connectivity in order to access." preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction *action)
+                                   {
+                                       exit(0);
+                                   }];
+        
+        [alertController addAction:actionOk];
+        [self presentViewController:alertController animated:YES completion:nil];
+        
+        
+        
+        
+    }
+    else
+    {
+        
+        NSURL *url;//=[NSURL URLWithString:[urlplist valueForKey:@"singup"]];
+        NSString *  urlStr=[urlplist valueForKey:@"viewpost"];
+        url =[NSURL URLWithString:urlStr];
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+        
+        [request setHTTPMethod:@"POST"];//Web API Method
+        
+        [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+        
+        
+        
+        NSString *userid= @"userid";
+        NSString *useridVal =[defaults valueForKey:@"userid"];
+        
+        NSString *location= @"location";
+        NSString *locationVal = @"OFF";
+        
+        NSString *myposts= @"myposts";
+        NSString *mypostsVal = @"YES";
+        
+        
+        
+        
+        NSString *city= @"city";
+        NSString *cityVal = [defaults valueForKey:@"Cityname"];
+        
+        NSString *country= @"country";
+        NSString *countryVal = [defaults valueForKey:@"Countryname"];;
+        
+        NSString *reqStringFUll=[NSString stringWithFormat:@"%@=%@&%@=%@&%@=%@&%@=%@&%@=%@",userid,useridVal,location,locationVal,city,cityVal,country,countryVal,myposts,mypostsVal];
+        
+        
+        //converting  string into data bytes and finding the lenght of the string.
+        NSData *requestData = [NSData dataWithBytes:[reqStringFUll UTF8String] length:[reqStringFUll length]];
+        [request setHTTPBody: requestData];
+        
+        Connection_MyViewPost = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+        {
+            if( Connection_MyViewPost)
+            {
+                webData_MyViewPost =[[NSMutableData alloc]init];
+                
+                
+            }
+            else
+            {
+                NSLog(@"theConnection is NULL");
+            }
+        }
+        
+    }
+    
+}
+
+#pragma mark - NSURL CONNECTION Methods
+
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+{
+    
+    NSLog(@"connnnnnnnnnnnnnn=%@",connection);
+    
+    if(connection==Connection_MyViewPost)
+    {
+        [webData_MyViewPost setLength:0];
+        
+        
+    }
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+{
+    if(connection==Connection_MyViewPost)
+    {
+        [webData_MyViewPost appendData:data];
+    }
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection
+{
+    
+    if (connection==Connection_MyViewPost)
+    {
+        
+        Array_MyViewPost=[[NSMutableArray alloc]init];
+        SBJsonParser *objSBJsonParser = [[SBJsonParser alloc]init];
+        Array_MyViewPost=[objSBJsonParser objectWithData:webData_MyViewPost];
+        NSString * ResultString=[[NSString alloc]initWithData:webData_MyViewPost encoding:NSUTF8StringEncoding];
+        //  Array_LodingPro=[NSJSONSerialization JSONObjectWithData:webData_LodingPro options:kNilOptions error:nil];
+        
+        ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+        ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\t" withString:@""];
+        
+        NSLog(@"cc %@",Array_MyViewPost);
+        NSLog(@"count= %lu",(unsigned long)Array_MyViewPost.count);
+        NSLog(@"registration_status %@",[[Array_MyViewPost objectAtIndex:0]valueForKey:@"registration_status"]);
+        NSLog(@"ResultString %@",ResultString);
+        
+        if ([ResultString isEqualToString:@"done"])
+        {
+            
+            
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"" message:@"Successfully Posted Post" preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                               style:UIAlertActionStyleDefault
+                                                             handler:nil];
+            [alertController addAction:actionOk];
+            [self presentViewController:alertController animated:YES completion:nil];
+            
+        }
+        
+        
+        
+        
+        
+        
+        
+      
+        
+        
+    }
+    [self.tableView reloadData];
+}
+
+
+
+
 @end

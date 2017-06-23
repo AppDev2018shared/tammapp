@@ -18,6 +18,7 @@
 #import "MyPostViewController.h"
 #import "AllViewSwapeViewController.h"
 #import "FavouriteViewController.h"
+#import "SalePointsViewController.h"
 #import "ChoosePostViewController.h"
 #import "BoostPostViewController.h"
 
@@ -33,7 +34,9 @@
     NSDictionary *urlplist;
     NSURLConnection *Connection_ViewPost;
     NSMutableData *webData_ViewPost;
-    NSMutableArray *Array_ViewPost;
+    NSMutableArray *Array_ViewPost,*Array_SalePoints;
+    
+    int favouritesCount;
 }
 
 @end
@@ -43,6 +46,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    favouritesCount = 0;
     
     NSString *plistPath = [[NSBundle mainBundle]pathForResource:@"UrlName" ofType:@"plist"];
     urlplist = [NSDictionary dictionaryWithContentsOfFile:plistPath];
@@ -76,8 +81,12 @@
     lastnameLabel.text = [defaults valueForKey:@"LastName" ];
     
     [self viewPostConnection];
+    [self salePointsConnection];
     
 //---------------------------Favourite label tap gesture---------------------------------------------------------
+    
+    
+    
      favoritesValueLabel.text = [defaults valueForKey:@"CountFav"];
      favoritesValueLabel.userInteractionEnabled = YES;
      favouriteLabel.userInteractionEnabled = YES;
@@ -87,6 +96,22 @@
     [favoritesValueLabel addGestureRecognizer:favourite_Tapped];
       UITapGestureRecognizer *favourite_Tapped1 =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(favourite_ActionDetails:)];
     [favouriteLabel addGestureRecognizer:favourite_Tapped1];
+    
+    
+
+//---------------------------Sale points label tap gesture---------------------------------------------------------
+    
+    
+    
+    
+    salepointValueLabel.userInteractionEnabled = YES;
+    saleLabel.userInteractionEnabled = YES;
+    
+    
+    UITapGestureRecognizer *sale_Tapped =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sale_ActionDetails:)];
+    [salepointValueLabel addGestureRecognizer:sale_Tapped];
+    UITapGestureRecognizer *sale_Tapped1 =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sale_ActionDetails:)];
+    [saleLabel addGestureRecognizer:sale_Tapped1];
     
 //---------------------------Pay Fee label tap gesture---------------------------------------------------------
     
@@ -101,7 +126,7 @@
     
     
     
-    //---------------------------Pay Fee label tap gesture---------------------------------------------------------
+    //--------------------------- Boost label tap gesture---------------------------------------------------------
     
     boostImageview.userInteractionEnabled = YES;
     boostLabel.userInteractionEnabled = YES;
@@ -113,13 +138,21 @@
     UITapGestureRecognizer *boost_Tapped1 =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ChooseBoost_ActionDetails:)];
     [boostLabel addGestureRecognizer:boost_Tapped1];
     
+    
+    
+    
+    
   
     
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    // [self viewPostConnection];
+    [self salePointsConnection];
+
+
+     [self viewPostConnection];
+     favoritesValueLabel.text = [defaults valueForKey:@"CountFav"];
     
     [self.collectionView reloadData];
     
@@ -147,6 +180,31 @@
     [self.navigationController pushViewController:profile animated:YES];
    
 }
+
+-(void)sale_ActionDetails:(UIGestureRecognizer *)reconizer
+{
+    NSLog(@"sale_ActionDetails tap");
+    
+    
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    SalePointsViewController * profile=[mainStoryboard instantiateViewControllerWithIdentifier:@"SalePointsViewController"];
+    
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.3;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    transition.type = kCATransitionPush;
+    transition.subtype = kCATransitionFromLeft;
+    
+    [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
+    
+    [self.navigationController pushViewController:profile animated:YES];
+    
+}
+
+
+
+
+
 
 -(void)ChoosePay_ActionDetails:(UIGestureRecognizer *)reconizer
 {
@@ -509,6 +567,11 @@ heightForHeaderAtIndexPath:(NSIndexPath *)indexPath
             
         }
         
+               
+
+        
+        
+        
         
         postValueLabel.text =[NSString stringWithFormat:@"%lu", (unsigned long)Array_ViewPost.count];
         
@@ -517,7 +580,128 @@ heightForHeaderAtIndexPath:(NSIndexPath *)indexPath
     [self.collectionView reloadData];
 }
 
+#pragma mark- salepoint count connection
 
+-(void)salePointsConnection
+
+{
+    
+    
+    NSString *userid= @"userid";
+    NSString *useridVal =[defaults valueForKey:@"userid"];
+    
+    
+    NSString *reqStringFUll=[NSString stringWithFormat:@"%@=%@",userid,useridVal];
+    
+    
+    
+#pragma mark - swipe sesion
+    
+    NSURLSession *session = [NSURLSession sessionWithConfiguration: [NSURLSessionConfiguration defaultSessionConfiguration] delegate: nil delegateQueue: [NSOperationQueue mainQueue]];
+    
+    NSURL *url;
+    NSString *  urlStrLivecount=[urlplist valueForKey:@"salepoints"];;
+    url =[NSURL URLWithString:urlStrLivecount];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    
+    [request setHTTPMethod:@"POST"];//Web API Method
+    
+    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    
+    request.HTTPBody = [reqStringFUll dataUsingEncoding:NSUTF8StringEncoding];
+    
+    
+    
+    NSURLSessionDataTask *dataTask =[session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
+                                     {
+                                         
+                                         if(data)
+                                         {
+                                             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+                                             NSInteger statusCode = httpResponse.statusCode;
+                                             if(statusCode == 200)
+                                             {
+                                                 
+                                                 Array_SalePoints=[[NSMutableArray alloc]init];
+                                                 SBJsonParser *objSBJsonParser = [[SBJsonParser alloc]init];
+                                                 Array_SalePoints =[objSBJsonParser objectWithData:data];
+                                                 
+                                                 
+                                                 
+                                                 NSString * ResultString=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+                                                 
+                                                 ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+                                                 ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\t" withString:@""];
+                                                 
+                                                 NSLog(@"Array_SalePoints %@",Array_SalePoints);
+                                                 
+                                                 if ([ResultString isEqualToString:@"0"])
+                                                 {
+                                                    
+                                                     
+                                                     salepointValueLabel.text = @"0 Points";
+                                                     
+                                                 }
+                                                 else //if ([ResultString isEqualToString:@"1"])
+                                                 {
+                                                     salepointValueLabel.text =ResultString;
+                                                     
+                                                 }
+//                                                 else
+//                                                 {
+//                                                     
+//                                                     salepointValueLabel.text = [NSString stringWithFormat:@"%@ Points",ResultString];
+//                                                 }
+                                                 
+                                                 if ([ResultString isEqualToString:@"done"])
+                                                 {
+                                                     
+                                                     
+                                                     
+                                                     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Boosted" message:@"Thank-you for your payment, your post has been successfully boosted!" preferredStyle:UIAlertControllerStyleAlert];
+                                                     
+                                                     UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                                                                        style:UIAlertActionStyleDefault
+                                                                                                      handler:nil];
+                                                     [alertController addAction:actionOk];
+                                                     [self presentViewController:alertController animated:YES completion:nil];
+                                                     
+                                                     
+                                                     
+                                                 }
+                                                 
+                                                 
+                                                 
+                                                 
+                                             }
+                                             
+                                             
+                                             else
+                                             {
+                                                 NSLog(@" error login1 ---%ld",(long)statusCode);
+                                                 
+                                             }
+                                             
+                                             
+                                         }
+                                         else if(error)
+                                         {
+                                             
+                                             NSLog(@"error login2.......%@",error.description);
+                                         }
+                                         
+                                         
+                                     }];
+    [dataTask resume];
+    
+    
+    
+    
+    
+    
+    
+}
 
 
 

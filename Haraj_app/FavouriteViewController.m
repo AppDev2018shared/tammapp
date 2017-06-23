@@ -36,7 +36,7 @@
     [super viewDidLoad];
     
     defaults = [[NSUserDefaults alloc]init];
-    postCountLabel.text = [defaults valueForKey:@"CountFav"];
+   // postCountLabel.text = [defaults valueForKey:@"CountFav"];
     
     
     NSString *plistPath = [[NSBundle mainBundle]pathForResource:@"UrlName" ofType:@"plist"];
@@ -44,6 +44,14 @@
     
     [self viewFavouritePostConnection];
     
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+     [self viewFavouritePostConnection];
+    
+    
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -240,7 +248,10 @@
         NSLog(@"registration_status %@",[[Array_ViewFavPost objectAtIndex:0]valueForKey:@"registration_status"]);
         NSLog(@"ResultString %@",ResultString);
         
+        postCountLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)Array_ViewFavPost.count];
         
+        
+        [defaults setObject:[NSString stringWithFormat:@"%lu",(unsigned long)Array_ViewFavPost.count] forKey:@"CountFav"];
         
     }
     [self.tableView reloadData];
