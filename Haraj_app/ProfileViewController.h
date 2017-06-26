@@ -13,6 +13,8 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 @property (weak, nonatomic) IBOutlet UITextField *searchTextField;
+- (IBAction)SearchEditing_Action:(id)sender;
+
 @property (weak, nonatomic) IBOutlet UIImageView *searchImageView;
 
 @property (weak, nonatomic) IBOutlet UIImageView *profileImageView;
@@ -34,6 +36,13 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *boostImageview;
 @property (weak, nonatomic) IBOutlet UILabel *boostLabel;
+
+
+
+@property (nonatomic,strong) NSMutableArray *initialCities;
+@property (nonatomic,strong) NSMutableArray *filteredArray;
+@property BOOL isFiltered;
+
 
 
 

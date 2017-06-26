@@ -323,7 +323,7 @@
                                                  if ([ResultString isEqualToString:@"done"])
                                                  {
                                                      
-                                                     [[NSNotificationCenter defaultCenter] postNotificationName:@"ViewControllerData" object:self userInfo:nil];
+//                                                     [[NSNotificationCenter defaultCenter] postNotificationName:@"ViewControllerData" object:self userInfo:nil];
                                                      
                                                      [self.view endEditing:YES];
                                                      transparentView.hidden= YES;
@@ -331,17 +331,17 @@
                                                      [self viewPostConnection];
                                                      
                                                      
-                                                     [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewEnable" object:self userInfo:nil];
+//                                                     [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewEnable" object:self userInfo:nil];
                                                      
-                                                     CATransition *transition = [CATransition animation];
-                                                     transition.duration = 0.3;
-                                                     transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-                                                     transition.type = kCATransitionPush;
-                                                     transition.subtype = kCATransitionFromRight;
-                                                     [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
-                                                     
-                                                     [self.navigationController popToRootViewControllerAnimated:YES];
-                                                     
+//                                                     CATransition *transition = [CATransition animation];
+//                                                     transition.duration = 0.3;
+//                                                     transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+//                                                     transition.type = kCATransitionPush;
+//                                                     transition.subtype = kCATransitionFromRight;
+//                                                     [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
+//                                                     
+//                                                     [self.navigationController popToRootViewControllerAnimated:YES];
+//                                                     
                                                      
                                                      
                                                      

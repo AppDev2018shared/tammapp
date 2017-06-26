@@ -36,5 +36,9 @@
 	<string>http://www.tammapp.com/app/salepoints.php</string>
 	<key>payfee</key>
 	<string>http://www.tammapp.com/app/payfee.php</string>
+	<key>activity</key>
+	<string>http://www.tammapp.com/app/activity.php</string>
+	<key>activityaddchat</key>
+	<string>http://www.tammapp.com/app/activityaddchat.php</string>
 </dict>
 </plist>

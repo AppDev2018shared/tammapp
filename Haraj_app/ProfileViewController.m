@@ -23,7 +23,7 @@
 #import "BoostPostViewController.h"
 
 
-@interface ProfileViewController () <UICollectionViewDataSource, UICollectionViewDelegate,UICollectionViewDelegate,FRGWaterfallCollectionViewDelegate>
+@interface ProfileViewController () <UICollectionViewDataSource, UICollectionViewDelegate,UICollectionViewDelegate,FRGWaterfallCollectionViewDelegate,UITextFieldDelegate>
 
 {
     NSMutableArray *modelArray;
@@ -42,7 +42,7 @@
 @end
 
 @implementation ProfileViewController
-@synthesize searchTextField,searchImageView,profileImageView,nameLabel,lastnameLabel,favoritesValueLabel,postValueLabel,salepointValueLabel,favouriteLabel,saleLabel,postLabel,payImageView,payLabel,boostImageview,boostLabel;
+@synthesize searchTextField,searchImageView,profileImageView,nameLabel,lastnameLabel,favoritesValueLabel,postValueLabel,salepointValueLabel,favouriteLabel,saleLabel,postLabel,payImageView,payLabel,boostImageview,boostLabel,isFiltered;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -85,9 +85,16 @@
     
 //---------------------------Favourite label tap gesture---------------------------------------------------------
     
+    if ([defaults  valueForKey:@"CountFav"] == 0)
+    {
+          favoritesValueLabel.text = @"0";
+    }
+    else
+    {
+         favoritesValueLabel.text = [defaults valueForKey:@"CountFav"];
+    }
     
-    
-     favoritesValueLabel.text = [defaults valueForKey:@"CountFav"];
+   //  favoritesValueLabel.text = [defaults valueForKey:@"CountFav"];
      favoritesValueLabel.userInteractionEnabled = YES;
      favouriteLabel.userInteractionEnabled = YES;
     
@@ -246,6 +253,140 @@
     
 }
 
+//-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+//{
+//    
+//    if (string.length == 0)
+//    {
+//         isFiltered = NO;
+//         [_filteredArray removeAllObjects];
+//          [_filteredArray addObjectsFromArray:Array_ViewPost];
+//       
+//    }
+//    else
+//    {
+//        
+//        //set boolean flag
+//        
+//        isFiltered = YES;
+//        
+//        
+//        //alloc and init filtered data
+//        
+//        _filteredArray = [[NSMutableArray alloc]init];
+//        
+//        [_filteredArray removeAllObjects];
+//        //fast enumeration
+//        
+//        for (NSDictionary *obj in Array_ViewPost)
+//        {
+//            NSString *sTemp = [obj valueForKey:@"title"];
+//            
+//            NSRange titleRange = [sTemp rangeOfString:string options:NSCaseInsensitiveSearch];
+//            
+//            if (titleRange.location != NSNotFound)
+//            {
+//                [_filteredArray addObject:obj];
+//            }
+//            
+//            
+////            if (titleRange.length > 0)
+////            {
+////                [_filteredArray addObject:obj];
+////
+////            }
+//
+//        }
+//        
+//        [self.collectionView reloadData];
+//        
+//    }
+//    
+//    
+//    return true;
+//}
+
+- (IBAction)SearchEditing_Action:(id)sender
+{
+    
+    if (searchTextField.text.length == 0)
+    {
+        isFiltered = NO;
+        [_filteredArray removeAllObjects];
+        [_filteredArray addObjectsFromArray:Array_ViewPost];
+        
+    }
+    else
+    {
+        
+        //set boolean flag
+        
+        isFiltered = YES;
+        
+        
+        //alloc and init filtered data
+        
+        _filteredArray = [[NSMutableArray alloc]init];
+        
+      //  [_filteredArray removeAllObjects];
+        //fast enumeration
+        
+        for (NSDictionary *obj in Array_ViewPost)
+        {
+            NSString *sTemp = [obj valueForKey:@"title"];
+            NSString *sTemp2 = [obj valueForKey:@"hashtags"];
+            NSString *sTemp3 = [obj valueForKey:@"description"];
+            
+            
+            NSRange titleRange = [sTemp rangeOfString:searchTextField.text options:NSCaseInsensitiveSearch];
+            NSRange titleRange2 = [sTemp2 rangeOfString:searchTextField.text options:NSCaseInsensitiveSearch];
+            NSRange titleRange3 = [sTemp3 rangeOfString:searchTextField.text options:NSCaseInsensitiveSearch];
+            
+            if (titleRange.location != NSNotFound || titleRange2.location !=NSNotFound || titleRange3.location !=NSNotFound)
+            {
+                [_filteredArray addObject:obj];
+            }
+            
+            
+           
+            
+        }
+        
+        
+    }
+
+    [self.collectionView reloadData];
+
+}
+
+
+
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [searchTextField resignFirstResponder];
+    return YES;
+}
+
+
+
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+     isFiltered = YES;
+    
+    
+}
+
+-(void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    [self.view endEditing:YES];
+}
+
+
+
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -259,13 +400,31 @@
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return Array_ViewPost.count;
+    if(isFiltered == YES)
+    {
+        return _filteredArray.count;
+    }
+    else
+    {
+        return Array_ViewPost.count;
+    }
+    //return Array_ViewPost.count;
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSDictionary *dic_request;
     
-    NSDictionary *dic_request=[Array_ViewPost objectAtIndex:indexPath.row];
+    if(isFiltered == YES)
+    {
+        dic_request=[_filteredArray objectAtIndex:indexPath.row];
+
+    }
+    else
+    {
+         dic_request=[Array_ViewPost objectAtIndex:indexPath.row];
+    }
+   // NSDictionary *dic_request=[Array_ViewPost objectAtIndex:indexPath.row];
     NSLog(@"dic= %@",dic_request);
     
     NSString *xyz = [dic_request valueForKey:@"mediatype"];
@@ -332,29 +491,10 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     
-//    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//    MyPostViewController * set1=[mainStoryboard instantiateViewControllerWithIdentifier:@"MyPostViewController"];
-//    
-//    CATransition *transition = [CATransition animation];
-//    transition.duration = 0.3;
-//    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-//    transition.type = kCATransitionPush;
-//    transition.subtype = kCATransitionFromLeft;
-//    
-//    [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
-//    
-//    set1.Array_UserInfo = Array_ViewPost;
-//    set1.swipeCount = 2;
-//    [self.navigationController pushViewController:set1 animated:YES];
-//    
-//    NSLog(@"Selected Index= %lditem",(long)indexPath.row);
-    
     
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     AllViewSwapeViewController * set1=[mainStoryboard instantiateViewControllerWithIdentifier:@"AllViewSwapeViewController"];
     
-    
-    // OnCellClickNewViewController * set=[mainStoryboard instantiateViewControllerWithIdentifier:@"OnCellClickNewViewController"];
     
     CATransition *transition = [CATransition animation];
     transition.duration = 0.3;
@@ -364,8 +504,20 @@
     
     [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
     
-    set1.Array_Alldata = Array_ViewPost;
-    set1.tuchedIndex = indexPath.row;
+    if(isFiltered == YES)
+    {
+        set1.Array_Alldata = _filteredArray;
+        set1.tuchedIndex = indexPath.row;
+        
+    }
+    else
+    {
+        set1.Array_Alldata = Array_ViewPost;
+        set1.tuchedIndex = indexPath.row;
+    }
+    
+//    set1.Array_Alldata = Array_ViewPost;
+//    set1.tuchedIndex = indexPath.row;
     [self.navigationController pushViewController:set1 animated:YES];
     
     NSLog(@"Selected Index= %lditem",(long)indexPath.row);
@@ -417,6 +569,21 @@ heightForHeaderAtIndexPath:(NSIndexPath *)indexPath
 
 - (IBAction)BackButton_Action:(id)sender
 {
+    if ([[defaults valueForKey:@"profileTapped"] isEqualToString:@"Activity"])
+    {
+        CATransition *transition = [CATransition animation];
+        transition.duration = 0.3;
+        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+        transition.type = kCATransitionPush;
+        transition.subtype = kCATransitionFromRight;
+        [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
+        [self.navigationController popViewControllerAnimated:YES];
+        
+         [defaults setObject:@"" forKey:@"profileTapped"];
+        
+    }
+    else
+    {
     
     CATransition *transition = [CATransition animation];
     transition.duration = 0.3;
@@ -425,7 +592,7 @@ heightForHeaderAtIndexPath:(NSIndexPath *)indexPath
     transition.subtype = kCATransitionFromRight;
     [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
     [self.navigationController popToRootViewControllerAnimated:YES];
-    
+    }
 }
 
 -(void)viewPostConnection
@@ -570,10 +737,17 @@ heightForHeaderAtIndexPath:(NSIndexPath *)indexPath
                
 
         
+        if (Array_ViewPost.count == 0)
+        {
+            postValueLabel.text = @"0";
+        }
+        else
+        {
+            postValueLabel.text =[NSString stringWithFormat:@"%lu", (unsigned long)Array_ViewPost.count];
+        }
         
         
         
-        postValueLabel.text =[NSString stringWithFormat:@"%lu", (unsigned long)Array_ViewPost.count];
         
         
     }
@@ -636,11 +810,11 @@ heightForHeaderAtIndexPath:(NSIndexPath *)indexPath
                                                  
                                                  NSLog(@"Array_SalePoints %@",Array_SalePoints);
                                                  
-                                                 if ([ResultString isEqualToString:@"0"])
+                                                 if ([ResultString isEqualToString:@""])
                                                  {
                                                     
                                                      
-                                                     salepointValueLabel.text = @"0 Points";
+                                                     salepointValueLabel.text = @"0";
                                                      
                                                  }
                                                  else //if ([ResultString isEqualToString:@"1"])

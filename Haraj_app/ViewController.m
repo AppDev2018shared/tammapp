@@ -21,7 +21,7 @@
 #import "ServicesViewController.h"
 #import "OtherViewController.h"
 #import "ProfileViewController.h"
-#import "FavouriteViewController.h"
+#import "ActivityViewController.h"
 
 #import "LGPlusButtonsView.h"
 
@@ -418,6 +418,22 @@
     else if ([sender tag]== 2)
     {
         NSLog(@"activity Button Pressed");
+        
+        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        ActivityViewController * activity=[mainStoryboard instantiateViewControllerWithIdentifier:@"ActivityViewController"];
+        
+        CATransition *transition = [CATransition animation];
+        transition.duration = 0.3;
+        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+        transition.type = kCATransitionPush;
+        transition.subtype = kCATransitionFromLeft;
+        
+        [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
+        
+        [self.navigationController pushViewController:activity animated:YES];
+
+        
+        
     }
     else if ([sender tag]== 3)
     {

@@ -113,6 +113,8 @@
 		618B000A1EF921A500434650 /* DetailPropertyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 618B00081EF921A500434650 /* DetailPropertyTableViewCell.xib */; };
 		61B8C8751EC1AA1800954A68 /* FirstImageViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B8C8741EC1AA1800954A68 /* FirstImageViewCell.m */; };
 		61B8C8851EC1E61100954A68 /* steve.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 61B8C8841EC1E61100954A68 /* steve.jpeg */; };
+		61C7FEB31F01079700EF278B /* ActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61C7FEB21F01079700EF278B /* ActivityViewController.m */; };
+		61C7FEB61F010BD500EF278B /* ActivityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61C7FEB51F010BD500EF278B /* ActivityTableViewCell.m */; };
 		61D376681EBC3F6300BA02D4 /* LGPlusButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D376611EBC3F6300BA02D4 /* LGPlusButton.m */; };
 		61D376691EBC3F6300BA02D4 /* LGPlusButtonDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D376631EBC3F6300BA02D4 /* LGPlusButtonDescription.m */; };
 		61D3766A1EBC3F6300BA02D4 /* LGPlusButtonsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D376651EBC3F6300BA02D4 /* LGPlusButtonsView.m */; };
@@ -373,6 +375,10 @@
 		61B8C8731EC1AA1800954A68 /* FirstImageViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstImageViewCell.h; sourceTree = "<group>"; };
 		61B8C8741EC1AA1800954A68 /* FirstImageViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirstImageViewCell.m; sourceTree = "<group>"; };
 		61B8C8841EC1E61100954A68 /* steve.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = steve.jpeg; sourceTree = "<group>"; };
+		61C7FEB11F01079700EF278B /* ActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityViewController.h; sourceTree = "<group>"; };
+		61C7FEB21F01079700EF278B /* ActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityViewController.m; sourceTree = "<group>"; };
+		61C7FEB41F010BD500EF278B /* ActivityTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityTableViewCell.h; sourceTree = "<group>"; };
+		61C7FEB51F010BD500EF278B /* ActivityTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityTableViewCell.m; sourceTree = "<group>"; };
 		61D376601EBC3F6300BA02D4 /* LGPlusButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGPlusButton.h; sourceTree = "<group>"; };
 		61D376611EBC3F6300BA02D4 /* LGPlusButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGPlusButton.m; sourceTree = "<group>"; };
 		61D376621EBC3F6300BA02D4 /* LGPlusButtonDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGPlusButtonDescription.h; sourceTree = "<group>"; };
@@ -585,6 +591,7 @@
 				61B8C8721EC1A8FB00954A68 /* OnclickMyPost TableView Cells */,
 				614E89721ECB0B5A00C302E6 /* Posting TableView Cells */,
 				6185B3AC1EFA3DE80051659D /* Top Bar Screens */,
+				61C7FEB01F00F11E00EF278B /* Account Setting */,
 				3247807D1EACEE0A00FF4B79 /* Main.storyboard */,
 				324780801EACEE0A00FF4B79 /* Images.xcassets */,
 				324780821EACEE0A00FF4B79 /* LaunchScreen.xib */,
@@ -913,6 +920,10 @@
 				611D2C771EFCF16900804839 /* SalePointsViewController.m */,
 				611D2C791EFD0C7300804839 /* SaleCollectionViewCell.h */,
 				611D2C7A1EFD0C7300804839 /* SaleCollectionViewCell.m */,
+				61C7FEB11F01079700EF278B /* ActivityViewController.h */,
+				61C7FEB21F01079700EF278B /* ActivityViewController.m */,
+				61C7FEB41F010BD500EF278B /* ActivityTableViewCell.h */,
+				61C7FEB51F010BD500EF278B /* ActivityTableViewCell.m */,
 			);
 			name = "Top Bar Screens";
 			sourceTree = "<group>";
@@ -961,6 +972,13 @@
 				615ED1481EDEE6D2001E6B0A /* SuggestedTableViewCell.xib */,
 			);
 			name = "OnclickMyPost TableView Cells";
+			sourceTree = "<group>";
+		};
+		61C7FEB01F00F11E00EF278B /* Account Setting */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Account Setting";
 			sourceTree = "<group>";
 		};
 		61D3765F1EBC3F6300BA02D4 /* LGPlusButtonsView */ = {
@@ -1325,6 +1343,7 @@
 				61EDCA0B1ECB2E3F0036A250 /* MoreDetailCell.m in Sources */,
 				61ED095B1EB85369008EAFB7 /* YSLScrollMenuView.m in Sources */,
 				61487FF81ED2ED5D009CEF9B /* OtherViewController.m in Sources */,
+				61C7FEB61F010BD500EF278B /* ActivityTableViewCell.m in Sources */,
 				61739FEC1EE2AF5900018CF1 /* AFPropertyListRequestOperation.m in Sources */,
 				61F95A9A1EF5527E00DEE62A /* ProductDetailCellCar.m in Sources */,
 				61ED099E1EB85D42008EAFB7 /* SDWebImageDecoder.m in Sources */,
@@ -1377,6 +1396,7 @@
 				9A09B8C21EF1672C00421BF7 /* PostHeaderTableViewCell.m in Sources */,
 				614C16141EC0739900B11A9B /* FRGWaterfallCollectionViewCell.m in Sources */,
 				614C15F11EC039C100B11A9B /* SBJsonStreamWriter.m in Sources */,
+				61C7FEB31F01079700EF278B /* ActivityViewController.m in Sources */,
 				61ED09A01EB85D42008EAFB7 /* SDWebImageDownloaderOperation.m in Sources */,
 				615ED13F1EDEE6AC001E6B0A /* DetailTableViewCell.m in Sources */,
 				614C16151EC0739900B11A9B /* FRGWaterfallCollectionViewLayout.m in Sources */,

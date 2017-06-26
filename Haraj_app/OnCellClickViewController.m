@@ -46,7 +46,7 @@
     NSDictionary *urlplist;
     NSURLConnection *Connection_MakeOffer, *Connection_SuggestPost;
     NSMutableData *webData_MakeOffer, *webData_SuggestPost;
-    NSMutableArray *Array_MakeOffer, *Array_SuggestPost,*Array_Moreimages, *Array_Chats, *Array_Comments,*Array_Favourite;
+    NSMutableArray *Array_MakeOffer, *Array_SuggestPost,*Array_Moreimages, *Array_Chats, *Array_Comments,*Array_Favourite, *Array_AddActivityChat;
     NSString * back_Arrow_Check;
     
     CGFloat newCellHeight;
@@ -1754,7 +1754,76 @@
     }
     else if ([sender tag]== 2)
     {
-        NSLog(@"Comments Pressed");
+        
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewDisable" object:self userInfo:nil];
+        
+        NSLog(@"post activity Comment Pressed");
+        
+        transparentView1=[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+        transparentView1.backgroundColor=[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.3];
+        
+        grayView=[[UIView alloc]initWithFrame:CGRectMake((self.view.frame.size.width-275)/2,self.view.frame.size.width - 250, 275, 225)];
+        grayView.layer.cornerRadius=20;
+        grayView.clipsToBounds = YES;
+        [grayView setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
+        
+        
+        UIButton *closeview=[[UIButton alloc]initWithFrame:CGRectMake(8, 8, 30, 30)];
+        [closeview setTitle:@"X" forState:UIControlStateNormal];
+        [closeview setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+        [closeview addTarget:self action:@selector(closedd1:)
+            forControlEvents:UIControlEventTouchUpInside];
+        [grayView addSubview:closeview];
+        
+        UILabel * label1 = [[UILabel alloc]initWithFrame:CGRectMake(75, 8, 184, 30)];
+        label1.font = [UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:17];
+        label1.textAlignment = NSTextAlignmentRight;
+        label1.text = @"Send message";
+        label1.textColor = [UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1];
+        [grayView addSubview:label1];
+        
+        
+        commentPostTextView1 = [[UITextView alloc]initWithFrame:CGRectMake(16, 49, 243, 128)];
+        commentPostTextView1.textAlignment = NSTextAlignmentRight;
+        commentPostTextView1.font = [UIFont fontWithName:@"SanFranciscoDisplay-medium" size:17];
+        commentPostTextView1.layer.cornerRadius = 4;
+        commentPostTextView1.clipsToBounds = YES;
+        commentPostTextView1.spellCheckingType = NO;
+        commentPostTextView1.autocorrectionType = NO;
+        commentPostTextView1.delegate = self;
+        [commentPostTextView1 becomeFirstResponder];
+        
+        [grayView addSubview:commentPostTextView1];
+        
+        postplaceholderLabel = [[UILabel alloc]initWithFrame:CGRectMake(22, 49, 231, 30)];
+        postplaceholderLabel.font = [UIFont fontWithName:@"SanFranciscoDisplay-medium" size:17];
+        postplaceholderLabel.textAlignment = NSTextAlignmentRight;
+        postplaceholderLabel.text = @"Type your message here...";
+        
+        postplaceholderLabel.textColor = [UIColor lightGrayColor];
+        [grayView bringSubviewToFront:postplaceholderLabel];
+        [grayView addSubview:postplaceholderLabel];
+        
+        submitPostButton=[[UIButton alloc]initWithFrame:CGRectMake(0, 191, 275, 34)];
+        [submitPostButton setTitle:@"SUBMIT" forState:UIControlStateNormal];
+        [submitPostButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        submitPostButton.titleLabel.font = [UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:16];
+        
+        submitPostButton.enabled = NO;
+        [submitPostButton setBackgroundColor:[UIColor grayColor]];
+        
+        // [submitPostButton setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
+        [submitPostButton addTarget:self action:@selector(submitActivity:) forControlEvents:UIControlEventTouchUpInside];
+        [grayView addSubview:submitPostButton];
+        
+        
+        [transparentView1 addSubview:grayView];
+        
+        [self.view addSubview:transparentView1];
+
+        
+        
     }
     else
     {
@@ -1960,6 +2029,178 @@
        [self AddChat_Connection];
     
 }
+
+- (void)submitActivity:(id)sender
+{
+    
+    [self AddActivityChat_Connection];
+    
+}
+
+-(void)AddActivityChat_Connection
+{
+    
+    NSString *postid= @"postid";
+    NSString *postidVal =str_postid;
+    
+    NSString *userid1= @"userid1";
+    NSString *userid1Val =[defaults valueForKey:@"userid"];
+    
+    NSString *message= @"message";
+    NSString *messageVal =commentPostTextView1.text;
+    
+    NSString *chat= @"messagetype";
+    NSString *chattypeVal =@"TEXT";
+    
+    NSString *userid2= @"userid2";
+    NSString *userid2Val =[Array_UserInfo valueForKey:@"userid1"];
+    
+    NSString *messageorigin= @"messageorigin";
+    NSString *messageoriginVal =@"POST";
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+    NSString *reqStringFUll=[NSString stringWithFormat:@"%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@",postid,postidVal,userid1,userid1Val,message,messageVal,chat,chattypeVal,userid2,userid2Val,messageorigin,messageoriginVal];
+    
+    
+    
+#pragma mark - swipe sesion
+    
+    NSURLSession *session = [NSURLSession sessionWithConfiguration: [NSURLSessionConfiguration defaultSessionConfiguration] delegate: nil delegateQueue: [NSOperationQueue mainQueue]];
+    
+    NSURL *url;
+    NSString *  urlStrLivecount=[urlplist valueForKey:@"activityaddchat"];;
+    url =[NSURL URLWithString:urlStrLivecount];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    
+    [request setHTTPMethod:@"POST"];//Web API Method
+    
+    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    
+    request.HTTPBody = [reqStringFUll dataUsingEncoding:NSUTF8StringEncoding];
+    
+    
+    
+    NSURLSessionDataTask *dataTask =[session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
+                                     {
+                                         
+                                         if(data)
+                                         {
+                                             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+                                             NSInteger statusCode = httpResponse.statusCode;
+                                             if(statusCode == 200)
+                                             {
+                                                 
+                                                 Array_AddActivityChat=[[NSMutableArray alloc]init];
+                                                 SBJsonParser *objSBJsonParser = [[SBJsonParser alloc]init];
+                                                 Array_AddActivityChat=[objSBJsonParser objectWithData:data];
+                                                 NSString * ResultString=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+                                                 ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+                                                 ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\t" withString:@""];
+                                                 NSLog(@"Array_AddActivityChat %@",Array_AddActivityChat);
+                                                 
+                                                 NSLog(@"array_login ResultString %@",ResultString);
+                                                 
+                                                 if ([ResultString isEqualToString:@"done"])
+                                                 {
+                                                     
+                                                     
+                                                     
+                                                     [self.view endEditing:YES];
+                                                     transparentView1.hidden= YES;
+                                                     [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewEnable" object:self userInfo:nil];
+                                                     
+                                                     [defaults setObject:@"no" forKey:@"SeeCommentPressed"];
+                                                     
+                                                     [self ChatCommentConnection];
+                                                     
+                                                     
+                                                     
+                                                 }
+                                                 if ([ResultString isEqualToString:@"inserterror"])
+                                                 {
+                                                     
+                                                     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops" message:@"inserterror" preferredStyle:UIAlertControllerStyleAlert];
+                                                     
+                                                     UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
+                                                     [alertController addAction:actionOk];
+                                                     [self presentViewController:alertController animated:YES completion:nil];
+                                                     
+                                                     
+                                                 }
+                                                 if ([ResultString isEqualToString:@"messagenull"])
+                                                 {
+                                                     
+                                                     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops" message:@"messagenull" preferredStyle:UIAlertControllerStyleAlert];
+                                                     
+                                                     UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
+                                                     [alertController addAction:actionOk];
+                                                     [self presentViewController:alertController animated:YES completion:nil];
+                                                     
+                                                     
+                                                 }
+                                                 if ([ResultString isEqualToString:@"nullerror"])
+                                                 {
+                                                     
+                                                     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops" message:@"nullerror" preferredStyle:UIAlertControllerStyleAlert];
+                                                     
+                                                     UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
+                                                     [alertController addAction:actionOk];
+                                                     [self presentViewController:alertController animated:YES completion:nil];
+                                                     
+                                                     
+                                                 }
+                                                 
+                                                 if ([ResultString isEqualToString:@"nopostid"])
+                                                 {
+                                                     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops" message:@"This item is no more available and has probably been sold by the seller." preferredStyle:UIAlertControllerStyleAlert];
+                                                     
+                                                     UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                                                                        style:UIAlertActionStyleDefault
+                                                                                                      handler:nil];
+                                                     [alertController addAction:actionOk];
+                                                     [self presentViewController:alertController animated:YES completion:nil];
+                                                     
+                                                     
+                                                     
+                                                 }
+                                                 
+                                                 
+                                                 
+                                                 
+                                             }
+                                             
+                                             else
+                                             {
+                                                 NSLog(@" error login1 ---%ld",(long)statusCode);
+                                                 
+                                             }
+                                             
+                                             
+                                         }
+                                         else if(error)
+                                         {
+                                             
+                                             NSLog(@"error login2.......%@",error.description);
+                                         }
+                                         
+                                         
+                                     }];
+    [dataTask resume];
+    
+
+    
+}
+
+
 
 -(void)AddChat_Connection
 {
