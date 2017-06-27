@@ -129,6 +129,23 @@
 		61D9FFFA1EE5635E0020755D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61D9FFF91EE5635D0020755D /* CoreLocation.framework */; };
 		61E015F41ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E015F21ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.m */; };
 		61E015F51ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61E015F31ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.xib */; };
+		61E1416B1F022B45008C3E7A /* ChattingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E1416A1F022B45008C3E7A /* ChattingViewController.m */; };
+		61E141701F02399D008C3E7A /* ChatOneTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E1416F1F02399D008C3E7A /* ChatOneTableViewCell.m */; };
+		61E141731F0239B7008C3E7A /* ChatTwoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E141721F0239B7008C3E7A /* ChatTwoTableViewCell.m */; };
+		61E1417E1F02593F008C3E7A /* AccFourTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E141751F02593F008C3E7A /* AccFourTableViewCell.m */; };
+		61E1417F1F02593F008C3E7A /* AccOneTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E141771F02593F008C3E7A /* AccOneTableViewCell.m */; };
+		61E141801F02593F008C3E7A /* AccountSettViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E141791F02593F008C3E7A /* AccountSettViewController.m */; };
+		61E141811F02593F008C3E7A /* AccThreeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E1417B1F02593F008C3E7A /* AccThreeTableViewCell.m */; };
+		61E141821F02593F008C3E7A /* AccTwoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E1417D1F02593F008C3E7A /* AccTwoTableViewCell.m */; };
+		61E1418D1F02602B008C3E7A /* setting_contacts.png in Resources */ = {isa = PBXBuildFile; fileRef = 61E141841F02602B008C3E7A /* setting_contacts.png */; };
+		61E1418E1F02602B008C3E7A /* setting_contacts@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61E141851F02602B008C3E7A /* setting_contacts@2x.png */; };
+		61E1418F1F02602B008C3E7A /* setting_contacts@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61E141861F02602B008C3E7A /* setting_contacts@3x.png */; };
+		61E141901F02602B008C3E7A /* setting_facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 61E141871F02602B008C3E7A /* setting_facebook.png */; };
+		61E141911F02602B008C3E7A /* setting_facebook@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61E141881F02602B008C3E7A /* setting_facebook@2x.png */; };
+		61E141921F02602B008C3E7A /* setting_facebook@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61E141891F02602B008C3E7A /* setting_facebook@3x.png */; };
+		61E141931F02602B008C3E7A /* setting_twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = 61E1418A1F02602B008C3E7A /* setting_twitter.png */; };
+		61E141941F02602B008C3E7A /* setting_twitter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61E1418B1F02602B008C3E7A /* setting_twitter@2x.png */; };
+		61E141951F02602B008C3E7A /* setting_twitter@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61E1418C1F02602B008C3E7A /* setting_twitter@3x.png */; };
 		61ED095A1EB85369008EAFB7 /* YSLContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61ED09571EB85369008EAFB7 /* YSLContainerViewController.m */; };
 		61ED095B1EB85369008EAFB7 /* YSLScrollMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61ED09591EB85369008EAFB7 /* YSLScrollMenuView.m */; };
 		61ED09991EB85D42008EAFB7 /* CellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 61ED096C1EB85D42008EAFB7 /* CellModel.m */; };
@@ -398,6 +415,31 @@
 		61E015F11ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwoImageOnClickTableViewCell.h; path = onclickVC/TwoImageOnClickTableViewCell.h; sourceTree = "<group>"; };
 		61E015F21ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwoImageOnClickTableViewCell.m; path = onclickVC/TwoImageOnClickTableViewCell.m; sourceTree = "<group>"; };
 		61E015F31ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TwoImageOnClickTableViewCell.xib; path = onclickVC/TwoImageOnClickTableViewCell.xib; sourceTree = "<group>"; };
+		61E141691F022B44008C3E7A /* ChattingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChattingViewController.h; sourceTree = "<group>"; };
+		61E1416A1F022B45008C3E7A /* ChattingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChattingViewController.m; sourceTree = "<group>"; };
+		61E1416E1F02399D008C3E7A /* ChatOneTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatOneTableViewCell.h; sourceTree = "<group>"; };
+		61E1416F1F02399D008C3E7A /* ChatOneTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatOneTableViewCell.m; sourceTree = "<group>"; };
+		61E141711F0239B7008C3E7A /* ChatTwoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatTwoTableViewCell.h; sourceTree = "<group>"; };
+		61E141721F0239B7008C3E7A /* ChatTwoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatTwoTableViewCell.m; sourceTree = "<group>"; };
+		61E141741F02593F008C3E7A /* AccFourTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccFourTableViewCell.h; sourceTree = "<group>"; };
+		61E141751F02593F008C3E7A /* AccFourTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccFourTableViewCell.m; sourceTree = "<group>"; };
+		61E141761F02593F008C3E7A /* AccOneTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccOneTableViewCell.h; sourceTree = "<group>"; };
+		61E141771F02593F008C3E7A /* AccOneTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccOneTableViewCell.m; sourceTree = "<group>"; };
+		61E141781F02593F008C3E7A /* AccountSettViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountSettViewController.h; sourceTree = "<group>"; };
+		61E141791F02593F008C3E7A /* AccountSettViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountSettViewController.m; sourceTree = "<group>"; };
+		61E1417A1F02593F008C3E7A /* AccThreeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccThreeTableViewCell.h; sourceTree = "<group>"; };
+		61E1417B1F02593F008C3E7A /* AccThreeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccThreeTableViewCell.m; sourceTree = "<group>"; };
+		61E1417C1F02593F008C3E7A /* AccTwoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccTwoTableViewCell.h; sourceTree = "<group>"; };
+		61E1417D1F02593F008C3E7A /* AccTwoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccTwoTableViewCell.m; sourceTree = "<group>"; };
+		61E141841F02602B008C3E7A /* setting_contacts.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = setting_contacts.png; sourceTree = "<group>"; };
+		61E141851F02602B008C3E7A /* setting_contacts@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "setting_contacts@2x.png"; sourceTree = "<group>"; };
+		61E141861F02602B008C3E7A /* setting_contacts@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "setting_contacts@3x.png"; sourceTree = "<group>"; };
+		61E141871F02602B008C3E7A /* setting_facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = setting_facebook.png; sourceTree = "<group>"; };
+		61E141881F02602B008C3E7A /* setting_facebook@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "setting_facebook@2x.png"; sourceTree = "<group>"; };
+		61E141891F02602B008C3E7A /* setting_facebook@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "setting_facebook@3x.png"; sourceTree = "<group>"; };
+		61E1418A1F02602B008C3E7A /* setting_twitter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = setting_twitter.png; sourceTree = "<group>"; };
+		61E1418B1F02602B008C3E7A /* setting_twitter@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "setting_twitter@2x.png"; sourceTree = "<group>"; };
+		61E1418C1F02602B008C3E7A /* setting_twitter@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "setting_twitter@3x.png"; sourceTree = "<group>"; };
 		61ED09561EB85369008EAFB7 /* YSLContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSLContainerViewController.h; sourceTree = "<group>"; };
 		61ED09571EB85369008EAFB7 /* YSLContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YSLContainerViewController.m; sourceTree = "<group>"; };
 		61ED09581EB85369008EAFB7 /* YSLScrollMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSLScrollMenuView.h; sourceTree = "<group>"; };
@@ -924,6 +966,12 @@
 				61C7FEB21F01079700EF278B /* ActivityViewController.m */,
 				61C7FEB41F010BD500EF278B /* ActivityTableViewCell.h */,
 				61C7FEB51F010BD500EF278B /* ActivityTableViewCell.m */,
+				61E141691F022B44008C3E7A /* ChattingViewController.h */,
+				61E1416A1F022B45008C3E7A /* ChattingViewController.m */,
+				61E1416E1F02399D008C3E7A /* ChatOneTableViewCell.h */,
+				61E1416F1F02399D008C3E7A /* ChatOneTableViewCell.m */,
+				61E141711F0239B7008C3E7A /* ChatTwoTableViewCell.h */,
+				61E141721F0239B7008C3E7A /* ChatTwoTableViewCell.m */,
 			);
 			name = "Top Bar Screens";
 			sourceTree = "<group>";
@@ -977,6 +1025,17 @@
 		61C7FEB01F00F11E00EF278B /* Account Setting */ = {
 			isa = PBXGroup;
 			children = (
+				61E141831F02602B008C3E7A /* settingimages */,
+				61E141781F02593F008C3E7A /* AccountSettViewController.h */,
+				61E141791F02593F008C3E7A /* AccountSettViewController.m */,
+				61E141761F02593F008C3E7A /* AccOneTableViewCell.h */,
+				61E141771F02593F008C3E7A /* AccOneTableViewCell.m */,
+				61E1417C1F02593F008C3E7A /* AccTwoTableViewCell.h */,
+				61E1417D1F02593F008C3E7A /* AccTwoTableViewCell.m */,
+				61E1417A1F02593F008C3E7A /* AccThreeTableViewCell.h */,
+				61E1417B1F02593F008C3E7A /* AccThreeTableViewCell.m */,
+				61E141741F02593F008C3E7A /* AccFourTableViewCell.h */,
+				61E141751F02593F008C3E7A /* AccFourTableViewCell.m */,
 			);
 			name = "Account Setting";
 			sourceTree = "<group>";
@@ -1018,6 +1077,22 @@
 				614C161D1EC0919200B11A9B /* OnCellClickViewController.m */,
 			);
 			path = onclickVC;
+			sourceTree = "<group>";
+		};
+		61E141831F02602B008C3E7A /* settingimages */ = {
+			isa = PBXGroup;
+			children = (
+				61E141841F02602B008C3E7A /* setting_contacts.png */,
+				61E141851F02602B008C3E7A /* setting_contacts@2x.png */,
+				61E141861F02602B008C3E7A /* setting_contacts@3x.png */,
+				61E141871F02602B008C3E7A /* setting_facebook.png */,
+				61E141881F02602B008C3E7A /* setting_facebook@2x.png */,
+				61E141891F02602B008C3E7A /* setting_facebook@3x.png */,
+				61E1418A1F02602B008C3E7A /* setting_twitter.png */,
+				61E1418B1F02602B008C3E7A /* setting_twitter@2x.png */,
+				61E1418C1F02602B008C3E7A /* setting_twitter@3x.png */,
+			);
+			path = settingimages;
 			sourceTree = "<group>";
 		};
 		61ED09551EB85369008EAFB7 /* YSLContainerViewController */ = {
@@ -1258,13 +1333,16 @@
 				61F95AA01EF5588900DEE62A /* ProductDetailCellProperty.xib in Resources */,
 				615ED14A1EDEE6D2001E6B0A /* SuggestedTableViewCell.xib in Resources */,
 				61D3767C1EBC868000BA02D4 /* SanFranciscoDisplay-Thin.otf in Resources */,
+				61E1418E1F02602B008C3E7A /* setting_contacts@2x.png in Resources */,
 				61F56CD31ECD75A10031E9C1 /* ELCAssetTablePicker.xib in Resources */,
 				61271D461EBD928C0082E504 /* facebook.png in Resources */,
+				61E141951F02602B008C3E7A /* setting_twitter@3x.png in Resources */,
 				61739FEF1EE2AF5900018CF1 /* Done.png in Resources */,
 				618B00051EF91CDD00434650 /* DetailCarTableViewCell.xib in Resources */,
 				61E015F51ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.xib in Resources */,
 				61F95A9B1EF5527E00DEE62A /* ProductDetailCellCar.xib in Resources */,
 				61F56CD21ECD75A10031E9C1 /* ELCAssetPicker.xib in Resources */,
+				61E141911F02602B008C3E7A /* setting_facebook@2x.png in Resources */,
 				61040CE21EFBC9F300ACE5D6 /* BoostPost.xib in Resources */,
 				61271D481EBD928C0082E504 /* facebook@3x.png in Resources */,
 				1B3B632E1EDFDD1B00D57715 /* defaultimg.jpg in Resources */,
@@ -1272,16 +1350,22 @@
 				613171101EC5BB2000E3BD4C /* EnterPrice.xib in Resources */,
 				614C161B1EC07E4600B11A9B /* play.png in Resources */,
 				61ED09B31EB865EF008EAFB7 /* photoicon.png in Resources */,
+				61E1418F1F02602B008C3E7A /* setting_contacts@3x.png in Resources */,
 				9A09B8C31EF1672C00421BF7 /* PostHeaderTableViewCell.xib in Resources */,
+				61E141921F02602B008C3E7A /* setting_facebook@3x.png in Resources */,
 				61D3767B1EBC868000BA02D4 /* SanFranciscoDisplay-Semibold.otf in Resources */,
 				61271D491EBD928C0082E504 /* twitter.png in Resources */,
 				61D3767A1EBC868000BA02D4 /* SanFranciscoDisplay-Regular.otf in Resources */,
 				61F56CD41ECD75A10031E9C1 /* Overlay.png in Resources */,
+				61E1418D1F02602B008C3E7A /* setting_contacts.png in Resources */,
+				61E141901F02602B008C3E7A /* setting_facebook.png in Resources */,
+				61E141931F02602B008C3E7A /* setting_twitter.png in Resources */,
 				3247807F1EACEE0A00FF4B79 /* Main.storyboard in Resources */,
 				61271E121EBDDB950082E504 /* FacebookSDKStrings.bundle in Resources */,
 				614B96D31ED45999008CB090 /* defaultpostimg.jpg in Resources */,
 				61739FF01EE2AF5900018CF1 /* Done@2x.png in Resources */,
 				324780841EACEE0A00FF4B79 /* LaunchScreen.xib in Resources */,
+				61E141941F02602B008C3E7A /* setting_twitter@2x.png in Resources */,
 				61D376761EBC867F00BA02D4 /* SanFranciscoDisplay-Bold.otf in Resources */,
 				61271D4A1EBD928C0082E504 /* twitter@2x.png in Resources */,
 				61F56CD11ECD75A10031E9C1 /* ELCAlbumPickerController.xib in Resources */,
@@ -1334,11 +1418,13 @@
 				61ED09A61EB85D42008EAFB7 /* UIImage+WebP.m in Sources */,
 				61739FF31EE2AF5900018CF1 /* UIImageView+MHFacebookImageViewer.m in Sources */,
 				618B00091EF921A500434650 /* DetailPropertyTableViewCell.m in Sources */,
+				61E1416B1F022B45008C3E7A /* ChattingViewController.m in Sources */,
 				61739FA31EE2951100018CF1 /* Base64.m in Sources */,
 				614C15EB1EC039C100B11A9B /* NSObject+SBJson.m in Sources */,
 				61B8C8751EC1AA1800954A68 /* FirstImageViewCell.m in Sources */,
 				61D3766B1EBC3F6300BA02D4 /* LGPlusButtonsViewShared.m in Sources */,
 				61ED099B1EB85D42008EAFB7 /* NSData+ImageContentType.m in Sources */,
+				61E141811F02593F008C3E7A /* AccThreeTableViewCell.m in Sources */,
 				61040CE01EFBC9D100ACE5D6 /* BoostPost.m in Sources */,
 				61EDCA0B1ECB2E3F0036A250 /* MoreDetailCell.m in Sources */,
 				61ED095B1EB85369008EAFB7 /* YSLScrollMenuView.m in Sources */,
@@ -1381,6 +1467,7 @@
 				61ED09A71EB85D42008EAFB7 /* UIImageView+HighlightedWebCache.m in Sources */,
 				61D3766A1EBC3F6300BA02D4 /* LGPlusButtonsView.m in Sources */,
 				6185B3B81EFAA2E20051659D /* FavTableViewCell.m in Sources */,
+				61E1417E1F02593F008C3E7A /* AccFourTableViewCell.m in Sources */,
 				61ED099F1EB85D42008EAFB7 /* SDWebImageDownloader.m in Sources */,
 				61739FEE1EE2AF5900018CF1 /* AFXMLRequestOperation.m in Sources */,
 				614C15F01EC039C100B11A9B /* SBJsonStreamParserState.m in Sources */,
@@ -1391,11 +1478,13 @@
 				61ED099C1EB85D42008EAFB7 /* SDImageCache.m in Sources */,
 				61F56CCA1ECD75A10031E9C1 /* ELCAlbumPickerController.m in Sources */,
 				9A13F3561EEE9DB40069219E /* YSLContainerViewController1.m in Sources */,
+				61E141801F02593F008C3E7A /* AccountSettViewController.m in Sources */,
 				61D376681EBC3F6300BA02D4 /* LGPlusButton.m in Sources */,
 				61487FF51ED2ED42009CEF9B /* ServicesViewController.m in Sources */,
 				9A09B8C21EF1672C00421BF7 /* PostHeaderTableViewCell.m in Sources */,
 				614C16141EC0739900B11A9B /* FRGWaterfallCollectionViewCell.m in Sources */,
 				614C15F11EC039C100B11A9B /* SBJsonStreamWriter.m in Sources */,
+				61E141701F02399D008C3E7A /* ChatOneTableViewCell.m in Sources */,
 				61C7FEB31F01079700EF278B /* ActivityViewController.m in Sources */,
 				61ED09A01EB85D42008EAFB7 /* SDWebImageDownloaderOperation.m in Sources */,
 				615ED13F1EDEE6AC001E6B0A /* DetailTableViewCell.m in Sources */,
@@ -1404,14 +1493,17 @@
 				614C15F31EC039C100B11A9B /* SBJsonStreamWriterState.m in Sources */,
 				61ED099A1EB85D42008EAFB7 /* MKAnnotationView+WebCache.m in Sources */,
 				618B00041EF91CDD00434650 /* DetailCarTableViewCell.m in Sources */,
+				61E141821F02593F008C3E7A /* AccTwoTableViewCell.m in Sources */,
 				614C15CB1EC0389200B11A9B /* SignUpViewController.m in Sources */,
 				6185B3B21EFA6AC90051659D /* ChoosePostViewController.m in Sources */,
 				9AD3F1A01EF2851E005A215D /* EnterComment.m in Sources */,
 				61ED09A51EB85D42008EAFB7 /* UIImage+MultiFormat.m in Sources */,
 				611D2C7B1EFD0C7300804839 /* SaleCollectionViewCell.m in Sources */,
 				61ED09A91EB85D42008EAFB7 /* UIView+WebCacheOperation.m in Sources */,
+				61E1417F1F02593F008C3E7A /* AccOneTableViewCell.m in Sources */,
 				61ED099D1EB85D42008EAFB7 /* SDWebImageCompat.m in Sources */,
 				6131710E1EC5BB0A00E3BD4C /* EnterPrice.m in Sources */,
+				61E141731F0239B7008C3E7A /* ChatTwoTableViewCell.m in Sources */,
 				61271E1C1EBDDD960082E504 /* UIView+RNActivityView.m in Sources */,
 				617FD8911EB9D6D8008B827F /* PatternViewCell.m in Sources */,
 				61739FE71EE2AF5900018CF1 /* AFHTTPClient.m in Sources */,

@@ -14,7 +14,7 @@
 #import "Reachability.h"
 
 
-@interface BoostPostViewController ()<UITableViewDataSource, UITableViewDelegate>
+@interface BoostPostViewController ()<UITableViewDataSource, UITableViewDelegate,UIGestureRecognizerDelegate>
 {
     FavTableViewCell *FavouriteCell;
     NSUserDefaults * defaults;
@@ -146,6 +146,7 @@
     
     [myBoostXIBViewObj.imageViewButton1 setUserInteractionEnabled:YES];
     UITapGestureRecognizer *viewTapped1 =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewButton1_Action:)];
+    
     [myBoostXIBViewObj.imageViewButton1 addGestureRecognizer:viewTapped1];
     
     [myBoostXIBViewObj.imageViewButton2 setUserInteractionEnabled:YES];
@@ -174,15 +175,47 @@
     
 }
 
+//- (IBAction)imageViewButton1_Action:(UIGestureRecognizer*)sender
+//{
+//      NSLog(@"imageViewButton1_Action");
+//    
+//    [myBoostXIBViewObj.imageViewButton1 setBackgroundColor:[UIColor redColor]];
+//    switch (sender.state)
+//        {
+//            case UIGestureRecognizerStateBegan:
+//            {
+//                NSLog(@"UIGestureRecognizerStateBegan");
+//                
+//               
+//            }
+//                 break;
+//            case UIGestureRecognizerStateChanged:
+//            {
+//                NSLog(@"UIGestureRecognizerStateChanged");
+//            }
+//                
+//                 break;
+//            case UIGestureRecognizerStateEnded:
+//            {
+//                NSLog(@"UIGestureRecognizerStateEnded");
+//                 [myBoostXIBViewObj.imageViewButton1 setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
+//            } break;
+//        }
+//    
+//}
+
 -(void)imageViewButton1_Action:(UIGestureRecognizer *)reconizer
 {
     NSLog(@"imageViewButton1_Action");
-    
     boostpackVal = @"24H";
     boostAmountVal = @"4";
     [self boostConnection];
     
+
 }
+
+
+
 -(void)imageViewButton2_Action:(UIGestureRecognizer *)reconizer
 {
     boostpackVal = @"48H";

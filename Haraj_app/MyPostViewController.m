@@ -1367,6 +1367,7 @@
         [button1 setTitle:@"ITEM SOLD " forState:UIControlStateNormal];
         button1.titleLabel.font = [UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:18];
         [button1 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [button1 setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
         [button1 setTitleEdgeInsets:UIEdgeInsetsMake(0, -50, 0, 0)];
         [button1 setBackgroundColor:[UIColor colorWithRed:0/255.0 green:114/255.0 blue:48/255.0 alpha:1]];
         [button1 setImage:[UIImage imageNamed:@"Itemsold"] forState:UIControlStateNormal];
@@ -1569,6 +1570,7 @@
         UIButton *confirm=[[UIButton alloc]initWithFrame:CGRectMake(0, 130, 275, 32)];
         [confirm setTitle:@"CONFIRM" forState:UIControlStateNormal];
         [confirm setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [confirm setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
         confirm.titleLabel.font = [UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:16];
         [confirm setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
         [confirm addTarget:self action:@selector(confirm:)
@@ -1655,7 +1657,9 @@
     [self.view addSubview:myCustomXIBViewObj];
     
     [myCustomXIBViewObj.bankButton addTarget:self action:@selector(bankButton_Action:) forControlEvents:UIControlEventTouchUpInside];
+    [myCustomXIBViewObj.bankButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
     [myCustomXIBViewObj.creditButton addTarget:self action:@selector(creditButton_Action:) forControlEvents:UIControlEventTouchUpInside];
+    [myCustomXIBViewObj.creditButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
     
     [myCustomXIBViewObj.priceTextField addTarget:self action:@selector(enterInLabel ) forControlEvents:UIControlEventEditingChanged];
     

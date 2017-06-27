@@ -12,6 +12,7 @@
 #import "Reachability.h"
 #import "SBJsonParser.h"
 #import "UIImageView+WebCache.h"
+#import "ChattingViewController.h"
 
 @interface ActivityViewController ()<UITableViewDataSource, UITableViewDelegate>
 {
@@ -102,10 +103,48 @@
                                             options:SDWebImageRefreshCached];
     
     
+   // messageread
+    
+    if ([[dic_request valueForKey:@"messageread"]isEqualToString:@"no"])
+    {
+        ActivityCell.greenAccessoryView.hidden = NO;
+        [ActivityCell.messageLabel setTextColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
+
+        
+    }
+    else
+    {
+        ActivityCell.greenAccessoryView.hidden = YES;
+        [ActivityCell.messageLabel setTextColor:[UIColor lightGrayColor]];
+    }
+    
+    
     return ActivityCell;
     
     
 }
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    
+    ChattingViewController * chat=[mainStoryboard instantiateViewControllerWithIdentifier:@"ChattingViewController"];
+    
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.3;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    transition.type = kCATransitionPush;
+    transition.subtype = kCATransitionFromLeft;
+    
+    [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
+    [self.navigationController pushViewController:chat animated:YES];
+    
+ 
+    
+    
+}
+
 
 
 -(void)activityConnection

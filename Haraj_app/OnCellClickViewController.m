@@ -1044,6 +1044,7 @@
              [detailCell.Button_makeoffer setFrame:CGRectMake(detailCell.Button_makeoffer.frame.origin.x,(detailCell.view_CordinateViewTapped.frame.origin.y+detailCell.view_CordinateViewTapped.frame.size.height),detailCell.Button_makeoffer.frame.size.width, detailCell.Button_makeoffer.frame.size.height)];
               [detailCell.Button_makeoffer  addTarget:self action:@selector(makeOfferPressed:) forControlEvents:UIControlEventTouchUpInside];
             
+            
            
             return detailCell;
         }
@@ -1592,6 +1593,7 @@
         [button1 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [button1 setTag:1];
         [button1 addTarget:self action:@selector(makeOfferPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [button1 setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
         [sectionView addSubview:button1];
         
         
@@ -2471,6 +2473,8 @@
     confirmOfferButton=[[UIButton alloc]initWithFrame:CGRectMake(0, 206, 275, 44)];
     [confirmOfferButton setTitle:@"CONFIRM" forState:UIControlStateNormal];
     [confirmOfferButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [confirmOfferButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+
     confirmOfferButton.titleLabel.font = [UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:16];
     confirmOfferButton.enabled = NO;
     [confirmOfferButton setBackgroundColor:[UIColor grayColor]];

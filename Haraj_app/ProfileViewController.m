@@ -21,6 +21,7 @@
 #import "SalePointsViewController.h"
 #import "ChoosePostViewController.h"
 #import "BoostPostViewController.h"
+#import "AccountSettViewController.h"
 
 
 @interface ProfileViewController () <UICollectionViewDataSource, UICollectionViewDelegate,UICollectionViewDelegate,FRGWaterfallCollectionViewDelegate,UITextFieldDelegate>
@@ -564,6 +565,20 @@ heightForHeaderAtIndexPath:(NSIndexPath *)indexPath
 
 - (IBAction)SettingButton_Action:(id)sender
 {
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    AccountSettViewController * setting=[mainStoryboard instantiateViewControllerWithIdentifier:@"AccountSettViewController"];
+    
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.3;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    transition.type = kCATransitionPush;
+    transition.subtype = kCATransitionFromLeft;
+    
+    [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
+    
+    [self.navigationController pushViewController:setting animated:YES];
+    
+    
     
 }
 
