@@ -43,11 +43,14 @@
     UITextView *commentPostTextView1;
     UILabel *postplaceholderLabel;
     BOOL fav;
+    
+    UIButton *floatButton;
 
     
     EnterPrice *myCustomXIBViewObj;
     BoostPost *myBoostXIBViewObj;
     
+    CGRect rect;
 
     
 }
@@ -63,16 +66,17 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    rect = [[UIApplication sharedApplication] statusBarFrame];
     
     
-    
-    UIButton *floatButton=[[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width - 70,self.view.frame.size.height - 70, 60,60)];
+    floatButton=[[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width - 70,self.view.frame.size.height - 70 - rect.size.height, 60,60)];
     floatButton.titleLabel.font = [UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:16];
     [floatButton setImage:[UIImage imageNamed:@"BoostButton"] forState:UIControlStateNormal];
     [floatButton addTarget:self action:@selector(floatButtonAction:)
       forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:floatButton];
     
+       
     
   
     
@@ -97,9 +101,14 @@
     
 //    myCustomXIBViewObj =[[[NSBundle mainBundle] loadNibNamed:@"EnterPrice" owner:self options:nil]objectAtIndex:0];
 //    myCustomXIBViewObj.priceTextField.delegate = self;
+    
+ //   [self performSelector:@selector(delay) withObject:nil afterDelay:3.0];
 
     
 }
+
+
+
 -(void)viewWillAppear:(BOOL)animated
 {
     NSLog(@" array info %ld",(long)self.view.tag);
@@ -108,7 +117,7 @@
 //    str_userid =[[Array_All_UserInfo objectAtIndex:(long)self.view.tag] valueForKey:@"userid1"];
     NSLog(@" str_postid viewwillappear %@", [[Array_All_UserInfo objectAtIndex:(long)self.view.tag] valueForKey:@"postid"]);
     NSLog(@" str_userid viewwillappear %@",[[Array_All_UserInfo objectAtIndex:(long)self.view.tag] valueForKey:@"userid1"]);
-  
+    
     [self ChatCommentConnection];
 }
 
@@ -1326,7 +1335,7 @@
     {
         if (Array_Chats.count == 0)
         {
-            return 100;
+            return 100 + rect.size.height;
             
         }
         else
@@ -1334,12 +1343,12 @@
         {
             if ([[[Array_Chats objectAtIndex:indexPath.row ] valueForKey:@"messagetype"] isEqualToString:@"TEXT"])
             {
-                return 103;
+                return 103 + rect.size.height;
                 
             }
             else
             {
-                return 142;
+                return 142 + rect.size.height;
                 
             }
             
@@ -1358,11 +1367,11 @@
     if (section==1)
     {
         
-        sectionView=[[UIView alloc]initWithFrame:CGRectMake(0, 0,self.view.frame.size.width,40)];//36
+        sectionView=[[UIView alloc]initWithFrame:CGRectMake(0, 0,self.view.frame.size.width,44)];//36
         [sectionView setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
         
         
-        UIButton *button1 = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width / 2 + 50, 40)];
+        UIButton *button1 = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width / 2 + 50, 44)];
        
         [button1 setTitle:@"ITEM SOLD " forState:UIControlStateNormal];
         button1.titleLabel.font = [UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:18];
@@ -1376,7 +1385,7 @@
         [button1 addTarget:self action:@selector(sectionHeaderButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [sectionView addSubview:button1];
         
-        UIButton *button2 = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width  - 95, 0, 40, 40)];
+        UIButton *button2 = [[UIButton alloc]initWithFrame:CGRectMake(292, 7, 33, 30)];
         [button2 setImage:[UIImage imageNamed:@"Share"] forState:UIControlStateNormal];
         [button2 setTag:2];
         [button2 addTarget:self action:@selector(sectionHeaderButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -1392,7 +1401,7 @@
 {
     if (section==1)
     {
-        return 40;
+        return 44;
     }
     
     

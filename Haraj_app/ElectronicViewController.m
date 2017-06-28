@@ -51,6 +51,7 @@
     defaults = [[NSUserDefaults alloc]init];
     NSString *plistPath = [[NSBundle mainBundle]pathForResource:@"UrlName" ofType:@"plist"];
     urlplist = [NSDictionary dictionaryWithContentsOfFile:plistPath];
+    [[self navigationController] setNavigationBarHidden:YES animated:YES];
 
 
      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ArrayelectronicData:) name:@"arrayelectronic_Info" object:nil];
@@ -346,12 +347,12 @@
     
     if ([[dic_request valueForKey:@"mediatype"] isEqualToString:@"VIDEO"] )
     {
-        height = 300.0;
+        height = 275.0;
     }
     else
     {
         
-        height = 250.0;
+        height = 225.0;
         
     }
     return height;

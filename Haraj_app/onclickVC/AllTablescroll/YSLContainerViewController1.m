@@ -51,17 +51,18 @@ static const CGFloat kYSLScrollMenuViewHeight = 40;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     // setupViews
     UIView *viewCover = [[UIView alloc]init];
     [self.view addSubview:viewCover];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ScrollView_Disable:) name:@"ScrollViewDisable" object:nil];
       [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ScrollView_Enable:) name:@"ScrollViewEnable" object:nil];
     
+    CGRect rect;
+    rect = [[UIApplication sharedApplication] statusBarFrame];
     
     // ContentScrollview setup
     _contentScrollView = [[UIScrollView alloc]init];
-    _contentScrollView.frame = CGRectMake(0,0 , self.view.frame.size.width, self.view.frame.size.height);
+    _contentScrollView.frame = CGRectMake(0,rect.size.height , self.view.frame.size.width, self.view.frame.size.height);
     _contentScrollView.backgroundColor = [UIColor clearColor];
     _contentScrollView.pagingEnabled = YES;
     _contentScrollView.delegate = self;
@@ -131,6 +132,8 @@ static const CGFloat kYSLScrollMenuViewHeight = 40;
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+  
+
     CGFloat oldPointX = self.currentIndex * scrollView.frame.size.width;
     CGFloat ratio = (scrollView.contentOffset.x - oldPointX) / scrollView.frame.size.width;
     

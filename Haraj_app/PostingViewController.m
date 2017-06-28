@@ -153,55 +153,7 @@
     
     [transperentViewIndicator addSubview:whiteView1];
     
-    
-    
-    
-//    
-//    transperentViewIndicator11=[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-//    transperentViewIndicator11.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5];
-//    
-//    whiteView111=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 150,150)];
-//    whiteView111.center=transperentViewIndicator11.center;
-//    [whiteView111 setBackgroundColor:[UIColor blackColor]];
-//    whiteView111.layer.cornerRadius=9;
-//    //   indicatorAlert = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-//    //    indicatorAlert.frame=CGRectMake(40, 40, 20, 20);
-//    //    [indicatorAlert startAnimating];
-//    //    [indicatorAlert setColor:[UIColor whiteColor]];
-//    
-//    Label_confirm11=[[UILabel alloc]initWithFrame:CGRectMake(0, 50, 150, 40)];
-//    
-//    [Label_confirm11 setFont:[UIFont systemFontOfSize:12]];
-//    Label_confirm11.text=@"0 %";
-//    Label_confirm11.font=[UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:40.0];
-//    Label_confirm11.textColor=[UIColor whiteColor];
-//    Label_confirm11.textAlignment=NSTextAlignmentCenter;
-//    
-//    Label_confirm=[[UILabel alloc]initWithFrame:CGRectMake(0, 110, 150, 28)];
-//    
-//    [Label_confirm setFont:[UIFont systemFontOfSize:12]];
-//    Label_confirm.text=@"Creating...";
-//    Label_confirm.font=[UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:20.0];
-//    Label_confirm.textColor=[UIColor whiteColor];
-//    Label_confirm.textAlignment=NSTextAlignmentCenter;
-//    
-//    Button_close=[[UIButton alloc]initWithFrame:CGRectMake(whiteView111.frame.size.width-23, -4, 28,28)];
-//    Button_close.layer.cornerRadius=Button_close.frame.size.height/2;
-//    
-//    Button_close.backgroundColor=[UIColor whiteColor];
-//    [Button_close setTitle:@"X" forState:UIControlStateNormal];
-//    [Button_close setTitleColor:[UIColor redColor]forState:UIControlStateNormal];
-//    Button_close.titleLabel.font=[UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:14.0];
-//    [Button_close addTarget:self action:@selector(UploadinView_Close:) forControlEvents:UIControlEventTouchUpInside];
-//    [whiteView111 addSubview:Button_close];
-//    [whiteView111 addSubview:Label_confirm];
-//    [whiteView111 addSubview:Label_confirm11];
-//    
-//    [transperentViewIndicator11 addSubview:whiteView111];
-//    
-//    [self.view addSubview:transperentViewIndicator11];
-//    
-    transperentViewIndicator11.hidden=YES;
+     transperentViewIndicator11.hidden=YES;
     
     
     NSLocale *abc =[NSLocale currentLocale];
@@ -902,7 +854,7 @@
     }
     else if (indexPath.section == 2)
     {
-        return 520;
+        return 366;
     }
     
     
@@ -1201,49 +1153,6 @@
     return YES;
 }
 
-//-(BOOL)textViewShouldBeginEditing:(UITextView *)textView
-//{
-//    
-//    if  ([textView isEqual:detailCell.hashTextView] || [textView isEqual:detailCell.sellingTextview] )
-//    {
-//        self.tableView.frame= CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.frame.size.height - 240);
-//        NSIndexPath *indexPath =[NSIndexPath indexPathForRow:0 inSection:1];
-//        [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
-//    }
-//    else if ([textView isEqual:moreCell.moreTextView])
-//    {
-//        self.tableView.frame= CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.frame.size.height - 240);
-//        NSIndexPath *indexPath =[NSIndexPath indexPathForRow:0 inSection:2];
-//        [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
-//   
-//        
-//    }
-//   
-//    return YES;
-//}
-//
-//-(BOOL)textViewShouldEndEditing:(UITextView *)textView
-//{
-//    if  ([textView isEqual:detailCell.hashTextView] || [textView isEqual:detailCell.sellingTextview] )
-//    {
-//        self.tableView.frame= CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.frame.size.height + 240);
-//        NSIndexPath *indexPath =[NSIndexPath indexPathForRow:0 inSection:1];
-//        [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
-//    }
-//    
-//    else if ([textView isEqual:moreCell.moreTextView])
-//    {
-//        self.tableView.frame= CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.frame.size.height + 240);
-//        NSIndexPath *indexPath =[NSIndexPath indexPathForRow:0 inSection:2];
-//        [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
-//        
-//        
-//    }
-//
-//    
-//
-//    return YES;
-//}
 
 -(BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
@@ -1267,7 +1176,7 @@
     
     if  ([textField isEqual:moreCell.askingPriceTextField])
     {
-    self.tableView.frame= CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.frame.size.height - 220);
+    self.tableView.frame= CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.frame.size.height - 220 -40);
     NSIndexPath *indexPath =[NSIndexPath indexPathForRow:0 inSection:2];
     [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
     }
@@ -1976,8 +1885,9 @@
         
         NSString *allowcalls= @"allowcalls";
         NSString *allowcallsVal = [defaults valueForKey:@"CallPressed"];
-        NSString *enddays= @"enddays";
-        NSString *enddaysVal = [defaults valueForKey:@"slival"];
+        
+//        NSString *enddays= @"enddays";
+//        NSString *enddaysVal = [defaults valueForKey:@"slival"];
         
         NSString *askingprice;
         NSString *askingpriceVal;
@@ -2017,7 +1927,7 @@
         NSString *categoryVal = self.name;
         
         
-        NSString *reqStringFUll=[NSString stringWithFormat:@"%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@",postid,postidVal,userid,useridVal,title,titleVal,allowcalls,allowcallsVal,enddays,enddaysVal,askingprice,askingpriceVal,description,descriptionVal,hashtags,hashtagsVal,city,cityVal,country,countryVal,category,categoryVal,carmodel,carmodelVal,carmileage,carmileageVal,propertytype,propertytypeVal,propertysize,propertysizeVal,noofrooms,noofroomsVal];
+        NSString *reqStringFUll=[NSString stringWithFormat:@"%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@",postid,postidVal,userid,useridVal,title,titleVal,allowcalls,allowcallsVal,askingprice,askingpriceVal,description,descriptionVal,hashtags,hashtagsVal,city,cityVal,country,countryVal,category,categoryVal,carmodel,carmodelVal,carmileage,carmileageVal,propertytype,propertytypeVal,propertysize,propertysizeVal,noofrooms,noofroomsVal];
         
         
         //converting  string into data bytes and finding the lenght of the string.

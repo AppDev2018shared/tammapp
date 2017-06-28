@@ -115,6 +115,7 @@
 		61B8C8851EC1E61100954A68 /* steve.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 61B8C8841EC1E61100954A68 /* steve.jpeg */; };
 		61C7FEB31F01079700EF278B /* ActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61C7FEB21F01079700EF278B /* ActivityViewController.m */; };
 		61C7FEB61F010BD500EF278B /* ActivityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61C7FEB51F010BD500EF278B /* ActivityTableViewCell.m */; };
+		61CBAE6B1F03BBC200B8065D /* tammlogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 61CBAE6A1F03BBC100B8065D /* tammlogo.png */; };
 		61D376681EBC3F6300BA02D4 /* LGPlusButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D376611EBC3F6300BA02D4 /* LGPlusButton.m */; };
 		61D376691EBC3F6300BA02D4 /* LGPlusButtonDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D376631EBC3F6300BA02D4 /* LGPlusButtonDescription.m */; };
 		61D3766A1EBC3F6300BA02D4 /* LGPlusButtonsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D376651EBC3F6300BA02D4 /* LGPlusButtonsView.m */; };
@@ -396,6 +397,7 @@
 		61C7FEB21F01079700EF278B /* ActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityViewController.m; sourceTree = "<group>"; };
 		61C7FEB41F010BD500EF278B /* ActivityTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityTableViewCell.h; sourceTree = "<group>"; };
 		61C7FEB51F010BD500EF278B /* ActivityTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityTableViewCell.m; sourceTree = "<group>"; };
+		61CBAE6A1F03BBC100B8065D /* tammlogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tammlogo.png; sourceTree = "<group>"; };
 		61D376601EBC3F6300BA02D4 /* LGPlusButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGPlusButton.h; sourceTree = "<group>"; };
 		61D376611EBC3F6300BA02D4 /* LGPlusButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGPlusButton.m; sourceTree = "<group>"; };
 		61D376621EBC3F6300BA02D4 /* LGPlusButtonDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGPlusButtonDescription.h; sourceTree = "<group>"; };
@@ -733,6 +735,7 @@
 				614C161A1EC07E4600B11A9B /* play.png */,
 				61ED09B41EB87ED1008EAFB7 /* swift.jpg */,
 				61ED09B21EB865EF008EAFB7 /* photoicon.png */,
+				61CBAE6A1F03BBC100B8065D /* tammlogo.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -1332,6 +1335,7 @@
 				614C15C51EC0315500B11A9B /* TwitterKitResources.bundle in Resources */,
 				61F95AA01EF5588900DEE62A /* ProductDetailCellProperty.xib in Resources */,
 				615ED14A1EDEE6D2001E6B0A /* SuggestedTableViewCell.xib in Resources */,
+				61CBAE6B1F03BBC200B8065D /* tammlogo.png in Resources */,
 				61D3767C1EBC868000BA02D4 /* SanFranciscoDisplay-Thin.otf in Resources */,
 				61E1418E1F02602B008C3E7A /* setting_contacts@2x.png in Resources */,
 				61F56CD31ECD75A10031E9C1 /* ELCAssetTablePicker.xib in Resources */,

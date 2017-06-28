@@ -28,7 +28,7 @@
     
     [super viewDidLoad];
     
-    
+    [[self navigationController] setNavigationBarHidden:YES animated:YES];
     defaults=[[NSUserDefaults alloc]init];
      
     
@@ -99,7 +99,7 @@
         else
         {
             
-            
+             
             OnCellClickViewController *serviceVC = [mainStoryboard instantiateViewControllerWithIdentifier:@"OnCellClickViewController"];
             serviceVC.Array_UserInfo=[Array_Alldata objectAtIndex:i];
             serviceVC.swipeCount=i;
@@ -133,6 +133,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [[self navigationController] setNavigationBarHidden:YES animated:YES];
     [super viewWillAppear:animated];
     
     

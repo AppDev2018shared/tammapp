@@ -106,50 +106,21 @@
                         <frame key="frameInset" minY="297" width="375" height="159"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Favourite" translatesAutoresizingMaskIntoConstraints="NO" id="XeC-pI-lWt">
-                                <frame key="frameInset" minX="31" minY="22" width="45" height="45"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="HighestPrice" translatesAutoresizingMaskIntoConstraints="NO" id="TFH-TO-hzs">
-                                <frame key="frameInset" minX="279" minY="22" width="45" height="45"/>
+                                <frame key="frameInset" minX="165" minY="24" width="45" height="45"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Favorite Post" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kCg-U3-8px">
-                                <frame key="frameInset" minX="8" minY="67" width="105" height="36"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="SanFranciscoDisplay-Semibold" family="San Francisco Display" pointSize="15"/>
-                                <color key="textColor" red="0.1960784314" green="0.1960784314" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Expires In" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1vq-4s-FTX">
-                                <frame key="frameInset" minX="124" minY="67" width="105" height="36"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="SanFranciscoDisplay-Semibold" family="San Francisco Display" pointSize="15"/>
-                                <color key="textColor" red="0.1960784314" green="0.1960784314" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Highest Price" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="veY-B5-AXJ">
-                                <frame key="frameInset" minX="249" minY="67" width="105" height="36"/>
+                                <frame key="frameInset" minX="135" minY="69" width="105" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="SanFranciscoDisplay-Semibold" family="San Francisco Display" pointSize="15"/>
                                 <color key="textColor" red="0.1960784314" green="0.1960784314" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="$20000" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LnE-kt-fwx">
-                                <frame key="frameInset" minX="249" minY="103" width="105" height="30"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="$20000" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LnE-kt-fwx">
+                                <frame key="frameInset" minX="82" minY="105" width="210" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="SanFranciscoDisplay-Heavy" family="San Francisco Display" pointSize="18"/>
-                                <color key="textColor" red="0.0" green="0.56470588239999997" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Expires" translatesAutoresizingMaskIntoConstraints="NO" id="fZ6-27-ZzA">
-                                <frame key="frameInset" minX="154" minY="22" width="45" height="45"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="21:00h" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="01O-m7-S9W">
-                                <frame key="frameInset" minX="124" minY="103" width="105" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="SanFranciscoDisplay-Heavy" family="San Francisco Display" pointSize="20"/>
                                 <color key="textColor" red="0.0" green="0.56470588239999997" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -162,14 +133,12 @@
                 <outlet property="detailinfoTextView" destination="hfa-8b-fJg" id="ipP-36-fbS"/>
                 <outlet property="detailinfoTextView1" destination="H9h-Li-Iqa" id="God-Ul-bMK"/>
                 <outlet property="durationLabel" destination="95H-sw-0SK" id="rCO-vh-0Nm"/>
-                <outlet property="favouriteImage" destination="XeC-pI-lWt" id="KFR-Af-RGA"/>
                 <outlet property="hashtagLabel" destination="Otb-dq-i2a" id="PQU-eg-HCj"/>
                 <outlet property="locationLabel" destination="zvV-0z-yCU" id="9Tb-Qh-dx2"/>
                 <outlet property="postidLabel" destination="pAw-vF-Ju0" id="kOe-lw-cPV"/>
                 <outlet property="priceLabel" destination="LnE-kt-fwx" id="3nI-fU-oEG"/>
                 <outlet property="profileImage" destination="MvA-OU-4ZI" id="bqB-Ar-ljI"/>
                 <outlet property="tapView" destination="gbg-DF-f4g" id="Zrs-vH-P40"/>
-                <outlet property="timeLabel" destination="01O-m7-S9W" id="rns-WS-wLA"/>
                 <outlet property="titleLabel" destination="rPu-nr-fAA" id="1TE-58-X4m"/>
                 <outlet property="usernameLabel" destination="YLg-a9-gCi" id="x5A-4a-E8J"/>
                 <outlet property="view_CordinateViewTapped" destination="GWg-fk-vI9" id="0qK-I3-971"/>
@@ -178,10 +147,8 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="Expires" width="25" height="30"/>
-        <image name="Favourite" width="25" height="25"/>
         <image name="HighestPrice" width="29" height="29"/>
-        <image name="Location_on" width="19" height="26"/>
+        <image name="Location_on" width="41" height="55"/>
         <image name="defaultimg.jpg" width="200" height="200"/>
     </resources>
 </document>

@@ -83,6 +83,7 @@
     //    [transparentView addSubview:pageControll];
     //    [self.view addSubview:transparentView];
     
+    
 }
 
 - (void)didReceiveMemoryWarning {

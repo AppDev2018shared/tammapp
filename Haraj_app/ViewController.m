@@ -75,17 +75,20 @@
     
    
     [profile setImage:[UIImage imageNamed:@"Profile"] forState:UIControlStateNormal];
+    [profile setContentMode:UIViewContentModeScaleAspectFit];
     profile.tag = 1;
     [profile addTarget:self action:@selector(topButton:) forControlEvents:UIControlEventTouchUpInside];
    
     
    
     [activity setImage:[UIImage imageNamed:@"Activity"] forState:UIControlStateNormal];
+    [activity setContentMode:UIViewContentModeScaleAspectFit];
     activity.tag = 2;
     [activity addTarget:self action:@selector(topButton:) forControlEvents:UIControlEventTouchUpInside];
     
  
     [search setImage:[UIImage imageNamed:@"Search"] forState:UIControlStateNormal];
+    [search setContentMode:UIViewContentModeScaleAspectFit];
     search.tag = 3;
     [search addTarget:self action:@selector(topButton:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -100,6 +103,7 @@
     if ([[defaults valueForKey:@"locationPresed"] isEqualToString:@"ON"])
     {
         [location setImage:[UIImage imageNamed:@"Location_on"] forState:UIControlStateNormal];
+       
         locationLabel.hidden = NO;
 
         
@@ -111,7 +115,8 @@
         [location setImage:[UIImage imageNamed:@"Location_off"] forState:UIControlStateNormal];
         locationLabel.hidden = YES;
     }
-    
+    [location setContentMode:UIViewContentModeScaleAspectFit];
+
     
     locationLabel.textColor = [UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1];
     locationLabel.text = [defaults valueForKey:@"Cityname"];
@@ -154,7 +159,7 @@
     furnitureVC.title = @"Furniture";
     
     ServicesViewController *serviceVC = [mainStoryboard instantiateViewControllerWithIdentifier:@"ServicesViewController"];
-    serviceVC.title = @"Service";
+    serviceVC.title = @"Services";
     
     OtherViewController * otherVC=[mainStoryboard instantiateViewControllerWithIdentifier:@"OtherViewController"];
     otherVC.title = @"Other";

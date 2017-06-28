@@ -342,12 +342,12 @@
     
     if ([[dic_request valueForKey:@"mediatype"] isEqualToString:@"VIDEO"]  )
     {
-        height = 300.0;
+        height = 275.0;
     }
     else
     {
         
-        height = 250.0;
+        height = 225.0;
         
     }
     return height;

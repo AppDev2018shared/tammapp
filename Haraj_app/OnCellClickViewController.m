@@ -64,6 +64,9 @@
     UILabel * postplaceholderLabel;
     UIButton *seeCommentButton, *confirmOfferButton, *submitPostButton;
     
+    UIButton *button3Fav;
+    CGRect rect;
+    
     
      MPMoviePlayerViewController *movieController ;
 }
@@ -77,6 +80,10 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    
+    rect = [[UIApplication sharedApplication] statusBarFrame];
+    
     
     defaults = [[NSUserDefaults alloc]init];
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
@@ -459,43 +466,80 @@
                     detailCellCar.profileImage.layer.cornerRadius = detailCellCar.profileImage.frame.size.height / 2;
                     detailCellCar.profileImage.clipsToBounds = YES;
                     
+#pragma mark favourite action
+                    
                     detailCellCar.favouriteImage.userInteractionEnabled = YES;
                     detailCellCar.favouriteImage.tag=swipeCount;
                     UITapGestureRecognizer *favouriteImage_Tapped =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(favouriteImage_ActionDetails:)];
                     [detailCellCar.favouriteImage addGestureRecognizer:favouriteImage_Tapped];
                     
                     
+//                    
+//                    if ([[Array_UserInfo valueForKey:@"favourite"]isEqualToString:@"TRUE"])
+//                    {
+//                        [detailCellCar.favouriteImage setImage:[UIImage imageNamed:@"Barfavouritefill"]];
+//                    }
+//                    else
+//                    {
+//                        [detailCellCar.favouriteImage setImage:[UIImage imageNamed:@"Barfavourite"]];
+//                        
+//                    }
+//                    
+//#pragma mark - fdgfhjdgj;
+//                    
+//                    if (fav)
+//                    {
+//                        
+//                        
+//                        if ([str_fav isEqualToString:@"inserted"])
+//                        {
+//                            [detailCellCar .favouriteImage setImage:[UIImage imageNamed:@"Barfavouritefill"]];
+//                        }
+//                        else
+//                        {
+//                            [detailCellCar .favouriteImage setImage:[UIImage imageNamed:@"Barfavourite"]];
+//                            
+//                        }
+//                        
+//                        fav = false;
+//                        
+//                    }
                     
-                    if ([[Array_UserInfo valueForKey:@"favourite"]isEqualToString:@"TRUE"])
-                    {
-                        [detailCellCar.favouriteImage setImage:[UIImage imageNamed:@"FavouriteFill"]];
-                    }
-                    else
-                    {
-                        [detailCellCar.favouriteImage setImage:[UIImage imageNamed:@"Favourite"]];
-                        
-                    }
-                    
-#pragma mark - fdgfhjdgj;
-                    
-                    if (fav)
-                    {
-                        
-                        
-                        if ([str_fav isEqualToString:@"inserted"])
-                        {
-                            [detailCellCar .favouriteImage setImage:[UIImage imageNamed:@"FavouriteFill"]];
-                        }
-                        else
-                        {
-                            [detailCellCar .favouriteImage setImage:[UIImage imageNamed:@"Favourite"]];
-                            
-                        }
-                        
-                        fav = false;
-                        
-                    }
-
+//                    
+//                    if ([[Array_UserInfo valueForKey:@"favourite"]isEqualToString:@"TRUE"])
+//                    {
+//                        
+//                        [button3Fav setImage:[UIImage imageNamed:@"Barfavouritefill"] forState:UIControlStateNormal];
+//                    }
+//                    else
+//                    {
+//                        [button3Fav setImage:[UIImage imageNamed:@"Barfavourite"] forState:UIControlStateNormal];
+//                    }
+//                    
+//#pragma mark - fdgfhjdgj;
+//                    
+//                    if (fav)
+//                    {
+//                        
+//                        
+//                        if ([str_fav isEqualToString:@"inserted"])
+//                        {
+//                            [button3Fav setImage:[UIImage imageNamed:@"Barfavouritefill"] forState:UIControlStateNormal];
+//                            
+//                        }
+//                        else
+//                        {
+//                            [button3Fav setImage:[UIImage imageNamed:@"Barfavourite"] forState:UIControlStateNormal];
+//                            
+//                            
+//                        }
+//                        
+//                        fav = false;
+//                        
+//                    }
+//
+//                    
+                  
                     
                     
                     //------------------------------------------$$$$$$$$$$$$$$$$$$$______________________________
@@ -681,35 +725,35 @@
                     
                     
                     
-                    if ([[Array_UserInfo valueForKey:@"favourite"]isEqualToString:@"TRUE"])
-                    {
-                        [detailCellProperty.favouriteImage setImage:[UIImage imageNamed:@"FavouriteFill"]];
-                    }
-                    else
-                    {
-                        [detailCellProperty.favouriteImage setImage:[UIImage imageNamed:@"Favourite"]];
-                        
-                    }
-                    
-#pragma mark - fdgfhjdgj;
-                    
-                    if (fav)
-                    {
-                        
-                        
-                        if ([str_fav isEqualToString:@"inserted"])
-                        {
-                            [detailCellProperty .favouriteImage setImage:[UIImage imageNamed:@"FavouriteFill"]];
-                        }
-                        else
-                        {
-                            [detailCellProperty .favouriteImage setImage:[UIImage imageNamed:@"Favourite"]];
-                            
-                        }
-                        
-                        fav = false;
-                        
-                    }
+//                    if ([[Array_UserInfo valueForKey:@"favourite"]isEqualToString:@"TRUE"])
+//                    {
+//                        [detailCellProperty.favouriteImage setImage:[UIImage imageNamed:@"Barfavouritefill"]];
+//                    }
+//                    else
+//                    {
+//                        [detailCellProperty.favouriteImage setImage:[UIImage imageNamed:@"Barfavourite"]];
+//                        
+//                    }
+//                    
+//#pragma mark - fdgfhjdgj;
+//                    
+//                    if (fav)
+//                    {
+//                        
+//                        
+//                        if ([str_fav isEqualToString:@"inserted"])
+//                        {
+//                            [detailCellProperty .favouriteImage setImage:[UIImage imageNamed:@"Barfavouritefill"]];
+//                        }
+//                        else
+//                        {
+//                            [detailCellProperty .favouriteImage setImage:[UIImage imageNamed:@"Barfavourite"]];
+//                            
+//                        }
+//                        
+//                        fav = false;
+//                        
+//                    }
 
                     
                     
@@ -894,37 +938,37 @@
             [detailCell.favouriteImage addGestureRecognizer:favouriteImage_Tapped];
             
             
-            
-            if ([[Array_UserInfo valueForKey:@"favourite"]isEqualToString:@"TRUE"])
-            {
-                [detailCell.favouriteImage setImage:[UIImage imageNamed:@"FavouriteFill"]];
-            }
-            else
-            {
-                [detailCell.favouriteImage setImage:[UIImage imageNamed:@"Favourite"]];
-               
-            }
-            
-#pragma mark - fdgfhjdgj;
-            
-            if (fav)
-            {
-                
-                
-                if ([str_fav isEqualToString:@"inserted"])
-                {
-                    [detailCell .favouriteImage setImage:[UIImage imageNamed:@"FavouriteFill"]];
-                }
-                else
-                {
-                    [detailCell .favouriteImage setImage:[UIImage imageNamed:@"Favourite"]];
-                    
-                }
-                
-                fav = false;
-                
-            }
-            
+//            
+//            if ([[Array_UserInfo valueForKey:@"favourite"]isEqualToString:@"TRUE"])
+//            {
+//                [detailCell.favouriteImage setImage:[UIImage imageNamed:@"Barfavouritefill"]];
+//            }
+//            else
+//            {
+//                [detailCell.favouriteImage setImage:[UIImage imageNamed:@"Barfavourite"]];
+//               
+//            }
+//            
+//#pragma mark - fdgfhjdgj;
+//            
+//            if (fav)
+//            {
+//                
+//                
+//                if ([str_fav isEqualToString:@"inserted"])
+//                {
+//                    [detailCell .favouriteImage setImage:[UIImage imageNamed:@"Barfavouritefill"]];
+//                }
+//                else
+//                {
+//                    [detailCell .favouriteImage setImage:[UIImage imageNamed:@"Barfavourite"]];
+//                    
+//                }
+//                
+//                fav = false;
+//                
+//            }
+//            
   //------------------------------------------$$$$$$$$$$$$$$$$$$$______________________________
             
             detailCell.tapView.userInteractionEnabled=YES;
@@ -1333,7 +1377,7 @@
 
     
     }
-    
+    [self.view endEditing:YES];
     return nil;
 
 }
@@ -1531,15 +1575,15 @@
     {
         if (Array_SuggestPost.count==0)
         {
-            return 0;
+            return 0 + rect.size.height;
         }
         else if (Array_SuggestPost.count >=1)
         {
-            return 140;
+            return 140 + rect.size.height;
         }
         else if (Array_SuggestPost.count>=4)
         {
-            return 280;
+            return 280 + rect.size.height;
         }
         
     }
@@ -1554,27 +1598,73 @@
     if (section==1)
     {
         
-        sectionView=[[UIView alloc]initWithFrame:CGRectMake(0, 0,self.view.frame.size.width,40)];//36
+        sectionView=[[UIView alloc]initWithFrame:CGRectMake(0, 0,self.view.frame.size.width,44)];//36
         [sectionView setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
         
         
-        UIButton *button1 = [[UIButton alloc]initWithFrame:CGRectMake(50, 0, 40, 40)];
+        UIButton *button1 = [[UIButton alloc]initWithFrame:CGRectMake(50, 7, 30, 30)];
         [button1 setImage:[UIImage imageNamed:@"Phone"] forState:UIControlStateNormal];
         [button1 setTag:1];
         [button1 addTarget:self action:@selector(sectionHeaderButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [sectionView addSubview:button1];
         
-        UIButton *button2 = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width / 2 - 20, 0, 40, 40)];
+        UIButton *button2 = [[UIButton alloc]initWithFrame:CGRectMake(130, 7, 30, 30)];
         [button2 setImage:[UIImage imageNamed:@"Comments"] forState:UIControlStateNormal];
         [button2 setTag:2];
         [button2 addTarget:self action:@selector(sectionHeaderButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [sectionView addSubview:button2];
         
-        UIButton *button3 = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width  - 95, 0, 40, 40)];
-        [button3 setImage:[UIImage imageNamed:@"Share"] forState:UIControlStateNormal];
-        [button3 setTag:3];
-        [button3 addTarget:self action:@selector(sectionHeaderButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        [sectionView addSubview:button3];
+        button3Fav = [[UIButton alloc]initWithFrame:CGRectMake(210, 7, 30, 30)];
+        
+        
+        
+        
+        
+        
+        
+        if ([[Array_UserInfo valueForKey:@"favourite"]isEqualToString:@"TRUE"])
+        {
+            
+             [button3Fav setImage:[UIImage imageNamed:@"Barfavouritefill"] forState:UIControlStateNormal];
+        }
+        else
+        {
+             [button3Fav setImage:[UIImage imageNamed:@"Barfavourite"] forState:UIControlStateNormal];
+        }
+        
+#pragma mark - fdgfhjdgj;
+        
+        if (fav)
+        {
+            
+            
+            if ([str_fav isEqualToString:@"inserted"])
+            {
+                [button3Fav setImage:[UIImage imageNamed:@"Barfavouritefill"] forState:UIControlStateNormal];
+
+            }
+            else
+            {
+                [button3Fav setImage:[UIImage imageNamed:@"Barfavourite"] forState:UIControlStateNormal];
+
+                
+            }
+            
+            fav = false;
+            
+        }
+
+      //  [button3 setImage:[UIImage imageNamed:@"Barfavourite"] forState:UIControlStateNormal];
+       // [button3 setTag:3];
+        [button3Fav addTarget:self action:@selector(favouriteImage_ActionDetails:) forControlEvents:UIControlEventTouchUpInside];
+        [sectionView addSubview:button3Fav];
+        
+        
+        UIButton *button4 = [[UIButton alloc]initWithFrame:CGRectMake(292, 7, 33, 30)];
+        [button4 setImage:[UIImage imageNamed:@"Share"] forState:UIControlStateNormal];
+        [button4 setTag:4];
+        [button4 addTarget:self action:@selector(sectionHeaderButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [sectionView addSubview:button4];
         
         sectionView.tag=section;
         
@@ -1597,25 +1687,6 @@
         [sectionView addSubview:button1];
         
         
-//        sectionView=[[UIView alloc]initWithFrame:CGRectMake(0, 0,self.view.frame.size.width,40)];//36
-//        [sectionView setBackgroundColor:[UIColor whiteColor]];
-//        
-//        UIButton *button1 = [[UIButton alloc]initWithFrame:CGRectMake(10, 10, 150, 40)];
-//        [button1 setTitle:@"Post a Comment" forState:UIControlStateNormal];
-//        [button1 setTitleColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1] forState:UIControlStateNormal];
-//        [button1 setTag:1];
-//        [button1 addTarget:self action:@selector(postCommentButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-//        [sectionView addSubview:button1];
-//        
-//        
-//        
-//        UILabel *comment = [[UILabel alloc]initWithFrame:CGRectMake(self.view.frame.size.width - 100, 10, 150, 40)];
-//        comment.text = @"Comments";
-//        comment.textColor = [UIColor lightGrayColor];
-//        [sectionView addSubview:comment];
-//        sectionView.tag=section;
-
-
     }
     
     if (section == 4)
@@ -1640,7 +1711,7 @@
     }
     if (section==1)
     {
-        return 40;
+        return 44;
     }
     if (section==2)
     {
@@ -1827,6 +1898,11 @@
         
         
     }
+     else if ([sender tag]== 3)
+     {
+          NSLog(@"Favourite Pressed");
+     }
+    
     else
     {
         NSLog(@"Share Pressed");
@@ -2966,7 +3042,7 @@
 //    [self.tableView  endUpdates];
 }
 
--(void)favouriteImage_ActionDetails:(UIGestureRecognizer *)reconizer
+-(void)favouriteImage_ActionDetails:(id)sender
 {
     
     
@@ -3200,6 +3276,8 @@
                                      }];
     [dataTask resume];
     
+    
+    
     }
 
 -(void)SuggestPostConnection
@@ -3275,6 +3353,8 @@
     
     
 }
+
+
 
 -(void)CreateMakeOfferConnection
 {
@@ -3429,20 +3509,27 @@
         if ([ResultString isEqualToString:@"done"])
         {
             
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewEnable" object:self userInfo:nil];
+            transparentView.hidden=YES;
+            
+            [self ChatCommentConnection];
             
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Offer Accepted" message:@"Thank-you for making your offer. You will be informed if you win the bid or if someone outbids you." preferredStyle:UIAlertControllerStyleAlert];
             
             UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
                                                                style:UIAlertActionStyleDefault
-                                                             handler:nil];
+                                                             handler:^(UIAlertAction * action)
+                                       {
+                                           [self.view endEditing:YES];
+                                           
+                                           
+                                           
+                                       }];
+
             [alertController addAction:actionOk];
             [self presentViewController:alertController animated:YES completion:nil];
             
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewEnable" object:self userInfo:nil];
-            transparentView.hidden=YES;
-            [self.view endEditing:YES];
             
-             [self ChatCommentConnection];
             
         }
         else if ([ResultString isEqualToString:@"inserterror"])
@@ -3565,6 +3652,11 @@
     
 }
 
+
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    [self.view endEditing:YES];
+}
 
 @end
 
