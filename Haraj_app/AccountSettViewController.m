@@ -18,7 +18,7 @@
 #import "LoginPageViewController.h"
 #import <MessageUI/MessageUI.h>
 #import <Messages/Messages.h>
-//#import "MainnavigationViewController.h"
+#import "MainNavigationController.h"
 //#import "ContactListViewController.h"
 //#import "FacebookListViewController.h"
 //#import "TwitterListViewController.h"
@@ -754,7 +754,8 @@ Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_t
     [defaults setObject:@"no" forKey:@"facebookconnect"];
     [defaults setObject:@"no" forKey:@"twitterconnect"];
     
-        [defaults synchronize];
+    [defaults synchronize];
+    
     NSHTTPCookie *cookie;
     NSHTTPCookieStorage *storage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
     for (cookie in [storage cookies])
@@ -766,6 +767,7 @@ Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_t
             [storage deleteCookie:cookie];
         }
     }
+    
     [FBSDKAccessToken setCurrentAccessToken:nil];
     [FBSDKProfile setCurrentProfile:nil];
     
@@ -789,17 +791,8 @@ Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_t
         [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
     }
     
-//    MainnavigationViewController *loginController=[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MainnavigationViewController"];
-//    
-    
-    
-
-    
-   //self.window.rootViewController=loginController;
-
-//    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//    LoginPageViewController *   Home_add= [mainStoryboard instantiateViewControllerWithIdentifier:@"LoginPageViewController"];
-   // [[UIApplication sharedApplication].keyWindow setRootViewController:loginController];
+    MainNavigationController *loginController=[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MainNavigationController"];
+    [[UIApplication sharedApplication].keyWindow setRootViewController:loginController];
  
 }
 - (IBAction)DoneButton:(id)sender;

@@ -828,10 +828,7 @@
     
     // [df setDateFormat:@"dd-MM-yyyy"];
     
-    
-    
-    
-   
+ 
         NSDate *date=[df dateFromString:[df stringFromDate:[NSDate date]]];
         [datePicker setDate:date];
 

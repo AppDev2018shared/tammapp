@@ -52,6 +52,8 @@
     MPMoviePlayerViewController *movieController ;
     NSInteger indexCount , x;
     UILabel *KMlabel, *Sqmlabel;
+    
+    NSString *TEXT;
 
     
 }
@@ -461,6 +463,7 @@
                 imageView.image=[imageArray objectAtIndex:i];
                 
                 imageView.contentMode = UIViewContentModeScaleAspectFill;
+                imageView.clipsToBounds = YES;
                 
                 
 //                UITapGestureRecognizer * ImageTap =[[UITapGestureRecognizer alloc] initWithTarget:self
@@ -593,6 +596,8 @@
                         moreCell .createButton.backgroundColor = [UIColor lightGrayColor];
                     }
                     
+                    [Cell_DetailCar.modelTextField addTarget:self action:@selector(textField_Action:) forControlEvents:UIControlEventEditingChanged];
+                    [Cell_DetailCar.mileageTextField addTarget:self action:@selector(textField_Action:) forControlEvents:UIControlEventEditingChanged];
                     
                     [Cell_DetailCar.sellingTextview setAutocorrectionType:UITextAutocorrectionTypeNo];
                     
@@ -714,6 +719,10 @@
                     Cell_DetailProperty.noOfBedroomTextField.delegate = self;
                     
                     [Cell_DetailProperty .propertySizeTextField bringSubviewToFront:Cell_DetailProperty];
+                    
+                    
+                    [Cell_DetailProperty.propertySizeTextField addTarget:self action:@selector(textField_Action:) forControlEvents:UIControlEventEditingChanged];
+                    [Cell_DetailProperty.noOfBedroomTextField addTarget:self action:@selector(textField_Action:) forControlEvents:UIControlEventEditingChanged];
                     
                     
                     return Cell_DetailProperty;
@@ -849,7 +858,7 @@
         }
         else
         {
-            return 243;
+            return 253;
         }
     }
     else if (indexPath.section == 2)
@@ -859,6 +868,49 @@
     
     
     return 0;
+    
+}
+
+
+-(void)textField_Action:(id)sender
+{
+    if ([self.name isEqualToString:@"car"])
+    {
+        
+        if (Cell_DetailCar.modelTextField.text.length == 0 || Cell_DetailCar.mileageTextField.text.length == 0)
+        {
+            moreCell.createButton.enabled = NO;
+            moreCell .createButton.backgroundColor = [UIColor lightGrayColor];
+            
+            
+        }
+        else
+        {
+            moreCell.createButton.enabled =YES;
+            moreCell .createButton.backgroundColor = [UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1];
+            
+        }
+        
+    }
+    
+    else if ([self.name isEqualToString:@"property"])
+    {
+        if (Cell_DetailProperty.propertySizeTextField.text.length == 0 || Cell_DetailProperty.noOfBedroomTextField.text.length == 0)
+        {
+            moreCell.createButton.enabled = NO;
+            moreCell .createButton.backgroundColor = [UIColor lightGrayColor];
+            
+            
+        }
+        else
+        {
+            moreCell.createButton.enabled =YES;
+            moreCell .createButton.backgroundColor = [UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1];
+            
+        }
+
+        
+    }
     
 }
 
@@ -902,17 +954,81 @@
         textView.text = @"";
         sellingPlaceholder.hidden = YES;
         moreCell.createButton.enabled = NO;
-        //   moreCell.createButton.backgroundColor = [UIColor greenColor];
         [moreCell.createButton setBackgroundColor:[UIColor lightGrayColor]];
         
     }
     else
     {
         sellingPlaceholder.hidden = YES;
-        moreCell.createButton.enabled = YES;
-        //   moreCell.createButton.backgroundColor = [UIColor greenColor];
-        [moreCell.createButton setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
+//        moreCell.createButton.enabled = YES;
+//        [moreCell.createButton setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
+
     }
+    
+    
+    if ([self.name isEqualToString:@"car"])
+    {
+        
+        if (Cell_DetailCar.sellingTextview.text.length == 0)
+        {
+            moreCell.createButton.enabled = NO;
+            [moreCell.createButton setBackgroundColor:[UIColor lightGrayColor]];
+        }
+        else
+        {
+            moreCell.createButton.enabled = YES;
+            [moreCell.createButton setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
+        }
+        
+        
+        if ([Cell_DetailCar.modelTextField.text isEqualToString:@""]  || [Cell_DetailCar.mileageTextField.text isEqualToString:@""]) {
+            moreCell.createButton.enabled = NO;
+            [moreCell.createButton setBackgroundColor:[UIColor lightGrayColor]];
+            
+        }
+    }
+    
+    else if([self.name isEqualToString:@"property"])
+    {
+        
+        if (Cell_DetailProperty.sellingTextview.text.length == 0)
+        {
+            moreCell.createButton.enabled = NO;
+            [moreCell.createButton setBackgroundColor:[UIColor lightGrayColor]];
+        }
+        else
+        {
+            moreCell.createButton.enabled = YES;
+            [moreCell.createButton setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
+        }
+        
+        
+        if ([Cell_DetailProperty.propertySizeTextField.text isEqualToString:@""]  || [Cell_DetailProperty.noOfBedroomTextField.text isEqualToString:@""]) {
+            moreCell.createButton.enabled = NO;
+            [moreCell.createButton setBackgroundColor:[UIColor lightGrayColor]];
+            
+        }
+    }
+    else
+    {
+        
+        if (detailCell.sellingTextview.text.length == 0)
+        {
+            moreCell.createButton.enabled = NO;
+            [moreCell.createButton setBackgroundColor:[UIColor lightGrayColor]];
+        }
+        else
+        {
+            moreCell.createButton.enabled = YES;
+            [moreCell.createButton setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
+        }
+        
+        
+    }
+
+    
+    
+    
     
 }
 -(void)textViewDidBeginEditing:(UITextView *)textView
@@ -929,6 +1045,7 @@
                 sellingPlaceholder.hidden = YES;
                 moreCell.createButton.enabled = NO;
                 [moreCell.createButton setBackgroundColor:[UIColor lightGrayColor]];
+               
                 
             }
             else
@@ -936,6 +1053,8 @@
                 sellingPlaceholder.hidden = YES;
                 moreCell.createButton.enabled = YES;
                 [moreCell.createButton setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
+               
+
             }
             
             
@@ -962,12 +1081,15 @@
                 moreCell.createButton.enabled = NO;
                 [moreCell.createButton setBackgroundColor:[UIColor lightGrayColor]];
                 
+
+                
             }
             else
             {
                 sellingPlaceholder.hidden = YES;
                 moreCell.createButton.enabled = YES;
                 [moreCell.createButton setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
+               
             }
             
             
@@ -999,12 +1121,16 @@
                 moreCell.createButton.enabled = NO;
                 [moreCell.createButton setBackgroundColor:[UIColor lightGrayColor]];
                 
+
+                
             }
             else
             {
                 sellingPlaceholder.hidden = YES;
                 moreCell.createButton.enabled = YES;
                 [moreCell.createButton setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
+                
+
             }
             
             
@@ -1051,6 +1177,8 @@
                 sellingPlaceholder.hidden = NO;
                 moreCell.createButton.enabled = NO;
                 moreCell .createButton.backgroundColor = [UIColor lightGrayColor];
+                
+
             }
         }
         
@@ -1079,6 +1207,7 @@
                 sellingPlaceholder.hidden = NO;
                 moreCell.createButton.enabled = NO;
                 moreCell .createButton.backgroundColor = [UIColor lightGrayColor];
+                
             }
         }
         
@@ -1106,6 +1235,7 @@
                 sellingPlaceholder.hidden = NO;
                 moreCell.createButton.enabled = NO;
                 moreCell .createButton.backgroundColor = [UIColor lightGrayColor];
+                
             }
         }
         
@@ -1123,11 +1253,6 @@
         
     }
 
-    
-    
-    
-    
-    
       if ([textView isEqual: moreCell.moreTextView])
     {
         
@@ -1209,16 +1334,11 @@
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     
-//    NSString *text =self. Cell_DetailCar.mileageTextField.text;
-//    Cell_DetailCar.mileageTextField.text = [NSString stringWithFormat:@"%@ KM",text];
-//    
-//    Cell_DetailProperty.propertySizeTextField.text = [NSString stringWithFormat:@"%@ (sqm)",Cell_DetailProperty.propertySizeTextField.text];
     
     if ([Cell_DetailCar.mileageTextField.text isEqualToString:@""])
     {
         KMlabel.frame = CGRectMake(0, 0, 0, 0);
         KMlabel.hidden = YES;
-        
     }
     else
     {
@@ -1227,7 +1347,8 @@
     KMlabel.text = @" KM";
     KMlabel.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.0];
     Cell_DetailCar.mileageTextField.rightViewMode = UITextFieldViewModeAlways;
-    Cell_DetailCar.mileageTextField.rightView = KMlabel;
+        Cell_DetailCar.mileageTextField.rightView = KMlabel;
+        
     }
     
     if ([Cell_DetailProperty.propertySizeTextField.text isEqualToString:@""])
@@ -1244,6 +1365,7 @@
         Sqmlabel.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.0];
         Cell_DetailProperty.propertySizeTextField.rightViewMode = UITextFieldViewModeAlways;
         Cell_DetailProperty.propertySizeTextField.rightView = Sqmlabel;
+    
     }
 
     
@@ -1574,7 +1696,15 @@
     [ImageId addObject:[NSString stringWithFormat:@"%ld",(long)indexCount]];
     
     
-     [self.tableView reloadData];
+   //  [self.tableView reloadData];
+    
+    
+    [self.tableView beginUpdates];
+    
+    NSIndexPath* rowToReload = [NSIndexPath indexPathForRow:0 inSection:0];
+    NSArray* rowsToReload = [NSArray arrayWithObjects:rowToReload, nil];
+    [self.tableView reloadRowsAtIndexPaths:rowsToReload withRowAnimation:UITableViewRowAnimationNone];
+    [self.tableView endUpdates];
     
 }
 
@@ -2066,13 +2196,6 @@
     
 }
 
-
-
-
--(void)CreatePostConnection
-{
-    
-}
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
     if (error)
@@ -2201,7 +2324,13 @@
             
             
             
-            [self.tableView reloadData];
+           // [self.tableView reloadData];
+            
+            NSIndexPath* rowToReload = [NSIndexPath indexPathForRow:0 inSection:0];
+            NSArray* rowsToReload = [NSArray arrayWithObjects:rowToReload, nil];
+            [self.tableView reloadRowsAtIndexPaths:rowsToReload withRowAnimation:UITableViewRowAnimationNone];
+            [self.tableView endUpdates];
+
             
                 
         

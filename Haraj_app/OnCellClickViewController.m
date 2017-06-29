@@ -7,7 +7,7 @@
 //
 
 #import "OnCellClickViewController.h"
-#import "FirstImageViewCell.h"
+#import "FirstImageViewCell.h"ƒ
 #import "UIImageView+WebCache.h"
 #import "SBJsonParser.h"
 #import "Reachability.h"
@@ -66,6 +66,9 @@
     
     UIButton *button3Fav;
     CGRect rect;
+    
+    BOOL makeOffer;
+    NSString *enteramount;
     
     
      MPMoviePlayerViewController *movieController ;
@@ -246,7 +249,6 @@
     static NSString *cell_detailscar=@"DetailCellCar";
     static NSString *cell_detailsproperty=@"DetailCellProperty";
 
-    
     
     
     
@@ -450,8 +452,23 @@
                     detailCellCar.usernameLabel.text = [Array_UserInfo valueForKey:@"usersname"];
                     detailCellCar.durationLabel.text = [Array_UserInfo valueForKey:@"postdur"];
                     
+                    if (makeOffer)
+                    {
+                        NSString *show = [NSString stringWithFormat:@"$%@",enteramount ];
+                        detailCellCar.priceLabel.text = show;
+                        makeOffer = NO;
+                        
+                        [Array_UserInfo setValue:enteramount forKey:@"showamount"];
+
+                    }
+                    else
+                    {
+                    
                     NSString *show = [NSString stringWithFormat:@"$%@",[Array_UserInfo valueForKey:@"showamount"]];
-                    detailCellCar.priceLabel.text = show;//[dic_request valueForKey:@"showamount"];
+                    detailCellCar.priceLabel.text = show;
+                        
+                    }
+                    
                     detailCellCar.timeLabel.text = [Array_UserInfo valueForKey:@"createtime"];
                     detailCellCar.titleLabel.text = [Array_UserInfo valueForKey:@"title"];
                     
@@ -473,73 +490,6 @@
                     UITapGestureRecognizer *favouriteImage_Tapped =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(favouriteImage_ActionDetails:)];
                     [detailCellCar.favouriteImage addGestureRecognizer:favouriteImage_Tapped];
                     
-                    
-//                    
-//                    if ([[Array_UserInfo valueForKey:@"favourite"]isEqualToString:@"TRUE"])
-//                    {
-//                        [detailCellCar.favouriteImage setImage:[UIImage imageNamed:@"Barfavouritefill"]];
-//                    }
-//                    else
-//                    {
-//                        [detailCellCar.favouriteImage setImage:[UIImage imageNamed:@"Barfavourite"]];
-//                        
-//                    }
-//                    
-//#pragma mark - fdgfhjdgj;
-//                    
-//                    if (fav)
-//                    {
-//                        
-//                        
-//                        if ([str_fav isEqualToString:@"inserted"])
-//                        {
-//                            [detailCellCar .favouriteImage setImage:[UIImage imageNamed:@"Barfavouritefill"]];
-//                        }
-//                        else
-//                        {
-//                            [detailCellCar .favouriteImage setImage:[UIImage imageNamed:@"Barfavourite"]];
-//                            
-//                        }
-//                        
-//                        fav = false;
-//                        
-//                    }
-                    
-//                    
-//                    if ([[Array_UserInfo valueForKey:@"favourite"]isEqualToString:@"TRUE"])
-//                    {
-//                        
-//                        [button3Fav setImage:[UIImage imageNamed:@"Barfavouritefill"] forState:UIControlStateNormal];
-//                    }
-//                    else
-//                    {
-//                        [button3Fav setImage:[UIImage imageNamed:@"Barfavourite"] forState:UIControlStateNormal];
-//                    }
-//                    
-//#pragma mark - fdgfhjdgj;
-//                    
-//                    if (fav)
-//                    {
-//                        
-//                        
-//                        if ([str_fav isEqualToString:@"inserted"])
-//                        {
-//                            [button3Fav setImage:[UIImage imageNamed:@"Barfavouritefill"] forState:UIControlStateNormal];
-//                            
-//                        }
-//                        else
-//                        {
-//                            [button3Fav setImage:[UIImage imageNamed:@"Barfavourite"] forState:UIControlStateNormal];
-//                            
-//                            
-//                        }
-//                        
-//                        fav = false;
-//                        
-//                    }
-//
-//                    
-                  
                     
                     
                     //------------------------------------------$$$$$$$$$$$$$$$$$$$______________________________
@@ -700,8 +650,26 @@
                     detailCellProperty.usernameLabel.text = [Array_UserInfo valueForKey:@"usersname"];
                     detailCellProperty.durationLabel.text = [Array_UserInfo valueForKey:@"postdur"];
                     
-                    NSString *show = [NSString stringWithFormat:@"$%@",[Array_UserInfo valueForKey:@"showamount"]];
-                    detailCellProperty.priceLabel.text = show;//[dic_request valueForKey:@"showamount"];
+                    
+                    if (makeOffer)
+                    {
+                        NSString *show = [NSString stringWithFormat:@"$%@",enteramount ];
+                        detailCellProperty.priceLabel.text = show;
+                        makeOffer = NO;
+                        
+                        [Array_UserInfo setValue:enteramount forKey:@"showamount"];
+                        
+                    }
+                    else
+                    {
+                        
+                        NSString *show = [NSString stringWithFormat:@"$%@",[Array_UserInfo valueForKey:@"showamount"]];
+                        detailCellProperty.priceLabel.text = show;
+                        
+                    }
+                    
+//                    NSString *show = [NSString stringWithFormat:@"$%@",[Array_UserInfo valueForKey:@"showamount"]];
+//                    detailCellProperty.priceLabel.text = show;//[dic_request valueForKey:@"showamount"];
                     detailCellProperty.timeLabel.text = [Array_UserInfo valueForKey:@"createtime"];
                     detailCellProperty.titleLabel.text = [Array_UserInfo valueForKey:@"title"];
                     
@@ -722,39 +690,6 @@
                     detailCellProperty.favouriteImage.tag=swipeCount;
                     UITapGestureRecognizer *favouriteImage_Tapped =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(favouriteImage_ActionDetails:)];
                     [detailCellProperty.favouriteImage addGestureRecognizer:favouriteImage_Tapped];
-                    
-                    
-                    
-//                    if ([[Array_UserInfo valueForKey:@"favourite"]isEqualToString:@"TRUE"])
-//                    {
-//                        [detailCellProperty.favouriteImage setImage:[UIImage imageNamed:@"Barfavouritefill"]];
-//                    }
-//                    else
-//                    {
-//                        [detailCellProperty.favouriteImage setImage:[UIImage imageNamed:@"Barfavourite"]];
-//                        
-//                    }
-//                    
-//#pragma mark - fdgfhjdgj;
-//                    
-//                    if (fav)
-//                    {
-//                        
-//                        
-//                        if ([str_fav isEqualToString:@"inserted"])
-//                        {
-//                            [detailCellProperty .favouriteImage setImage:[UIImage imageNamed:@"Barfavouritefill"]];
-//                        }
-//                        else
-//                        {
-//                            [detailCellProperty .favouriteImage setImage:[UIImage imageNamed:@"Barfavourite"]];
-//                            
-//                        }
-//                        
-//                        fav = false;
-//                        
-//                    }
-
                     
                     
                     
@@ -919,8 +854,28 @@
             detailCell.usernameLabel.text = [Array_UserInfo valueForKey:@"usersname"];
             detailCell.durationLabel.text = [Array_UserInfo valueForKey:@"postdur"];
             
-            NSString *show = [NSString stringWithFormat:@"$%@",[Array_UserInfo valueForKey:@"showamount"]];
-            detailCell.priceLabel.text = show;//[dic_request valueForKey:@"showamount"];
+            if (makeOffer)
+            {
+                NSString *show = [NSString stringWithFormat:@"$%@",enteramount ];
+                detailCell.priceLabel.text = show;
+                makeOffer = NO;
+                
+                [Array_UserInfo setValue:enteramount forKey:@"showamount"];
+                
+            }
+            else
+            {
+                
+                NSString *show = [NSString stringWithFormat:@"$%@",[Array_UserInfo valueForKey:@"showamount"]];
+                detailCell.priceLabel.text = show;
+                
+            }
+
+        
+            
+//            NSString *show = [NSString stringWithFormat:@"$%@",[Array_UserInfo valueForKey:@"showamount"]];
+//            detailCell.priceLabel.text = show;//[dic_request valueForKey:@"showamount"];
+            
             detailCell.timeLabel.text = [Array_UserInfo valueForKey:@"createtime"];
             detailCell.titleLabel.text = [Array_UserInfo valueForKey:@"title"];
             
@@ -1684,6 +1639,15 @@
         [button1 setTag:1];
         [button1 addTarget:self action:@selector(makeOfferPressed:) forControlEvents:UIControlEventTouchUpInside];
         [button1 setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+        
+        UIImageView *questionView = [[UIImageView alloc]initWithFrame:CGRectMake(8, 22 , 20, 20)];
+        questionView.image = [UIImage imageNamed:@"WhiteQuestion"];
+        questionView.contentMode = UIViewContentModeScaleAspectFit;
+        questionView.clipsToBounds = YES;
+        
+        [button1 addSubview:questionView];
+        
+        
         [sectionView addSubview:button1];
         
         
@@ -3511,8 +3475,9 @@
             
             [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewEnable" object:self userInfo:nil];
             transparentView.hidden=YES;
-            
             [self ChatCommentConnection];
+            
+            
             
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Offer Accepted" message:@"Thank-you for making your offer. You will be informed if you win the bid or if someone outbids you." preferredStyle:UIAlertControllerStyleAlert];
             
@@ -3529,6 +3494,21 @@
             [alertController addAction:actionOk];
             [self presentViewController:alertController animated:YES completion:nil];
             
+            
+            NSString *askingpriceValString = [NSString stringWithFormat:@"%@",amountTextField.text];
+            askingpriceValString = [askingpriceValString substringFromIndex:1];
+
+            enteramount = askingpriceValString ;
+            makeOffer = YES;
+            
+//            NSMutableDictionary *newDict = [[NSMutableDictionary alloc] init];
+//            NSDictionary *oldDict = (NSDictionary *)[Array_UserInfo objectAtIndex:indexes];
+//            [newDict addEntriesFromDictionary:oldDict];
+//            [newDict setObject:askingpriceValString forKey:@"showamount"];
+//            [Array_UserInfo replaceObjectAtIndex:0 withObject:newDict];
+            
+                            
+         
             
             
         }
