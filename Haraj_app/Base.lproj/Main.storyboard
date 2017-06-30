@@ -617,7 +617,7 @@
                                         <color key="textColor" red="0.0" green="0.56470588239999997" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="28CA539D-D4B8-4E69-9D7C-9744DD772800" translatesAutoresizingMaskIntoConstraints="NO" id="7sL-5T-AGh">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="D17E2197-2832-4D42-AEC2-F10BA9D7F511" translatesAutoresizingMaskIntoConstraints="NO" id="7sL-5T-AGh">
                                         <frame key="frameInset" minX="322" minY="20" width="40" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
@@ -649,7 +649,7 @@
             <objects>
                 <navigationController storyboardIdentifier="HomeNavigationController" automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="3Yh-ps-osH" customClass="HomeNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="45N-9l-Y3Z">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="45N-9l-Y3Z">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -971,7 +971,7 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Date of brith" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FHK-tN-LTl">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Date of birth" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FHK-tN-LTl">
                                 <frame key="frameInset" minX="50" minY="437" width="275" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -1063,7 +1063,7 @@
             <objects>
                 <navigationController storyboardIdentifier="MainNavigationController" automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="EIm-hX-R5N" customClass="MainNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="QqY-iC-hys">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="QqY-iC-hys">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1530,28 +1530,21 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6gd-Fg-GDP">
-                                <frame key="frameInset" minY="480" width="375" height="44"/>
+                                <frame key="frameInset" minY="480" width="375" height="64"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TPp-lK-tCp">
-                                        <frame key="frameInset" minX="50" minY="7" width="30" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="suq-Sv-o0F">
+                                        <frame key="frameInset" minX="78" width="220" height="64"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="Phone"/>
+                                        <fontDescription key="fontDescription" name="SanFranciscoDisplay-Bold" family="San Francisco Display" pointSize="22"/>
+                                        <state key="normal" title="MAKE AN OFFER">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2UY-d3-ioU">
-                                        <frame key="frameInset" minX="130" minY="7" width="30" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F6B-lT-YbH">
+                                        <frame key="frameInset" minX="16" minY="22" width="20" height="20"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="Comments"/>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hBH-dh-Riq">
-                                        <frame key="frameInset" minX="210" minY="7" width="30" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="Barfavourite"/>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gTR-ej-946">
-                                        <frame key="frameInset" minX="292" minY="7" width="33" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="Share"/>
+                                        <state key="normal" image="WhiteQuestion"/>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.56470588239999997" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -3558,7 +3551,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IaJ-2w-S5I">
-                                <frame key="frameInset" minX="38" minY="24" width="30" height="30"/>
+                                <frame key="frameInset" minX="38" minY="24" width="24" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="Profile"/>
                                 <connections>
@@ -3965,7 +3958,15 @@
         </scene>
     </scenes>
     <resources>
-        <image name="28CA539D-D4B8-4E69-9D7C-9744DD772800" width="45" height="44">
+        <image name="3Stars" width="126" height="57"/>
+        <image name="3dots" width="12" height="59"/>
+        <image name="Activity" width="50" height="49"/>
+        <image name="Boost" width="80" height="48"/>
+        <image name="Boostgrey" width="90" height="53"/>
+        <image name="Calc" width="70" height="91"/>
+        <image name="Callsgrey" width="28" height="31"/>
+        <image name="Claim" width="40" height="40"/>
+        <image name="D17E2197-2832-4D42-AEC2-F10BA9D7F511" width="45" height="44">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
@@ -4148,16 +4149,6 @@ AMIA2QDbAN0obyh0KH8oiCibKJ8oqiizKLgowCjDKMgo1yjbKOIo6ij3KPwo/ikAKQUpDSkQKRUpHSkg
 KTIpNSk6AAAAAAAAAgEAAAAAAAAAQQAAAAAAAAAAAAAAAAAAKTw
 </mutableData>
         </image>
-        <image name="3Stars" width="126" height="57"/>
-        <image name="3dots" width="12" height="59"/>
-        <image name="Activity" width="50" height="49"/>
-        <image name="Barfavourite" width="55" height="55"/>
-        <image name="Boost" width="80" height="48"/>
-        <image name="Boostgrey" width="90" height="53"/>
-        <image name="Calc" width="70" height="91"/>
-        <image name="Callsgrey" width="28" height="31"/>
-        <image name="Claim" width="40" height="40"/>
-        <image name="Comments" width="57" height="57"/>
         <image name="Expires" width="25" height="30"/>
         <image name="Favourite" width="25" height="25"/>
         <image name="FavouriteGreen" width="39" height="39"/>
@@ -4167,7 +4158,6 @@ KTIpNSk6AAAAAAAAAgEAAAAAAAAAQQAAAAAAAAAAAAAAAAAAKTw
         <image name="Location_off" width="43" height="57"/>
         <image name="Location_on" width="41" height="55"/>
         <image name="Moreimages" width="19" height="19"/>
-        <image name="Phone" width="60" height="60"/>
         <image name="Play" width="88" height="88"/>
         <image name="Postcamera" width="33" height="26"/>
         <image name="Postgallery" width="33" height="25"/>
@@ -4175,8 +4165,8 @@ KTIpNSk6AAAAAAAAAgEAAAAAAAAAQQAAAAAAAAAAAAAAAAAAKTw
         <image name="Profile" width="44" height="56"/>
         <image name="RightArrowGrey" width="58" height="51"/>
         <image name="Search" width="52" height="52"/>
-        <image name="Share" width="56" height="51"/>
         <image name="Wallet" width="60" height="55"/>
+        <image name="WhiteQuestion" width="47" height="47"/>
         <image name="Whitearrow" width="28" height="25"/>
         <image name="Whitetick" width="46" height="46"/>
         <image name="defaultimg.jpg" width="200" height="200"/>

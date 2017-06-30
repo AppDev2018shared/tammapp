@@ -51,6 +51,7 @@
     BoostPost *myBoostXIBViewObj;
     
     CGRect rect;
+    NSString *eventidvalue;
 
     
 }
@@ -1595,7 +1596,16 @@
     
     else
     {
-       
+        NSLog(@"share button pressed");
+        
+        NSString * texttoshare=[NSString stringWithFormat:@"%@%@%@",@"You have been invited to a Play:Date meet-up!\n\nUse the event code:\n",eventidvalue,@" to join the meet-up.\n\nDownload Play:Date on your iPhone from http://www.play-date.ae and find new friends for your children!"];
+        
+        
+        NSArray *activityItems1=@[texttoshare];
+        NSArray *activityItems =@[UIActivityTypePrint,UIActivityTypeAirDrop,UIActivityTypeAssignToContact,UIActivityTypeAddToReadingList,UIActivityTypeOpenInIBooks];
+        UIActivityViewController *activityViewControntroller = [[UIActivityViewController alloc] initWithActivityItems:activityItems1 applicationActivities:nil];
+        activityViewControntroller.excludedActivityTypes = activityItems;
+        [self presentViewController:activityViewControntroller animated:YES completion:nil];
     }
 
 }
@@ -1603,7 +1613,7 @@
 
 -(void) button_threedots_action:(id)sender
 {
-    
+     NSLog(@"threedots"); 
 }
 -(void) button_favourite_action:(id)sender
 {
@@ -2114,128 +2124,159 @@
 {
 #pragma mark- --more image scroll view
     
-    
-    
-    
-    
-    
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewDisable" object:self userInfo:nil];
-    
-    transparentView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-    transparentView.backgroundColor=[UIColor colorWithRed:30/255.0 green:30/255.0 blue:30/255.0 alpha:0.95];
-    
-    NSLog(@"FirstCell=%f",FirstCell.button_threedots.frame.origin.y);
-    NSLog(@"cell two=%f",Cell_two.button_threedots.frame.origin.y);
-    
-    UIButton *button1 = [[UIButton alloc]initWithFrame:CGRectMake(button_threeDotsx,button_threeDotsy, button_threeDotsw, button_threeDotsh)];
-    [button1 setImage:[UIImage imageNamed:@"3dots"] forState:UIControlStateNormal];
-    [button1 setTag:1];
-    [button1 addTarget:self action:@selector(sectionHeaderTopButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [transparentView addSubview:button1];
-    
-    UIButton *button2 = [[UIButton alloc]initWithFrame:CGRectMake(button_favx, button_favy, button_favw, button_favh)];
-    [button2 setImage:[UIImage imageNamed:@"Whitefavourite"] forState:UIControlStateNormal];
-    [button2 setTag:2];
-    [button2 addTarget:self action:@selector(sectionHeaderTopButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    //[transparentView addSubview:button2];
-    
-    UIButton *button3 = [[UIButton alloc]initWithFrame:CGRectMake(button_arrowx, button_arrowy, button_arroww, button_arrowh)];
-    [button3 setImage:[UIImage imageNamed:@"Whitearrow"] forState:UIControlStateNormal];
-    [button3 setTag:3];
-    [button3 addTarget:self action:@selector(sectionHeaderTopButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [transparentView addSubview:button3];
-    
-    scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0,160,self.view.frame.size.width , self.view.frame.size.height -160)];
-    scrollView.backgroundColor = [UIColor clearColor];
-    scrollView.center = transparentView.center;
-    scrollView.delegate = self;
-    scrollView.pagingEnabled = YES;
-    
-    
-    
-    for (int i = 0; i < total_image; i++ )
+    if (total_image == 1)
     {
-        int page = scrollView.contentOffset.x / scrollView.frame.size.width;
+        UIGestureRecognizer *rec = (UIGestureRecognizer*)sender;
+        UIImageView *imageView1 = (UIImageView *)rec.view;
+        NSLog(@"ImageTappedscroll ImageTappedscroll==%ld", (long)imageView1.tag);
         
-        CGRect frame;
-        frame.origin.x = scrollView.frame.size.width * i;
-        frame.origin.y = 0;
-        frame.size = scrollView.frame.size;
         
-        imageView = [[UIImageView alloc] initWithFrame:frame];
-        imageView.userInteractionEnabled=YES;
-        imageView.clipsToBounds=YES;
-        imageView.contentMode = UIViewContentModeScaleAspectFill;
-        imageView.tag=i;
-        
-      playButton=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50, 50)];
-        [playButton setImage:[UIImage imageNamed:@"Play"] forState:UIControlStateNormal];
-        playButton.center=imageView.center;
-           playButton.tag=i;
-        playButton.backgroundColor=[UIColor clearColor];
-        [scrollView addSubview:imageView];
-        [scrollView addSubview:playButton];
-        
-        playButton.hidden = YES;
-        
-        NSLog (@"page %d",page);
-        
-        if (i==0)
+        if ([[[Array_Moreimages objectAtIndex:(long)imageView1.tag] valueForKey:@"mediatype"] isEqualToString:@"VIDEO"])
         {
-            NSURL *url=[NSURL URLWithString:[Array_UserInfo valueForKey:@"mediathumbnailurl"]];
-            [imageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
-            if ([[Array_UserInfo valueForKey:@"mediatype"] isEqualToString:@"VIDEO"])
-            {
-                playButton.hidden = NO;
-                
-                
-            }
-        }
-        else if (i==1)
-        {
+            NSURL *url=[NSURL URLWithString:[[Array_Moreimages objectAtIndex:(long)imageView1.tag]valueForKey:@"mediaurl"]];
+            movieController = [[MPMoviePlayerViewController alloc] initWithContentURL:url];
             
-            NSURL *url1=[NSURL URLWithString:[Array_UserInfo valueForKey:@"mediathumbnailurl1"]];
             
-            [imageView sd_setImageWithURL:url1 placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
-            if ([[Array_UserInfo valueForKey:@"mediatype1"] isEqualToString:@"VIDEO"])
-            {
-                playButton.hidden = NO;
-                
-                
-            }
+            
+            [self presentMoviePlayerViewControllerAnimated:movieController];
+            [movieController.moviePlayer prepareToPlay];
+            [movieController.moviePlayer play];
+            
+            
+            
         }
         else
         {
-            NSURL *url1=[NSURL URLWithString:@""];
-            
-            [imageView sd_setImageWithURL:url1 placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
-             playButton.hidden = YES;
+            [self displayImage:FirstCell.imageView_thumbnails withImage:FirstCell.imageView_thumbnails.image];
         }
         
-       
         
-        
-            
         
         
         
     }
-    scrollView.contentSize = CGSizeMake(scrollView.frame.size.
-                                        width *total_image,
-                                        scrollView.frame.size.height);
-    
-    pageControll = [[UIPageControl alloc]init];
-    pageControll.frame = CGRectMake(375/2-20, transparentView.frame.size.height - 100, 40, 10);
-    pageControll.numberOfPages = total_image;
-    pageControll.currentPage = 0;
-    [pageControll setPageIndicatorTintColor:[UIColor grayColor]];
-    
-    [transparentView addSubview:scrollView];
-    [transparentView addSubview:pageControll];
-    [self.view addSubview:transparentView];
-    
-    [self Communication_moreImage];
+    else
+    {
+        
+        
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewDisable" object:self userInfo:nil];
+        
+        transparentView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+        transparentView.backgroundColor=[UIColor colorWithRed:30/255.0 green:30/255.0 blue:30/255.0 alpha:0.95];
+        
+        NSLog(@"FirstCell=%f",FirstCell.button_threedots.frame.origin.y);
+        NSLog(@"cell two=%f",Cell_two.button_threedots.frame.origin.y);
+        
+        UIButton *button1 = [[UIButton alloc]initWithFrame:CGRectMake(button_threeDotsx,button_threeDotsy, button_threeDotsw, button_threeDotsh)];
+        [button1 setImage:[UIImage imageNamed:@"3dots"] forState:UIControlStateNormal];
+        [button1 setTag:1];
+        [button1 addTarget:self action:@selector(sectionHeaderTopButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [transparentView addSubview:button1];
+        
+        UIButton *button2 = [[UIButton alloc]initWithFrame:CGRectMake(button_favx, button_favy, button_favw, button_favh)];
+        [button2 setImage:[UIImage imageNamed:@"Whitefavourite"] forState:UIControlStateNormal];
+        [button2 setTag:2];
+        [button2 addTarget:self action:@selector(sectionHeaderTopButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        //[transparentView addSubview:button2];
+        
+        UIButton *button3 = [[UIButton alloc]initWithFrame:CGRectMake(button_arrowx, button_arrowy, button_arroww, button_arrowh)];
+        [button3 setImage:[UIImage imageNamed:@"Whitearrow"] forState:UIControlStateNormal];
+        [button3 setTag:3];
+        [button3 addTarget:self action:@selector(sectionHeaderTopButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [transparentView addSubview:button3];
+        
+        scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0,160,self.view.frame.size.width , self.view.frame.size.height -160)];
+        scrollView.backgroundColor = [UIColor clearColor];
+        scrollView.center = transparentView.center;
+        scrollView.delegate = self;
+        scrollView.pagingEnabled = YES;
+        
+        
+        
+        for (int i = 0; i < total_image; i++ )
+        {
+            int page = scrollView.contentOffset.x / scrollView.frame.size.width;
+            
+            CGRect frame;
+            frame.origin.x = scrollView.frame.size.width * i;
+            frame.origin.y = 0;
+            frame.size = scrollView.frame.size;
+            
+            imageView = [[UIImageView alloc] initWithFrame:frame];
+            imageView.userInteractionEnabled=YES;
+            imageView.clipsToBounds=YES;
+            imageView.contentMode = UIViewContentModeScaleAspectFill;
+            imageView.tag=i;
+            
+            playButton=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50, 50)];
+            [playButton setImage:[UIImage imageNamed:@"Play"] forState:UIControlStateNormal];
+            playButton.center=imageView.center;
+            playButton.tag=i;
+            playButton.backgroundColor=[UIColor clearColor];
+            [scrollView addSubview:imageView];
+            [scrollView addSubview:playButton];
+            
+            playButton.hidden = YES;
+            
+            NSLog (@"page %d",page);
+            
+            if (i==0)
+            {
+                NSURL *url=[NSURL URLWithString:[Array_UserInfo valueForKey:@"mediathumbnailurl"]];
+                [imageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
+                if ([[Array_UserInfo valueForKey:@"mediatype"] isEqualToString:@"VIDEO"])
+                {
+                    playButton.hidden = NO;
+                    
+                    
+                }
+            }
+            else if (i==1)
+            {
+                
+                NSURL *url1=[NSURL URLWithString:[Array_UserInfo valueForKey:@"mediathumbnailurl1"]];
+                
+                [imageView sd_setImageWithURL:url1 placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
+                if ([[Array_UserInfo valueForKey:@"mediatype1"] isEqualToString:@"VIDEO"])
+                {
+                    playButton.hidden = NO;
+                    
+                    
+                }
+            }
+            else
+            {
+                NSURL *url1=[NSURL URLWithString:@""];
+                
+                [imageView sd_setImageWithURL:url1 placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
+                playButton.hidden = YES;
+            }
+            
+            
+            
+            
+            
+            
+            
+            
+        }
+        scrollView.contentSize = CGSizeMake(scrollView.frame.size.
+                                            width *total_image,
+                                            scrollView.frame.size.height);
+        
+        pageControll = [[UIPageControl alloc]init];
+        pageControll.frame = CGRectMake(375/2-20, transparentView.frame.size.height - 100, 40, 10);
+        pageControll.numberOfPages = total_image;
+        pageControll.currentPage = 0;
+        [pageControll setPageIndicatorTintColor:[UIColor grayColor]];
+        
+        [transparentView addSubview:scrollView];
+        [transparentView addSubview:pageControll];
+        [self.view addSubview:transparentView];
+        
+        [self Communication_moreImage];
+    }
 }
 -(void)Communication_moreImage
 {

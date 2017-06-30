@@ -70,6 +70,8 @@
     BOOL makeOffer;
     NSString *enteramount;
     
+    NSString *eventidvalue;
+    
     
      MPMoviePlayerViewController *movieController ;
 }
@@ -414,6 +416,9 @@
                 UITapGestureRecognizer *imageTap4 =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(MoreImage:)];
                 [FirstCell.imageView_thumbnails addGestureRecognizer:imageTap4];
                 }
+                
+                [self displayImage:FirstCell.imageView_thumbnails withImage:FirstCell.imageView_thumbnails.image];
+
                 
                 return FirstCell;
             }
@@ -1628,27 +1633,24 @@
     {
         
         sectionView=[[UIView alloc]initWithFrame:CGRectMake(0, 0,self.view.frame.size.width,64)];
-        [sectionView setBackgroundColor:[UIColor whiteColor]];
+        [sectionView setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
         
-        UIButton *button1 = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
+        UIButton *button1 = [[UIButton alloc]initWithFrame:CGRectMake(78, 0, 220, 64)];
         [button1 setTitle:@"MAKE AN OFFER" forState:UIControlStateNormal];
         button1.titleLabel.font = [UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:22];
-    
         [button1 setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
         [button1 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [button1 setTag:1];
         [button1 addTarget:self action:@selector(makeOfferPressed:) forControlEvents:UIControlEventTouchUpInside];
         [button1 setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
-        
-        UIImageView *questionView = [[UIImageView alloc]initWithFrame:CGRectMake(8, 22 , 20, 20)];
-        questionView.image = [UIImage imageNamed:@"WhiteQuestion"];
-        questionView.contentMode = UIViewContentModeScaleAspectFit;
-        questionView.clipsToBounds = YES;
-        
-        [button1 addSubview:questionView];
-        
-        
         [sectionView addSubview:button1];
+        
+        UIButton *questionButton = [[UIButton alloc]initWithFrame:CGRectMake(16, 22 , 20, 20)];
+        [questionButton setImage:[UIImage imageNamed:@"WhiteQuestion"] forState:UIControlStateNormal];
+        [questionButton addTarget:self action:@selector(Help_ButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [sectionView addSubview:questionButton];
+        
+        
         
         
     }
@@ -1870,6 +1872,22 @@
     else
     {
         NSLog(@"Share Pressed");
+        
+        NSString * texttoshare=[NSString stringWithFormat:@"%@%@%@",@"You have been invited to a Play:Date meet-up!\n\nUse the event code:\n",eventidvalue,@" to join the meet-up.\n\nDownload Play:Date on your iPhone from http://www.play-date.ae and find new friends for your children!"];
+        
+       // NSURL *myWebsite = [NSURL URLWithString:@"http://www.codingexplorer.com/"];
+
+        
+        NSArray *objectsToShare=@[texttoshare];
+        UIActivityViewController *activityViewControntroller = [[UIActivityViewController alloc] initWithActivityItems:objectsToShare applicationActivities:nil];
+        
+        NSArray *activityItems =@[UIActivityTypePrint,UIActivityTypeAirDrop,UIActivityTypeAssignToContact,UIActivityTypeAddToReadingList,UIActivityTypeOpenInIBooks,UIActivityTypeMessage,
+                                  UIActivityTypeMail];
+        
+        activityViewControntroller.excludedActivityTypes = activityItems;
+        [self presentViewController:activityViewControntroller animated:YES completion:nil];
+        
+        
     }
     
 }
@@ -2441,6 +2459,21 @@
     
 }
 
+
+
+-(void)Help_ButtonPressed:(id)sender
+{
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops" message:@"Help_ButtonPressed." preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                       style:UIAlertActionStyleDefault
+                                                     handler:nil];
+    [alertController addAction:actionOk];
+    [self presentViewController:alertController animated:YES completion:nil];
+
+    
+}
+
 -(void)makeOfferPressed:(id)sender
 {
     
@@ -2628,6 +2661,8 @@
 -(void) button_threedots_action:(id)sender
 {
     
+    NSLog(@"threedots");
+    
 }
 -(void) button_favourite_action:(id)sender
 {
@@ -2658,11 +2693,49 @@
    
 }
 
+#pragma mark- --more image scroll view
+
 -(void)MoreImage:(UITapGestureRecognizer *)sender
 {
-#pragma mark- --more image scroll view
     
-      [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewDisable" object:self userInfo:nil];
+    if (total_image == 1)
+    {
+        UIGestureRecognizer *rec = (UIGestureRecognizer*)sender;
+        UIImageView *imageView1 = (UIImageView *)rec.view;
+        NSLog(@"ImageTappedscroll ImageTappedscroll==%ld", (long)imageView1.tag);
+
+        
+        if ([[[Array_Moreimages objectAtIndex:(long)imageView1.tag] valueForKey:@"mediatype"] isEqualToString:@"VIDEO"])
+        {
+            NSURL *url=[NSURL URLWithString:[[Array_Moreimages objectAtIndex:(long)imageView1.tag]valueForKey:@"mediaurl"]];
+                    movieController = [[MPMoviePlayerViewController alloc] initWithContentURL:url];
+            
+            
+            
+                    [self presentMoviePlayerViewControllerAnimated:movieController];
+                    [movieController.moviePlayer prepareToPlay];
+                    [movieController.moviePlayer play];
+
+            
+            
+        }
+        else
+        {
+           [self displayImage:FirstCell.imageView_thumbnails withImage:FirstCell.imageView_thumbnails.image];
+        }
+        
+        
+        
+        
+
+    }
+    else
+    {
+    
+    
+  
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewDisable" object:self userInfo:nil];
     
     transparentView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     transparentView.backgroundColor=[UIColor colorWithRed:30/255.0 green:30/255.0 blue:30/255.0 alpha:0.95];
@@ -2708,7 +2781,7 @@
         imageView = [[UIImageView alloc] initWithFrame:frame];
         imageView.userInteractionEnabled=YES;
         imageView.clipsToBounds=YES;
-        imageView.contentMode = UIViewContentModeScaleAspectFill;
+        imageView.contentMode = UIViewContentModeScaleAspectFit;
         imageView.tag=i;
         
          UIButton* playButton=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50, 50)];
@@ -2783,6 +2856,9 @@
     [self.view addSubview:transparentView];
    
     [self Communication_moreImage];
+        
+    }
+    
 }
 -(void)Communication_moreImage
 {
@@ -2888,7 +2964,7 @@
                         imageView = [[UIImageView alloc] initWithFrame:frame];
                         imageView.userInteractionEnabled=YES;
                         imageView.clipsToBounds=YES;
-                        imageView.contentMode = UIViewContentModeScaleAspectFill;
+                        imageView.contentMode = UIViewContentModeScaleAspectFit;
                         imageView.tag=i;
                         
                          UIButton* playButton=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50, 50)];
@@ -2898,6 +2974,7 @@
                         playButton.backgroundColor=[UIColor clearColor];
                         [scrollView addSubview:imageView];
                         [scrollView addSubview:playButton];
+                        
                         
                         
                         NSLog (@"page %d",page);
@@ -2967,7 +3044,6 @@
 -(void)ImageTappedscroll:(UIGestureRecognizer *)reconizer
 {
     UIGestureRecognizer *rec = (UIGestureRecognizer*)reconizer;
-    
     UIImageView *imageView1 = (UIImageView *)rec.view;
     NSLog(@"ImageTappedscroll ImageTappedscroll==%ld", (long)imageView1.tag);
     NSURL *url=[NSURL URLWithString:[[Array_Moreimages objectAtIndex:(long)imageView1.tag]valueForKey:@"mediaurl"]];
