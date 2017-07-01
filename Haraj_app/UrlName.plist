@@ -40,5 +40,7 @@
 	<string>http://www.tammapp.com/app/activity.php</string>
 	<key>activityaddchat</key>
 	<string>http://www.tammapp.com/app/activityaddchat.php</string>
+	<key>activitychat</key>
+	<string>http://www.tammapp.com/app/activitychat.php</string>
 </dict>
 </plist>

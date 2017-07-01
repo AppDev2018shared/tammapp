@@ -82,6 +82,11 @@
 		615ED1451EDEE6C1001E6B0A /* CommentsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 615ED1431EDEE6C1001E6B0A /* CommentsTableViewCell.xib */; };
 		615ED1491EDEE6D2001E6B0A /* SuggestedTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 615ED1471EDEE6D2001E6B0A /* SuggestedTableViewCell.m */; };
 		615ED14A1EDEE6D2001E6B0A /* SuggestedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 615ED1481EDEE6D2001E6B0A /* SuggestedTableViewCell.xib */; };
+		6163B7A01F077829003631AF /* FriendCahtingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6163B79E1F077829003631AF /* FriendCahtingViewController.m */; };
+		6163B7A21F0778E6003631AF /* ChatText.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6163B7A11F0778E6003631AF /* ChatText.plist */; };
+		6163B7A51F077957003631AF /* CustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6163B7A41F077957003631AF /* CustomTableViewCell.m */; };
+		6163B7A81F0779B8003631AF /* UIViewController+KeyboardAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6163B7A71F0779B8003631AF /* UIViewController+KeyboardAnimation.m */; };
+		6163B7AA1F079C4D003631AF /* Screenshot Filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 6163B7A91F079C4C003631AF /* Screenshot Filled-50.png */; };
 		61739F961EE2928100018CF1 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61739F951EE2928100018CF1 /* AVFoundation.framework */; };
 		61739F981EE2928900018CF1 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61739F971EE2928900018CF1 /* MobileCoreServices.framework */; };
 		61739F9A1EE2929100018CF1 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61739F991EE2929100018CF1 /* MediaPlayer.framework */; };
@@ -339,6 +344,14 @@
 		615ED1461EDEE6D2001E6B0A /* SuggestedTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SuggestedTableViewCell.h; path = onclickVC/SuggestedTableViewCell.h; sourceTree = "<group>"; };
 		615ED1471EDEE6D2001E6B0A /* SuggestedTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SuggestedTableViewCell.m; path = onclickVC/SuggestedTableViewCell.m; sourceTree = "<group>"; };
 		615ED1481EDEE6D2001E6B0A /* SuggestedTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SuggestedTableViewCell.xib; path = onclickVC/SuggestedTableViewCell.xib; sourceTree = "<group>"; };
+		6163B79E1F077829003631AF /* FriendCahtingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendCahtingViewController.m; sourceTree = "<group>"; };
+		6163B79F1F077829003631AF /* FriendCahtingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendCahtingViewController.h; sourceTree = "<group>"; };
+		6163B7A11F0778E6003631AF /* ChatText.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ChatText.plist; sourceTree = "<group>"; };
+		6163B7A31F077957003631AF /* CustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableViewCell.h; sourceTree = "<group>"; };
+		6163B7A41F077957003631AF /* CustomTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTableViewCell.m; sourceTree = "<group>"; };
+		6163B7A61F0779B8003631AF /* UIViewController+KeyboardAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+KeyboardAnimation.h"; sourceTree = "<group>"; };
+		6163B7A71F0779B8003631AF /* UIViewController+KeyboardAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+KeyboardAnimation.m"; sourceTree = "<group>"; };
+		6163B7A91F079C4C003631AF /* Screenshot Filled-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Screenshot Filled-50.png"; sourceTree = "<group>"; };
 		61739F951EE2928100018CF1 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		61739F971EE2928900018CF1 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		61739F991EE2929100018CF1 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
@@ -725,6 +738,7 @@
 		61271D3F1EBD927C0082E504 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				6163B7A91F079C4C003631AF /* Screenshot Filled-50.png */,
 				61B8C8841EC1E61100954A68 /* steve.jpeg */,
 				61271D401EBD928C0082E504 /* facebook.png */,
 				61271D411EBD928C0082E504 /* facebook@2x.png */,
@@ -743,6 +757,8 @@
 		61271D8A1EBDC3DF0082E504 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6163B7A61F0779B8003631AF /* UIViewController+KeyboardAnimation.h */,
+				6163B7A71F0779B8003631AF /* UIViewController+KeyboardAnimation.m */,
 				61739FCC1EE2AF5900018CF1 /* ImageZoomIn */,
 				61739FA01EE2951100018CF1 /* BaseEncoding */,
 				1B3B63331EDFF51B00D57715 /* FRHyperLabel */,
@@ -975,6 +991,11 @@
 				61E1416F1F02399D008C3E7A /* ChatOneTableViewCell.m */,
 				61E141711F0239B7008C3E7A /* ChatTwoTableViewCell.h */,
 				61E141721F0239B7008C3E7A /* ChatTwoTableViewCell.m */,
+				6163B79F1F077829003631AF /* FriendCahtingViewController.h */,
+				6163B79E1F077829003631AF /* FriendCahtingViewController.m */,
+				6163B7A31F077957003631AF /* CustomTableViewCell.h */,
+				6163B7A41F077957003631AF /* CustomTableViewCell.m */,
+				6163B7A11F0778E6003631AF /* ChatText.plist */,
 			);
 			name = "Top Bar Screens";
 			sourceTree = "<group>";
@@ -1339,6 +1360,7 @@
 				61D3767C1EBC868000BA02D4 /* SanFranciscoDisplay-Thin.otf in Resources */,
 				61E1418E1F02602B008C3E7A /* setting_contacts@2x.png in Resources */,
 				61F56CD31ECD75A10031E9C1 /* ELCAssetTablePicker.xib in Resources */,
+				6163B7AA1F079C4D003631AF /* Screenshot Filled-50.png in Resources */,
 				61271D461EBD928C0082E504 /* facebook.png in Resources */,
 				61E141951F02602B008C3E7A /* setting_twitter@3x.png in Resources */,
 				61739FEF1EE2AF5900018CF1 /* Done.png in Resources */,
@@ -1367,6 +1389,7 @@
 				3247807F1EACEE0A00FF4B79 /* Main.storyboard in Resources */,
 				61271E121EBDDB950082E504 /* FacebookSDKStrings.bundle in Resources */,
 				614B96D31ED45999008CB090 /* defaultpostimg.jpg in Resources */,
+				6163B7A21F0778E6003631AF /* ChatText.plist in Resources */,
 				61739FF01EE2AF5900018CF1 /* Done@2x.png in Resources */,
 				324780841EACEE0A00FF4B79 /* LaunchScreen.xib in Resources */,
 				61E141941F02602B008C3E7A /* setting_twitter@2x.png in Resources */,
@@ -1433,6 +1456,7 @@
 				61EDCA0B1ECB2E3F0036A250 /* MoreDetailCell.m in Sources */,
 				61ED095B1EB85369008EAFB7 /* YSLScrollMenuView.m in Sources */,
 				61487FF81ED2ED5D009CEF9B /* OtherViewController.m in Sources */,
+				6163B7A01F077829003631AF /* FriendCahtingViewController.m in Sources */,
 				61C7FEB61F010BD500EF278B /* ActivityTableViewCell.m in Sources */,
 				61739FEC1EE2AF5900018CF1 /* AFPropertyListRequestOperation.m in Sources */,
 				61F95A9A1EF5527E00DEE62A /* ProductDetailCellCar.m in Sources */,
@@ -1442,6 +1466,7 @@
 				1B3B63361EDFF51B00D57715 /* FRHyperLabel.m in Sources */,
 				9AEB1F0A1EF1020E00BD9DEF /* MoreImageScrollViewController.m in Sources */,
 				61ED09A31EB85D42008EAFB7 /* UIButton+WebCache.m in Sources */,
+				6163B7A81F0779B8003631AF /* UIViewController+KeyboardAnimation.m in Sources */,
 				61F56CCF1ECD75A10031E9C1 /* ELCImagePickerController.m in Sources */,
 				614C15EE1EC039C100B11A9B /* SBJsonStreamParserAccumulator.m in Sources */,
 				61F56CCE1ECD75A10031E9C1 /* ELCConsole.m in Sources */,
@@ -1500,6 +1525,7 @@
 				61E141821F02593F008C3E7A /* AccTwoTableViewCell.m in Sources */,
 				614C15CB1EC0389200B11A9B /* SignUpViewController.m in Sources */,
 				6185B3B21EFA6AC90051659D /* ChoosePostViewController.m in Sources */,
+				6163B7A51F077957003631AF /* CustomTableViewCell.m in Sources */,
 				9AD3F1A01EF2851E005A215D /* EnterComment.m in Sources */,
 				61ED09A51EB85D42008EAFB7 /* UIImage+MultiFormat.m in Sources */,
 				611D2C7B1EFD0C7300804839 /* SaleCollectionViewCell.m in Sources */,

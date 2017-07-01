@@ -12,7 +12,8 @@
 #import "Reachability.h"
 #import "SBJsonParser.h"
 #import "UIImageView+WebCache.h"
-#import "ChattingViewController.h"
+#import "FriendCahtingViewController.h"
+
 
 @interface ActivityViewController ()<UITableViewDataSource, UITableViewDelegate>
 {
@@ -22,7 +23,7 @@
     NSDictionary *urlplist;
     NSURLConnection *Connection_Activity;
     NSMutableData *webData_Activity;
-    NSMutableArray *Array_Activity;
+    NSMutableArray *Array_Activity,*Array_Activity1;
     
 }
 
@@ -129,13 +130,16 @@
     
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     
-    ChattingViewController * chat=[mainStoryboard instantiateViewControllerWithIdentifier:@"ChattingViewController"];
+    FriendCahtingViewController * chat=[mainStoryboard instantiateViewControllerWithIdentifier:@"FriendCahtingViewController"];
     
     CATransition *transition = [CATransition animation];
     transition.duration = 0.3;
     transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
     transition.type = kCATransitionPush;
     transition.subtype = kCATransitionFromLeft;
+    NSMutableArray * addData=[[NSMutableArray alloc]init];
+    [addData addObject: [Array_Activity objectAtIndex:indexPath.row]];
+    chat.AllDataArray=addData;
     
     [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
     [self.navigationController pushViewController:chat animated:YES];
@@ -244,8 +248,10 @@
     {
         
         Array_Activity=[[NSMutableArray alloc]init];
+          Array_Activity1=[[NSMutableArray alloc]init];
         SBJsonParser *objSBJsonParser = [[SBJsonParser alloc]init];
-        Array_Activity=[objSBJsonParser objectWithData:webData_Activity];
+        //Array_Activity=[objSBJsonParser objectWithData:webData_Activity];
+        Array_Activity1=[objSBJsonParser objectWithData:webData_Activity];
         NSString * ResultString=[[NSString alloc]initWithData:webData_Activity encoding:NSUTF8StringEncoding];
         //  Array_LodingPro=[NSJSONSerialization JSONObjectWithData:webData_LodingPro options:kNilOptions error:nil];
         
@@ -256,6 +262,91 @@
         NSLog(@"count= %lu",(unsigned long)Array_Activity.count);
         NSLog(@"ResultString %@",ResultString);
         
+        
+//        
+//        if(Array_Activity1.count !=0)
+//        {
+//            for (int i=0; i<Array_Activity1.count; i++)
+//            {
+//                if (Array_Activity.count==0)
+//                {
+//                    [Array_Activity addObject:[Array_Activity1 objectAtIndex:i]];
+//                }
+//                else
+//                {
+//        for (NSInteger k=Array_Activity.count-1; k<Array_Activity.count; k++)
+//                    {
+//        NSString * fbMatch11=[[Array_Activity1 objectAtIndex:i]valueForKey:@"receiveruserid"];
+//    NSString * fbMatch22=[[Array_Activity objectAtIndex:k]valueForKey:@"receiveruserid"];
+//                        
+//                        
+//                        if (![fbMatch22 isEqualToString:fbMatch11] )
+//                        {
+//
+//                        [Array_Activity addObject:[Array_Activity1 objectAtIndex:i]];
+//                            
+//                            
+//                            break;
+//                        }
+//                       
+//                       
+//                        
+//                        
+//                    }
+//                    
+//                    
+//                    
+//                    
+//                }
+//            }
+//            NSMutableArray * arrr=[[NSMutableArray alloc]init];
+//            
+//            for (int m=0; m<Array_Activity.count; m++)
+//            {
+//                for (int n=0; n<Array_Activity1.count; n++)
+//                {
+//                    NSString * fbMatch11=[[Array_Activity objectAtIndex:m]valueForKey:@"postid"];
+//                    NSString * fbMatch22=[[Array_Activity1 objectAtIndex:n]valueForKey:@"postid"];
+//                    
+//                    NSString * fbMatch111=[[Array_Activity objectAtIndex:m]valueForKey:@"receiveruserid"];
+//                    NSString * fbMatch222=[[Array_Activity1 objectAtIndex:n]valueForKey:@"receiveruserid"];
+//                    
+//                    if (arrr.count==0)
+//                    {
+//                        [arrr addObject:[Array_Activity objectAtIndex:m]];
+//                    }
+//                    else
+//                    {
+//                for (NSInteger k=arrr.count-1; k<arrr.count; k++)
+//                {
+//                    NSString * fbMatch11p=[[arrr objectAtIndex:k]valueForKey:@"postid"];
+//                    NSString * fbMatch22p=[[Array_Activity1 objectAtIndex:n]valueForKey:@"postid"];
+//                    
+//                    
+//                    if (![fbMatch22p isEqualToString:fbMatch11p] )
+//                    {
+//                        
+//                        [arrr addObject:[Array_Activity1 objectAtIndex:n]];
+//                        
+//                        
+//                        break;
+//                    }
+//                }
+//                    }
+//                    NSLog(@"count n==%d",n);
+//                    NSLog(@"count mmmmmmmm==%d",m);
+//
+//                }
+//                NSLog(@"count m==%d",m);
+//            }
+//               NSLog(@"arrrarrr arrr %@",arrr);
+//        }
+//        NSLog(@"countaftermerge= %lu",(unsigned long)Array_Activity.count);
+//         NSLog(@"countaftermerge array %@",Array_Activity);
+        
+        
+        
+     
         if ([ResultString isEqualToString:@"nochat"])
         {
             
