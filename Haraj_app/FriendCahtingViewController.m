@@ -8,6 +8,7 @@
 #import "UIImageView+MHFacebookImageViewer.h"
 #import "Reachability.h"
 #import "SBJsonParser.h"
+
 static NSString* const CellIdentifier = @"DynamicTableViewCell";
 #define FONT_SIZE 16.0f
 #define CELL_CONTENT_WIDTH self.view.frame.size.width-138
@@ -68,7 +69,7 @@ static const CGFloat kButtonSpaceHided = 24.0f;
 @implementation FriendCahtingViewController
 @synthesize HeadTopView,Table_Friend_chat,Label_UserName,Image_UserProfile;
 @synthesize AllDataArray,TextViews,BackTextViews;
-@synthesize textOne,tableOne,ViewTextViewOne,Cell_one1;
+@synthesize textOne,tableOne,ViewTextViewOne,Cell_one1,Cell_Zero;
 - (void)viewDidLoad {
     
     [super viewDidLoad];
@@ -120,22 +121,15 @@ static const CGFloat kButtonSpaceHided = 24.0f;
 //    Image_UserProfile.layer.cornerRadius = Image_UserProfile.frame.size.height / 2;
     
     
-//    imageheight = 0;
-//    imageurl = "";
-//    imagewidth = 0;
-//    message = Abc;
-//    messagedate = "2017-06-26 11:52:51";
-//    messageread = no;
-//    messagetype = TEXT;
-//    name = "Mohit Sureka";
-//    postid = P1706231926532Z9;
-//    profilepic = "https://graph.facebook.com/10154588848442724/picture?type=large";
-//    receiveruserid = 201706231355556SU1;
-//    senderuserid = 201706260616334AVG;
   
     
     NSURL * url=[NSURL URLWithString:[[AllDataArray objectAtIndex:0] valueForKey:@"profilepic"]];
     [Image_UserProfile sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"DefaultImg.jpg"]options:SDWebImageRefreshCached];
+    Image_UserProfile.layer.cornerRadius = Image_UserProfile.frame.size.height / 2;
+    Image_UserProfile.clipsToBounds = YES;
+
+    
+    
     Label_UserName.text=[[AllDataArray objectAtIndex:0] valueForKey:@"name"];
     
     //     [Image_UserProfile setFrame:CGRectMake(HeadTopView.center.x-64,  Image_UserProfile.frame.origin.y, Image_UserProfile.frame.size.width, Image_UserProfile.frame.size.height)];
@@ -174,13 +168,6 @@ static const CGFloat kButtonSpaceHided = 24.0f;
     self.sendButton.frame=CGRectMake((self.view.frame.size.width-self.sendButton.frame.size.width)-4, self.sendButton.frame.origin.y,self.sendButton.frame.size.width, self.sendButton.frame.size.height);
     
     self.BlackViewOne.frame=CGRectMake(self.view.frame.size.width,self.BlackViewOne.frame.origin.y,self.BlackViewOne.frame.size.width, self.BlackViewOne.frame.size.height);
-    
-    
-    
-    
-    
-    
-    
     
     
     self.ImageGalButton.userInteractionEnabled = YES;
@@ -348,7 +335,7 @@ static const CGFloat kButtonSpaceHided = 24.0f;
         {
             
             
-            [Table_Friend_chat scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:Array_Comment1.count inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+            [Table_Friend_chat scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:Array_Comment1.count inSection:1] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
             
         }
         NSLog(@"data plist path array==%@",Array_Comment1);
@@ -404,7 +391,7 @@ if ([[[AllDataArray objectAtIndex:0]valueForKey:@"matchedfbid"] isEqualToString:
 {
     if (Array_Comment1.count>=1)
     {
-         [Table_Friend_chat scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:Array_Comment1.count inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+         [Table_Friend_chat scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:Array_Comment1.count inSection:1] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
     }
    
 }
@@ -468,11 +455,11 @@ if ([[[AllDataArray objectAtIndex:0]valueForKey:@"matchedfbid"] isEqualToString:
                 if([subImgname isEqualToString:@"defaultimg.jpg"])
                 {
                     
-                    [Table_Friend_chat scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:Array_Comment1.count inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+                    [Table_Friend_chat scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:Array_Comment1.count inSection:1] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
                 }
                 else
                 {
-                    [Table_Friend_chat scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:Array_Comment1.count inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+                    [Table_Friend_chat scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:Array_Comment1.count inSection:1] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
                 }
                 
                 NSLog(@"keyboard cordinates==height==%f", CGRectGetHeight(keyboardRect));
@@ -500,13 +487,25 @@ if ([[[AllDataArray objectAtIndex:0]valueForKey:@"matchedfbid"] isEqualToString:
     [textField resignFirstResponder];
     return YES;
 }
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 2;
+}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (Array_Comment1.count !=0)
+    if (section == 0)
     {
-         return Array_Comment1.count+1;
+        return 1;
     }
-    
+    else
+    {
+        
+        if (Array_Comment1.count !=0)
+        {
+            return Array_Comment1.count+1;
+        }
+    }
   
      return 0;
     
@@ -519,398 +518,399 @@ if ([[[AllDataArray objectAtIndex:0]valueForKey:@"matchedfbid"] isEqualToString:
 //}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    static NSString *Cellid0 = @"CellZero";
     static NSString *Cellid1=@"CellOnes";
  
     
  
-    
-    
-    UILabel *label = nil;
-    UILabel *label1 = nil;
-    UILabel *label_time = nil;
-    UIImageView * desc_Imagepro=nil;
-//    UIImageView * Chat_ImageRight=nil;
-    UIImageView * Chat_UserImage=nil;
-     NSLog(@"Indexpath===%d",indexPath.row);
-    Cell_one1 = [Table_Friend_chat dequeueReusableCellWithIdentifier:@"Cell"];
-    Cell_one1.selectionStyle=UITableViewCellSelectionStyleNone;
-    if (Cell_one1 == nil)
+    if (indexPath.section == 0)
     {
         
-        Cell_one1 = [[CustomTableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:Cellid1] ;
-        label1 = [[UILabel alloc] initWithFrame:CGRectZero];
-        [label1 setLineBreakMode:UILineBreakModeWordWrap];
-        [label1 setNumberOfLines:0];
-        [label1 setTag:1];
-        [label1 setBackgroundColor:[UIColor clearColor]];
-        [[Cell_one1 contentView] addSubview:label1];
+        Cell_Zero = (CustomTableViewCellZero *)[Table_Friend_chat dequeueReusableCellWithIdentifier:Cellid0 forIndexPath:indexPath];
         
         
+        Cell_Zero.postImageView.layer.cornerRadius = 10;
+        Cell_Zero.postImageView.layer.masksToBounds = YES;
+        NSURL * url=[NSURL URLWithString:[[AllDataArray objectAtIndex:indexPath.row] valueForKey:@"profilepic"]];
+        [Cell_Zero.postImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"]
+                                                  options:SDWebImageRefreshCached];
+
+        Cell_Zero.postIdLabel.text =[NSString stringWithFormat:@"POST ID:%@", [[AllDataArray objectAtIndex:indexPath.row]valueForKey:@"postid"]];
         
-        label = [[UILabel alloc] initWithFrame:CGRectZero];
-        [label setLineBreakMode:UILineBreakModeWordWrap];
-        [label setNumberOfLines:0];
-        [label setFont:[UIFont fontWithName:@"Helvetica-Light" size:FONT_SIZE]];
-        [label setTag:5];
+        NSLog(@"AllDataArray=%@",AllDataArray);
+        
+        
+                
+
+        
+            return Cell_Zero;
+        
+  
+    }
+    else
+    {
+        
+        UILabel *label = nil;
+        UILabel *label1 = nil;
+        UILabel *label_time = nil;
+        UIImageView * desc_Imagepro=nil;
+        //    UIImageView * Chat_ImageRight=nil;
+        UIImageView * Chat_UserImage=nil;
+        NSLog(@"Indexpath===%ld",(long)indexPath.row);
+        Cell_one1 = [Table_Friend_chat dequeueReusableCellWithIdentifier:@"Cell"];
+        Cell_one1.selectionStyle=UITableViewCellSelectionStyleNone;
+        if (Cell_one1 == nil)
+        {
+            
+            Cell_one1 = [[CustomTableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:Cellid1] ;
+            label1 = [[UILabel alloc] initWithFrame:CGRectZero];
+            [label1 setLineBreakMode:UILineBreakModeWordWrap];
+            [label1 setNumberOfLines:0];
+            [label1 setTag:1];
+            [label1 setBackgroundColor:[UIColor clearColor]];
+            [[Cell_one1 contentView] addSubview:label1];
+            
+            
+            
+            label = [[UILabel alloc] initWithFrame:CGRectZero];
+            [label setLineBreakMode:UILineBreakModeWordWrap];
+            [label setNumberOfLines:0];
+            [label setFont:[UIFont fontWithName:@"Helvetica-Light" size:FONT_SIZE]];
+            [label setTag:5];
+            [label setBackgroundColor:[UIColor clearColor]];
+            [[Cell_one1 contentView] addSubview:label];
+            
+            
+            
+            label_time = [[UILabel alloc] initWithFrame:CGRectZero];
+            [label_time setLineBreakMode:UILineBreakModeWordWrap];
+            [label_time setNumberOfLines:0];
+            [label_time setFont:[UIFont fontWithName:@"Helvetica-Light" size:12]];
+            
+            [label_time setBackgroundColor:[UIColor clearColor]];
+            [[Cell_one1 contentView] addSubview:label_time];
+            
+            
+            desc_Imagepro = [[UIImageView alloc] initWithFrame:CGRectZero];
+            [desc_Imagepro setTag:4];
+            [desc_Imagepro setBackgroundColor:[UIColor lightGrayColor]];
+            [[Cell_one1 contentView] addSubview:desc_Imagepro];
+            
+            
+            //        Chat_ImageRight = [[UIImageView alloc] initWithFrame:CGRectZero];
+            //        [Chat_ImageRight setTag:4];
+            //        [Chat_ImageRight setBackgroundColor:[UIColor lightGrayColor]];
+            //        [[Cell_one1 contentView] addSubview:Chat_ImageRight];
+            
+            Chat_UserImage = [[UIImageView alloc] initWithFrame:CGRectZero];
+            [Chat_UserImage setTag:5];
+            [Chat_UserImage setBackgroundColor:[UIColor lightGrayColor]];
+            [[Cell_one1 contentView] addSubview:Chat_UserImage];
+            
+            
+            
+        }
+        
+        
+        Cell_one1.selectionStyle=UITableViewCellSelectionStyleNone;
+        
+        
+        if (!label)
+            label = (UILabel*)[Cell_one1 viewWithTag:1];
+        
+        if (!label1)
+            label1 = (UILabel*)[Cell_one1 viewWithTag:2];
+        
+        
         [label setBackgroundColor:[UIColor clearColor]];
-        [[Cell_one1 contentView] addSubview:label];
         
         
-        
-        label_time = [[UILabel alloc] initWithFrame:CGRectZero];
-        [label_time setLineBreakMode:UILineBreakModeWordWrap];
-        [label_time setNumberOfLines:0];
-        [label_time setFont:[UIFont fontWithName:@"Helvetica-Light" size:12]];
-       
-        [label_time setBackgroundColor:[UIColor clearColor]];
-        [[Cell_one1 contentView] addSubview:label_time];
+        label.textColor=[UIColor blackColor];
         
         
-        desc_Imagepro = [[UIImageView alloc] initWithFrame:CGRectZero];
-        [desc_Imagepro setTag:4];
-        [desc_Imagepro setBackgroundColor:[UIColor lightGrayColor]];
-        [[Cell_one1 contentView] addSubview:desc_Imagepro];
-        
-        
-//        Chat_ImageRight = [[UIImageView alloc] initWithFrame:CGRectZero];
-//        [Chat_ImageRight setTag:4];
-//        [Chat_ImageRight setBackgroundColor:[UIColor lightGrayColor]];
-//        [[Cell_one1 contentView] addSubview:Chat_ImageRight];
-        
-        Chat_UserImage = [[UIImageView alloc] initWithFrame:CGRectZero];
-        [Chat_UserImage setTag:5];
-        [Chat_UserImage setBackgroundColor:[UIColor lightGrayColor]];
-        [[Cell_one1 contentView] addSubview:Chat_UserImage];
-        
-        
-        
-    }
-    
-    
-    Cell_one1.selectionStyle=UITableViewCellSelectionStyleNone; 
-    
-   
-    if (!label)
-        label = (UILabel*)[Cell_one1 viewWithTag:1];
-    
-    if (!label1)
-        label1 = (UILabel*)[Cell_one1 viewWithTag:2];
-   
-   
-    [label setBackgroundColor:[UIColor clearColor]];
-    
-
-    label.textColor=[UIColor blackColor];
-    
-   
-    if (indexPath.row==0)
-    {
-       
-[label setText:[NSString stringWithFormat:@"%@%@%@%@",@"You matched with ",[[AllDataArray objectAtIndex:0] valueForKey:@"name"],@" on ",[[AllDataArray objectAtIndex:0] valueForKey:@"messagedate"]]];
-        [label setFrame:CGRectMake(0,label_time.frame.size.height,self.view.frame.size.width, Cell_one1.frame.size.height)];
-         label.textColor=[UIColor lightGrayColor];
-        label.textAlignment=NSTextAlignmentCenter;
-        label_time.hidden=YES;
-    }
-  else
-  {
-      
-      label_time.tag=indexPath.row-1;
-      
-      label_time.textColor=[UIColor lightGrayColor];
-      label_time.textAlignment=NSTextAlignmentCenter;
-      label_time.hidden=NO;
-      
-      
-
-      NSString *str = [[Array_Comment1 objectAtIndex:indexPath.row-1]valueForKey:@"messagedate"];;
-      NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-      [dateFormat setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
-       NSDate *dte = [dateFormat dateFromString:str];
-      [dateFormat setDateFormat:@"dd/MM/yyyy"];
-      
-    NSLog(@"Date format saecond %@",[NSString stringWithFormat:@"%@",[dateFormat stringFromDate:dte]]);
-      NSString *str_Date=[NSString stringWithFormat:@"%@",[dateFormat stringFromDate:dte]];
-   
-     label_time.text=str_Date;
-      label_time.hidden=NO;
-      if (indexPath.row==1)
-      {
-        
-           Flag_TimeOneUser=@"no";
-           label_time.hidden=NO;
-       [label_time setFrame:CGRectMake(0,0,self.view.frame.size.width, 20)];
-           NSLog(@"Date format row11 %d",indexPath.row-1);
-      }
-      else
-      {
-        label_time.hidden=NO;
-          if (indexPath.row >=2)
-          {
-              NSString *str1 = [[Array_Comment1 objectAtIndex:indexPath.row-2]valueForKey:@"messagedate"];;         NSDateFormatter *dateFormat1 = [[NSDateFormatter alloc] init];
-              [dateFormat1 setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
-              NSDate *dte1 = [dateFormat1 dateFromString:str1];
-              [dateFormat1 setDateFormat:@"dd/MM/yyyy"];
-              label_time.text=[NSString stringWithFormat:@"%@",[dateFormat1 stringFromDate:dte1]];
-              NSLog(@"Date format saecond1111 %@",[NSString stringWithFormat:@"%@",[dateFormat stringFromDate:dte1]]);
-              NSString *str_Date1=[NSString stringWithFormat:@"%@",[dateFormat stringFromDate:dte1]];
-              if ([str_Date isEqualToString:str_Date1])
-              {
-                  [label_time setFrame:CGRectMake(0,0,0,0)];
-                  label_time.text=@"";;
-              }
-              else
-              {
-                  [label_time setFrame:CGRectMake(0,0,self.view.frame.size.width, 20)];
-                  label_time.text=str_Date;
-              }
- 
-          }
-          
-          
-      }
-
-      
-      
-      
-      
-      
-      if ([[[Array_Comment1 objectAtIndex:indexPath.row-1]valueForKey:@"messagetype"] isEqualToString:@"TEXT"] || [[[Array_Comment1 objectAtIndex:indexPath.row-1]valueForKey:@"messagetype"] isEqualToString:@""])
-      {
-      
-          
-          
-    NSString *text =[[Array_Comment1 objectAtIndex:indexPath.row-1]valueForKey:@"message"];
-               CGSize constraint = CGSizeMake(CELL_CONTENT_WIDTH - (CELL_CONTENT_MARGIN * 2), 20000.0f);
-      
-      CGSize size = [text sizeWithFont:[UIFont fontWithName:@"Helvetica-Light" size:FONT_SIZE] constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
-      
-      int lines = size.height/16;
-      
-      NSLog(@"lines count : %i \n\n",lines);
-      
-    
-    
-   [label setFont:[UIFont fontWithName:@"Helvetica-Light" size:FONT_SIZE]];
-    
-      NSMutableParagraphStyle *style =  [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-      style.alignment = NSTextAlignmentLeft;
-      style.firstLineHeadIndent = 10.0f;
-      style.headIndent = 10.0f;
-      style.tailIndent = -10.0f;
-      
-      NSAttributedString *attrText = [[NSAttributedString alloc] initWithString:text attributes:@{ NSParagraphStyleAttributeName : style}];
-      
-      label.numberOfLines = 0;
-      label.attributedText = attrText;
-      
-   //   [label setText:text];
-    
-    label.clipsToBounds=YES;
-    label.layer.cornerRadius=9.0f;
-    label1.backgroundColor=[UIColor colorWithRed:13/255.0 green:146/255.0 blue:220/255.0 alpha:0.8];
-
-    NSLog(@"Comment Width==%f",size.width);
-    NSLog(@"Comment Height==%f",size.height);
-    NSLog(@"Comment StringLength==%lu",(unsigned long)text.length);
-    
-//          receiveruserid = 201706231355556SU1;
-//          senderuserid
-          
-    if ([[defaults valueForKey:@"userid"] isEqualToString:[[Array_Comment1 objectAtIndex:indexPath.row-1]valueForKey:@"receiveruserid"]])
-    {
-        
-        
-        
-        NSURL * url=[[AllDataArray objectAtIndex:0]valueForKey:@"profilepic"];
-        [desc_Imagepro sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"DefaultImg.jpg"]options:SDWebImageRefreshCached];
-        
-        
-        label.backgroundColor=[UIColor colorWithRed:255/255.0 green:244/255.0 blue:96/255.0 alpha:0.7];
-
-           label.textColor=[UIColor colorWithRed:0 green:0 blue:0 alpha:0.9];
-        if (size.width <=self.view.frame.size.width-132)
+        if (indexPath.row==0)
         {
             
-
-            [label setFrame:CGRectMake(50,label_time.frame.size.height, size.width+22, MAX(size.height, 30.0f)+8)];
-           
-          
-        }
-        
-        else
-        {
-            [label setFrame:CGRectMake(50,label_time.frame.size.height, self.view.frame.size.width-140,MAX(size.height, 30.0f)+8)];
-         
-            
-        }
- 
-        [desc_Imagepro setFrame:CGRectMake(8,label.frame.origin.y+(label.frame.size.height-32),32,32)];
-        desc_Imagepro.clipsToBounds=YES;
-        desc_Imagepro.layer.cornerRadius=desc_Imagepro.frame.size.height/2;
-    }
-    else
-    {
-        NSURL * url=[defaults valueForKey:@"profilepic"];
-        [desc_Imagepro sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"DefaultImg.jpg"]options:SDWebImageRefreshCached];
-        if ([[defaults valueForKey:@"gender"] isEqualToString:@"Boy"])
-        {
-           label.backgroundColor=[UIColor colorWithRed:220/255.0 green:242/255.0 blue:253/255.0 alpha:1];
-            label.layer.borderColor=[UIColor colorWithRed:220/255.0 green:242/255.0 blue:253/255.0 alpha:1].CGColor;
-            label.layer.borderWidth=1.0f;
-            
-        }
-        else
-        {
- label.backgroundColor=[UIColor colorWithRed:250/255.0 green:207/255.0 blue:214/255.0 alpha:1];
-    label.layer.borderColor=[UIColor colorWithRed:250/255.0 green:207/255.0 blue:214/255.0 alpha:1].CGColor;
-            label.layer.borderWidth=1.0f;
-        }
-        
-
-          label.textColor=[UIColor colorWithRed:0 green:0 blue:0 alpha:0.9];
-        
-        if (size.width <=self.view.frame.size.width-132)
-        {
-            
-
-    [label setFrame:CGRectMake(self.view.frame.size.width-(size.width+83),label_time.frame.size.height, size.width+22, MAX(size.height, 30.0f)+8)];
-        }
-        
-        else
-        {
-            
-
-            [label setFrame:CGRectMake(self.view.frame.size.width-(size.width+83),label_time.frame.size.height, self.view.frame.size.width-140, MAX(size.height, 30.0f)+8)];
-            
-            
-            
-        }
-
-        
-        [desc_Imagepro setFrame:CGRectMake(self.view.frame.size.width-48,label.frame.origin.y+(label.frame.size.height-32),32,32)];
-        desc_Imagepro.clipsToBounds=YES;
-        desc_Imagepro.layer.cornerRadius=desc_Imagepro.frame.size.height/2;
-    }
-  
-      
-      
-      
-  }
-  
-    else
-    {
-      
-       
-        CGFloat imgwidth=[[[Array_Comment1 objectAtIndex:indexPath.row-1]valueForKey:@"imagewidth"] floatValue];
-        CGFloat imgheight=[[[Array_Comment1 objectAtIndex:indexPath.row-1]valueForKey:@"imageheight"] floatValue];
-       
-      
-        NSURL * url=[[Array_Comment1 objectAtIndex:indexPath.row-1]valueForKey:@"imageurl"];
-        [Chat_UserImage sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"DefaultImg.jpg"]options:SDWebImageRefreshCached];
-        Chat_UserImage.clipsToBounds=YES;
-        Chat_UserImage.layer.cornerRadius=9.0f;
-        Chat_UserImage.contentMode=UIViewContentModeScaleAspectFit;
-        
-        
-       
-
-        
-        
-        
-        if ([[defaults valueForKey:@"userid1"] isEqualToString:[[Array_Comment1 objectAtIndex:indexPath.row-1]valueForKey:@"receiveruserid"]])
-        {
-            
-            NSURL * url=[[AllDataArray objectAtIndex:0]valueForKey:@"profilepic"];
-            [desc_Imagepro sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"DefaultImg.jpg"]options:SDWebImageRefreshCached];
-           
-            [Chat_UserImage setFrame:CGRectMake(52,4+label_time.frame.size.height,imgwidth,imgheight)];
-            Chat_UserImage.clipsToBounds=YES;
-            Chat_UserImage.layer.cornerRadius=9.0f;
-            Chat_UserImage.contentMode=UIViewContentModeScaleAspectFit;
-         [self displayImage:Chat_UserImage withImage:Chat_UserImage.image];
-            
-            [desc_Imagepro setFrame:CGRectMake(8,Chat_UserImage.frame.origin.y+(Chat_UserImage.frame.size.height-32),32,32)];
-            desc_Imagepro.clipsToBounds=YES;
-            desc_Imagepro.layer.cornerRadius=desc_Imagepro.frame.size.height/2;
-            
+          //  [label setText:[NSString stringWithFormat:@"%@%@%@%@",@"You matched with ",[[AllDataArray objectAtIndex:0] valueForKey:@"name"],@" on ",[[AllDataArray objectAtIndex:0] valueForKey:@"messagedate"]]];
+//            [label setFrame:CGRectMake(0,label_time.frame.size.height,self.view.frame.size.width, Cell_one1.frame.size.height)];
+//            label.textColor=[UIColor lightGrayColor];
+//            label.textAlignment=NSTextAlignmentCenter;
+//            label_time.hidden=YES;
         }
         else
         {
             
+            label_time.tag=indexPath.row-1;
             
-            NSURL * url=[defaults valueForKey:@"profilepic"];
-            [desc_Imagepro sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"DefaultImg.jpg"]options:SDWebImageRefreshCached];
+            label_time.textColor=[UIColor lightGrayColor];
+            label_time.textAlignment=NSTextAlignmentCenter;
+            label_time.hidden=NO;
             
             
-            [Chat_UserImage setFrame:CGRectMake((self.view.frame.size.width-64)-imgwidth,4+label_time.frame.size.height,imgwidth,imgheight)];
-            Chat_UserImage.clipsToBounds=YES;
-            Chat_UserImage.layer.cornerRadius=9.0f;
-            Chat_UserImage.contentMode=UIViewContentModeScaleAspectFit;
             
-             [self displayImage:Chat_UserImage withImage:Chat_UserImage.image];
+            NSString *str = [[Array_Comment1 objectAtIndex:indexPath.row-1]valueForKey:@"messagedate"];;
+            NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+            [dateFormat setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
+            NSDate *dte = [dateFormat dateFromString:str];
+            [dateFormat setDateFormat:@"dd/MM/yyyy"];
             
-            [desc_Imagepro setFrame:CGRectMake(self.view.frame.size.width-48,Chat_UserImage.frame.origin.y+(Chat_UserImage.frame.size.height-32),32,32)];
-            desc_Imagepro.clipsToBounds=YES;
-            desc_Imagepro.layer.cornerRadius=desc_Imagepro.frame.size.height/2;
+            NSLog(@"Date format saecond %@",[NSString stringWithFormat:@"%@",[dateFormat stringFromDate:dte]]);
+            NSString *str_Date=[NSString stringWithFormat:@"%@",[dateFormat stringFromDate:dte]];
+            
+            label_time.text=str_Date;
+            label_time.hidden=NO;
+            if (indexPath.row==1)
+            {
+                
+                Flag_TimeOneUser=@"no";
+                label_time.hidden=NO;
+                [label_time setFrame:CGRectMake(0,0,self.view.frame.size.width, 20)];
+                NSLog(@"Date format row11 %ld",indexPath.row-1);
+            }
+            else
+            {
+                label_time.hidden=NO;
+                if (indexPath.row >=2)
+                {
+                    NSString *str1 = [[Array_Comment1 objectAtIndex:indexPath.row-2]valueForKey:@"messagedate"];;         NSDateFormatter *dateFormat1 = [[NSDateFormatter alloc] init];
+                    [dateFormat1 setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
+                    NSDate *dte1 = [dateFormat1 dateFromString:str1];
+                    [dateFormat1 setDateFormat:@"dd/MM/yyyy"];
+                    label_time.text=[NSString stringWithFormat:@"%@",[dateFormat1 stringFromDate:dte1]];
+                    NSLog(@"Date format saecond1111 %@",[NSString stringWithFormat:@"%@",[dateFormat stringFromDate:dte1]]);
+                    NSString *str_Date1=[NSString stringWithFormat:@"%@",[dateFormat stringFromDate:dte1]];
+                    if ([str_Date isEqualToString:str_Date1])
+                    {
+                        [label_time setFrame:CGRectMake(0,0,0,0)];
+                        label_time.text=@"";;
+                    }
+                    else
+                    {
+                        [label_time setFrame:CGRectMake(0,0,self.view.frame.size.width, 20)];
+                        label_time.text=str_Date;
+                    }
+                    
+                }
+                
+                
+            }
+            
+            
+            
+            
+            
+            
+            if ([[[Array_Comment1 objectAtIndex:indexPath.row-1]valueForKey:@"messagetype"] isEqualToString:@"TEXT"] || [[[Array_Comment1 objectAtIndex:indexPath.row-1]valueForKey:@"messagetype"] isEqualToString:@""])
+            {
+                
+                
+                
+                NSString *text =[[Array_Comment1 objectAtIndex:indexPath.row-1]valueForKey:@"message"];
+                CGSize constraint = CGSizeMake(CELL_CONTENT_WIDTH - (CELL_CONTENT_MARGIN * 2), 20000.0f);
+                
+                CGSize size = [text sizeWithFont:[UIFont fontWithName:@"Helvetica-Light" size:FONT_SIZE] constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
+                
+                int lines = size.height/16;
+                
+                NSLog(@"lines count : %i \n\n",lines);
+                
+                
+                
+                [label setFont:[UIFont fontWithName:@"Helvetica-Light" size:FONT_SIZE]];
+                
+                NSMutableParagraphStyle *style =  [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+                style.alignment = NSTextAlignmentLeft;
+                style.firstLineHeadIndent = 10.0f;
+                style.headIndent = 10.0f;
+                style.tailIndent = -10.0f;
+                
+                NSAttributedString *attrText = [[NSAttributedString alloc] initWithString:text attributes:@{ NSParagraphStyleAttributeName : style}];
+                
+                label.numberOfLines = 0;
+                label.attributedText = attrText;
+                
+                //   [label setText:text];
+                
+                label.clipsToBounds=YES;
+                label.layer.cornerRadius=9.0f;
+                label1.backgroundColor=[UIColor colorWithRed:13/255.0 green:146/255.0 blue:220/255.0 alpha:0.8];
+                
+                NSLog(@"Comment Width==%f",size.width);
+                NSLog(@"Comment Height==%f",size.height);
+                NSLog(@"Comment StringLength==%lu",(unsigned long)text.length);
+                
+                //          receiveruserid = 201706231355556SU1;
+                //          senderuserid
+                
+                if ([[defaults valueForKey:@"userid"] isEqualToString:[[Array_Comment1 objectAtIndex:indexPath.row-1]valueForKey:@"receiveruserid"]])
+                {
+                    
+                    
+                    
+                    NSURL * url=[[AllDataArray objectAtIndex:0]valueForKey:@"profilepic"];
+                    [desc_Imagepro sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"DefaultImg.jpg"]options:SDWebImageRefreshCached];
+                    
+                    
+                    label.backgroundColor=[UIColor colorWithRed:255/255.0 green:244/255.0 blue:96/255.0 alpha:0.7];
+                    
+                    label.textColor=[UIColor colorWithRed:0 green:0 blue:0 alpha:0.9];
+                    if (size.width <=self.view.frame.size.width-132)
+                    {
+                        
+                        
+                        [label setFrame:CGRectMake(50,label_time.frame.size.height, size.width+22, MAX(size.height, 30.0f)+8)];
+                        
+                        
+                    }
+                    
+                    else
+                    {
+                        [label setFrame:CGRectMake(50,label_time.frame.size.height, self.view.frame.size.width-140,MAX(size.height, 30.0f)+8)];
+                        
+                        
+                    }
+                    
+                    [desc_Imagepro setFrame:CGRectMake(8,label.frame.origin.y+(label.frame.size.height-32),32,32)];
+                    desc_Imagepro.clipsToBounds=YES;
+                    desc_Imagepro.layer.cornerRadius=desc_Imagepro.frame.size.height/2;
+                }
+                else
+                {
+                    NSURL * url=[defaults valueForKey:@"ProImg"];
+                    [desc_Imagepro sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"DefaultImg.jpg"]options:SDWebImageRefreshCached];
+                    if ([[defaults valueForKey:@"gender"] isEqualToString:@"Boy"])
+                    {
+                        label.backgroundColor=[UIColor colorWithRed:220/255.0 green:242/255.0 blue:253/255.0 alpha:1];
+                        label.layer.borderColor=[UIColor colorWithRed:220/255.0 green:242/255.0 blue:253/255.0 alpha:1].CGColor;
+                        label.layer.borderWidth=1.0f;
+                        
+                    }
+                    else
+                    {
+                        label.backgroundColor=[UIColor colorWithRed:250/255.0 green:207/255.0 blue:214/255.0 alpha:1];
+                        label.layer.borderColor=[UIColor colorWithRed:250/255.0 green:207/255.0 blue:214/255.0 alpha:1].CGColor;
+                        label.layer.borderWidth=1.0f;
+                    }
+                    
+                    
+                    label.textColor=[UIColor colorWithRed:0 green:0 blue:0 alpha:0.9];
+                    
+                    if (size.width <=self.view.frame.size.width-132)
+                    {
+                        
+                        
+                        [label setFrame:CGRectMake(self.view.frame.size.width-(size.width+83),label_time.frame.size.height, size.width+22, MAX(size.height, 30.0f)+8)];
+                    }
+                    
+                    else
+                    {
+                        
+                        
+                        [label setFrame:CGRectMake(self.view.frame.size.width-(size.width+83),label_time.frame.size.height, self.view.frame.size.width-140, MAX(size.height, 30.0f)+8)];
+                        
+                        
+                        
+                    }
+                    
+                    
+                    [desc_Imagepro setFrame:CGRectMake(self.view.frame.size.width-48,label.frame.origin.y+(label.frame.size.height-32),32,32)];
+                    desc_Imagepro.clipsToBounds=YES;
+                    desc_Imagepro.layer.cornerRadius=desc_Imagepro.frame.size.height/2;
+                }
+                
+                
+                
+                
+            }
+            
+            else
+            {
+                
+                
+                CGFloat imgwidth=[[[Array_Comment1 objectAtIndex:indexPath.row-1]valueForKey:@"imagewidth"] floatValue];
+                CGFloat imgheight=[[[Array_Comment1 objectAtIndex:indexPath.row-1]valueForKey:@"imageheight"] floatValue];
+                
+                
+                NSURL * url=[[Array_Comment1 objectAtIndex:indexPath.row-1]valueForKey:@"imageurl"];
+                [Chat_UserImage sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"DefaultImg.jpg"]options:SDWebImageRefreshCached];
+                Chat_UserImage.clipsToBounds=YES;
+                Chat_UserImage.layer.cornerRadius=9.0f;
+                Chat_UserImage.contentMode=UIViewContentModeScaleAspectFit;
+                
+                
+                
+                
+                
+                
+                
+                if ([[defaults valueForKey:@"userid1"] isEqualToString:[[Array_Comment1 objectAtIndex:indexPath.row-1]valueForKey:@"receiveruserid"]])
+                {
+                    
+                    NSURL * url=[[AllDataArray objectAtIndex:0]valueForKey:@"profilepic"];
+                    [desc_Imagepro sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"DefaultImg.jpg"]options:SDWebImageRefreshCached];
+                    
+                    [Chat_UserImage setFrame:CGRectMake(52,4+label_time.frame.size.height,imgwidth,imgheight)];
+                    Chat_UserImage.clipsToBounds=YES;
+                    Chat_UserImage.layer.cornerRadius=9.0f;
+                    Chat_UserImage.contentMode=UIViewContentModeScaleAspectFit;
+                    [self displayImage:Chat_UserImage withImage:Chat_UserImage.image];
+                    
+                    [desc_Imagepro setFrame:CGRectMake(8,Chat_UserImage.frame.origin.y+(Chat_UserImage.frame.size.height-32),32,32)];
+                    desc_Imagepro.clipsToBounds=YES;
+                    desc_Imagepro.layer.cornerRadius=desc_Imagepro.frame.size.height/2;
+                    
+                }
+                else
+                {
+                    
+                    
+                    NSURL * url=[defaults valueForKey:@"profilepic"];
+                    [desc_Imagepro sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"DefaultImg.jpg"]options:SDWebImageRefreshCached];
+                    
+                    
+                    [Chat_UserImage setFrame:CGRectMake((self.view.frame.size.width-64)-imgwidth,4+label_time.frame.size.height,imgwidth,imgheight)];
+                    Chat_UserImage.clipsToBounds=YES;
+                    Chat_UserImage.layer.cornerRadius=9.0f;
+                    Chat_UserImage.contentMode=UIViewContentModeScaleAspectFit;
+                    
+                    [self displayImage:Chat_UserImage withImage:Chat_UserImage.image];
+                    
+                    [desc_Imagepro setFrame:CGRectMake(self.view.frame.size.width-48,Chat_UserImage.frame.origin.y+(Chat_UserImage.frame.size.height-32),32,32)];
+                    desc_Imagepro.clipsToBounds=YES;
+                    desc_Imagepro.layer.cornerRadius=desc_Imagepro.frame.size.height/2;
+                }
+                
+                
+            }
         }
         
-        
+    
+        return Cell_one1;
     }
-  }
-    return Cell_one1;
     
     
-    
+    return 0;
 
 }
 
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    
-    return 1;
-    
-    
-}
-//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-//{
-////    if (section==0)
-////    {
-//        sectionView=[[UIView alloc]initWithFrame:CGRectMake(0, 0,self.view.frame.size.width,36)];
-//        [sectionView setBackgroundColor:[UIColor colorWithRed:255/255.0 green:244/255.0 blue:96/255.0 alpha:1]];
-//        UILabel * Label1=[[UILabel alloc]initWithFrame:CGRectMake(20, 0, self.view.frame.size.width-40, sectionView.frame.size.height)];
-//        Label1.backgroundColor=[UIColor clearColor];
-//        Label1.textColor=[UIColor colorWithRed:0 green:0 blue:0 alpha:0.9];
-//        Label1.font=[UIFont fontWithName:@"Helvetica-Bold" size:16.0f];
-//        Label1.text=@"New matches";
-//
-//
-//        UILabel * Label2=[[UILabel alloc]initWithFrame:CGRectMake(130,6,24,24)];
-//        Label2.backgroundColor=[UIColor lightGrayColor];
-//        Label2.clipsToBounds=YES;
-//        Label2.layer.cornerRadius=Label2.frame.size.height/2;
-//        Label2.textColor=[UIColor groupTableViewBackgroundColor];
-//        Label2.font=[UIFont fontWithName:@"Helvetica-Bold" size:14.0f];
-//        Label2.text=[NSString stringWithFormat:@"%lu",(unsigned long)Array_Comment.count];
-//        Label2.textAlignment=NSTextAlignmentCenter;
-//        [sectionView addSubview:Label2];
-//
-//
-//
-//        [sectionView addSubview:Label1];
-//        sectionView.tag=section;
-//    return sectionView;
-//    }
 
 
 - (CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
+    if (indexPath.section == 0)
+    {
+        return 128;
+
+    }
+    else
+    {
+    
  
     if (indexPath.row==0)
     {
-       return 50;
+       return 10;
     }
     else
     {
@@ -976,56 +976,51 @@ if ([[[AllDataArray objectAtIndex:0]valueForKey:@"matchedfbid"] isEqualToString:
  
    
     }
+    }
     return 0;
 }
-//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-//{
-//    return 0;
-//    
-//}
-//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    if (indexPath.section==1)
-//    {
-//        
-//    }
-//    
-//}
+
 -(IBAction)BackView:(id)sender
 {
     
     
-    [defaults setObject:@"no" forKey:@"notification"];
-    [defaults synchronize];
-    if ([[defaults valueForKey:@"letsChat"] isEqualToString:@"yes"] || [[defaults valueForKey:@"letsChatAd"] isEqualToString:@"yes"])
-    {
-        //        self.view.window.rootViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-        //[self.view.window.rootViewController setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
-        
-        [self performSegueWithIdentifier:@"back" sender:self];
-    }
-    else
-    {
-        [defaults setObject:@"no" forKey:@"letsChat"];
-        [defaults setObject:@"no" forKey:@"letsChatAd"];
-        
-        [defaults synchronize];
-        if ([[defaults valueForKey:@"friendRequest"] isEqualToString:@"yes"])
-        {
-            [defaults setObject:@"no" forKey:@"friendRequest"];
-            [self.navigationController popToRootViewControllerAnimated:YES];
-            
-            
-        }
-        else
-        {
-            [self.navigationController popViewControllerAnimated:YES];
-            
-        }
-        
-        
-    }
-    
+//    [defaults setObject:@"no" forKey:@"notification"];
+//    [defaults synchronize];
+//    if ([[defaults valueForKey:@"letsChat"] isEqualToString:@"yes"] || [[defaults valueForKey:@"letsChatAd"] isEqualToString:@"yes"])
+//    {
+//        //        self.view.window.rootViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+//        //[self.view.window.rootViewController setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
+//        
+//        [self performSegueWithIdentifier:@"back" sender:self];
+//    }
+//    else
+//    {
+//        [defaults setObject:@"no" forKey:@"letsChat"];
+//        [defaults setObject:@"no" forKey:@"letsChatAd"];
+//        
+//        [defaults synchronize];
+//        if ([[defaults valueForKey:@"friendRequest"] isEqualToString:@"yes"])
+//        {
+//            [defaults setObject:@"no" forKey:@"friendRequest"];
+//            [self.navigationController popToRootViewControllerAnimated:YES];
+//            
+//            
+//        }
+//        else
+//        {
+//            [self.navigationController popViewControllerAnimated:YES];
+//            
+//        }
+//        
+//        
+//    }
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.3;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    transition.type = kCATransitionPush;
+    transition.subtype = kCATransitionFromRight;
+    [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
+    [self.navigationController popViewControllerAnimated:YES];
     
     
     [HomeTimer invalidate];
@@ -1253,7 +1248,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     NSString *chatcountVal=@"";
     
 //    NSString *message=@"message";
-    NSString *messageVal=textOne.text;
+    NSString *messageVal=(NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,(CFStringRef)textOne.text,NULL,(CFStringRef)@"!*\"();:@&=+$,/?%#[]% ",CFStringConvertNSStringEncodingToEncoding(NSUTF8StringEncoding)));
    
 //    NSString *Chattypee=@"chattype";
     NSString *ChattypeeVal=chattype;
@@ -1501,7 +1496,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
             {
                 
                 
-                [Table_Friend_chat scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:Array_Comment.count inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+                [Table_Friend_chat scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:Array_Comment.count inSection:1] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
                 
             }
             
@@ -1676,7 +1671,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
             {
                 
                     
-                    [Table_Friend_chat scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:Array_Comment.count inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+                    [Table_Friend_chat scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:Array_Comment.count inSection:1] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
               
             }
             
@@ -1712,7 +1707,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     {
     
             
-            [Table_Friend_chat scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:Array_Comment1.count inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+            [Table_Friend_chat scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:Array_Comment1.count inSection:1] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
         
     }
     
@@ -1859,7 +1854,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     {
         
             
-            [Table_Friend_chat scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:Array_Comment1.count inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+            [Table_Friend_chat scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:Array_Comment1.count inSection:1] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
         
       
     

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "CustomTableViewCell.h"
+#import "CustomTableViewCellZero.h"
 
 @interface FriendCahtingViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
 @property(nonatomic,strong)IBOutlet UIView * HeadTopView;
@@ -27,7 +28,7 @@
 
 
 
-
+@property(strong,nonatomic)CustomTableViewCellZero * Cell_Zero;
 @property(strong,nonatomic)CustomTableViewCell * Cell_one1;
 @property (nonatomic, strong)NSMutableArray *AllDataArray;
 @property (nonatomic, strong)NSString * String_payButtonHide;

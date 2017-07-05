@@ -38,9 +38,11 @@
     NSDictionary *urlplist;
     NSURLConnection *Connection_ViewPost;
     NSMutableData *webData_ViewPost;
-    NSMutableArray *Array_ViewPost,*Array_Car,*Array_Property,*Array_Electronics,*Array_Pets,*Array_Furniture,*Array_Others,*Array_Services;
+    NSMutableArray *Array_ViewPost,*Array_Car,*Array_Property,*Array_Electronics,*Array_Pets,*Array_Furniture,*Array_Others,*Array_Services,*Array_ActivityTicker;
     
     int favouritesCount;
+    
+    NSTimer *BadgeTimer;
 }
 @property (strong, nonatomic) LGPlusButtonsView *plusButtonsViewMain;
 
@@ -48,7 +50,7 @@
 @end
 
 @implementation ViewController
-@synthesize navigationView,profile,activity,search,location,locationLabel,nameLabel;
+@synthesize navigationView,profile,activity,search,location,locationLabel,nameLabel,badgeLabel;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -72,6 +74,19 @@
     self.navigationController.navigationBar.hidden=YES;
     
 //    [defaults setObject:@"ON" forKey:@"locationPresed"];
+    
+    
+    
+    //-------------------badge label for Activity -----------------------------------
+    
+    badgeLabel.layer.cornerRadius = badgeLabel.frame.size.height / 2 ;
+    badgeLabel.clipsToBounds = YES;
+    badgeLabel.hidden = YES;
+    
+     BadgeTimer =  [NSTimer scheduledTimerWithTimeInterval:3.0f target:self selector:@selector(ActivityTicker_Connection) userInfo:nil  repeats:YES];
+    
+    
+    //--------------------------------------------------------------------------------
 
     
     
@@ -196,6 +211,8 @@
     
     [self.view addSubview:navigationView];
     [self viewPostConnection];
+    
+  //  [self ActivityTicker_Connection];
 
 }
 
@@ -284,7 +301,7 @@
                             }];
     
     
-    _plusButtonsViewMain.coverColor = [UIColor colorWithWhite:2.f alpha:0.3];
+    _plusButtonsViewMain.coverColor = [UIColor colorWithWhite:1.f alpha:0.90];
     _plusButtonsViewMain.position = LGPlusButtonsViewPositionBottomRight;
     _plusButtonsViewMain.plusButtonAnimationType = LGPlusButtonAnimationTypeRotate;
     
@@ -383,9 +400,7 @@
     [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
     
     [self.navigationController pushViewController:set animated:YES];
-    
-    
-    
+ 
     [[NSNotificationCenter defaultCenter] postNotificationName:@"HidePlusButton" object:self userInfo:nil];
     
 }
@@ -829,6 +844,101 @@
     
 }
 
+#pragma mark - Badge Connection
+
+-(void)ActivityTicker_Connection
+{
+    
+    NSLog(@"FAVORITE TAPPED");
+    
+    
+    NSString *userid= @"userid";
+    NSString *useridVal =[defaults valueForKey:@"userid"];
+    
+    
+    NSString *reqStringFUll=[NSString stringWithFormat:@"%@=%@",userid,useridVal];
+    
+    
+    
+    
+    NSURLSession *session = [NSURLSession sessionWithConfiguration: [NSURLSessionConfiguration defaultSessionConfiguration] delegate: nil delegateQueue: [NSOperationQueue mainQueue]];
+    
+    NSURL *url;
+    NSString *  urlStrLivecount=[urlplist valueForKey:@"activityticker"];;
+    url =[NSURL URLWithString:urlStrLivecount];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    
+    [request setHTTPMethod:@"POST"];//Web API Method
+    
+    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    
+    request.HTTPBody = [reqStringFUll dataUsingEncoding:NSUTF8StringEncoding];
+    
+    
+    
+    NSURLSessionDataTask *dataTask =[session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
+                                     {
+                                         
+                                         if(data)
+                                         {
+                                             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+                                             NSInteger statusCode = httpResponse.statusCode;
+                                             if(statusCode == 200)
+                                             {
+                                                 
+                                                 Array_ActivityTicker=[[NSMutableArray alloc]init];
+                                                 SBJsonParser *objSBJsonParser = [[SBJsonParser alloc]init];
+                                                 Array_ActivityTicker =[objSBJsonParser objectWithData:data];
+                                                 
+                                                 
+                                                 
+                                                 NSString * ResultString=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+                                                 
+                                                 ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+                                                 ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\t" withString:@""];
+                                                 
+                                                 NSLog(@"Array_ActivityTicker %@",Array_ActivityTicker);
+                                                 
+                                            
+                                                 
+                                                 if ([ResultString isEqualToString:@"0"])
+                                                 {
+                                                     badgeLabel.hidden = YES;
+                                                 }
+                                                 else
+                                                 {
+                                                     badgeLabel.hidden = NO;
+                                                     badgeLabel.text = ResultString;
+                                                 }
+                                                 
+                                                 
+                                                 
+                                                 
+                                                 
+                                             }
+                                             
+                                             
+                                             else
+                                             {
+                                                 NSLog(@" error login1 ---%ld",(long)statusCode);
+                                                 
+                                             }
+                                             
+                                             
+                                         }
+                                         else if(error)
+                                         {
+                                             
+                                             NSLog(@"error login2.......%@",error.description);
+                                         }
+                                         
+                                         
+                                     }];
+    [dataTask resume];
+    
+    
+}
 
 
 @end

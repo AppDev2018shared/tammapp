@@ -13,6 +13,9 @@
 
 @interface ViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UILabel *badgeLabel;
+
+
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigationBar;
 @property (weak, nonatomic) IBOutlet UIView *navigationView;
 @property (weak, nonatomic) IBOutlet  UIButton *profile;

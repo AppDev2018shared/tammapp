@@ -262,87 +262,35 @@
         NSLog(@"count= %lu",(unsigned long)Array_Activity.count);
         NSLog(@"ResultString %@",ResultString);
         
+
         
-//        
-//        if(Array_Activity1.count !=0)
-//        {
-//            for (int i=0; i<Array_Activity1.count; i++)
-//            {
-//                if (Array_Activity.count==0)
-//                {
-//                    [Array_Activity addObject:[Array_Activity1 objectAtIndex:i]];
-//                }
-//                else
-//                {
-//        for (NSInteger k=Array_Activity.count-1; k<Array_Activity.count; k++)
-//                    {
-//        NSString * fbMatch11=[[Array_Activity1 objectAtIndex:i]valueForKey:@"receiveruserid"];
-//    NSString * fbMatch22=[[Array_Activity objectAtIndex:k]valueForKey:@"receiveruserid"];
-//                        
-//                        
-//                        if (![fbMatch22 isEqualToString:fbMatch11] )
-//                        {
-//
-//                        [Array_Activity addObject:[Array_Activity1 objectAtIndex:i]];
-//                            
-//                            
-//                            break;
-//                        }
-//                       
-//                       
-//                        
-//                        
-//                    }
-//                    
-//                    
-//                    
-//                    
-//                }
-//            }
-//            NSMutableArray * arrr=[[NSMutableArray alloc]init];
-//            
-//            for (int m=0; m<Array_Activity.count; m++)
-//            {
-//                for (int n=0; n<Array_Activity1.count; n++)
-//                {
-//                    NSString * fbMatch11=[[Array_Activity objectAtIndex:m]valueForKey:@"postid"];
-//                    NSString * fbMatch22=[[Array_Activity1 objectAtIndex:n]valueForKey:@"postid"];
-//                    
-//                    NSString * fbMatch111=[[Array_Activity objectAtIndex:m]valueForKey:@"receiveruserid"];
-//                    NSString * fbMatch222=[[Array_Activity1 objectAtIndex:n]valueForKey:@"receiveruserid"];
-//                    
-//                    if (arrr.count==0)
-//                    {
-//                        [arrr addObject:[Array_Activity objectAtIndex:m]];
-//                    }
-//                    else
-//                    {
-//                for (NSInteger k=arrr.count-1; k<arrr.count; k++)
-//                {
-//                    NSString * fbMatch11p=[[arrr objectAtIndex:k]valueForKey:@"postid"];
-//                    NSString * fbMatch22p=[[Array_Activity1 objectAtIndex:n]valueForKey:@"postid"];
-//                    
-//                    
-//                    if (![fbMatch22p isEqualToString:fbMatch11p] )
-//                    {
-//                        
-//                        [arrr addObject:[Array_Activity1 objectAtIndex:n]];
-//                        
-//                        
-//                        break;
-//                    }
-//                }
-//                    }
-//                    NSLog(@"count n==%d",n);
-//                    NSLog(@"count mmmmmmmm==%d",m);
-//
-//                }
-//                NSLog(@"count m==%d",m);
-//            }
-//               NSLog(@"arrrarrr arrr %@",arrr);
-//        }
-//        NSLog(@"countaftermerge= %lu",(unsigned long)Array_Activity.count);
-//         NSLog(@"countaftermerge array %@",Array_Activity);
+                if(Array_Activity1.count !=0)
+                {
+
+                   
+                for (int j=0; j<Array_Activity1.count; j++)
+                    {
+                 
+            NSString * receiveruserid2=[[Array_Activity1 objectAtIndex:j]valueForKey:@"receiveruserid"];
+            NSString * postid2=[[Array_Activity1 objectAtIndex:j]valueForKey:@"postid"];
+                        
+                        if ([[Array_Activity valueForKeyPath :@"receiveruserid"] containsObject:receiveruserid2] && [[Array_Activity valueForKeyPath :@"postid"] containsObject:postid2] )
+                        {
+
+                        }
+                        else
+                        {
+                            [Array_Activity addObject:[Array_Activity1 objectAtIndex:j]];
+                        }
+                            
+                        }
+                       
+                    }
+                    
+        
+        
+          NSLog(@"countaftermerge array %@",Array_Activity);
+        
         
         
         
@@ -350,14 +298,6 @@
         if ([ResultString isEqualToString:@"nochat"])
         {
             
-            
-//            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"" message:@"nochat" preferredStyle:UIAlertControllerStyleAlert];
-//            
-//            UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
-//                                                               style:UIAlertActionStyleDefault
-//                                                             handler:nil];
-//            [alertController addAction:actionOk];
-//            [self presentViewController:alertController animated:YES completion:nil];
             
         }
         

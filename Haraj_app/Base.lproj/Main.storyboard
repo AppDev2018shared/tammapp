@@ -617,10 +617,18 @@
                                         <color key="textColor" red="0.0" green="0.56470588239999997" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="5B3843BD-1445-44F5-B10A-36B2173587EE" translatesAutoresizingMaskIntoConstraints="NO" id="7sL-5T-AGh">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="7791BF97-EBD9-48D8-8041-E2A6084ED27E" translatesAutoresizingMaskIntoConstraints="NO" id="7sL-5T-AGh">
                                         <frame key="frameInset" minX="322" minY="20" width="40" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="99" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Scw-tL-kdp">
+                                        <frame key="frameInset" minX="122" minY="10" width="22" height="20"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" name="SanFranciscoDisplay-Bold" family="San Francisco Display" pointSize="15"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                             </view>
                         </subviews>
@@ -631,6 +639,7 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="activity" destination="Hff-rX-oQH" id="1ik-b6-CuW"/>
+                        <outlet property="badgeLabel" destination="Scw-tL-kdp" id="RBG-LV-txu"/>
                         <outlet property="location" destination="9PE-f6-enM" id="bgv-tM-hot"/>
                         <outlet property="locationLabel" destination="jkk-v0-edv" id="Rd2-pl-xwN"/>
                         <outlet property="nameLabel" destination="7sL-5T-AGh" id="lKg-R9-2HS"/>
@@ -3969,12 +3978,37 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleAspectFit" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="128" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="7B4-KW-peY">
-                                <frame key="frameInset" minX="0.0%" minY="5.85%" width="100.00%" height="85.91%"/>
+                                <frame key="frameInset" minX="0.0%" minY="6.90%" width="100.00%" height="85.01%"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CellZero" rowHeight="128" id="fA2-4D-yCa" customClass="CustomTableViewCellZero">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="128"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fA2-4D-yCa" id="y3w-Hb-pKt">
+                                            <frame key="frameInset" width="375" height="128"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="POST ID: 35892758487" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uWh-mN-GVa">
+                                                    <frame key="frameInset" minX="78" minY="8" width="219" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="SanFranciscoDisplay-Medium" family="San Francisco Display" pointSize="15"/>
+                                                    <color key="textColor" red="0.0" green="0.56470588239999997" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8xV-ZI-QWm">
+                                                    <frame key="frameInset" minX="146" minY="37" width="83" height="83"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="postIdLabel" destination="uWh-mN-GVa" id="2zu-tR-zwy"/>
+                                            <outlet property="postImageView" destination="8xV-ZI-QWm" id="Q7m-HT-uQu"/>
+                                        </connections>
+                                    </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CellOnes" rowHeight="91" id="buD-m3-Phi" customClass="CustomTableViewCell">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="91"/>
+                                        <rect key="frame" x="0.0" y="156" width="375" height="91"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="buD-m3-Phi" id="jvN-M0-1SE">
                                             <frame key="frameInset" width="375" height="91"/>
@@ -3988,22 +4022,13 @@
                                 </connections>
                             </tableView>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RDg-X7-tN2">
-                                <frame key="frameInset" minX="0.0%" minY="0.0%" width="100.00%" height="9.00%"/>
+                                <frame key="frameInset" minX="0.0%" minY="0.0%" width="100.00%" height="9.75%"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Sachin" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WBi-Jm-DMz">
-                                        <frame key="frameInset" minX="51.47%" minY="36.67%" width="35.47%" height="48.33%"/>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dpS-r3-fFE">
+                                        <frame key="frameInset" minX="86.40%" minY="36.92%" width="9.07%" height="46.15%"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="16"/>
-                                        <color key="textColor" cyan="0.0" magenta="0.0" yellow="0.0" black="0.90000000000000002" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dpS-r3-fFE">
-                                        <frame key="frameInset" minX="0.27%" minY="36.67%" width="15.73%" height="63.33%"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="16"/>
-                                        <state key="normal" title="Back">
+                                        <state key="normal" image="RightArrowGrey">
                                             <color key="titleColor" cyan="0.0" magenta="0.0" yellow="0.0" black="0.90000000000000002" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
                                         </state>
                                         <connections>
@@ -4011,20 +4036,9 @@
                                         </connections>
                                     </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="10154143609282724.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="2yk-I7-sBW">
-                                        <frame key="frameInset" minX="40.80%" minY="33.33%" width="8.53%" height="53.33%"/>
+                                        <frame key="frameInset" minX="45.07%" minY="32.31%" width="9.33%" height="53.85%"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                     </imageView>
-                                    <button opaque="NO" alpha="0.94999998807907104" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HCc-6R-K3O">
-                                        <frame key="frameInset" minX="86.40%" minY="36.67%" width="13.60%" height="63.33%"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <state key="normal" image="3dotsgrey.png">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="FlagButton_Acion:" destination="dSX-Oa-CEP" eventType="touchUpInside" id="dNg-5M-XTm"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -4099,11 +4113,9 @@
                     <navigationItem key="navigationItem" id="1wt-vb-7xw"/>
                     <connections>
                         <outlet property="BlackViewOne" destination="g6y-Ej-hQ8" id="x6l-qK-8JI"/>
-                        <outlet property="Button_Flag_Button" destination="HCc-6R-K3O" id="8ae-KH-gXJ"/>
                         <outlet property="HeadTopView" destination="RDg-X7-tN2" id="7vR-75-UWj"/>
                         <outlet property="ImageGalButton" destination="Eai-2u-bRT" id="Ert-Di-IbG"/>
                         <outlet property="Image_UserProfile" destination="2yk-I7-sBW" id="rte-Lz-wnj"/>
-                        <outlet property="Label_UserName" destination="WBi-Jm-DMz" id="JSm-Lv-aKh"/>
                         <outlet property="Table_Friend_chat" destination="7B4-KW-peY" id="nhr-YK-dHt"/>
                         <outlet property="ViewTextViewOne" destination="bta-6e-Of9" id="7EI-2r-PBQ"/>
                         <outlet property="placeholderLabel" destination="Veb-64-wNa" id="HZT-Qi-e0S"/>
@@ -4115,15 +4127,14 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ODh-5s-G5V" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4353" y="-460"/>
+            <point key="canvasLocation" x="4245.6000000000004" y="-457.42128935532236"/>
         </scene>
     </scenes>
     <resources>
         <image name="10154143609282724.jpg" width="28" height="60"/>
         <image name="3Stars" width="126" height="57"/>
         <image name="3dots" width="12" height="59"/>
-        <image name="3dotsgrey.png" width="28" height="60"/>
-        <image name="5B3843BD-1445-44F5-B10A-36B2173587EE" width="45" height="44">
+        <image name="7791BF97-EBD9-48D8-8041-E2A6084ED27E" width="45" height="44">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
@@ -4327,7 +4338,7 @@ KTIpNSk6AAAAAAAAAgEAAAAAAAAAQQAAAAAAAAAAAAAAAAAAKTw
         <image name="Postvideo" width="33" height="25"/>
         <image name="Profile" width="44" height="56"/>
         <image name="RightArrowGrey" width="58" height="51"/>
-        <image name="Screenshot Filled-50.png" width="28" height="60"/>
+        <image name="Screenshot Filled-50.png" width="50" height="50"/>
         <image name="Search" width="52" height="52"/>
         <image name="Wallet" width="60" height="55"/>
         <image name="WhiteQuestion" width="47" height="47"/>

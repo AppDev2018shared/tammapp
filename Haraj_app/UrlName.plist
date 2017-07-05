@@ -42,5 +42,7 @@
 	<string>http://www.tammapp.com/app/activityaddchat.php</string>
 	<key>activitychat</key>
 	<string>http://www.tammapp.com/app/activitychat.php</string>
+	<key>activityticker</key>
+	<string>http://www.tammapp.com/app/activityticker.php</string>
 </dict>
 </plist>

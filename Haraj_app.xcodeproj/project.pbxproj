@@ -41,6 +41,7 @@
 		6131710E1EC5BB0A00E3BD4C /* EnterPrice.m in Sources */ = {isa = PBXBuildFile; fileRef = 6131710D1EC5BB0A00E3BD4C /* EnterPrice.m */; };
 		613171101EC5BB2000E3BD4C /* EnterPrice.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6131710F1EC5BB2000E3BD4C /* EnterPrice.xib */; };
 		613E82FA1ED2B82500B1BC23 /* UrlName.plist in Resources */ = {isa = PBXBuildFile; fileRef = 613E82F91ED2B82400B1BC23 /* UrlName.plist */; };
+		6140FC811F0B59C200F55751 /* CustomTableViewCellZero.m in Sources */ = {isa = PBXBuildFile; fileRef = 6140FC801F0B59C200F55751 /* CustomTableViewCellZero.m */; };
 		61487FEC1ED2ECE7009CEF9B /* PropertyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61487FEB1ED2ECE7009CEF9B /* PropertyViewController.m */; };
 		61487FEF1ED2ED0F009CEF9B /* PetsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61487FEE1ED2ED0F009CEF9B /* PetsViewController.m */; };
 		61487FF21ED2ED20009CEF9B /* FurnitureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61487FF11ED2ED20009CEF9B /* FurnitureViewController.m */; };
@@ -268,6 +269,8 @@
 		6131710D1EC5BB0A00E3BD4C /* EnterPrice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnterPrice.m; sourceTree = "<group>"; };
 		6131710F1EC5BB2000E3BD4C /* EnterPrice.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EnterPrice.xib; sourceTree = "<group>"; };
 		613E82F91ED2B82400B1BC23 /* UrlName.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = UrlName.plist; sourceTree = "<group>"; };
+		6140FC7F1F0B59C200F55751 /* CustomTableViewCellZero.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableViewCellZero.h; sourceTree = "<group>"; };
+		6140FC801F0B59C200F55751 /* CustomTableViewCellZero.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTableViewCellZero.m; sourceTree = "<group>"; };
 		61487FEA1ED2ECE7009CEF9B /* PropertyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyViewController.h; sourceTree = "<group>"; };
 		61487FEB1ED2ECE7009CEF9B /* PropertyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertyViewController.m; sourceTree = "<group>"; };
 		61487FED1ED2ED0F009CEF9B /* PetsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PetsViewController.h; sourceTree = "<group>"; };
@@ -993,6 +996,8 @@
 				61E141721F0239B7008C3E7A /* ChatTwoTableViewCell.m */,
 				6163B79F1F077829003631AF /* FriendCahtingViewController.h */,
 				6163B79E1F077829003631AF /* FriendCahtingViewController.m */,
+				6140FC7F1F0B59C200F55751 /* CustomTableViewCellZero.h */,
+				6140FC801F0B59C200F55751 /* CustomTableViewCellZero.m */,
 				6163B7A31F077957003631AF /* CustomTableViewCell.h */,
 				6163B7A41F077957003631AF /* CustomTableViewCell.m */,
 				6163B7A11F0778E6003631AF /* ChatText.plist */,
@@ -1436,6 +1441,7 @@
 				61ED09AB1EB85D42008EAFB7 /* WSLayout.m in Sources */,
 				614C15F41EC039C100B11A9B /* SBJsonTokeniser.m in Sources */,
 				615ED1491EDEE6D2001E6B0A /* SuggestedTableViewCell.m in Sources */,
+				6140FC811F0B59C200F55751 /* CustomTableViewCellZero.m in Sources */,
 				6185B3B51EFA6C1D0051659D /* FavouriteViewController.m in Sources */,
 				61ED095A1EB85369008EAFB7 /* YSLContainerViewController.m in Sources */,
 				614C16171EC0739900B11A9B /* FRGWaterfallHeaderReusableView.m in Sources */,
