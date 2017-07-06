@@ -415,9 +415,10 @@
                 
                 UITapGestureRecognizer *imageTap4 =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(MoreImage:)];
                 [FirstCell.imageView_thumbnails addGestureRecognizer:imageTap4];
+                    [self displayImage:FirstCell.imageView_thumbnails withImage:FirstCell.imageView_thumbnails.image];
                 }
                 
-                [self displayImage:FirstCell.imageView_thumbnails withImage:FirstCell.imageView_thumbnails.image];
+                
 
                 
                 return FirstCell;

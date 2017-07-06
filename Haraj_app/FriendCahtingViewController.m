@@ -1236,10 +1236,23 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
      [request addValue: @"application/x-www-form-urlencoded; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
     
 //    NSString *receiverfbid=@"fbid2";
-    NSString *receiverfbidVal=[[AllDataArray objectAtIndex:0]valueForKey:@"receiveruserid"];
+    
+    NSString *receiverfbidVal;
+    if ([[defaults valueForKey:@"userid"]isEqualToString:[[AllDataArray objectAtIndex:0]valueForKey:@"receiveruserid"]])
+    {
+        receiverfbidVal=[[AllDataArray objectAtIndex:0]valueForKey:@"senderuserid"];
+    }
+    else
+    {
+        receiverfbidVal=[[AllDataArray objectAtIndex:0]valueForKey:@"receiveruserid"];
+    }
+    
+  //  NSString *receiverfbidVal=[[AllDataArray objectAtIndex:0]valueForKey:@"receiveruserid"];
     
 //    NSString *senderfbid=@"fbid1";
     NSString *senderfbidVal=[defaults valueForKey:@"userid"];
+    
+    
     
    
      NSString *postidVal=[[AllDataArray objectAtIndex:0]valueForKey:@"postid"];
@@ -1333,8 +1346,21 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     else
     {
         userid1=@"userid2";
+        
+        if ([[defaults valueForKey:@"userid"]isEqualToString:[[AllDataArray objectAtIndex:0]valueForKey:@"receiveruserid"]])
+        {
+            userid1Val=[[AllDataArray objectAtIndex:0]valueForKey:@"senderuserid"];
+            [defaults setObject:[[AllDataArray objectAtIndex:0]valueForKey:@"senderuserid"] forKey:@"userid1"];
+
+        }
+        else
+        {
+        
         userid1Val=[[AllDataArray objectAtIndex:0]valueForKey:@"receiveruserid"];
         [defaults setObject:[[AllDataArray objectAtIndex:0]valueForKey:@"receiveruserid"] forKey:@"userid1"];
+        }
+        
+        
         
         
         postid=@"postid";

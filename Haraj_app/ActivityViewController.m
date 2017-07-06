@@ -137,6 +137,7 @@
     transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
     transition.type = kCATransitionPush;
     transition.subtype = kCATransitionFromLeft;
+    
     NSMutableArray * addData=[[NSMutableArray alloc]init];
     [addData addObject: [Array_Activity objectAtIndex:indexPath.row]];
     chat.AllDataArray=addData;
@@ -262,6 +263,40 @@
         NSLog(@"count= %lu",(unsigned long)Array_Activity.count);
         NSLog(@"ResultString %@",ResultString);
         
+     //   Array_Activity = Array_Activity1;
+        
+//--------------------------------------------------------------------------------------------------
+//        if(Array_Activity1.count !=0)
+//        {
+//            
+//            
+//            for (int j=0; j<Array_Activity1.count; j++)
+//            {
+//                NSString * receiveruserid2;
+//                if ([[defaults valueForKey:@"userid"]isEqualToString:[[Array_Activity1 objectAtIndex:j]valueForKey:@"receiveruserid"]])
+//                {
+//                    receiveruserid2=[[Array_Activity1 objectAtIndex:j]valueForKey:@"senderuserid"];
+//                }
+//                else
+//                {
+//                    receiveruserid2=[[Array_Activity1 objectAtIndex:j]valueForKey:@"receiveruserid"];
+//                }
+//                
+//                
+//                //    NSString * receiveruserid2=[[Array_Activity1 objectAtIndex:j]valueForKey:@"receiveruserid"];
+//                NSString * postid2=[[Array_Activity1 objectAtIndex:j]valueForKey:@"postid"];
+//                
+//                
+//                
+//                
+//            }
+//            
+//        }
+//        
+
+    
+//---------------------------------------------------------------------------------------------
+        
 
         
                 if(Array_Activity1.count !=0)
@@ -270,11 +305,23 @@
                    
                 for (int j=0; j<Array_Activity1.count; j++)
                     {
+                        NSString * receiveruserid2;
+             if ([[defaults valueForKey:@"userid"]isEqualToString:[[Array_Activity1 objectAtIndex:j]valueForKey:@"receiveruserid"]])
+             {
+                 receiveruserid2=[[Array_Activity1 objectAtIndex:j]valueForKey:@"senderuserid"];
+             }
+            else
+            {
+                receiveruserid2=[[Array_Activity1 objectAtIndex:j]valueForKey:@"receiveruserid"];
+            }
                  
-            NSString * receiveruserid2=[[Array_Activity1 objectAtIndex:j]valueForKey:@"receiveruserid"];
+                 
+        //    NSString * receiveruserid2=[[Array_Activity1 objectAtIndex:j]valueForKey:@"receiveruserid"];
             NSString * postid2=[[Array_Activity1 objectAtIndex:j]valueForKey:@"postid"];
                         
                         if ([[Array_Activity valueForKeyPath :@"receiveruserid"] containsObject:receiveruserid2] && [[Array_Activity valueForKeyPath :@"postid"] containsObject:postid2] )
+                            
+                            
                         {
 
                         }
@@ -286,7 +333,7 @@
                         }
                        
                     }
-                    
+        
         
         
           NSLog(@"countaftermerge array %@",Array_Activity);
