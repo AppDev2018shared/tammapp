@@ -475,6 +475,7 @@ if ([[[AllDataArray objectAtIndex:0]valueForKey:@"matchedfbid"] isEqualToString:
   
             self.tabBarBottomSpace.constant = 0.0f;
            Table_Friend_chat.frame = CGRectMake(0,yt, tw, th);
+             keyboradHeight= 0.0f;
             
         }
         

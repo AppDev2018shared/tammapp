@@ -266,72 +266,137 @@
      //   Array_Activity = Array_Activity1;
         
 //--------------------------------------------------------------------------------------------------
-//        if(Array_Activity1.count !=0)
-//        {
-//            
-//            
-//            for (int j=0; j<Array_Activity1.count; j++)
-//            {
-//                NSString * receiveruserid2;
-//                if ([[defaults valueForKey:@"userid"]isEqualToString:[[Array_Activity1 objectAtIndex:j]valueForKey:@"receiveruserid"]])
-//                {
-//                    receiveruserid2=[[Array_Activity1 objectAtIndex:j]valueForKey:@"senderuserid"];
-//                }
-//                else
-//                {
-//                    receiveruserid2=[[Array_Activity1 objectAtIndex:j]valueForKey:@"receiveruserid"];
-//                }
-//                
-//                
-//                //    NSString * receiveruserid2=[[Array_Activity1 objectAtIndex:j]valueForKey:@"receiveruserid"];
-//                NSString * postid2=[[Array_Activity1 objectAtIndex:j]valueForKey:@"postid"];
-//                
-//                
-//                
-//                
-//            }
-//            
-//        }
-//        
-
     
+       
+        
+        
+        
+        
+        
+        
 //---------------------------------------------------------------------------------------------
         
 
         
-                if(Array_Activity1.count !=0)
-                {
-
-                   
-                for (int j=0; j<Array_Activity1.count; j++)
-                    {
-                        NSString * receiveruserid2;
-             if ([[defaults valueForKey:@"userid"]isEqualToString:[[Array_Activity1 objectAtIndex:j]valueForKey:@"receiveruserid"]])
-             {
-                 receiveruserid2=[[Array_Activity1 objectAtIndex:j]valueForKey:@"senderuserid"];
-             }
-            else
+        if(Array_Activity1.count !=0)
             {
-                receiveruserid2=[[Array_Activity1 objectAtIndex:j]valueForKey:@"receiveruserid"];
-            }
-                 
-                 
-        //    NSString * receiveruserid2=[[Array_Activity1 objectAtIndex:j]valueForKey:@"receiveruserid"];
-            NSString * postid2=[[Array_Activity1 objectAtIndex:j]valueForKey:@"postid"];
-                        
-                        if ([[Array_Activity valueForKeyPath :@"receiveruserid"] containsObject:receiveruserid2] && [[Array_Activity valueForKeyPath :@"postid"] containsObject:postid2] )
-                            
-                            
-                        {
 
+//               for (int j=0; j<Array_Activity1.count; j++)
+//                    {
+//                        NSString * receiveruserid2;
+////             if ([[defaults valueForKey:@"userid"]isEqualToString:[[Array_Activity1 objectAtIndex:j]valueForKey:@"receiveruserid"]])
+////             {
+////                 receiveruserid2=[[Array_Activity1 objectAtIndex:j]valueForKey:@"senderuserid"];
+////             }
+////            else
+////            {
+//                receiveruserid2=[[Array_Activity1 objectAtIndex:j]valueForKey:@"name"];
+//           // }
+//                 
+//                 
+//        //    NSString * receiveruserid2=[[Array_Activity1 objectAtIndex:j]valueForKey:@"receiveruserid"];
+//            NSString * postid2=[[Array_Activity1 objectAtIndex:j]valueForKey:@"postid"];
+//                        
+//                        if ([[Array_Activity valueForKeyPath :@"postid"] containsObject:postid2])
+//                        
+//                        {
+//
+//                        }
+//                        else
+//                        {
+//                            [Array_Activity addObject:[Array_Activity1 objectAtIndex:j]];
+//                        }
+//                            
+//                        }
+                
+                
+                
+                
+                
+                for (int i=0; i<Array_Activity1.count; i++)
+                {
+                    
+                NSString * name1=[[Array_Activity1 objectAtIndex:i]valueForKey:@"name"];
+                NSString * id1=[[Array_Activity1 objectAtIndex:i]valueForKey:@"postid"];
+            for (int j=0; j<Array_Activity1.count; j++)
+                {
+                    NSString * name=@"no";
+                    NSString * name2=[[Array_Activity1 objectAtIndex:j]valueForKey:@"name"];
+                    NSString * id2=[[Array_Activity1 objectAtIndex:j]valueForKey:@"postid"];
+                        
+                if ([name1 isEqualToString:name2])
+                    {
+                            if (Array_Activity.count==0)
+                            {
+                                [Array_Activity addObject:[Array_Activity1 objectAtIndex:j]];
+                            }
+                            else
+                            {
+                                if (![id1 isEqualToString:id2])
+                                    
+                                {
+                                    
+                                    for (int k=0; k<Array_Activity.count; k++)
+                                    {
+                                        NSString * name3=[[Array_Activity objectAtIndex:k]valueForKey:@"name"];
+                                        NSString * id3=[[Array_Activity objectAtIndex:k]valueForKey:@"postid"];
+                                        if ([name2 isEqualToString:name3] && [id2 isEqualToString:id3] )
+                                        {
+                                            
+                                            name=@"yes";
+                                            break;
+                                            
+                                        }
+                                        
+                                    }
+                                    if ([name isEqualToString:@"no"])
+                                    {
+                                        [Array_Activity addObject:[Array_Activity1 objectAtIndex:j]];
+                                    }
+                                }
+                            }
                         }
                         else
                         {
-                            [Array_Activity addObject:[Array_Activity1 objectAtIndex:j]];
+                            for (int k=0; k<Array_Activity.count; k++)
+                            {
+                                NSString * name3=[[Array_Activity objectAtIndex:k]valueForKey:@"name"];
+                                NSString * id3=[[Array_Activity objectAtIndex:k]valueForKey:@"postid"];
+                                if ([name2 isEqualToString:name3] && [id2 isEqualToString:id3] )
+                                {
+                                    
+                                    name=@"yes";
+                                    break;
+                                    
+                                }
+                                
+                            }
+                            if ([name isEqualToString:@"no"])
+                            {
+                                [Array_Activity addObject:[Array_Activity1 objectAtIndex:j]];
+                            }
                         }
-                            
-                        }
-                       
+                        
+                        
+                        
+                        
+                        
+                    }
+                }
+                NSLog(@"New array merge==%@",Array_Activity);
+                NSLog(@"New countss==%lu",(unsigned long)Array_Activity.count);
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
                     }
         
         
