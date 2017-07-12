@@ -21,6 +21,7 @@
 		61040CDD1EFBBC1800ACE5D6 /* BoostPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61040CDC1EFBBC1800ACE5D6 /* BoostPostViewController.m */; };
 		61040CE01EFBC9D100ACE5D6 /* BoostPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 61040CDF1EFBC9D100ACE5D6 /* BoostPost.m */; };
 		61040CE21EFBC9F300ACE5D6 /* BoostPost.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61040CE11EFBC9F300ACE5D6 /* BoostPost.xib */; };
+		6111001B1F14C8470034F058 /* ActivityNextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6111001A1F14C8470034F058 /* ActivityNextViewController.m */; };
 		611D2C781EFCF16A00804839 /* SalePointsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 611D2C771EFCF16900804839 /* SalePointsViewController.m */; };
 		611D2C7B1EFD0C7300804839 /* SaleCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 611D2C7A1EFD0C7300804839 /* SaleCollectionViewCell.m */; };
 		61271D461EBD928C0082E504 /* facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 61271D401EBD928C0082E504 /* facebook.png */; };
@@ -136,9 +137,6 @@
 		61D9FFFA1EE5635E0020755D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61D9FFF91EE5635D0020755D /* CoreLocation.framework */; };
 		61E015F41ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E015F21ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.m */; };
 		61E015F51ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61E015F31ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.xib */; };
-		61E1416B1F022B45008C3E7A /* ChattingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E1416A1F022B45008C3E7A /* ChattingViewController.m */; };
-		61E141701F02399D008C3E7A /* ChatOneTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E1416F1F02399D008C3E7A /* ChatOneTableViewCell.m */; };
-		61E141731F0239B7008C3E7A /* ChatTwoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E141721F0239B7008C3E7A /* ChatTwoTableViewCell.m */; };
 		61E1417E1F02593F008C3E7A /* AccFourTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E141751F02593F008C3E7A /* AccFourTableViewCell.m */; };
 		61E1417F1F02593F008C3E7A /* AccOneTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E141771F02593F008C3E7A /* AccOneTableViewCell.m */; };
 		61E141801F02593F008C3E7A /* AccountSettViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E141791F02593F008C3E7A /* AccountSettViewController.m */; };
@@ -240,6 +238,8 @@
 		61040CDE1EFBC9D100ACE5D6 /* BoostPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoostPost.h; sourceTree = "<group>"; };
 		61040CDF1EFBC9D100ACE5D6 /* BoostPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoostPost.m; sourceTree = "<group>"; };
 		61040CE11EFBC9F300ACE5D6 /* BoostPost.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BoostPost.xib; sourceTree = "<group>"; };
+		611100191F14C8460034F058 /* ActivityNextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityNextViewController.h; sourceTree = "<group>"; };
+		6111001A1F14C8470034F058 /* ActivityNextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityNextViewController.m; sourceTree = "<group>"; };
 		611D2C761EFCF16900804839 /* SalePointsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SalePointsViewController.h; sourceTree = "<group>"; };
 		611D2C771EFCF16900804839 /* SalePointsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SalePointsViewController.m; sourceTree = "<group>"; };
 		611D2C791EFD0C7300804839 /* SaleCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaleCollectionViewCell.h; sourceTree = "<group>"; };
@@ -433,12 +433,6 @@
 		61E015F11ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwoImageOnClickTableViewCell.h; path = onclickVC/TwoImageOnClickTableViewCell.h; sourceTree = "<group>"; };
 		61E015F21ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwoImageOnClickTableViewCell.m; path = onclickVC/TwoImageOnClickTableViewCell.m; sourceTree = "<group>"; };
 		61E015F31ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TwoImageOnClickTableViewCell.xib; path = onclickVC/TwoImageOnClickTableViewCell.xib; sourceTree = "<group>"; };
-		61E141691F022B44008C3E7A /* ChattingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChattingViewController.h; sourceTree = "<group>"; };
-		61E1416A1F022B45008C3E7A /* ChattingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChattingViewController.m; sourceTree = "<group>"; };
-		61E1416E1F02399D008C3E7A /* ChatOneTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatOneTableViewCell.h; sourceTree = "<group>"; };
-		61E1416F1F02399D008C3E7A /* ChatOneTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatOneTableViewCell.m; sourceTree = "<group>"; };
-		61E141711F0239B7008C3E7A /* ChatTwoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatTwoTableViewCell.h; sourceTree = "<group>"; };
-		61E141721F0239B7008C3E7A /* ChatTwoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatTwoTableViewCell.m; sourceTree = "<group>"; };
 		61E141741F02593F008C3E7A /* AccFourTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccFourTableViewCell.h; sourceTree = "<group>"; };
 		61E141751F02593F008C3E7A /* AccFourTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccFourTableViewCell.m; sourceTree = "<group>"; };
 		61E141761F02593F008C3E7A /* AccOneTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccOneTableViewCell.h; sourceTree = "<group>"; };
@@ -988,12 +982,8 @@
 				61C7FEB21F01079700EF278B /* ActivityViewController.m */,
 				61C7FEB41F010BD500EF278B /* ActivityTableViewCell.h */,
 				61C7FEB51F010BD500EF278B /* ActivityTableViewCell.m */,
-				61E141691F022B44008C3E7A /* ChattingViewController.h */,
-				61E1416A1F022B45008C3E7A /* ChattingViewController.m */,
-				61E1416E1F02399D008C3E7A /* ChatOneTableViewCell.h */,
-				61E1416F1F02399D008C3E7A /* ChatOneTableViewCell.m */,
-				61E141711F0239B7008C3E7A /* ChatTwoTableViewCell.h */,
-				61E141721F0239B7008C3E7A /* ChatTwoTableViewCell.m */,
+				611100191F14C8460034F058 /* ActivityNextViewController.h */,
+				6111001A1F14C8470034F058 /* ActivityNextViewController.m */,
 				6163B79F1F077829003631AF /* FriendCahtingViewController.h */,
 				6163B79E1F077829003631AF /* FriendCahtingViewController.m */,
 				6140FC7F1F0B59C200F55751 /* CustomTableViewCellZero.h */,
@@ -1451,7 +1441,6 @@
 				61ED09A61EB85D42008EAFB7 /* UIImage+WebP.m in Sources */,
 				61739FF31EE2AF5900018CF1 /* UIImageView+MHFacebookImageViewer.m in Sources */,
 				618B00091EF921A500434650 /* DetailPropertyTableViewCell.m in Sources */,
-				61E1416B1F022B45008C3E7A /* ChattingViewController.m in Sources */,
 				61739FA31EE2951100018CF1 /* Base64.m in Sources */,
 				614C15EB1EC039C100B11A9B /* NSObject+SBJson.m in Sources */,
 				61B8C8751EC1AA1800954A68 /* FirstImageViewCell.m in Sources */,
@@ -1463,6 +1452,7 @@
 				61ED095B1EB85369008EAFB7 /* YSLScrollMenuView.m in Sources */,
 				61487FF81ED2ED5D009CEF9B /* OtherViewController.m in Sources */,
 				6163B7A01F077829003631AF /* FriendCahtingViewController.m in Sources */,
+				6111001B1F14C8470034F058 /* ActivityNextViewController.m in Sources */,
 				61C7FEB61F010BD500EF278B /* ActivityTableViewCell.m in Sources */,
 				61739FEC1EE2AF5900018CF1 /* AFPropertyListRequestOperation.m in Sources */,
 				61F95A9A1EF5527E00DEE62A /* ProductDetailCellCar.m in Sources */,
@@ -1519,7 +1509,6 @@
 				9A09B8C21EF1672C00421BF7 /* PostHeaderTableViewCell.m in Sources */,
 				614C16141EC0739900B11A9B /* FRGWaterfallCollectionViewCell.m in Sources */,
 				614C15F11EC039C100B11A9B /* SBJsonStreamWriter.m in Sources */,
-				61E141701F02399D008C3E7A /* ChatOneTableViewCell.m in Sources */,
 				61C7FEB31F01079700EF278B /* ActivityViewController.m in Sources */,
 				61ED09A01EB85D42008EAFB7 /* SDWebImageDownloaderOperation.m in Sources */,
 				615ED13F1EDEE6AC001E6B0A /* DetailTableViewCell.m in Sources */,
@@ -1539,7 +1528,6 @@
 				61E1417F1F02593F008C3E7A /* AccOneTableViewCell.m in Sources */,
 				61ED099D1EB85D42008EAFB7 /* SDWebImageCompat.m in Sources */,
 				6131710E1EC5BB0A00E3BD4C /* EnterPrice.m in Sources */,
-				61E141731F0239B7008C3E7A /* ChatTwoTableViewCell.m in Sources */,
 				61271E1C1EBDDD960082E504 /* UIView+RNActivityView.m in Sources */,
 				617FD8911EB9D6D8008B827F /* PatternViewCell.m in Sources */,
 				61739FE71EE2AF5900018CF1 /* AFHTTPClient.m in Sources */,

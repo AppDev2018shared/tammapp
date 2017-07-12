@@ -14,6 +14,10 @@
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
 
 
+@property (weak, nonatomic) IBOutlet UIImageView *greenViewNotification;
+@property (weak, nonatomic) IBOutlet UIImageView *greenViewInbox;
+
+
 - (IBAction)segmentedControl_Action:(id)sender;
 - (IBAction)ProfileButton_Action:(id)sender;
 - (IBAction)SearchButton_Action:(id)sender;

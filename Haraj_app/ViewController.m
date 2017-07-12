@@ -27,7 +27,7 @@
 
 //ViewControllerData
 
-@interface ViewController ()<YSLContainerViewControllerDelegate>
+@interface ViewController ()<YSLContainerViewControllerDelegate,UISearchBarDelegate, UISearchResultsUpdating,UISearchControllerDelegate >
 {
     UILabel *titleLabel;
     NSUserDefaults *defaults;
@@ -460,6 +460,21 @@
     else if ([sender tag]== 3)
     {
         NSLog(@"search Button Pressed");
+        
+        
+//   UISearchController     *searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+//        searchController.searchResultsUpdater = self;
+//        searchController.dimsBackgroundDuringPresentation = NO;
+//        searchController.searchBar.delegate = self;
+        
+
+        
+
+        
+        
+        
+        
+        
     }
     else
     {
@@ -900,22 +915,51 @@
                                                  
                                                  NSLog(@"Array_ActivityTicker %@",Array_ActivityTicker);
                                                  
-                                            
                                                  
-                                                 if ([ResultString isEqualToString:@"0"])
+                                                 
+                                                 NSString *badge = [NSString stringWithFormat:@"%@",[[Array_ActivityTicker objectAtIndex:0]  valueForKey:@"totalcount"]];
+                                                 
+                                                 if ([badge isEqualToString:@"0"])
                                                  {
                                                      badgeLabel.hidden = YES;
                                                  }
                                                  else
                                                  {
                                                      badgeLabel.hidden = NO;
-                                                     badgeLabel.text = ResultString;
+                                                     badgeLabel.text = badge;
                                                  }
                                                  
+                                                 NSString *notificationcount = [NSString stringWithFormat:@"%@",[[Array_ActivityTicker objectAtIndex:0]  valueForKey:@"notificationcount"]];
                                                  
+                                                 if ([notificationcount isEqualToString:@"0"])
+                                                 {
+                                                     [defaults setObject:@"0" forKey:@"notificationcount"];
+                                                 }
+                                                 else
+                                                 {
+                                                     
+                                                     [defaults setObject:notificationcount forKey:@"notificationcount"];
+                                                     
+                                                 }
                                                  
+                                                 NSString *chatcount = [NSString stringWithFormat:@"%@",[[Array_ActivityTicker objectAtIndex:0]  valueForKey:@"chatcount"]];
                                                  
+                                                 if ([chatcount isEqualToString:@"0"])
+                                                 {
+                                                     [defaults setObject:@"0" forKey:@"chatcount"];
+                                                     
+                                                 }
+                                                 else
+                                                 {
+                                                      [defaults setObject:chatcount forKey:@"chatcount"];
+                                                 }
                                                  
+                                                 [defaults synchronize];
+                                                 
+                                       [[NSNotificationCenter defaultCenter] postNotificationName:@"updateBadge" object:self userInfo:nil];
+                                             
+
+
                                              }
                                              
                                              

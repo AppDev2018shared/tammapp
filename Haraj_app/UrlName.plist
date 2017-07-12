@@ -44,5 +44,9 @@
 	<string>http://www.tammapp.com/app/activitychat.php</string>
 	<key>activityticker</key>
 	<string>http://www.tammapp.com/app/activityticker.php</string>
+	<key>activitystep2</key>
+	<string>http://www.tammapp.com/app/activitystep2.php</string>
+	<key>notifications</key>
+	<string>http://www.tammapp.com/app/notifications.php</string>
 </dict>
 </plist>

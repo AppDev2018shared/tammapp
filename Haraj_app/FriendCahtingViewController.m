@@ -532,7 +532,7 @@ if ([[[AllDataArray objectAtIndex:0]valueForKey:@"matchedfbid"] isEqualToString:
         
         Cell_Zero.postImageView.layer.cornerRadius = 10;
         Cell_Zero.postImageView.layer.masksToBounds = YES;
-        NSURL * url=[NSURL URLWithString:[[AllDataArray objectAtIndex:indexPath.row] valueForKey:@"profilepic"]];
+        NSURL * url=[NSURL URLWithString:[[AllDataArray objectAtIndex:indexPath.row] valueForKey:@"mediathumbnailurl"]];
         [Cell_Zero.postImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"]
                                                   options:SDWebImageRefreshCached];
 
@@ -902,7 +902,7 @@ if ([[[AllDataArray objectAtIndex:0]valueForKey:@"matchedfbid"] isEqualToString:
     
     if (indexPath.section == 0)
     {
-        return 128;
+        return 0;//128;
 
     }
     else

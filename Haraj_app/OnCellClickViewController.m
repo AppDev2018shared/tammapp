@@ -86,7 +86,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    
     rect = [[UIApplication sharedApplication] statusBarFrame];
     
     
@@ -120,6 +119,25 @@
     
     
      [defaults setObject:@"no" forKey:@"SeeCommentPressed"];
+    
+    
+    if ([[defaults valueForKey:@"Activitynext"]isEqualToString:@"yes"])
+    {
+        self.tableView.frame = CGRectMake(self.view.layer.frame.origin.x, self.view.frame.origin.y - rect.size.height, self.view.frame.size.width,400);
+        
+        [defaults setObject:@"no" forKey:@"Activitynext"];
+    }
+    
+    else
+        
+    {
+        
+    }
+    
+    
+
+    
+    
     
 
 
