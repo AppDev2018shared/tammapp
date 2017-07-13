@@ -14,6 +14,8 @@
 #import "UIImageView+WebCache.h"
 #import "FriendCahtingViewController.h"
 #import "ActivityNextViewController.h"
+#import "OnCellClickViewController.h"
+#import "MyPostViewController.h"
 
 
 @interface ActivityViewController ()<UITableViewDataSource, UITableViewDelegate>
@@ -28,6 +30,7 @@
     NSMutableArray *Array_Activity,*Array_Activity1, *Array_Notification;
     
     NSString *segmentPressed;
+    CALayer *bottomBorder;
     
 }
 
@@ -103,7 +106,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [self activityConnection];
-    [self notificationConnection];
+//    [self notificationConnection];
     [self chatTimer];
   
 }
@@ -243,6 +246,9 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
+    if ([segmentPressed isEqualToString:@"inbox"])
+    {
+    
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     
     ActivityNextViewController * chat=[mainStoryboard instantiateViewControllerWithIdentifier:@"ActivityNextViewController"];
@@ -264,7 +270,62 @@
     [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
     [self.navigationController pushViewController:chat animated:YES];
     
- 
+    }
+    
+    else
+    {
+        
+        
+        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        
+        
+        if ([[[Array_Notification objectAtIndex:indexPath.row] valueForKey:@"userid1"]isEqualToString:[defaults valueForKey:@"userid"]])
+        {
+            
+            
+            MyPostViewController * set=[mainStoryboard instantiateViewControllerWithIdentifier:@"MyPostViewController"];
+            CATransition *transition = [CATransition animation];
+            transition.duration = 0.3;
+            transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+            transition.type = kCATransitionPush;
+            transition.subtype = kCATransitionFromLeft;
+            
+            [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
+            set.Array_UserInfo = [Array_Notification objectAtIndex:indexPath.row];
+            set.swipeCount = indexPath.row;
+            [self.navigationController pushViewController:set animated:YES];
+            
+            [defaults setObject:@"yes" forKey:@"Activitynext"] ;
+            
+        }
+        else
+            
+        {
+            
+            OnCellClickViewController * set=[mainStoryboard instantiateViewControllerWithIdentifier:@"OnCellClickViewController"];
+            CATransition *transition = [CATransition animation];
+            transition.duration = 0.3;
+            transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+            transition.type = kCATransitionPush;
+            transition.subtype = kCATransitionFromLeft;
+            
+            [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
+            
+            set.Array_UserInfo = [Array_Notification objectAtIndex:indexPath.row];
+            set.swipeCount = indexPath.row;
+            
+            [self.navigationController pushViewController:set animated:YES];
+            [defaults setObject:@"yes" forKey:@"Activitynext"];
+            
+            
+        }
+        
+        
+  
+        
+        
+        
+    }
     
     
 }
@@ -678,20 +739,22 @@
         
     }
     
-//    for (int i=0; i<[segmentedControl.subviews count]; i++)
-//    {
-//        if ([[segmentedControl.subviews objectAtIndex:i]isSelected] )
-//        {
-//            UIColor *tintcolor=[UIColor colorWithRed: 98/255.0 green:156/255.0 blue:247/255.0 alpha:1.0];
-//            [[segmentedControl.subviews objectAtIndex:i] setTintColor:tintcolor];
-//        }
-//        else{
-//            UIColor *tintcolor=[UIColor colorWithRed:127.0/255.0 green:161.0/255.0 blue:183.0/255.0 alpha:1.0];
-//            [[segmentedControl.subviews objectAtIndex:i] setTintColor:tintcolor];
-//            
-//        }
-//    }
-    
+    // Removing previous selection
+//    [bottomBorder removeFromSuperlayer];
+//    
+//    // Creating new layer for selection
+//    bottomBorder             = [CALayer layer];
+//    bottomBorder.borderColor = [UIColor redColor].CGColor;
+//    bottomBorder.borderWidth = 3;
+//    
+//    // Calculating frame
+//    CGFloat width            = segmentedControl.frame.size.width/2;
+//    CGFloat x                = segmentedControl.selectedSegmentIndex * width;
+//    CGFloat y                = segmentedControl.frame.size.height + 1;
+//    bottomBorder.frame       = CGRectMake(x, y,width, bottomBorder.borderWidth);
+//    
+//    // Adding selection to segment
+//    [segmentedControl.layer addSublayer:bottomBorder];
     
     
 }

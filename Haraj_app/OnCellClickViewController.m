@@ -123,17 +123,16 @@
     
     if ([[defaults valueForKey:@"Activitynext"]isEqualToString:@"yes"])
     {
-        self.tableView.frame = CGRectMake(self.view.layer.frame.origin.x, self.view.frame.origin.y - rect.size.height, self.view.frame.size.width,400);
-        
+        self.tableView.contentInset = UIEdgeInsetsMake(-20, 0, 0, 0);        
         [defaults setObject:@"no" forKey:@"Activitynext"];
     }
     
     else
         
     {
-        
+        self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
     }
-    
+   
     
 
     
@@ -163,6 +162,10 @@
         [self SuggestPostConnection];
         [self ChatCommentConnection];
     }
+    
+    
+    
+    
     
  
 
@@ -1595,11 +1598,7 @@
         
         button3Fav = [[UIButton alloc]initWithFrame:CGRectMake(210, 7, 30, 30)];
         
-        
-        
-        
-        
-        
+       
         
         if ([[Array_UserInfo valueForKey:@"favourite"]isEqualToString:@"TRUE"])
         {

@@ -104,6 +104,20 @@
 //    myCustomXIBViewObj.priceTextField.delegate = self;
     
  //   [self performSelector:@selector(delay) withObject:nil afterDelay:3.0];
+    // self.tableView.contentInset = UIEdgeInsetsMake(-20, 0, 0, 0);
+    if ([[defaults valueForKey:@"Activitynext"]isEqualToString:@"yes"])
+    {
+      self.tableView.contentInset = UIEdgeInsetsMake(-20, 0, 0, 0);
+        [defaults setObject:@"no" forKey:@"Activitynext"];
+    }
+    
+    else
+        
+    {
+
+       self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
+        
+    }
 
     
 }

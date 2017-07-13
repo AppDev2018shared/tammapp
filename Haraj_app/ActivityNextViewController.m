@@ -100,9 +100,13 @@
         set.Array_UserInfo = [Array_Activity objectAtIndex:0];
         set.swipeCount = touchedIndex;
         
+         [defaults setObject:@"yes" forKey:@"Activitynext"] ;
+            [defaults synchronize];
+        
         [self.navigationController pushViewController:set animated:YES];
         
-        [defaults setObject:@"yes" forKey:@"Activitynext"] ;
+       
+       
 
         
     }
@@ -122,8 +126,11 @@
         set.Array_UserInfo = [Array_Activity objectAtIndex:0];
         set.swipeCount = touchedIndex;
         
+        [defaults setObject:@"yes" forKey:@"Activitynext"] ;
+        [defaults synchronize];
+        
         [self.navigationController pushViewController:set animated:YES];
-         [defaults setObject:@"yes" forKey:@"Activitynext"] ;
+       
 
         
     }
