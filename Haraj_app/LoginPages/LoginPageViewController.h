@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FRHyperLabel.h"
 
 @interface LoginPageViewController : UIViewController
 @property(nonatomic,weak)IBOutlet UILabel * Label_TitleName;
@@ -21,6 +22,8 @@
 @property(nonatomic,weak)IBOutlet UIButton *  Button_LoginTw;
 
 @property(nonatomic,weak)IBOutlet UILabel * Label_TermsAndCon;
+
+@property (weak, nonatomic) IBOutlet FRHyperLabel *termLabel;
 
 -(IBAction)SignUpView:(id)sender;
 

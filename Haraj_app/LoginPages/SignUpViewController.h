@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FRHyperLabel.h"
 
 @interface SignUpViewController : UIViewController
 
@@ -26,6 +27,9 @@
 @property(nonatomic,weak)IBOutlet UIButton *  Button_LoginTw;
 
 @property(nonatomic,weak)IBOutlet UILabel * Label_TermsAndCon;
+@property (weak, nonatomic) IBOutlet FRHyperLabel *termLabel;
+
+
 -(IBAction)SignUpViewBack:(id)sender;
 -(IBAction)LoginWithFbAction:(id)sender;
 -(IBAction)LoginWithTwitterAction:(id)sender;

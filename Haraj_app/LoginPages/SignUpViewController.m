@@ -120,6 +120,43 @@
     Label_TermsAndCon.attributedText = aAttrString;
     Button_signip .enabled=NO;
     Button_signip.titleLabel.textColor =Buttonlogincolor;
+    
+    
+    
+    FRHyperLabel *label = self.termLabel;
+    label.numberOfLines = 0;
+    label.textColor = [UIColor whiteColor];
+    label.textAlignment = NSTextAlignmentCenter;
+    [label setFont:[UIFont fontWithName:@"San Francisco Display" size:12]];
+    
+    //Step 1: Define a normal attributed string for non-link texts
+    
+    NSString *string = @"By signing in, you agree to our Terms & Conditions";
+    
+    NSDictionary *attributes = @{NSForegroundColorAttributeName: [UIColor colorWithRed:(255/255.0) green:255/255.0 blue:255/255.0 alpha:1],NSFontAttributeName: [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote]};
+    
+    
+    label.attributedText = [[NSAttributedString alloc]initWithString:string attributes:attributes];
+    
+    //Step 2: Define a selection handler block
+    
+    void(^handler)(FRHyperLabel *label, NSString *substring) = ^(FRHyperLabel *label, NSString *substring)
+    {
+        
+        if ([substring isEqualToString:@"Terms & Conditions"])
+        {
+            
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://play-date.ae/terms.html"]];
+            
+        }
+        
+    };
+    
+    //Step 3: Add link substrings
+    
+    [label setLinksForSubstrings:@[@"Terms & Conditions"] withLinkHandler:handler];
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
