@@ -16,6 +16,7 @@
 #import <Fabric/Fabric.h>
 #import "SBJsonParser.h"
 #import "HomeNavigationController.h"
+#import "MobileViewController.h"
 
 #define Buttonlogincolor [UIColor colorWithRed:200/255.0 green:200/255.0 blue:200/255.0 alpha:1]
 @interface LoginPageViewController ()
@@ -474,6 +475,10 @@
                                         
         [defaults setObject:[NSString stringWithFormat:@"%@",[[array_login objectAtIndex:0]valueForKey:@"userid"]] forKey:@"userid"];
                                         
+        [defaults setObject:[NSString stringWithFormat:@"%@",[[array_login objectAtIndex:0]valueForKey:@"mobileno"]] forKey:@"mobileNumber"];
+         [defaults setObject:[NSString stringWithFormat:@"%@",[[array_login objectAtIndex:0]valueForKey:@"verified"]] forKey:@"verified"];
+
+                                        
                                         
             [defaults setObject:@"yes" forKey:@"LoginView"];
             [defaults synchronize];
@@ -482,11 +487,27 @@
                                         
                                         
                                     [self.view hideActivityViewWithAfterDelay:0];
-            HomeNavigationController *loginController=[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"HomeNavigationController"];
                                         
-                                        //                        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-                                        //                        HomeTabBarViewController *   Home_add= [mainStoryboard instantiateViewControllerWithIdentifier:@"HomeTabBarViewController"];
-            [[UIApplication sharedApplication].keyWindow setRootViewController:loginController];
+                                        if ([[[array_login objectAtIndex:0]valueForKey:@"verified"] isEqualToString:@"yes"])
+                                            
+                                        {
+                                            HomeNavigationController *loginController=[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"HomeNavigationController"];
+                                            [[UIApplication sharedApplication].keyWindow setRootViewController:loginController];
+                                            
+                                        }
+                                        else
+                                        {
+                                            
+                                            UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                                            MobileViewController * mobileController=[mainStoryboard instantiateViewControllerWithIdentifier:@"MobileViewController"];
+                                            [self.navigationController pushViewController:mobileController animated:YES];
+                                            
+                                        }
+                                        
+                                        
+
+//            HomeNavigationController *loginController=[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"HomeNavigationController"];
+//            [[UIApplication sharedApplication].keyWindow setRootViewController:loginController];
                                         
                                                  }
                                                  
@@ -587,18 +608,18 @@ else
     
     
     
-     //   [self.view showActivityViewWithLabel:@"Loading"];
+    //   [self.view showActivityViewWithLabel:@"Loading"];
     NSString *email= @"email";
     NSString *fbid1;
     if ([regTypeVal isEqualToString:@"FACEBOOK"])
     {
-     fbid1= @"fbid";
+        fbid1= @"fbid";
     }
     else
     {
-    fbid1= @"twitterid";
+        fbid1= @"twitterid";
     }
-   
+    
     
     NSString *gender= @"gender";
     NSString *name= @"name";
@@ -621,13 +642,13 @@ else
     NSString *devicetokenVal =@"123";
     
     NSString *regType= @"regtype";
-  
+    
     
     NSString *Platform= @"platform";
     NSString *PlatformVal =@"ios";
     
     NSString *nooffriends= @"nooffriends";
-   
+    
     NSString *friendlist= @"friendlist";
     NSString *friendlistval =[NSString stringWithFormat:@"%@",Str_fb_friend_id];
     
@@ -745,41 +766,59 @@ else
                                                      
                                                  }
                                                  
-                                if(array_login.count !=0)
-                                    {
-                        [self.view hideActivityViewWithAfterDelay:0];
-                                        
-                                        
-                                        
-                                        
-                                        
-                                        
-        [defaults setObject:[NSString stringWithFormat:@"%@",[[array_login objectAtIndex:0]valueForKey:@"challenges"]] forKey:@"challenges"];
-                                        
-                                        
-                                        
-        [defaults setObject:[[array_login objectAtIndex:0]valueForKey:@"email"] forKey:@"email"];
-                                        
-        [defaults setObject:[NSString stringWithFormat:@"%@",[[array_login objectAtIndex:0]valueForKey:@"friends"]] forKey:@"friends"];
-                                        
-        [defaults setObject:[[array_login objectAtIndex:0]valueForKey:@"name"] forKey:@"name"];
-                                        
-                                        
-        [defaults setObject:[[array_login objectAtIndex:0]valueForKey:@"profileimage"] forKey:@"profileimage"];
-                                        
-        [defaults setObject:[NSString stringWithFormat:@"%@",[[array_login objectAtIndex:0]valueForKey:@"userid"]] forKey:@"userid"];
-                                        
-                                        
-        [defaults setObject:@"yes" forKey:@"LoginView"];
-                                        
-        [defaults synchronize];
-                                        
-                                        
-        HomeNavigationController *loginController=[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"HomeNavigationController"];
-        
-//                        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//                        HomeTabBarViewController *   Home_add= [mainStoryboard instantiateViewControllerWithIdentifier:@"HomeTabBarViewController"];
-                        [[UIApplication sharedApplication].keyWindow setRootViewController:loginController];
+                                                 if(array_login.count !=0)
+                                                 {
+                                                     [self.view hideActivityViewWithAfterDelay:0];
+                                                     
+                                                     
+                                                     
+                                                     
+                                                     
+                                                     
+                                                     [defaults setObject:[NSString stringWithFormat:@"%@",[[array_login objectAtIndex:0]valueForKey:@"challenges"]] forKey:@"challenges"];
+                                                     
+                                                     
+                                                     
+                                                     [defaults setObject:[[array_login objectAtIndex:0]valueForKey:@"email"] forKey:@"email"];
+                                                     
+                                                     [defaults setObject:[NSString stringWithFormat:@"%@",[[array_login objectAtIndex:0]valueForKey:@"friends"]] forKey:@"friends"];
+                                                     
+                                                     [defaults setObject:[[array_login objectAtIndex:0]valueForKey:@"name"] forKey:@"name"];
+                                                     
+                                                     
+                                                     [defaults setObject:[[array_login objectAtIndex:0]valueForKey:@"profileimage"] forKey:@"profileimage"];
+                                                     
+                                                     [defaults setObject:[NSString stringWithFormat:@"%@",[[array_login objectAtIndex:0]valueForKey:@"userid"]] forKey:@"userid"];
+                                                     
+                                                     [defaults setObject:[NSString stringWithFormat:@"%@",[[array_login objectAtIndex:0]valueForKey:@"mobileno"]] forKey:@"mobileNumber"];
+                                                     [defaults setObject:[NSString stringWithFormat:@"%@",[[array_login objectAtIndex:0]valueForKey:@"verified"]] forKey:@"verified"];
+                                                     
+                                                     
+                                                     [defaults setObject:@"yes" forKey:@"LoginView"];
+                                                     
+                                                     [defaults synchronize];
+                                                     
+                                                     
+                                                     if ([[[array_login objectAtIndex:0]valueForKey:@"verified"] isEqualToString:@"yes"])
+                                                         
+                                                     {
+                                                         HomeNavigationController *loginController=[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"HomeNavigationController"];
+                                                         [[UIApplication sharedApplication].keyWindow setRootViewController:loginController];
+                                                         
+                                                     }
+                                                     else
+                                                     {
+                                                         
+                                                         UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                                                         MobileViewController * mobileController=[mainStoryboard instantiateViewControllerWithIdentifier:@"MobileViewController"];
+                                                         [self.navigationController pushViewController:mobileController animated:YES];
+                                                         
+                                                     }
+                                                     
+                                                     
+                                                     
+                                                     //        HomeNavigationController *loginController=[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"HomeNavigationController"];
+                                                     //        [[UIApplication sharedApplication].keyWindow setRootViewController:loginController];
                                                      
                                                  }
                                                  

@@ -15,6 +15,8 @@
 @property(nonatomic,weak)IBOutlet UITextField * textfield_Emailname;
 @property(nonatomic,weak)IBOutlet UITextField * textfield_password;
 @property(nonatomic,weak)IBOutlet UITextField * textfield_Dob;
+@property (weak, nonatomic) IBOutlet UITextField *textfield_MobileNumber;
+
 @property(nonatomic,weak)IBOutlet UIButton *  Button_signip;
 
 @property(nonatomic,weak)IBOutlet UIView * view_LoginFB;

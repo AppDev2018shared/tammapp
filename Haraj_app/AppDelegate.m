@@ -16,6 +16,8 @@
 #import "MainNavigationController.h"
 #import "HomeNavigationController.h"
 #import "LoginWithViewController.h"
+#import <FirebaseAuth/FirebaseAuth.h>
+#import "Firebase.h"
 
 @interface AppDelegate ()<CLLocationManagerDelegate>
 {
@@ -36,6 +38,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    [FIRApp configure];
+    
     
     Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
     NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];

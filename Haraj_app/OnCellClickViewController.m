@@ -1588,6 +1588,17 @@
         [button1 setImage:[UIImage imageNamed:@"Phone"] forState:UIControlStateNormal];
         [button1 setTag:1];
         [button1 addTarget:self action:@selector(sectionHeaderButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        
+        if ([[Array_UserInfo valueForKey:@"allowcalls" ] isEqualToString:@"YES"] && [[Array_UserInfo valueForKey:@"verifiedmobile" ] isEqualToString:@"yes"] )
+        {
+            button1.enabled = YES;
+        }
+        else
+        {
+            button1.enabled = NO;
+        }
+        
+        
         [sectionView addSubview:button1];
         
         UIButton *button2 = [[UIButton alloc]initWithFrame:CGRectMake(130, 7, 30, 30)];
@@ -1806,6 +1817,28 @@
     if ([sender tag]== 1)
     {
         NSLog(@"Phone Pressed");
+        
+        
+        if ([[Array_UserInfo valueForKey:@"allowcalls" ] isEqualToString:@"YES"] && [[Array_UserInfo valueForKey:@"verifiedmobile" ] isEqualToString:@"yes"] )
+        {
+            NSString *mobstr = [NSString stringWithFormat:@"telprompt:%@",[Array_UserInfo valueForKey:@"mobileno"]];
+            
+            
+            mobstr = [mobstr stringByReplacingOccurrencesOfString:@" " withString:@""];
+            //mobstr = [NSString stringWithFormat@"tel:%@", mobstr];
+           
+            
+            
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:mobstr]];
+        }
+        else
+        {
+            
+        }
+        
+        
+     
+    
         
        
     }

@@ -16,6 +16,8 @@
 #import "SBJsonParser.h"
 #import "HomeNavigationController.h"
 #import "LoginPageViewController.h"
+#import <FirebaseAuth/FirebaseAuth.h>
+#import "MobileViewController.h"
 
 #define Buttonlogincolor [UIColor colorWithRed:200/255.0 green:200/255.0 blue:200/255.0 alpha:1]
 @interface SignUpViewController ()
@@ -29,13 +31,15 @@
 @end
 
 @implementation SignUpViewController
-@synthesize Label_TitleName,textfield_name,textfield_password,textfield_Dob,Button_signip,view_LoginFB,View_LoginTW,Label_TermsAndCon,Button_LoginFb,Button_LoginTw;
+@synthesize Label_TitleName,textfield_name,textfield_password,textfield_Dob,textfield_MobileNumber,Button_signip,view_LoginFB,View_LoginTW,Label_TermsAndCon,Button_LoginFb,Button_LoginTw;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     NSString *plistPath = [[NSBundle mainBundle]pathForResource:@"UrlName" ofType:@"plist"];
     urlplist = [NSDictionary dictionaryWithContentsOfFile:plistPath];
     defaults=[[NSUserDefaults alloc]init];
+    
+    
     CALayer *borderBottom_uname = [CALayer layer];
     borderBottom_uname.backgroundColor = [UIColor whiteColor].CGColor;
     borderBottom_uname.frame = CGRectMake(0, textfield_name.frame.size.height-0.8, textfield_name.frame.size.width,0.5f);
@@ -60,6 +64,12 @@
     borderBottom_email.frame = CGRectMake(0, _textfield_Emailname.frame.size.height-0.8, _textfield_Emailname.frame.size.width,0.5f);
     [_textfield_Emailname.layer addSublayer:borderBottom_email];
     
+    CALayer *borderBottom_mobile = [CALayer layer];
+    borderBottom_mobile.backgroundColor = [UIColor whiteColor].CGColor;
+    borderBottom_mobile.frame = CGRectMake(0, textfield_MobileNumber.frame.size.height-0.8, textfield_MobileNumber.frame.size.width,0.5f);
+    [textfield_MobileNumber.layer addSublayer:borderBottom_mobile];
+    
+    
     
     Button_signip.clipsToBounds=YES;
     Button_signip.layer.cornerRadius=5.0f;
@@ -70,11 +80,19 @@
     view_LoginFB.layer.cornerRadius=5.0f;
     view_LoginFB.layer.borderColor=[UIColor whiteColor].CGColor;
     view_LoginFB.layer.borderWidth=1.0f;
+    UITapGestureRecognizer * LoginFB =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(LoginWithFbAction:)];
+    [view_LoginFB addGestureRecognizer:LoginFB];
+   
+
+    
     
     View_LoginTW.clipsToBounds=YES;
     View_LoginTW.layer.cornerRadius=5.0f;
     View_LoginTW.layer.borderColor=[UIColor whiteColor].CGColor;
     View_LoginTW.layer.borderWidth=1.0f;
+    UITapGestureRecognizer * LoginTW =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(LoginWithTwitterAction:)];
+    [View_LoginTW addGestureRecognizer:LoginTW];
+    
     
     CALayer *borderLeftFb = [CALayer layer];
     borderLeftFb.backgroundColor = [UIColor whiteColor].CGColor;
@@ -283,6 +301,8 @@
 -(IBAction)LoginButtonAction:(id)sender
 {
     
+   
+    
     
     
     NSString *emailRegEx = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,10}";
@@ -478,19 +498,22 @@
                     
                     [defaults setObject:[NSString stringWithFormat:@"%@",[[array_login objectAtIndex:0]valueForKey:@"userid"]] forKey:@"userid"];
                     
+//                     [self JoinAction];
+                    
                     
                     [defaults setObject:@"yes" forKey:@"LoginView"];
                     [defaults synchronize];
                     
                     
+                    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                    MobileViewController * mobileController=[mainStoryboard instantiateViewControllerWithIdentifier:@"MobileViewController"];
+                    [self.navigationController pushViewController:mobileController animated:YES];
+
                     
                     
-                    
-    HomeNavigationController *loginController=[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"HomeNavigationController"];
-//                    
-//                    //                        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//                    //                        HomeTabBarViewController *   Home_add= [mainStoryboard instantiateViewControllerWithIdentifier:@"HomeTabBarViewController"];
-[[UIApplication sharedApplication].keyWindow setRootViewController:loginController];
+//
+//                    HomeNavigationController *loginController=[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"HomeNavigationController"];
+//[[UIApplication sharedApplication].keyWindow setRootViewController:loginController];
 
                 }
                 
@@ -519,7 +542,113 @@
     
     }
     
+    
+//    
+//    [[FIRPhoneAuthProvider provider] verifyPhoneNumber:textfield_MobileNumber.text
+//                                            completion:^(NSString * _Nullable verificationID, NSError * _Nullable error) {
+//                                                if (error) {
+//                                                   // [self showMessagePrompt:error.localizedDescription];
+//                                                    return;
+//                                                }
+//                                                // Sign in using the verificationID and the code sent to the user
+//                                                // ...
+//                                                
+//                                                
+//                                                [defaults setObject:verificationID forKey:@"authVerificationId"];
+//                                                
+//                                          
+//                                            }];
+    
+    
+    
+    
+    
+    
+    
+    
 }
+
+
+
+
+-(void)JoinAction
+
+{
+    NSString *message = [NSString stringWithFormat:@"Enter the Authentication  code  sent to  number :%@",textfield_MobileNumber.text];
+    
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Event Code" message:message preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField)
+     
+     {
+         
+         //         textField.frame=CGRectMake(<#CGFloat x#>, <#CGFloat y#>, <#CGFloat width#>, <#CGFloat height#>)
+         
+         textField.placeholder = @"Event Code";
+         
+         
+         
+         //        textField.secureTextEntry = YES;
+         
+     }];
+    
+    UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"Join" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
+                                    
+                                    {
+                                        
+                                        NSLog(@"Current password %@", [[alertController textFields][0] text]);
+                                        
+                                        
+                                        
+                                        FIRAuthCredential *credential = [[FIRPhoneAuthProvider provider] credentialWithVerificationID:[defaults valueForKey:@"authVerificationId"] verificationCode:[[alertController textFields][0] text]];
+                                        
+                                        
+                                        
+                                        [[FIRAuth auth] signInWithCredential:credential completion:^(FIRUser *user, NSError *error)
+                                        {
+                                            if (error)
+                                            {
+                                                return ;
+                                            }
+                                            else
+                                            {
+                                                
+                                                HomeNavigationController *loginController=[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"HomeNavigationController"];
+                                                [[UIApplication sharedApplication].keyWindow setRootViewController:loginController];
+                                            }
+                                        }];
+                                        
+//                                        if ([[defaults valueForKey:@"authVerificationId"]isEqualToString:[[alertController textFields][0] text]])
+//                                        {
+//                                            
+//                                         HomeNavigationController *loginController=[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"HomeNavigationController"];
+//                                            [[UIApplication sharedApplication].keyWindow setRootViewController:loginController];
+//                                            
+//                                        }
+                                        
+                                        
+                                        
+                                    }];
+    
+    
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        
+        NSLog(@"Canelled");
+        
+    }];
+    
+    [alertController addAction:confirmAction];
+    
+    [alertController addAction:cancelAction];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
+    
+}
+
+
+
 
 - (IBAction)Textfelds_Actions:(id)sender
 {
@@ -761,16 +890,35 @@
                             
                             [defaults setObject:[NSString stringWithFormat:@"%@",[[array_login objectAtIndex:0]valueForKey:@"userid"]] forKey:@"userid"];
                             
+                            [defaults setObject:[NSString stringWithFormat:@"%@",[[array_login objectAtIndex:0]valueForKey:@"mobileno"]] forKey:@"mobileNumber"];
+                            [defaults setObject:[NSString stringWithFormat:@"%@",[[array_login objectAtIndex:0]valueForKey:@"verified"]] forKey:@"verified"];
+                            
                             
                             [defaults setObject:@"yes" forKey:@"LoginView"];
                             [defaults synchronize];
                             
                             
-        HomeNavigationController *loginController=[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"HomeNavigationController"];
-//
-//                            //                        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//                            //                        HomeTabBarViewController *   Home_add= [mainStoryboard instantiateViewControllerWithIdentifier:@"HomeTabBarViewController"];
-        [[UIApplication sharedApplication].keyWindow setRootViewController:loginController];
+                            
+                            if ([[[array_login objectAtIndex:0]valueForKey:@"verified"] isEqualToString:@"yes"])
+                                
+                            {
+                                HomeNavigationController *loginController=[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"HomeNavigationController"];
+                                [[UIApplication sharedApplication].keyWindow setRootViewController:loginController];
+                                
+                            }
+                            else
+                            {
+                                
+                                UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                                MobileViewController * mobileController=[mainStoryboard instantiateViewControllerWithIdentifier:@"MobileViewController"];
+                                [self.navigationController pushViewController:mobileController animated:YES];
+                                
+                            }
+
+                            
+                            
+//        HomeNavigationController *loginController=[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"HomeNavigationController"];
+//        [[UIApplication sharedApplication].keyWindow setRootViewController:loginController];
                                                  }
                                                  
                                                  

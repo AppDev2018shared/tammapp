@@ -18,6 +18,7 @@
 #import "SignUpViewController.h"
 #import "SBJsonParser.h"
 #import "HomeNavigationController.h"
+#import "MobileViewController.h"
 
 
 @interface LoginWithViewController ()
@@ -451,17 +452,33 @@
                                                      
                                                      [defaults setObject:[NSString stringWithFormat:@"%@",[[array_login objectAtIndex:0]valueForKey:@"userid"]] forKey:@"userid"];
                                                      
+                                                     [defaults setObject:[NSString stringWithFormat:@"%@",[[array_login objectAtIndex:0]valueForKey:@"mobileno"]] forKey:@"mobileNumber"];
+                                                     [defaults setObject:[NSString stringWithFormat:@"%@",[[array_login objectAtIndex:0]valueForKey:@"verified"]] forKey:@"verified"];
                                                      
                                                      [defaults setObject:@"yes" forKey:@"LoginView"];
                                                      
                                                      [defaults synchronize];
                                                      
                                                      
-                                                     HomeNavigationController *loginController=[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"HomeNavigationController"];
+                                                     if ([[[array_login objectAtIndex:0]valueForKey:@"verified"] isEqualToString:@"yes"])
                                                      
-                                                     //                        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-                                                     //                        HomeTabBarViewController *   Home_add= [mainStoryboard instantiateViewControllerWithIdentifier:@"HomeTabBarViewController"];
-                                                     [[UIApplication sharedApplication].keyWindow setRootViewController:loginController];
+                                                     {
+                                                         HomeNavigationController *loginController=[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"HomeNavigationController"];
+                                                         [[UIApplication sharedApplication].keyWindow setRootViewController:loginController];
+                                                         
+                                                     }
+                                                     else
+                                                     {
+                                                         
+                                                         UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                                                         MobileViewController * mobileController=[mainStoryboard instantiateViewControllerWithIdentifier:@"MobileViewController"];
+                                                         [self.navigationController pushViewController:mobileController animated:YES];
+                                                         
+                                                     }
+                                                     
+                                                     
+//                                                     HomeNavigationController *loginController=[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"HomeNavigationController"];
+//                                                     [[UIApplication sharedApplication].keyWindow setRootViewController:loginController];
                                                      
                                                  }
                                                  
