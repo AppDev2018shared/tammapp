@@ -12,6 +12,7 @@
 #import "BoostPost.h"
 #import "SBJsonParser.h"
 #import "Reachability.h"
+#import "UIView+RNActivityView.h"
 
 
 @interface BoostPostViewController ()<UITableViewDataSource, UITableViewDelegate,UIGestureRecognizerDelegate>
@@ -207,6 +208,8 @@
 -(void)imageViewButton1_Action:(UIGestureRecognizer *)reconizer
 {
     NSLog(@"imageViewButton1_Action");
+     [self.view showActivityViewWithLabel:@"Boosting post..."];
+    
     boostpackVal = @"24H";
     boostAmountVal = @"4";
     [self boostConnection];
@@ -218,6 +221,7 @@
 
 -(void)imageViewButton2_Action:(UIGestureRecognizer *)reconizer
 {
+     [self.view showActivityViewWithLabel:@"Boosting post..."];
     boostpackVal = @"48H";
     boostAmountVal = @"6";
     NSLog(@"imageViewButton2_Action");
@@ -228,6 +232,7 @@
 
 -(void)imageViewButton3_Action:(UIGestureRecognizer *)reconizer
 {
+     [self.view showActivityViewWithLabel:@"Boosting post..."];
     NSLog(@"imageViewButton3_Action");
     boostpackVal = @"72H";
     boostAmountVal = @"10";
@@ -361,7 +366,7 @@
                                                  }
                                                  
                                                  
-                                                 
+                                                  [self.view hideActivityViewWithAfterDelay:0];
                                                  
                                              }
                                              

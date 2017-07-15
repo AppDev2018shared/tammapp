@@ -48,6 +48,24 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    UIView *paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10,searchTextField.frame.size.height)];
+    searchTextField.rightView = paddingView;
+    searchTextField.rightViewMode = UITextFieldViewModeAlways;
+    
+    
+
+    
+    UIView *paddingView1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0,36,22)];
+   // [paddingView1 addSubview:searchImageView];
+    
+    searchTextField.leftView = paddingView1;
+    searchTextField.leftViewMode = UITextFieldViewModeAlways;
+    
+   
+    
+    
+    
+    
     favouritesCount = 0;
     
     NSString *plistPath = [[NSBundle mainBundle]pathForResource:@"UrlName" ofType:@"plist"];
@@ -78,8 +96,8 @@
     profileImageView.layer.cornerRadius = profileImageView.frame.size.height / 2;
     profileImageView.clipsToBounds = YES;
     
-    nameLabel.text = [defaults valueForKey:@"FirstName" ];
-    lastnameLabel.text = [defaults valueForKey:@"LastName" ];
+    nameLabel.text = [defaults valueForKey:@"name" ];
+  //  lastnameLabel.text = [defaults valueForKey:@"LastName" ];
     
     [self viewPostConnection];
     [self salePointsConnection];
@@ -167,6 +185,12 @@
     
     
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
+}
+
+- (CGRect)textRectForBounds:(CGRect)bounds
+{
+    return CGRectInset(bounds, 10, 10);
+    
 }
 
 -(void)favourite_ActionDetails:(UIGestureRecognizer *)reconizer

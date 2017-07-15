@@ -7,7 +7,7 @@
 //
 
 #import "OnCellClickViewController.h"
-#import "FirstImageViewCell.h"ƒ
+#import "FirstImageViewCell.h"
 #import "UIImageView+WebCache.h"
 #import "SBJsonParser.h"
 #import "Reachability.h"
@@ -22,6 +22,8 @@
 #import "MHFacebookImageViewer.h"
 #import "UIImageView+MHFacebookImageViewer.h"
 #import "EnterComment.h"
+#import "UIView+RNActivityView.h"
+
 #define FONT_SIZE 15.0f
 #define CELL_CONTENT_WIDTH self.view.frame.size.width-138
 
@@ -1122,7 +1124,7 @@
             [ComCell.commentofferLabel setFont:[UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:20]];
             [ComCell.commentmsgLabel setFont:[UIFont fontWithName:@"SanFranciscoDisplay-medium" size:15]];
             
-            
+                        
             if (Array_Chats.count == 0 )
             {
                 ComCell.commentmsgLabel.text = @"No Chats available";
@@ -1213,7 +1215,12 @@
                     [ComCell.profileImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
                     
                     
+                    
+                    
                 }
+                
+                
+
                 
             }
             return ComCell;
@@ -1514,7 +1521,7 @@
                 }
                 else
                 {
-                    return 456 ;
+                    return 456 + 38 ;
                 }
                 
                 
@@ -1541,11 +1548,19 @@
         {
             if ([[[Array_Chats objectAtIndex:indexPath.row ] valueForKey:@"messagetype"] isEqualToString:@"TEXT"])
             {
+                UIImageView *line = [[UIImageView alloc] initWithFrame:CGRectMake(0, 102,375, 1)];
+                line.backgroundColor = [UIColor colorWithRed:241/255.0 green:241/255.0 blue:241/255.0 alpha:1];
+                [ComCell addSubview:line];
+                
                 return 103;
 
             }
             else
             {
+                UIImageView *line = [[UIImageView alloc] initWithFrame:CGRectMake(0, 141,375, 1)];
+                line.backgroundColor =[UIColor colorWithRed:241/255.0 green:241/255.0 blue:241/255.0 alpha:1];
+                [ComCell addSubview:line];
+
                 return 142;
 
             }
@@ -1986,6 +2001,7 @@
 -(void)postCommentButtonPressed:(id)sender
 {
     
+    
  [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewDisable" object:self userInfo:nil];
     
    NSLog(@"post comment Pressed");
@@ -2137,13 +2153,18 @@
 - (void)submit:(id)sender
 {
     
+
+    
+    [self.view showActivityViewWithLabel:@"Posting..."];
+    
+  
        [self AddChat_Connection];
     
 }
 
 - (void)submitActivity:(id)sender
 {
-    
+     [self.view showActivityViewWithLabel:@"Sending..."];
     [self AddActivityChat_Connection];
     
 }
@@ -2284,7 +2305,7 @@
                                                      
                                                  }
                                                  
-                                                 
+                                                  [self.view hideActivityViewWithAfterDelay:0];
                                                  
                                                  
                                              }
@@ -2383,6 +2404,9 @@
                                                      
                                                       [defaults setObject:@"no" forKey:@"SeeCommentPressed"];
                                                      
+                                                    
+
+                                                     
                                                      [self ChatCommentConnection];
                                                    
                                                      
@@ -2437,7 +2461,7 @@
                                                  }
 
                                                  
-                                                 
+                                                  [self.view hideActivityViewWithAfterDelay:0];
                                                  
                                              }
                                              
@@ -2698,6 +2722,8 @@
 - (void)confirm:(id)sender
 {
     
+    
+     [self.view showActivityViewWithLabel:@"Creating offer..."];
    
     [self CreateMakeOfferConnection];
 //     [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewEnable" object:self userInfo:nil];
@@ -3686,7 +3712,7 @@
         }
 
 
-        
+         [self.view hideActivityViewWithAfterDelay:0];
         
 
     }
@@ -3743,15 +3769,20 @@
         
         
         MyPostViewController * serviceVC=[mainStoryboard instantiateViewControllerWithIdentifier:@"MyPostViewController"];
-        serviceVC.Array_UserInfo=[Array_SuggestPost objectAtIndex:(long)imageView1.tag];;
+        serviceVC.Array_UserInfo=[Array_SuggestPost objectAtIndex:(long)imageView1.tag];
+        [defaults setObject:@"yes" forKey:@"Activitynext"] ;
+        [defaults synchronize];
          [self.navigationController pushViewController:serviceVC animated:YES];
+        
     }
     else
     {
         
         
         OnCellClickViewController *serviceVC = [mainStoryboard instantiateViewControllerWithIdentifier:@"OnCellClickViewController"];
-       serviceVC.Array_UserInfo=[Array_SuggestPost objectAtIndex:(long)imageView1.tag];;
+       serviceVC.Array_UserInfo=[Array_SuggestPost objectAtIndex:(long)imageView1.tag];
+        [defaults setObject:@"yes" forKey:@"Activitynext"] ;
+        [defaults synchronize];
          [self.navigationController pushViewController:serviceVC animated:YES];
     }
    

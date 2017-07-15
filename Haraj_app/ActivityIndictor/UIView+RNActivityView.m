@@ -33,6 +33,7 @@
     if (!activityView.superview)
     {
         [self addSubview:activityView];
+    
     }
     
     return activityView;
@@ -222,6 +223,9 @@
     RNActivityView *activityView = [self rn_activityViewAssociated];
     if (activityView)
         [activityView hide:YES afterDelay:delay];
+    
+    [activityView removeFromSuperview];
+    
 }
 
 

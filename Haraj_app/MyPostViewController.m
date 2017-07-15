@@ -14,6 +14,7 @@
 #import "MHFacebookImageViewer.h"
 #import "UIImageView+MHFacebookImageViewer.h"
 #import "BoostPost.h"
+#import "UIView+RNActivityView.h"
 #define FONT_SIZE 15.0f
 #define CELL_CONTENT_WIDTH self.view.frame.size.width-138
 #define CELL_CONTENT_MARGIN 0.0f
@@ -1332,7 +1333,7 @@
                 }
                 else
                 {
-                    return 456 ;
+                    return 456 + 38 ;
                 }
                 
                 
@@ -1665,6 +1666,7 @@
 
 - (void)closedd:(id)sender
 {
+    [self.view endEditing:YES];
       [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewEnable" object:self userInfo:nil];
     transparentView.hidden=YES;
     
@@ -1792,6 +1794,7 @@
 
 -(void)bankButton_Action:(id)sender
 {
+     [self.view showActivityViewWithLabel:@"Making payment..."];
     paymentmodeStr = @"BANK";
     
     [self ItemSold_Connection];
@@ -1799,7 +1802,7 @@
 }
 -(void)creditButton_Action:(id)sender
 {
-    
+    [self.view showActivityViewWithLabel:@"Making payment..."];
     paymentmodeStr = @"CARD";
     [self ItemSold_Connection];
     NSLog(@"creditButton_Action Pressed");
@@ -1958,6 +1961,8 @@
 - (void)submit:(id)sender
 {
     
+    [self.view showActivityViewWithLabel:@"Posting..."];
+    
     [self AddChat_Connection];
     
 }
@@ -2073,7 +2078,7 @@
                                                      
                                                  }
                                                  
-                                                 
+                                                 [self.view hideActivityViewWithAfterDelay:0];
                                                  
                                              }
                                              
@@ -2738,7 +2743,7 @@
                                                      
                                                  }
                                                  
-                                                 
+                                                 [self.view hideActivityViewWithAfterDelay:0];
                                                  
                                                  
                                                  
@@ -2938,7 +2943,7 @@
 -(void)imageViewButton1_Action:(UIGestureRecognizer *)reconizer
 {
     NSLog(@"imageViewButton1_Action");
-    
+    [self.view showActivityViewWithLabel:@"Boosting post..."];
     boostpackVal = @"24H";
     boostAmountVal = @"4";
     [self boostConnection];
@@ -2946,6 +2951,7 @@
 }
 -(void)imageViewButton2_Action:(UIGestureRecognizer *)reconizer
 {
+    [self.view showActivityViewWithLabel:@"Boosting post..."];
     boostpackVal = @"48H";
     boostAmountVal = @"6";
     NSLog(@"imageViewButton2_Action");
@@ -2956,6 +2962,7 @@
 
 -(void)imageViewButton3_Action:(UIGestureRecognizer *)reconizer
 {
+    [self.view showActivityViewWithLabel:@"Boosting post..."];
     NSLog(@"imageViewButton3_Action");
     boostpackVal = @"72H";
     boostAmountVal = @"10";
@@ -3086,7 +3093,7 @@
                                                      
                                                  }
                                                  
-                                                 
+                                                 [self.view hideActivityViewWithAfterDelay:0];
                                                  
                                                  
                                              }

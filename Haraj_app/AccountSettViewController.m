@@ -754,7 +754,17 @@ Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_t
     [defaults setObject:@"no" forKey:@"facebookconnect"];
     [defaults setObject:@"no" forKey:@"twitterconnect"];
     
+    
+// --------to clear all data from defaults------------------
+    
+    NSDictionary * dict = [defaults dictionaryRepresentation];
+    for (id key in dict) {
+        [defaults removeObjectForKey:key];
+    }
     [defaults synchronize];
+    
+    
+   // [defaults synchronize];
     
     NSHTTPCookie *cookie;
     NSHTTPCookieStorage *storage = [NSHTTPCookieStorage sharedHTTPCookieStorage];

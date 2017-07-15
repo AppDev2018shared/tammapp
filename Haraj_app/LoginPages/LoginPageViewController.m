@@ -228,7 +228,7 @@
                              //  nameFb=[NSString stringWithFormat:@"%@%@%@",[result objectForKey:@"first_name"],@" ",[result objectForKey:@"last_name"]];
                              nameFb=[result objectForKey:@"name"];
                              genderfb=[result objectForKey:@"gender"];
-                             
+                                                    
                              
                              NSArray * allKeys = [[result valueForKey:@"friends"]objectForKey:@"data"];
                              

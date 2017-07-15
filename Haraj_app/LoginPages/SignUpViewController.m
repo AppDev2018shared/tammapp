@@ -235,6 +235,7 @@
               //  nameFb=[NSString stringWithFormat:@"%@%@%@",[result objectForKey:@"first_name"],@" ",[result objectForKey:@"last_name"]];
                 nameFb=[result objectForKey:@"name"];
                 genderfb=[result objectForKey:@"gender"];
+                            
                              
                   regTypeVal=@"FACEBOOK";
                          
@@ -252,7 +253,7 @@
                              }
                              
                              Str_fb_friend_id=[fb_friend_id componentsJoinedByString:@","];
-                             Str_fb_friend_id_Count=[NSString stringWithFormat:@"%d",fb_friend_id.count];
+                             Str_fb_friend_id_Count=[NSString stringWithFormat:@"%lu",(unsigned long)fb_friend_id.count];
                              NSLog(@"Friends ID : %@",Str_fb_friend_id);
 
                              
