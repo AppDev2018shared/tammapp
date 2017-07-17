@@ -96,7 +96,7 @@
         if ([substring isEqualToString:@"Terms & Conditions"])
         {
             
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://play-date.ae/terms.html"]];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.tammapp.com/terms.html"]];
             
         }
         
@@ -183,6 +183,8 @@
                          NSLog(@"my url DataFBB=%@",result);
                          regTypeVal =@"FACEBOOK";
                          
+                         [defaults setObject:@"FACEBOOK" forKey:@"SettingLogin"];
+                         
                          [self FbTwittercommunicationServer];
                          
                      }
@@ -240,7 +242,7 @@
                   regTypeVal =@"TWITTER";
                   genderfb=@"";
                   profile_picFb=[Array_sinupFb valueForKey:@"profile_image_url"];
-                  
+                  [defaults setObject:@"TWITTER" forKey:@"SettingLogin"];
                   [defaults setObject:nameFb forKey:@"UserName"];
                   [defaults setObject:profile_picFb forKey:@"ProImg"];
                   [defaults synchronize];
@@ -447,6 +449,7 @@
                                                      [defaults setObject:[[array_login objectAtIndex:0]valueForKey:@"profileimage"] forKey:@"profileimage"];
                                                      
                                                      [defaults setObject:[NSString stringWithFormat:@"%@",[[array_login objectAtIndex:0]valueForKey:@"userid"]] forKey:@"userid"];
+                                                     [defaults setObject:[NSString stringWithFormat:@"%@",[[array_login objectAtIndex:0]valueForKey:@"regtype"]] forKey:@"logintype"];
                                                      
                                                      [defaults setObject:[NSString stringWithFormat:@"%@",[[array_login objectAtIndex:0]valueForKey:@"mobileno"]] forKey:@"mobileNumber"];
                                                      [defaults setObject:[NSString stringWithFormat:@"%@",[[array_login objectAtIndex:0]valueForKey:@"verified"]] forKey:@"verified"];

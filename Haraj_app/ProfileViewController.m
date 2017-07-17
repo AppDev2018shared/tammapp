@@ -38,6 +38,10 @@
     NSMutableArray *Array_ViewPost,*Array_SalePoints;
     
     int favouritesCount;
+    
+    UIActivityIndicatorView *activityindicator;
+    
+    
 }
 
 @end
@@ -83,7 +87,6 @@
     cvLayout.stickyHeader = YES;
     
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
-    // [self viewPostConnection];
     
     [self.collectionView setCollectionViewLayout:cvLayout];
     [self.collectionView reloadData];
@@ -164,8 +167,16 @@
     UITapGestureRecognizer *boost_Tapped1 =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ChooseBoost_ActionDetails:)];
     [boostLabel addGestureRecognizer:boost_Tapped1];
     
+ 
+// //---------Activity indicator------------------------------------------
     
-    
+    activityindicator = [[UIActivityIndicatorView alloc]init];
+    activityindicator.activityIndicatorViewStyle  = UIActivityIndicatorViewStyleWhiteLarge;
+    activityindicator.color = [UIColor grayColor] ;
+    [activityindicator startAnimating];
+    activityindicator.center = self.collectionView.center;
+    [self.view addSubview:activityindicator];
+
     
     
   
@@ -773,7 +784,19 @@ heightForHeaderAtIndexPath:(NSIndexPath *)indexPath
             
         }
         
-               
+        if ([ResultString isEqualToString:@"noposts"])
+        {
+            activityindicator.hidden = YES;
+            [activityindicator stopAnimating];
+
+            
+        }
+        
+        if (Array_ViewPost.count != 0)
+        {
+            activityindicator.hidden = YES;
+            [activityindicator stopAnimating];
+        }
 
         
         if (Array_ViewPost.count == 0)

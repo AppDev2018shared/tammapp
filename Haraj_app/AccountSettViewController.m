@@ -23,7 +23,7 @@
 //#import "FacebookListViewController.h"
 //#import "TwitterListViewController.h"
 #import "UIView+RNActivityView.h"
-//#import "ChangePasswordViewController.h"
+#import "ChangePasswordViewController.h"
 @interface AccountSettViewController ()<UIAlertViewDelegate,MFMessageComposeViewControllerDelegate>
 {
     NSArray *Array_Title1,*Array_Title2,*Array_Title3,*Array_Title4,*Array_Gender2,*Array_Images;
@@ -173,9 +173,20 @@ Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_t
                 }
                 else if (indexPath.row == 2)
                 {
+                    
+                    
+//                    NSMutableAttributedString *text =
+//                    [[NSMutableAttributedString alloc]
+//                     initWithAttributedString: Twocell2.LabelVal.attributedText];
+//                    
+//                    [text addAttribute:NSForegroundColorAttributeName
+//                                 value:[UIColor greenColor]
+//                                 range:NSMakeRange(5, 1)];
+//                    [Twocell2.LabelVal setAttributedText: text];
+                    
                     Twocell2.switchOutlet.hidden=YES;
-                    Twocell2.locationLabel.hidden = NO;
-                    Twocell2.locationImageView.hidden = NO;
+                    Twocell2.locationLabel.hidden = YES;//NO
+                    Twocell2.locationImageView.hidden = YES;//NO;
                     Twocell2.ChangeButtonOutlet.hidden = NO;
                 }
                 else
@@ -263,8 +274,8 @@ Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_t
         Label1.textColor=[UIColor lightGrayColor];
       
     Label1.font=[UIFont fontWithName:@"San Francisco Display" size:15.0f];
-        Label1.text=@"If checked, only your friends will be able to send you dare requests";
-        Label1.textAlignment = NSTextAlignmentLeft;
+        Label1.text=@"If checked, users will only be able to contact you through the app messaging system.";
+        Label1.textAlignment = NSTextAlignmentRight;
         Label1.numberOfLines =2;
         Label1.adjustsFontSizeToFitWidth=YES;
         Label1.minimumScaleFactor=0.5;
@@ -287,6 +298,7 @@ Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_t
         Label1.textColor=[UIColor lightGrayColor];
         Label1.font=[UIFont fontWithName:@"SanFranciscoDisplay-Medium" size:15.0f];
         Label1.text=@"Share";
+        Label1.textAlignment = NSTextAlignmentRight;
           [sectionView addSubview:Label1];
         sectionView.tag=section;
         
@@ -302,6 +314,7 @@ Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_t
         Label1.textColor=[UIColor lightGrayColor];
         Label1.font=[UIFont fontWithName:@"SanFranciscoDisplay-Medium" size:15.0f];
         Label1.text=@"Account";
+        Label1.textAlignment = NSTextAlignmentRight;
         [sectionView addSubview:Label1];
         
         
@@ -319,6 +332,7 @@ Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_t
         Label1.textColor=[UIColor lightGrayColor];
         Label1.font=[UIFont fontWithName:@"SanFranciscoDisplay-Medium" size:15.0f];
         Label1.text=@"Support";
+        Label1.textAlignment = NSTextAlignmentRight;
         [sectionView addSubview:Label1];
         sectionView.tag=section;
         
@@ -541,12 +555,19 @@ Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_t
                 else
                 {
                     
-   UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
                     
-//   ChangePasswordViewController * set=[mainStoryboard instantiateViewControllerWithIdentifier:@"ChangePasswordViewController"];
-//                    
-//    [self.navigationController pushViewController:set animated:YES];
-                 
+                    ChangePasswordViewController * set=[mainStoryboard instantiateViewControllerWithIdentifier:@"ChangePasswordViewController"];
+                    
+                    CATransition *transition = [CATransition animation];
+                    transition.duration = 0.3;
+                    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+                    transition.type = kCATransitionPush;
+                    transition.subtype = kCATransitionFromLeft;
+                    [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
+                    
+                    [self.navigationController pushViewController:set animated:YES];
+                    
                     
                 }
             
@@ -571,10 +592,10 @@ Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_t
         if (indexPath.row==0)
         {
             
-            NSString *emailTitle = @"Report a problem";
+            NSString *emailTitle = @"Report a Problem";
             // Email Content
             NSString *messageBody = @"";
-            NSArray *toRecipents = [NSArray arrayWithObject:@"support@care2dareapp.com"];
+            NSArray *toRecipents = [NSArray arrayWithObject:@"support@tammapp.com"];
             
             MFMailComposeViewController *mc = [[MFMailComposeViewController alloc] init];
             mc.mailComposeDelegate = self;
@@ -588,13 +609,13 @@ Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_t
         }
         if (indexPath.row==1)
         {
-           [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.care2dareapp.com/terms.html"]];
+           [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.tammapp.com/terms.html"]];
             
         }
         if (indexPath.row==2)
         {
             
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.care2dareapp.com/privacy.html"]];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.tammapp.com"]];
             
         }
         if (indexPath.row==3)

@@ -27,6 +27,8 @@
     NSURLConnection *Connection_ViewPost;
     NSMutableData *webData_ViewPost;
     NSMutableArray *Array_ViewPost, *Array_SalePoints;
+    
+    UIActivityIndicatorView *activityindicator;
 
     
 }
@@ -63,6 +65,15 @@
     
     [self viewPostConnection];
     [self salePointsConnection];
+    
+    //---------Activity indicator------------------------------------------
+    
+    activityindicator = [[UIActivityIndicatorView alloc]init];
+    activityindicator.activityIndicatorViewStyle  = UIActivityIndicatorViewStyleWhiteLarge;
+    activityindicator.color = [UIColor grayColor] ;
+    [activityindicator startAnimating];
+    activityindicator.center = self.collectionView.center;
+    [self.view addSubview:activityindicator];
 
     
     
@@ -325,6 +336,9 @@ heightForHeaderAtIndexPath:(NSIndexPath *)indexPath
             [self presentViewController:alertController animated:YES completion:nil];
             
         }
+        
+        activityindicator.hidden = YES;
+        [activityindicator stopAnimating];
        
     }
     [self.collectionView reloadData];
@@ -384,7 +398,7 @@ heightForHeaderAtIndexPath:(NSIndexPath *)indexPath
                                                  
                                                  NSLog(@"Array_SalePoints %@",Array_SalePoints);
                                                  
-                                                 if ([ResultString isEqualToString:@"0"])
+                                                 if ([ResultString isEqualToString:@""])
                                                  {
                                                      greetingLabel.text = @"You have not yet earned any points";
                                                      

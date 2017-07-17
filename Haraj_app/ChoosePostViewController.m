@@ -27,6 +27,9 @@
     
     NSString *paymentmodeStr ,*postIdVal;
     
+    UIActivityIndicatorView *activityindicator;
+    
+    
 }
 
 @end
@@ -46,6 +49,13 @@
     urlplist = [NSDictionary dictionaryWithContentsOfFile:plistPath];
     
      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(Hide_Popover) name:@"HidePopOver" object:nil];
+    
+    activityindicator = [[UIActivityIndicatorView alloc]init];
+    activityindicator.activityIndicatorViewStyle  = UIActivityIndicatorViewStyleWhiteLarge;
+    activityindicator.color = [UIColor grayColor] ;
+    [activityindicator startAnimating];
+    activityindicator.center = self.view.center;
+    [self.view addSubview:activityindicator];
     
     
     [self viewPostConnection];
@@ -567,6 +577,9 @@
             
         }
         
+        activityindicator.hidden = YES;
+        [activityindicator stopAnimating];
+        
         
         
     }
@@ -579,8 +592,18 @@
 
 
 
-- (IBAction)SearchButton_Action:(id)sender
+- (IBAction)InfoButton_Action:(id)sender
 {
+    
+    NSLog(@"InfoButton_Action Pressed");
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Tip" message:@"Pay fees Alert box" preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                       style:UIAlertActionStyleDefault
+                                                     handler:nil];
+    [alertController addAction:actionOk];
+    [self presentViewController:alertController animated:YES completion:nil];
     
 }
 

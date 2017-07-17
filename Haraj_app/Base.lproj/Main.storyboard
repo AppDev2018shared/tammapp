@@ -323,11 +323,9 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sdm-1b-8FE">
                                 <frame key="frameInset" minX="16" minY="24" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="Search"/>
+                                <state key="normal" image="GreyQuestion"/>
                                 <connections>
-                                    <action selector="SearchButton_Action:" destination="hW6-pS-ZxG" eventType="touchUpInside" id="EO8-A9-gLe"/>
-                                    <action selector="SearchButton_Action:" destination="FbY-sB-4MR" eventType="touchUpInside" id="iOa-DG-HMm"/>
-                                    <action selector="SettingButton_Action:" destination="Wgk-jY-Dik" eventType="touchUpInside" id="Ysa-t1-eai"/>
+                                    <action selector="InfoButton_Action:" destination="FbY-sB-4MR" eventType="touchUpInside" id="dj6-Ua-fnR"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ifm-xs-hjf">
@@ -453,15 +451,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OvE-bM-NJt">
-                                <frame key="frameInset" minX="16" minY="24" width="30" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="Search"/>
-                                <connections>
-                                    <action selector="SearchButton_Action:" destination="hW6-pS-ZxG" eventType="touchUpInside" id="9rF-HM-0PQ"/>
-                                    <action selector="SettingButton_Action:" destination="Wgk-jY-Dik" eventType="touchUpInside" id="5xv-3h-1XH"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XzU-q3-Xfr">
                                 <frame key="frameInset" minX="324" minY="24" width="35" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -609,7 +598,7 @@
                                         <color key="textColor" red="0.0" green="0.56470588239999997" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="CA5F9AE7-916E-4313-98BF-CD789356A5A4" translatesAutoresizingMaskIntoConstraints="NO" id="7sL-5T-AGh">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="F75A05C0-82B5-49C2-A716-EF5A75E1914C" translatesAutoresizingMaskIntoConstraints="NO" id="7sL-5T-AGh">
                                         <frame key="frameInset" minX="322" minY="20" width="40" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
@@ -650,7 +639,7 @@
             <objects>
                 <navigationController storyboardIdentifier="HomeNavigationController" automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="3Yh-ps-osH" customClass="HomeNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="45N-9l-Y3Z">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="45N-9l-Y3Z">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -783,7 +772,7 @@
                                 </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" tag="102" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Lll-dB-gxY">
-                                <frame key="frameInset" minX="13.07%" minY="31.78%" width="73.33%" height="4.50%"/>
+                                <frame key="frameInset" minX="13.07%" minY="31.63%" width="73.33%" height="4.50%"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -812,7 +801,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wEQ-HW-FUJ">
-                                <frame key="frameInset" minX="4.27%" minY="53.22%" width="91.47%" height="4.50%"/>
+                                <frame key="frameInset" minX="4.27%" minY="53.07%" width="91.47%" height="4.50%"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="SanFranciscoDisplay-Bold" family="San Francisco Display" pointSize="16"/>
@@ -852,15 +841,15 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="tammlogo.png" translatesAutoresizingMaskIntoConstraints="NO" id="L8m-5s-sBh">
-                                <frame key="frameInset" minX="4.27%" minY="4.20%" width="91.47%" height="12.14%"/>
+                                <frame key="frameInset" minX="4.27%" minY="4.20%" width="91.47%" height="11.99%"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MmG-VC-jir">
-                                <frame key="frameInset" minX="61.87%" minY="75.86%" width="26.93%" height="9.90%"/>
+                                <frame key="frameInset" minX="61.87%" minY="75.71%" width="26.93%" height="10.05%"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="twitter.png" translatesAutoresizingMaskIntoConstraints="NO" id="GqE-BS-c3c">
-                                        <frame key="frameInset" minX="15.84%" minY="15.15%" width="68.32%" height="68.18%"/>
+                                        <frame key="frameInset" minX="15.84%" minY="14.93%" width="68.32%" height="67.16%"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </imageView>
@@ -868,11 +857,11 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CpS-0a-08M">
-                                <frame key="frameInset" minX="10.67%" minY="75.86%" width="26.93%" height="9.90%"/>
+                                <frame key="frameInset" minX="10.67%" minY="75.71%" width="26.93%" height="10.05%"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="facebook.png" translatesAutoresizingMaskIntoConstraints="NO" id="iZP-Hd-rH9">
-                                        <frame key="frameInset" minX="15.84%" minY="15.15%" width="68.32%" height="68.18%"/>
+                                        <frame key="frameInset" minX="15.84%" minY="14.93%" width="68.32%" height="67.16%"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </imageView>
@@ -927,7 +916,7 @@
                                 </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aZb-xY-Z8i">
-                                <frame key="frameInset" minX="13.07%" minY="36.58%" width="73.33%" height="4.65%"/>
+                                <frame key="frameInset" minX="13.07%" minY="36.43%" width="73.33%" height="4.80%"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -944,7 +933,7 @@
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w5Q-xq-mg1">
-                                <frame key="frameInset" minX="13.07%" minY="51.42%" width="73.33%" height="5.70%"/>
+                                <frame key="frameInset" minX="13.07%" minY="51.27%" width="73.33%" height="5.70%"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="SanFranciscoDisplay-Bold" family="San Francisco Display" pointSize="20"/>
                                 <state key="normal" title="Sign Up">
@@ -1015,26 +1004,26 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="tammlogo.png" translatesAutoresizingMaskIntoConstraints="NO" id="ISI-y4-dkV">
-                                <frame key="frameInset" minX="4.27%" minY="4.20%" width="91.47%" height="12.14%"/>
+                                <frame key="frameInset" minX="4.27%" minY="4.20%" width="91.47%" height="11.99%"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Spt-Nc-hYJ">
-                                <frame key="frameInset" minX="10.67%" minY="75.86%" width="26.93%" height="9.90%"/>
+                                <frame key="frameInset" minX="10.67%" minY="75.71%" width="26.93%" height="10.05%"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="facebook.png" translatesAutoresizingMaskIntoConstraints="NO" id="RPV-5Z-cKu">
-                                        <frame key="frameInset" minX="15.84%" minY="15.15%" width="68.32%" height="68.18%"/>
+                                        <frame key="frameInset" minX="15.84%" minY="14.93%" width="68.32%" height="67.16%"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xuG-lc-fhc">
-                                <frame key="frameInset" minX="61.87%" minY="75.86%" width="26.93%" height="9.90%"/>
+                                <frame key="frameInset" minX="61.87%" minY="75.71%" width="26.93%" height="10.05%"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="twitter.png" translatesAutoresizingMaskIntoConstraints="NO" id="s26-UI-fRf">
-                                        <frame key="frameInset" minX="15.84%" minY="15.15%" width="68.32%" height="68.18%"/>
+                                        <frame key="frameInset" minX="15.84%" minY="14.93%" width="68.32%" height="67.16%"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                 </subviews>
@@ -1109,7 +1098,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vtf-qS-tDB">
-                                <frame key="frameInset" minX="4.27%" minY="21.44%" width="91.47%" height="15.44%"/>
+                                <frame key="frameInset" minX="4.27%" minY="21.44%" width="91.47%" height="15.29%"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <string key="text">Please enter your mobile no., starting with +(Country code). You will receive a SMS on this number with a verification code. Standard incoming rates may apply.</string>
                                 <fontDescription key="fontDescription" name="SanFranciscoDisplay-Medium" family="San Francisco Display" pointSize="16"/>
@@ -1117,7 +1106,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="You can register and verify your mobile no. later from app settings." textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="asx-CD-pwp">
-                                <frame key="frameInset" minX="4.27%" minY="54.87%" width="91.47%" height="7.80%"/>
+                                <frame key="frameInset" minX="4.27%" minY="54.72%" width="91.47%" height="7.95%"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="SanFranciscoDisplay-Medium" family="San Francisco Display" pointSize="16"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1175,7 +1164,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4SJ-a7-M8N">
-                                <frame key="frameInset" minX="4.27%" minY="21.89%" width="91.47%" height="15.44%"/>
+                                <frame key="frameInset" minX="4.27%" minY="21.89%" width="91.47%" height="15.29%"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <string key="text">Please enter the verification code that you received on your registered mobile number. If you wish to send again, please go back and re-submit your mobile number.</string>
                                 <fontDescription key="fontDescription" name="SanFranciscoDisplay-Medium" family="San Francisco Display" pointSize="16"/>
@@ -1223,7 +1212,7 @@
             <objects>
                 <navigationController storyboardIdentifier="MainNavigationController" automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="EIm-hX-R5N" customClass="MainNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="QqY-iC-hys">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="QqY-iC-hys">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -3413,11 +3402,9 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nGK-vN-mJ7">
                                 <frame key="frameInset" minX="16" minY="24" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="Search"/>
+                                <state key="normal" image="GreyQuestion"/>
                                 <connections>
-                                    <action selector="SearchButton_Action:" destination="PIT-S8-SSv" eventType="touchUpInside" id="WNt-Jw-XsR"/>
-                                    <action selector="SearchButton_Action:" destination="hW6-pS-ZxG" eventType="touchUpInside" id="mge-XF-ZTa"/>
-                                    <action selector="SettingButton_Action:" destination="Wgk-jY-Dik" eventType="touchUpInside" id="h8C-6b-ImV"/>
+                                    <action selector="InfoButton_Action:" destination="PIT-S8-SSv" eventType="touchUpInside" id="JhB-cX-URt"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZrA-dt-Y1J">
@@ -4004,18 +3991,18 @@
                                             <frame key="frameInset" width="375" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="setting_facebook.png" translatesAutoresizingMaskIntoConstraints="NO" id="9hm-fr-dIb">
-                                                    <frame key="frameInset" minX="16" minY="14" width="22" height="22"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6fh-hn-KCg">
-                                                    <frame key="frameInset" minX="12.27%" minY="28.00%" width="78.93%" height="44.00%"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6fh-hn-KCg">
+                                                    <frame key="frameInset" minX="8.80%" minY="28.00%" width="78.93%" height="44.00%"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="SanFranciscoDisplay-Medium" family="San Francisco Display" pointSize="15"/>
                                                     <color key="textColor" red="0.25490196079999999" green="0.25490196079999999" blue="0.25490196079999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="setting_facebook.png" translatesAutoresizingMaskIntoConstraints="NO" id="9hm-fr-dIb">
+                                                    <frame key="frameInset" minX="337" minY="14" width="22" height="22"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                </imageView>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
@@ -4030,31 +4017,31 @@
                                             <frame key="frameInset" width="375" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Location:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wJr-PU-e9a">
-                                                    <frame key="frameInset" minX="4.27%" minY="28.00%" width="74.40%" height="46.00%"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Location:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wJr-PU-e9a">
+                                                    <frame key="frameInset" minX="21.33%" minY="28.00%" width="74.40%" height="46.00%"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="SanFranciscoDisplay-Medium" family="San Francisco Display" pointSize="15"/>
                                                     <color key="textColor" red="0.25490196079999999" green="0.25490196079999999" blue="0.25490196079999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F4d-pu-spl">
-                                                    <frame key="frameInset" minX="305" minY="10" width="51" height="31"/>
+                                                    <frame key="frameInset" minX="24" minY="10" width="51" height="31"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="onTintColor" red="0.0" green="0.56470588239999997" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Jeddah" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UhF-Y9-88R">
-                                                    <frame key="frameInset" minX="81" minY="15" width="72" height="21"/>
+                                                    <frame key="frameInset" minX="145" minY="15" width="72" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="SanFranciscoDisplay-Medium" family="San Francisco Display" pointSize="14"/>
                                                     <color key="textColor" red="0.0" green="0.56470588239999997" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Location_on" translatesAutoresizingMaskIntoConstraints="NO" id="rbq-L7-p7H">
-                                                    <frame key="frameInset" minX="130" minY="15" width="23" height="21"/>
+                                                    <frame key="frameInset" minX="194" minY="15" width="23" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kVw-mH-zV8">
-                                                    <frame key="frameInset" minX="289" minY="12" width="78" height="30"/>
+                                                    <frame key="frameInset" minX="8" minY="12" width="78" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="SanFranciscoDisplay-Bold" family="San Francisco Display" pointSize="15"/>
                                                     <state key="normal" title="Change">
@@ -4078,8 +4065,8 @@
                                             <frame key="frameInset" width="375" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Log Out" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z0N-c8-2JY">
-                                                    <frame key="frameInset" minX="4.27%" minY="28.00%" width="81.87%" height="46.00%"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Log Out" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z0N-c8-2JY">
+                                                    <frame key="frameInset" minX="13.87%" minY="28.00%" width="81.87%" height="46.00%"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="SanFranciscoDisplay-Medium" family="San Francisco Display" pointSize="15"/>
                                                     <color key="textColor" red="0.25490196079999999" green="0.25490196079999999" blue="0.25490196079999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -4107,7 +4094,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SpV-Wd-FHz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3613.5999999999999" y="-457.42128935532236"/>
+            <point key="canvasLocation" x="4295" y="-460"/>
         </scene>
         <!--Friend Cahting View Controller-->
         <scene sceneID="3xK-zT-vix">
@@ -4271,7 +4258,107 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ODh-5s-G5V" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4245.6000000000004" y="-457.42128935532236"/>
+            <point key="canvasLocation" x="3610" y="-458"/>
+        </scene>
+        <!--Change Password View Controller-->
+        <scene sceneID="kge-fd-fQT">
+            <objects>
+                <viewController storyboardIdentifier="ChangePasswordViewController" id="7wV-aL-fC5" customClass="ChangePasswordViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="XaW-ed-GV7"/>
+                        <viewControllerLayoutGuide type="bottom" id="jgk-tX-Fip"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="JrF-zA-gsf">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HzF-U9-fbi">
+                                <frame key="frameInset" minX="324" minY="24" width="35" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="SanFranciscoDisplay-Bold" family="San Francisco Display" pointSize="29"/>
+                                <state key="normal" image="RightArrowGrey">
+                                    <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="Button_BackAction:" destination="7wV-aL-fC5" eventType="touchUpInside" id="tBZ-5o-XcF"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uNf-Sj-lt6">
+                                <frame key="frameInset" minY="64" width="375" height="1"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.94509803920000002" green="0.94509803920000002" blue="0.94509803920000002" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Change Password" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nWb-zB-CuQ">
+                                <frame key="frameInset" minX="98" minY="24" width="179" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="SanFranciscoDisplay-Bold" family="San Francisco Display" pointSize="22"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter your old password" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WII-Pt-DRd">
+                                <frame key="frameInset" minX="15" minY="95" width="343" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="textColor" red="0.25490196079999999" green="0.25490196079999999" blue="0.25490196079999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="SanFranciscoDisplay-Medium" family="San Francisco Display" pointSize="20"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="alphabet" secureTextEntry="YES"/>
+                                <connections>
+                                    <action selector="TextfieldAction_ChangePassword:" destination="7wV-aL-fC5" eventType="editingChanged" id="357-qP-9pO"/>
+                                </connections>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Choose your new password" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pT0-ks-MFJ">
+                                <frame key="frameInset" minX="15" minY="146" width="343" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="textColor" red="0.25490196079999999" green="0.25490196079999999" blue="0.25490196079999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="SanFranciscoDisplay-Medium" family="San Francisco Display" pointSize="20"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="alphabet" secureTextEntry="YES"/>
+                                <connections>
+                                    <action selector="TextfieldAction_ChangePassword:" destination="7wV-aL-fC5" eventType="editingChanged" id="gDj-Sw-3mC"/>
+                                </connections>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Confirm your above password" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="P8F-DF-TWQ">
+                                <frame key="frameInset" minX="15" minY="197" width="343" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="textColor" red="0.25490196079999999" green="0.25490196079999999" blue="0.25490196079999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="SanFranciscoDisplay-Medium" family="San Francisco Display" pointSize="20"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="alphabet" secureTextEntry="YES"/>
+                                <connections>
+                                    <action selector="TextfieldAction_ChangePassword:" destination="7wV-aL-fC5" eventType="editingChanged" id="ZOj-nx-1yy"/>
+                                </connections>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="79g-m1-2Do">
+                                <color key="backgroundColor" red="0.0" green="0.56470588239999997" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="375" id="CUi-fX-7f4"/>
+                                    <constraint firstAttribute="height" constant="46" id="s2C-p5-fsr"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SanFranciscoDisplay-Bold" family="San Francisco Display" pointSize="20"/>
+                                <state key="normal" title="CHANGE PASSWORD">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="Button_ChangePasswordAction:" destination="7wV-aL-fC5" eventType="touchUpInside" id="bbC-Ch-AcK"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="79g-m1-2Do" firstAttribute="leading" secondItem="JrF-zA-gsf" secondAttribute="leading" id="JdG-1Y-vJI"/>
+                            <constraint firstAttribute="trailing" secondItem="79g-m1-2Do" secondAttribute="trailing" id="aaF-oM-p5I"/>
+                            <constraint firstItem="jgk-tX-Fip" firstAttribute="top" secondItem="79g-m1-2Do" secondAttribute="bottom" id="nvq-h9-7cB"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="Button_Back" destination="HzF-U9-fbi" id="Icv-41-wam"/>
+                        <outlet property="Button_ChangePassword" destination="79g-m1-2Do" id="wfH-hF-VqU"/>
+                        <outlet property="Textfield_confirmpassword" destination="P8F-DF-TWQ" id="xcJ-Zb-uYy"/>
+                        <outlet property="Textfield_newpassword" destination="pT0-ks-MFJ" id="Wmm-iY-vZe"/>
+                        <outlet property="Textfield_oldpassword" destination="WII-Pt-DRd" id="QJ9-ON-1MZ"/>
+                        <outlet property="tabBarBottomSpace" destination="nvq-h9-7cB" id="CLZ-ew-j1q"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WO1-z3-g98" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4967" y="-457"/>
         </scene>
     </scenes>
     <resources>
@@ -4281,7 +4368,11 @@
         <image name="Activity" width="50" height="49"/>
         <image name="Boost" width="80" height="48"/>
         <image name="Boostgrey" width="90" height="53"/>
-        <image name="CA5F9AE7-916E-4313-98BF-CD789356A5A4" width="45" height="44">
+        <image name="Calc" width="70" height="91"/>
+        <image name="Callsgrey" width="28" height="31"/>
+        <image name="Claim" width="40" height="40"/>
+        <image name="Expires" width="25" height="30"/>
+        <image name="F75A05C0-82B5-49C2-A716-EF5A75E1914C" width="45" height="44">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
@@ -4464,10 +4555,6 @@ AMIA2QDbAN0obyh0KH8oiCibKJ8oqiizKLgowCjDKMgo1yjbKOIo6ij3KPwo/ikAKQUpDSkQKRUpHSkg
 KTIpNSk6AAAAAAAAAgEAAAAAAAAAQQAAAAAAAAAAAAAAAAAAKTw
 </mutableData>
         </image>
-        <image name="Calc" width="70" height="91"/>
-        <image name="Callsgrey" width="28" height="31"/>
-        <image name="Claim" width="40" height="40"/>
-        <image name="Expires" width="25" height="30"/>
         <image name="Favourite" width="25" height="25"/>
         <image name="FavouriteGreen" width="39" height="39"/>
         <image name="Float" width="56" height="56"/>

@@ -30,7 +30,7 @@
     NSMutableData *webData_MyViewPost;
     NSMutableArray *Array_MyViewPost;
 
-    
+      UIActivityIndicatorView *activityindicator;
     
     
 }
@@ -51,6 +51,13 @@
    
     NSString *plistPath = [[NSBundle mainBundle]pathForResource:@"UrlName" ofType:@"plist"];
     urlplist = [NSDictionary dictionaryWithContentsOfFile:plistPath];
+    
+    activityindicator = [[UIActivityIndicatorView alloc]init];
+    activityindicator.activityIndicatorViewStyle  = UIActivityIndicatorViewStyleWhiteLarge;
+    activityindicator.color = [UIColor grayColor] ;
+    [activityindicator startAnimating];
+    activityindicator.center = self.view.center;
+    [self.view addSubview:activityindicator];
     
     [self viewPostConnection];
 }
@@ -410,7 +417,19 @@
 }
 
 
-- (IBAction)SearchButton_Action:(id)sender {
+- (IBAction)InfoButton_Action:(id)sender
+{
+    
+    NSLog(@"InfoButton_Action Pressed");
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Tip" message:@"Boost Alert box" preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                       style:UIAlertActionStyleDefault
+                                                     handler:nil];
+    [alertController addAction:actionOk];
+    [self presentViewController:alertController animated:YES completion:nil];
+    
 }
 
 - (IBAction)BackButton_Action:(id)sender
@@ -567,7 +586,8 @@
         }
         
         
-        
+        activityindicator.hidden = YES;
+        [activityindicator stopAnimating];
         
         
         

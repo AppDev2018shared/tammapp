@@ -18,8 +18,8 @@
 
 
 
+- (IBAction)InfoButton_Action:(id)sender;
 
-- (IBAction)SearchButton_Action:(id)sender;
 - (IBAction)BackButton_Action:(id)sender;
 
 @end

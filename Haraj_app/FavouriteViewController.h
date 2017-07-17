@@ -15,9 +15,6 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 
-
-
-- (IBAction)SearchButton_Action:(id)sender;
 - (IBAction)BackButton_Action:(id)sender;
 
 @end

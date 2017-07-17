@@ -25,6 +25,8 @@
     NSMutableData *webData_ViewFavPost;
     NSMutableArray *Array_ViewFavPost;
     
+    UIActivityIndicatorView *activityindicator;
+    
 }
 
 @end
@@ -43,6 +45,17 @@
     urlplist = [NSDictionary dictionaryWithContentsOfFile:plistPath];
     
     [self viewFavouritePostConnection];
+    
+    
+    //---------Activity indicator------------------------------------------
+    
+    activityindicator = [[UIActivityIndicatorView alloc]init];
+    activityindicator.activityIndicatorViewStyle  = UIActivityIndicatorViewStyleWhiteLarge;
+    activityindicator.color = [UIColor grayColor] ;
+    [activityindicator startAnimating];
+    activityindicator.center = self.view.center;
+    [self.view addSubview:activityindicator];
+
     
 }
 
@@ -252,6 +265,12 @@
         
         
         [defaults setObject:[NSString stringWithFormat:@"%lu",(unsigned long)Array_ViewFavPost.count] forKey:@"CountFav"];
+        
+//        if (Array_ViewFavPost.count != 0)
+//        {
+            activityindicator.hidden = YES;
+            [activityindicator stopAnimating];
+//        }
         
     }
     [self.tableView reloadData];

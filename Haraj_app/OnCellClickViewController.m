@@ -1540,6 +1540,10 @@
     {
         if (Array_Chats.count == 0)
         {
+            
+            UIImageView *line = [[UIImageView alloc] initWithFrame:CGRectMake(0, 99,375, 1)];
+            line.backgroundColor = [UIColor colorWithRed:241/255.0 green:241/255.0 blue:241/255.0 alpha:1];
+            [ComCell addSubview:line];
             return 100;
            
         }
@@ -1576,6 +1580,7 @@
         }
         else if (Array_SuggestPost.count >=1)
         {
+            
             return 140 + rect.size.height;
         }
         else if (Array_SuggestPost.count>=4)

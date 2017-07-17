@@ -50,5 +50,11 @@
 	<string>http://www.tammapp.com/app/notifications.php</string>
 	<key>verifymobile</key>
 	<string>http://www.tammapp.com/app/verifymobile.php</string>
+	<key>deleteaccount</key>
+	<string>http://www.tammapp.com/app/deleteaccount.php</string>
+	<key>changepassword</key>
+	<string>http://www.tammapp.com/app/changepassword.php</string>
+	<key>forgotpassword</key>
+	<string>http://www.tammapp.com/app/forgotpassword.php</string>
 </dict>
 </plist>
