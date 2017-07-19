@@ -10,6 +10,10 @@
 
 @interface ProfileViewController : UIViewController
 
+{
+    UIView *transparentView,*grayView,*transparentView1;
+}
+
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 @property (weak, nonatomic) IBOutlet UITextField *searchTextField;

@@ -208,11 +208,31 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VgV-iv-jhs">
+                                                    <frame key="frameInset" minX="11" minY="160" width="150" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <subviews>
+                                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GM9-KU-4Yc">
+                                                            <frame key="frameInset" minX="19" width="84" height="30"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" name="SanFranciscoDisplay-Bold" family="San Francisco Display" pointSize="14"/>
+                                                            <state key="normal" title="ITEM SOLD">
+                                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                            </state>
+                                                        </button>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Itemsold" translatesAutoresizingMaskIntoConstraints="NO" id="WZD-Zd-XDz">
+                                                            <frame key="frameInset" minX="105" minY="2" width="25" height="25"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        </imageView>
+                                                    </subviews>
+                                                    <color key="backgroundColor" red="0.0" green="0.56470588239999997" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                </view>
                                             </subviews>
                                         </view>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <size key="customSize" width="176" height="275"/>
                                         <connections>
+                                            <outlet property="Button_ItemSold" destination="GM9-KU-4Yc" id="kav-jn-6z6"/>
                                             <outlet property="bidAmountLabel" destination="Xlv-jf-fej" id="TCm-OA-ZfT"/>
                                             <outlet property="bidImageView" destination="Mc4-w6-3Hw" id="MYK-xu-bhm"/>
                                             <outlet property="locationLabel" destination="mNK-75-EIh" id="JpU-9j-i0d"/>
@@ -260,11 +280,31 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ieX-zV-xCO">
+                                                    <frame key="frameInset" minX="11" minY="110" width="150" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <subviews>
+                                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MUf-yg-o7c">
+                                                            <frame key="frameInset" minX="19" width="84" height="30"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" name="SanFranciscoDisplay-Bold" family="San Francisco Display" pointSize="14"/>
+                                                            <state key="normal" title="ITEM SOLD">
+                                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                            </state>
+                                                        </button>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Itemsold" translatesAutoresizingMaskIntoConstraints="NO" id="ACo-AF-e7L">
+                                                            <frame key="frameInset" minX="105" minY="2" width="25" height="25"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        </imageView>
+                                                    </subviews>
+                                                    <color key="backgroundColor" red="0.0" green="0.56470588239999997" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                </view>
                                             </subviews>
                                         </view>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <size key="customSize" width="176" height="225"/>
                                         <connections>
+                                            <outlet property="Button_ItemSold" destination="MUf-yg-o7c" id="Okm-65-ttX"/>
                                             <outlet property="bidAmountLabel" destination="XsC-Ru-eO8" id="mMd-Gl-PID"/>
                                             <outlet property="bidImageView" destination="0g5-xW-U61" id="ULj-dB-eh8"/>
                                             <outlet property="locationLabel" destination="VGN-3n-ssL" id="m6F-u5-uAd"/>
@@ -601,7 +641,7 @@
                                         <color key="textColor" red="0.0" green="0.56470588239999997" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="13E303BB-026A-4FEC-AA15-6D8A574703A2" translatesAutoresizingMaskIntoConstraints="NO" id="7sL-5T-AGh">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="6217F4DE-C980-476C-B626-77CA20D18FA4" translatesAutoresizingMaskIntoConstraints="NO" id="7sL-5T-AGh">
                                         <frame key="frameInset" minX="322" minY="20" width="40" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
@@ -1726,7 +1766,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RfO-a5-MPF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7654" y="26"/>
+            <point key="canvasLocation" x="7582" y="182"/>
         </scene>
         <!--More Image Scroll View Controller-->
         <scene sceneID="NTa-yM-JJu">
@@ -4536,7 +4576,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bbH-yj-Czn" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3774" y="-1330"/>
+            <point key="canvasLocation" x="6991" y="-457"/>
         </scene>
         <!--Facebook List View Controller-->
         <scene sceneID="zOW-NF-HZP">
@@ -4656,7 +4696,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yJD-cF-ZmR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2980" y="-2319"/>
+            <point key="canvasLocation" x="6308" y="-457"/>
         </scene>
         <!--Twitter List View Controller-->
         <scene sceneID="MiN-BA-UkP">
@@ -4671,7 +4711,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="99d-vc-Q7v">
-                                <frame key="frameInset" minX="0.0%" minY="11.39%" width="100.00%" height="88.61%"/>
+                                <frame key="frameInset" minX="0.0%" minY="13.04%" width="100.00%" height="86.96%"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -4811,12 +4851,14 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zbh-3a-jaX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1329" y="-2021"/>
+            <point key="canvasLocation" x="5663" y="-457"/>
         </scene>
     </scenes>
     <resources>
         <image name="10154143609282724.jpg" width="28" height="60"/>
-        <image name="13E303BB-026A-4FEC-AA15-6D8A574703A2" width="45" height="44">
+        <image name="3Stars" width="126" height="57"/>
+        <image name="3dots" width="12" height="59"/>
+        <image name="6217F4DE-C980-476C-B626-77CA20D18FA4" width="45" height="44">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
@@ -4999,8 +5041,6 @@ AMIA2QDbAN0obyh0KH8oiCibKJ8oqiizKLgowCjDKMgo1yjbKOIo6ij3KPwo/ikAKQUpDSkQKRUpHSkg
 KTIpNSk6AAAAAAAAAgEAAAAAAAAAQQAAAAAAAAAAAAAAAAAAKTw
 </mutableData>
         </image>
-        <image name="3Stars" width="126" height="57"/>
-        <image name="3dots" width="12" height="59"/>
         <image name="Activity" width="50" height="49"/>
         <image name="Boost" width="80" height="48"/>
         <image name="Boostgrey" width="90" height="53"/>
@@ -5013,6 +5053,7 @@ KTIpNSk6AAAAAAAAAgEAAAAAAAAAQQAAAAAAAAAAAAAAAAAAKTw
         <image name="Float" width="56" height="56"/>
         <image name="GreyQuestion" width="47" height="47"/>
         <image name="HighestPrice" width="29" height="29"/>
+        <image name="Itemsold" width="28" height="26"/>
         <image name="Location_off" width="43" height="57"/>
         <image name="Location_on" width="41" height="55"/>
         <image name="Moreimages" width="19" height="19"/>

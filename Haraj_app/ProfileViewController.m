@@ -26,6 +26,8 @@
 #import "UIImageView+MHFacebookImageViewer.h"
 #import "LGPlusButtonsView.h"
 #import "PostingViewController.h"
+#import "EnterPrice.h"
+#import "UIView+RNActivityView.h"
 
 
 
@@ -40,13 +42,18 @@
     NSDictionary *urlplist;
     NSURLConnection *Connection_ViewPost;
     NSMutableData *webData_ViewPost;
-    NSMutableArray *Array_ViewPost,*Array_SalePoints;
+    NSMutableArray *Array_ViewPost,*Array_SalePoints, *Array_ItemSold;
     
     int favouritesCount;
     
     UIActivityIndicatorView *activityindicator;
     UIImage *chosenImage;
-    NSString * ImageNSdata,*encodedImage;
+    NSString * ImageNSdata,*encodedImage,*Str_profileurl, *paymentmodeStr , *PostIDValue;
+    
+    EnterPrice *myCustomXIBViewObj;
+    
+    PatternViewCell *Videocell;
+    ImageCollectionViewCell *Imagecell;
     
 }
 
@@ -224,7 +231,7 @@
     
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(HideProfile_PlusButton) name:@"HidePlusButtonProfile" object:nil];
     
-   
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(Hide_Popover) name:@"HidePopOver" object:nil];
   
     
 }
@@ -235,8 +242,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"Hide" object:self userInfo:nil];
 
     
-    _plusButtonsViewMain.hidden = YES;
-    //[_plusButtonsViewMain removeFromSuperview];
+     _plusButtonsViewMain.hidden = YES;
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -631,7 +637,13 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    [searchTextField resignFirstResponder];
+    
+    if (textField == searchTextField)
+    {
+        [searchTextField resignFirstResponder];
+    }
+
+    
     return YES;
 }
 
@@ -640,8 +652,18 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
-     isFiltered = YES;
     
+    if (textField == searchTextField)
+    {
+         isFiltered = YES;
+    }
+    
+    
+    if (myCustomXIBViewObj.priceTextField.text.length == 0)
+    {
+        myCustomXIBViewObj.priceTextField.text = @"$";
+        
+    }
     
 }
 
@@ -699,56 +721,70 @@
     if([NSNull null] ==[[Array_ViewPost  objectAtIndex:0]valueForKey:@"mediatype"] || [[dic_request valueForKey:@"mediatype"] isEqualToString:@"VIDEO"])
     {
         
-        PatternViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"PatternCell" forIndexPath:indexPath];
+        Videocell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"PatternCell" forIndexPath:indexPath];
         
         NSURL * url=[NSURL URLWithString:[dic_request valueForKey:@"mediathumbnailurl"]];
         if([NSNull null] ==[dic_request valueForKey:@"mediathumbnailurl"])
         {
             
-            cell.videoImageView.image =[UIImage imageNamed:@"defaultpostimg.jpg"];
-            cell.playImageView.image = [UIImage imageNamed:@""];
+            Videocell.videoImageView.image =[UIImage imageNamed:@"defaultpostimg.jpg"];
+            Videocell.playImageView.image = [UIImage imageNamed:@""];
         }
         else
         {
-            [cell.videoImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"]
+            [Videocell.videoImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"]
                                             options:SDWebImageRefreshCached];
-            cell.playImageView.image = [UIImage imageNamed:@"Play"];
+            Videocell.playImageView.image = [UIImage imageNamed:@"Play"];
             //[cell.videoImageView sd_setImageWithURL:url];
             
         }
-        
-        
-        
-        cell.videoImageView.layer.cornerRadius = 10;
-        cell.videoImageView.layer.masksToBounds = YES;
+       
+        Videocell.videoImageView.layer.cornerRadius = 10;
+        Videocell.videoImageView.layer.masksToBounds = YES;
         
         NSString *show = [NSString stringWithFormat:@"$%@",[dic_request valueForKey:@"showamount"]];
-        cell.bidAmountLabel.text = show;//[dic_request valueForKey:@"showamount"];
-        cell.titleLabel.text =  [dic_request valueForKey:@"title"];
-        cell.locationLabel.text = [dic_request valueForKey:@"city1"];
-        cell.timeLabel.text = [dic_request valueForKey:@"createtime"];
+        Videocell.bidAmountLabel.text = show;//[dic_request valueForKey:@"showamount"];
+        Videocell.titleLabel.text =  [dic_request valueForKey:@"title"];
+        Videocell.locationLabel.text = [dic_request valueForKey:@"city1"];
+        Videocell.timeLabel.text = [dic_request valueForKey:@"createtime"];
+        
+        Videocell.Button_ItemSold.tag = indexPath.item;
+        NSLog(@"button tag :%ld",(long)Videocell.Button_ItemSold.tag);
+        Videocell.Button_ItemSold.userInteractionEnabled=YES;
+        UITapGestureRecognizer *imageTap4 =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(itemSoldButtonPressed:)];
+        
+        [Videocell.Button_ItemSold addGestureRecognizer:imageTap4];
         
         
-        return cell;
+        
+        return Videocell;
     }
     else
     {
         
-        ImageCollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"ImageCell" forIndexPath:indexPath];
+        Imagecell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"ImageCell" forIndexPath:indexPath];
         //        [cell.videoImageView sd_setImageWithURL:url];
-        cell.videoImageView.layer.cornerRadius = 10;
-        cell.videoImageView.layer.masksToBounds = YES;
+        Imagecell.videoImageView.layer.cornerRadius = 10;
+        Imagecell.videoImageView.layer.masksToBounds = YES;
         NSURL * url=[NSURL URLWithString:[dic_request valueForKey:@"mediathumbnailurl"]];
-        [cell.videoImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"]
+        [Imagecell.videoImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"]
                                         options:SDWebImageRefreshCached];
         
-        cell.locationLabel.text = [dic_request valueForKey:@"city1"];
-        cell.timeLabel.text = [dic_request valueForKey:@"createtime"];
+        Imagecell.locationLabel.text = [dic_request valueForKey:@"city1"];
+        Imagecell.timeLabel.text = [dic_request valueForKey:@"createtime"];
         NSString *show = [NSString stringWithFormat:@"$%@",[dic_request valueForKey:@"showamount"]];
-        cell.bidAmountLabel.text = show;
-        cell.titleLabel.text = [dic_request valueForKey:@"title"];
+        Imagecell.bidAmountLabel.text = show;
+        Imagecell.titleLabel.text = [dic_request valueForKey:@"title"];
+      
         
-        return cell;
+        Imagecell.Button_ItemSold.tag = indexPath.item;
+        NSLog(@"button tag :%ld",(long)Imagecell.Button_ItemSold.tag);
+         Imagecell.Button_ItemSold.userInteractionEnabled=YES;
+        UITapGestureRecognizer *imageTap4 =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(itemSoldButtonPressed:)];
+        
+        [Imagecell.Button_ItemSold addGestureRecognizer:imageTap4];
+        
+        return Imagecell;
     }
     
     
@@ -775,6 +811,8 @@
     {
         set1.Array_Alldata = _filteredArray;
         set1.tuchedIndex = indexPath.row;
+        
+        
         
     }
     else
@@ -832,9 +870,7 @@ heightForHeaderAtIndexPath:(NSIndexPath *)indexPath
 - (IBAction)CreatePost_Action:(id)sender
 {
      _plusButtonsViewMain.hidden = NO;
-    
-
-    
+  
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ShowOpen" object:self userInfo:nil];
     
     
@@ -1342,8 +1378,8 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
                                                      ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\t" withString:@""];
                                                      if (array_profilepic.count !=0)
                                                      {
-//                                                         Str_profileurl=@"";
-//                                                         Str_profileurl=[[array_profilepic objectAtIndex:0]valueForKey:@"profilepic"];
+                                                        Str_profileurl=@"";
+                                                         Str_profileurl=[[array_profilepic objectAtIndex:0]valueForKey:@"ProImg"];
                                                         
                                                      }
                                                      
@@ -1372,6 +1408,416 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     _plusButtonsViewMain.hidden = YES;
 }
+
+
+//--------------------------ITEM SOLD METHOD---------------------------------------------------------
+
+
+//-(void)itemSoldButtonPressed:(id)sender
+//{
+
+-(void)itemSoldButtonPressed:(UITapGestureRecognizer *)sender
+    {
+        UIGestureRecognizer *rec = (UIGestureRecognizer*)sender;
+        UIButton *button = (UIButton *)rec.view;
+        NSLog(@"ImageTappedscroll ImageTappedscroll==%ld", (long)button.tag);
+        
+        
+        if(isFiltered == YES)
+        {
+            PostIDValue = [[_filteredArray objectAtIndex:(long)button.tag]valueForKey:@"postid"];
+        }
+        else
+        {
+            PostIDValue = [[Array_ViewPost objectAtIndex:(long)button.tag]valueForKey:@"postid"];
+        }
+        
+        
+        
+    
+    NSLog(@"Item Sold Pressed");
+    
+    transparentView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    transparentView.backgroundColor=[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.3];
+    
+    grayView=[[UIView alloc]initWithFrame:CGRectMake(self.view.frame.size.width - 137.5, self.view.frame.size.width - 250, 275, 162)];
+    grayView.center=transparentView.center;
+    grayView.layer.cornerRadius=10;
+    grayView.clipsToBounds = YES;
+    [grayView setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
+    
+    UIButton *closeview=[[UIButton alloc]initWithFrame:CGRectMake(8, 8, 30, 30)];
+    [closeview setTitle:@"X" forState:UIControlStateNormal];
+    [closeview setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+    [closeview addTarget:self action:@selector(closedd:)
+        forControlEvents:UIControlEventTouchUpInside];
+    [grayView addSubview:closeview];
+    
+    UILabel * label1 = [[UILabel alloc]initWithFrame:CGRectMake(147, 8, 86, 30)];
+    label1.font = [UIFont fontWithName:@"SanFranciscoDisplay-Medium" size:16];
+    label1.textAlignment = NSTextAlignmentCenter;
+    label1.text = @"ITEM SOLD";
+    label1.textColor = [UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1];
+    [grayView addSubview:label1];
+    
+    UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(232, 8, 30, 30)];
+    imageView.image = [UIImage imageNamed:@"Greenitemsold"];
+    imageView.contentMode = UIViewContentModeScaleAspectFit;
+    
+    [grayView addSubview:imageView];
+    
+    UILabel * label2 = [[UILabel alloc]initWithFrame:CGRectMake(112, 41, 150, 18)];
+    label2.font = [UIFont fontWithName:@"SanFranciscoDisplay-Semibold" size:11];
+    label2.textAlignment = NSTextAlignmentRight;
+    label2.text = [NSString stringWithFormat:@"POST ID: %@",PostIDValue];//@"POST ID: 3589278W3";
+    
+    
+  //  label2.text = [NSString stringWithFormat:@"POST ID: %@",[[Array_ViewPost objectAtIndex:(long)button.tag]valueForKey:@"postid"]];
+    
+    label2.textColor = [UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1];
+    [grayView addSubview:label2];
+    
+    UILabel * label3 = [[UILabel alloc]initWithFrame:CGRectMake(8, 67, 254, 21)];
+    label3.font = [UIFont fontWithName:@"SanFranciscoDisplay-Medium" size:14];
+    label3.textAlignment = NSTextAlignmentRight;
+    label3.text = @"Are you sure this item has been sold?";
+    [grayView addSubview:label3];
+    
+    
+    UILabel * label4 = [[UILabel alloc]initWithFrame:CGRectMake(21, 87, 241, 35)];
+    label4.font = [UIFont fontWithName:@"SanFranciscoDisplay-Medium" size:14];
+    label4.textAlignment = NSTextAlignmentRight;
+    label4.numberOfLines = 2;
+    label4.text = @"Selecting confirm will remove item from تم";
+    [grayView addSubview:label4];
+    
+    
+    UIButton *confirm=[[UIButton alloc]initWithFrame:CGRectMake(0, 130, 275, 32)];
+    [confirm setTitle:@"CONFIRM" forState:UIControlStateNormal];
+    [confirm setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [confirm setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    confirm.titleLabel.font = [UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:16];
+    [confirm setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
+    [confirm addTarget:self action:@selector(confirm:)
+      forControlEvents:UIControlEventTouchUpInside];
+    [grayView addSubview:confirm];
+    
+    
+    [transparentView addSubview:grayView];
+    [self.view addSubview:transparentView];
+    
+}
+
+- (void)closedd:(id)sender
+{
+    [self.view endEditing:YES];
+    transparentView.hidden=YES;
+    
+}
+- (void)confirm:(id)sender
+{
+    transparentView1=[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    transparentView1.backgroundColor=[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.3];
+    
+    
+    //    NSArray *nibContents = [[NSBundle mainBundle] loadNibNamed:@"EnterPrice" owner:self options:nil];
+    //    UIView *myView = [nibContents objectAtIndex:0];
+    
+    myCustomXIBViewObj =[[[NSBundle mainBundle] loadNibNamed:@"EnterPrice" owner:self options:nil]objectAtIndex:0];
+    
+    myCustomXIBViewObj.frame = CGRectMake((self.view.frame.size.width- myCustomXIBViewObj.frame.size.width)/2,self.view.frame.size.width - 250, myCustomXIBViewObj.frame.size.width, myCustomXIBViewObj.frame.size.height);
+    
+    
+    [self.view addSubview:myCustomXIBViewObj];
+    
+    [myCustomXIBViewObj.bankButton addTarget:self action:@selector(bankButton_Action:) forControlEvents:UIControlEventTouchUpInside];
+    [myCustomXIBViewObj.bankButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    [myCustomXIBViewObj.creditButton addTarget:self action:@selector(creditButton_Action:) forControlEvents:UIControlEventTouchUpInside];
+    [myCustomXIBViewObj.creditButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    
+    [myCustomXIBViewObj.priceTextField addTarget:self action:@selector(enterInLabel ) forControlEvents:UIControlEventEditingChanged];
+    
+    myCustomXIBViewObj.priceTextField.delegate = self;
+    [myCustomXIBViewObj.priceTextField becomeFirstResponder];
+    myCustomXIBViewObj.postIdLabel.text = [NSString stringWithFormat:@"POST ID: %@",PostIDValue];//[NSString stringWithFormat:@"POST ID: %@",[Array_ViewPost  valueForKey:@"postid"]];
+    myCustomXIBViewObj.layer.cornerRadius = 10;
+    myCustomXIBViewObj.clipsToBounds = YES;
+    
+    [myCustomXIBViewObj setUserInteractionEnabled:YES];
+    UITapGestureRecognizer *viewTapped =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewTapped_Action:)];
+    [myCustomXIBViewObj addGestureRecognizer:viewTapped];
+    
+    [transparentView1 addSubview:myCustomXIBViewObj];
+    [self.view addSubview:transparentView1];
+    transparentView.hidden=YES;
+    
+    myCustomXIBViewObj.bankButton.enabled = NO;
+    [myCustomXIBViewObj.bankButton setBackgroundColor:[UIColor grayColor]];
+    
+    myCustomXIBViewObj.creditButton.enabled = NO;
+    [myCustomXIBViewObj.creditButton setBackgroundColor:[UIColor grayColor]];
+    
+    
+}
+
+-(void)viewTapped_Action:(UIGestureRecognizer *)reconizer
+{
+    [self.view endEditing:YES];
+}
+
+-(void)enterInLabel
+{
+    NSString *askingpriceValString = [NSString stringWithFormat:@"%@",myCustomXIBViewObj.priceTextField.text];
+    askingpriceValString = [askingpriceValString substringFromIndex:1];
+    
+    float j = [askingpriceValString floatValue];
+    
+    float k = ((0.75*j)/100);
+    
+    myCustomXIBViewObj.caculatedAmountLabel.text =[NSString stringWithFormat:@"$ %0.2f",k]; //[NSString stringWithFormat:@"$ %@",askingpriceValString];
+    
+    if ([myCustomXIBViewObj.priceTextField.text isEqualToString:@"$"])
+    {
+        
+        myCustomXIBViewObj.bankButton.enabled = NO;
+        [myCustomXIBViewObj.bankButton setBackgroundColor:[UIColor grayColor]];
+        myCustomXIBViewObj.creditButton.enabled = NO;
+        [myCustomXIBViewObj.creditButton setBackgroundColor:[UIColor grayColor]];
+        
+    }
+    
+    
+}
+
+//- (void)textFieldDidBeginEditing:(UITextField *)textField
+//{
+//    if (myCustomXIBViewObj.priceTextField.text.length == 0)
+//    {
+//        myCustomXIBViewObj.priceTextField.text = @"$";
+//        
+//    }
+//    
+//}
+
+
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    NSString *newText = [myCustomXIBViewObj.priceTextField.text stringByReplacingCharactersInRange:range withString:string];
+    
+    if (![newText hasPrefix:@"$"])
+    {
+        
+        myCustomXIBViewObj.bankButton.enabled = NO;
+        [myCustomXIBViewObj.bankButton setBackgroundColor:[UIColor grayColor]];
+        myCustomXIBViewObj.creditButton.enabled = NO;
+        [myCustomXIBViewObj.creditButton setBackgroundColor:[UIColor grayColor]];
+        
+        
+        return NO;
+    }
+    
+    myCustomXIBViewObj.bankButton.enabled = YES;
+    [myCustomXIBViewObj.bankButton setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
+    myCustomXIBViewObj.creditButton.enabled = YES;
+    [myCustomXIBViewObj.creditButton setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
+    
+    
+    
+    // Default:
+    
+    NSLog(@"%lu",textField.text.length);
+    
+    return YES;
+    
+}
+
+
+
+-(void)bankButton_Action:(id)sender
+{
+    [self.view showActivityViewWithLabel:@"Making payment..."];
+    paymentmodeStr = @"BANK";
+    
+    [self ItemSold_Connection];
+    NSLog(@"Bank button Pressed");
+}
+-(void)creditButton_Action:(id)sender
+{
+    [self.view showActivityViewWithLabel:@"Making payment..."];
+    paymentmodeStr = @"CARD";
+    [self ItemSold_Connection];
+    NSLog(@"creditButton_Action Pressed");
+    
+}
+
+- (void)Hide_Popover
+{
+   
+    transparentView1.hidden= YES;
+}
+
+#pragma mark - ItemSold Connection
+-(void)ItemSold_Connection
+{
+    
+    NSString *postid= @"postid";
+    NSString *postidVal = PostIDValue;
+    
+    NSString *userid= @"userid";
+    NSString *useridVal =[defaults valueForKey:@"userid"];
+    
+    
+    
+    NSString *enterPriceString = [NSString stringWithFormat:@"%@",myCustomXIBViewObj.priceTextField.text];
+    enterPriceString = [enterPriceString substringFromIndex:1];
+    
+    NSString *price= @"sellprice";
+    NSString *priceVal = enterPriceString;
+    
+    
+    NSString *transactionString = [NSString stringWithFormat:@"%@",myCustomXIBViewObj.caculatedAmountLabel.text];
+    transactionString = [transactionString substringFromIndex:1];
+    
+    NSString *transaction= @"commission";
+    NSString *transactionVal = transactionString;
+    
+    NSString *paymentmode= @"paymentmode";
+    NSString *paymentmodeVal = paymentmodeStr;
+    
+    
+    
+    
+    NSString *reqStringFUll=[NSString stringWithFormat:@"%@=%@&%@=%@&%@=%@&%@=%@&%@=%@",postid,postidVal,userid,useridVal,price,priceVal,transaction,transactionVal,paymentmode,paymentmodeVal];
+    
+    
+    
+    NSURLSession *session = [NSURLSession sessionWithConfiguration: [NSURLSessionConfiguration defaultSessionConfiguration] delegate: nil delegateQueue: [NSOperationQueue mainQueue]];
+    
+    NSURL *url;
+    NSString *  urlStrLivecount=[urlplist valueForKey:@"itemsold"];;
+    url =[NSURL URLWithString:urlStrLivecount];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    
+    [request setHTTPMethod:@"POST"];//Web API Method
+    
+    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    
+    request.HTTPBody = [reqStringFUll dataUsingEncoding:NSUTF8StringEncoding];
+    
+    
+    
+    NSURLSessionDataTask *dataTask =[session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
+                                     {
+                                         
+                                         if(data)
+                                         {
+                                             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+                                             NSInteger statusCode = httpResponse.statusCode;
+                                             if(statusCode == 200)
+                                             {
+                                                 
+                                                 Array_ItemSold=[[NSMutableArray alloc]init];
+                                                 SBJsonParser *objSBJsonParser = [[SBJsonParser alloc]init];
+                                                 Array_ItemSold =[objSBJsonParser objectWithData:data];
+                                                 
+                                               
+                                                 
+                                                 NSString * ResultString=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+                                                 
+                                                 ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+                                                 ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\t" withString:@""];
+                                                 
+                                                 NSLog(@"Array_ItemSold %@",Array_ItemSold);
+                                                 
+                                                 if ([ResultString isEqualToString:@"done"])
+                                                 {
+                                                     
+                                                     [[NSNotificationCenter defaultCenter] postNotificationName:@"ViewControllerData" object:self userInfo:nil];
+                                                     
+                                                     [self.view endEditing:YES];
+                                                     transparentView1.hidden= YES;
+                                                
+//                                                     CATransition *transition = [CATransition animation];
+//                                                     transition.duration = 0.3;
+//                                                     transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+//                                                     transition.type = kCATransitionPush;
+//                                                     transition.subtype = kCATransitionFromRight;
+//                                                     [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
+//                                                     
+//                                                     [self.navigationController popViewControllerAnimated:YES];
+                                                     
+                                                       [self viewPostConnection];
+                                                     
+                                                     
+                                                 }
+                                                 if ([ResultString isEqualToString:@"inserterror"])
+                                                 {
+                                                     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops" message:@"The server encountered some error, please try again." preferredStyle:UIAlertControllerStyleAlert];
+                                                     
+                                                     UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                                                                        style:UIAlertActionStyleDefault
+                                                                                                      handler:nil];
+                                                     [alertController addAction:actionOk];
+                                                     [self presentViewController:alertController animated:YES completion:nil];
+                                                     
+                                                     
+                                                 }
+                                                 if ([ResultString isEqualToString:@"nopostid"])
+                                                 {
+                                                     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops" message:@"This item is no more available and has probably been sold by the seller." preferredStyle:UIAlertControllerStyleAlert];
+                                                     
+                                                     UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                                                                        style:UIAlertActionStyleDefault
+                                                                                                      handler:nil];
+                                                     [alertController addAction:actionOk];
+                                                     [self presentViewController:alertController animated:YES completion:nil];
+                                                     
+                                                     
+                                                     
+                                                 }
+                                                 
+                                                 if ([ResultString isEqualToString:@"nullerror"])
+                                                 {
+                                                     
+                                                     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops" message:@"Please enter the price at which the item has been sold." preferredStyle:UIAlertControllerStyleAlert];
+                                                     
+                                                     UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                                                                        style:UIAlertActionStyleDefault
+                                                                                                      handler:nil];
+                                                     [alertController addAction:actionOk];
+                                                     [self presentViewController:alertController animated:YES completion:nil];
+                                                     
+                                                 }
+                                                 
+                                                 [self.view hideActivityViewWithAfterDelay:0];
+                                                 
+                                                 
+                                                 
+                                                 
+                                             }
+                                             
+                                             
+                                             else
+                                             {
+                                                 NSLog(@" error login1 ---%ld",(long)statusCode);
+                                                 
+                                             }
+                                             
+                                             
+                                         }
+                                         else if(error)
+                                         {
+                                             
+                                             NSLog(@"error login2.......%@",error.description);
+                                         }
+                                         
+                                         
+                                     }];
+    [dataTask resume];
+    
+}
+
 
 
 

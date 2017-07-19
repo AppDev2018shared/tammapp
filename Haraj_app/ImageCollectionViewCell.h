@@ -19,5 +19,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 
 
+//----------------profile screen button-----------------------
+
+@property (weak, nonatomic) IBOutlet UIButton *Button_ItemSold;
+
+
 
 @end

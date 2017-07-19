@@ -2114,9 +2114,9 @@ typedef NS_ENUM(NSUInteger, LGPlusButtonDescriptionsPosition)
 
 -(void)ShowOpen_PlusButton
 {
-    BOOL animated;
     
-    [self showButtonsAnimated:animated completionHandler:nil];
+    
+    [self showButtonsAnimated:YES completionHandler:nil];
     
     
     
@@ -2124,9 +2124,9 @@ typedef NS_ENUM(NSUInteger, LGPlusButtonDescriptionsPosition)
 
 -(void)HideProfile_PlusButton
 {
-      BOOL animated;
+   
     
-    [self hideButtonsAnimated:animated completionHandler:nil];
+    [self hideButtonsAnimated:YES completionHandler:nil];
 }
 
 
