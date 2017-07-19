@@ -56,5 +56,15 @@
 	<string>http://www.tammapp.com/app/changepassword.php</string>
 	<key>forgotpassword</key>
 	<string>http://www.tammapp.com/app/forgotpassword.php</string>
+	<key>connect_fb_twitter</key>
+	<string>http://www.tammapp.com/app/connect_fb_twitter.php</string>
+	<key>invite_contacts</key>
+	<string>http://www.tammapp.com/app/invite_contacts.php</string>
+	<key>show_contacts</key>
+	<string>http://www.tammapp.com/app/show_contacts.php</string>
+	<key>addfriend</key>
+	<string>http://www.tammapp.com/app/addfriend.php</string>
+	<key>invite_fb_twitter</key>
+	<string>http://www.tammapp.com/app/invite_fb_twitter.php</string>
 </dict>
 </plist>

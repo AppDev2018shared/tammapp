@@ -11,6 +11,7 @@
 #import "AccOneTableViewCell.h"
 #import "AccTwoTableViewCell.h"
 #import "AccThreeTableViewCell.h"
+#import "AccTwoPushTableViewCell.h"
 
 @interface AccountSettViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
 {
@@ -18,6 +19,7 @@
 }
 @property(nonatomic,strong)AccOneTableViewCell *onecell;
 @property(nonatomic,strong)AccTwoTableViewCell *Twocell2;
+@property(nonatomic,strong)AccTwoPushTableViewCell *Twocellpush2;
 @property(nonatomic,strong)AccThreeTableViewCell *Threecell3;
 
 @property (nonatomic, retain) UIRefreshControl *refreshControl;

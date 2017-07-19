@@ -22,6 +22,11 @@
 #import "ChoosePostViewController.h"
 #import "BoostPostViewController.h"
 #import "AccountSettViewController.h"
+#import "Base64.h"
+#import "UIImageView+MHFacebookImageViewer.h"
+#import "LGPlusButtonsView.h"
+#import "PostingViewController.h"
+
 
 
 @interface ProfileViewController () <UICollectionViewDataSource, UICollectionViewDelegate,UICollectionViewDelegate,FRGWaterfallCollectionViewDelegate,UITextFieldDelegate>
@@ -40,9 +45,12 @@
     int favouritesCount;
     
     UIActivityIndicatorView *activityindicator;
-    
+    UIImage *chosenImage;
+    NSString * ImageNSdata,*encodedImage;
     
 }
+
+@property (strong, nonatomic) LGPlusButtonsView *plusButtonsViewMain;
 
 @end
 
@@ -92,15 +100,49 @@
     [self.collectionView reloadData];
     
     
+ //------------------------------Profile Image Tap Action---------------------------------------------------
     
-    NSURL *url=[NSURL URLWithString:[defaults valueForKey:@"ProImg"]];
-
-    [profileImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultimg.jpg"] options:SDWebImageRefreshCached];
     profileImageView.layer.cornerRadius = profileImageView.frame.size.height / 2;
     profileImageView.clipsToBounds = YES;
-    
     nameLabel.text = [defaults valueForKey:@"name" ];
-  //  lastnameLabel.text = [defaults valueForKey:@"LastName" ];
+
+    
+    
+    if ([[defaults valueForKey:@"logintype"] isEqualToString:@"FACEBOOK"]|| [[defaults valueForKey:@"logintype"] isEqualToString:@"TWITTER"])
+    {
+    
+    
+    NSURL *url=[NSURL URLWithString:[defaults valueForKey:@"ProImg"]];
+    [profileImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultimg.jpg"] options:SDWebImageRefreshCached];
+    [self displayImage:profileImageView withImage:profileImageView.image];
+
+        
+        
+        
+    }
+    else
+    {
+        
+        profileImageView.userInteractionEnabled=YES;
+        UITapGestureRecognizer *ViewTapprofile =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ViewTapprofileTappedView:)];
+        [profileImageView addGestureRecognizer:ViewTapprofile];
+        if(chosenImage == nil)
+        {
+            NSURL *url=[NSURL URLWithString:[defaults valueForKey:@"ProImg"]];
+            
+            [profileImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"DefaultImg.jpg"] options:SDWebImageRefreshCached];
+        }
+        else
+        {
+             profileImageView.image = chosenImage;
+        }
+
+        
+    }
+    
+    
+    
+    
     
     [self viewPostConnection];
     [self salePointsConnection];
@@ -177,10 +219,24 @@
     activityindicator.center = self.collectionView.center;
     [self.view addSubview:activityindicator];
 
+   
+ //-------------------hide plus button--------------------------------------------------------------
     
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(HideProfile_PlusButton) name:@"HidePlusButtonProfile" object:nil];
     
+   
   
     
+}
+
+-(void)HideProfile_PlusButton
+{
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"Hide" object:self userInfo:nil];
+
+    
+    _plusButtonsViewMain.hidden = YES;
+    //[_plusButtonsViewMain removeFromSuperview];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -196,6 +252,181 @@
     
     
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
+    
+    [self plusbuttonView];
+}
+
+
+-(void)plusbuttonView
+{
+    _plusButtonsViewMain = [LGPlusButtonsView plusButtonsViewWithNumberOfButtons:8
+                                                         firstButtonIsPlusButton:YES
+                                                                   showAfterInit:YES
+                                                                   actionHandler:^(LGPlusButtonsView *plusButtonView, NSString *title, NSString *description, NSUInteger index)
+                            {
+                                NSLog(@"actionHandler | title: %@, description: %@, index: %lu", title, description, (long unsigned)index);
+                                
+                                if (index == 1)
+                                {
+                                     [defaults setObject:@"profilepost" forKey:@"PlusButtonPressed"];
+                                    
+                                    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                                    
+                                    
+                                    PostingViewController * set=[mainStoryboard instantiateViewControllerWithIdentifier:@"PostingViewController"];
+                                    
+                                    set.name = @"car" ;
+                                    
+                                    CATransition *transition = [CATransition animation];
+                                    transition.duration = 0.3;
+                                    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+                                    transition.type = kCATransitionPush;
+                                    transition.subtype = kCATransitionFromLeft;
+                                    
+                                    [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
+                                    
+                                    [self.navigationController pushViewController:set animated:YES];
+                                    
+                                    [[NSNotificationCenter defaultCenter] postNotificationName:@"HidePlusButton" object:self userInfo:nil];
+                                }
+                                else if(index == 2)
+                                {
+                                    [defaults setValue:@"property" forKey:@"Title"];
+                                    [self postFunction];
+                                }
+                                else if(index == 3)
+                                {
+                                    [defaults setValue:@"electronics" forKey:@"Title"];
+                                    [self postFunction];
+                                }
+                                else if(index == 4)
+                                {
+                                    [defaults setValue:@"pets" forKey:@"Title"];
+                                    [self postFunction];
+                                }
+                                else if(index == 5)
+                                {
+                                    [defaults setValue:@"furniture" forKey:@"Title"];
+                                    [self postFunction];
+                                }
+                                else if(index == 6)
+                                {
+                                    [defaults setValue:@"services" forKey:@"Title"];
+                                    [self postFunction];
+                                }
+                                else if(index == 7)
+                                {
+                                    [defaults setValue:@"others" forKey:@"Title"];
+                                    [self postFunction];
+                                }
+                                
+                                
+                                
+                            }];
+    
+    
+    _plusButtonsViewMain.coverColor = [UIColor colorWithWhite:1.f alpha:0.90];
+    _plusButtonsViewMain.position = LGPlusButtonsViewPositionBottomRight;
+    _plusButtonsViewMain.plusButtonAnimationType = LGPlusButtonAnimationTypeRotate;
+    
+    [_plusButtonsViewMain setButtonsTitles:@[@"", @"", @"", @"",@"",@"",@"",@""] forState:UIControlStateNormal];
+    [_plusButtonsViewMain setDescriptionsTexts:@[@"", @"Cars", @"Property", @"Electronics", @"Pets", @"Furniture", @"Services", @"Other"]];
+    [_plusButtonsViewMain setButtonsImages:@[[UIImage imageNamed:@"Float"], [UIImage imageNamed:@"Cars"], [UIImage imageNamed:@"Property"], [UIImage imageNamed:@"Electronics"], [UIImage imageNamed:@"Pets"], [UIImage imageNamed:@"Furniture"], [UIImage imageNamed:@"Services"], [UIImage imageNamed:@"Other"]]
+                                  forState:UIControlStateNormal
+                            forOrientation:LGPlusButtonsViewOrientationAll];
+    
+    [_plusButtonsViewMain setButtonsAdjustsImageWhenHighlighted:NO];
+    
+    [_plusButtonsViewMain setButtonsBackgroundColor:[UIColor colorWithRed:0.f green:0.5 blue:1.f alpha:1.f] forState:UIControlStateNormal];
+    [_plusButtonsViewMain setButtonsBackgroundColor:[UIColor colorWithRed:0.2 green:0.6 blue:1.f alpha:1.f] forState:UIControlStateHighlighted];
+    [_plusButtonsViewMain setButtonsBackgroundColor:[UIColor colorWithRed:0.2 green:0.6 blue:1.f alpha:1.f] forState:UIControlStateHighlighted|UIControlStateSelected];
+    
+    [_plusButtonsViewMain setButtonsSize:CGSizeMake(44.f, 44.f) forOrientation:LGPlusButtonsViewOrientationAll];
+    [_plusButtonsViewMain setButtonsLayerCornerRadius:44.f/2.f forOrientation:LGPlusButtonsViewOrientationAll];
+    [_plusButtonsViewMain setButtonsTitleFont:[UIFont boldSystemFontOfSize:24.f] forOrientation:LGPlusButtonsViewOrientationAll];
+    //    [_plusButtonsViewMain setButtonsLayerShadowColor:[UIColor colorWithRed:0.1 green:0.1 blue:0.1 alpha:1.f]];
+    //    [_plusButtonsViewMain setButtonsLayerShadowOpacity:0.5];
+    //    [_plusButtonsViewMain setButtonsLayerShadowRadius:3.f];
+    //    [_plusButtonsViewMain setButtonsLayerShadowOffset:CGSizeMake(0.f, 2.f)];
+    
+    [_plusButtonsViewMain setButtonAtIndex:0 size:CGSizeMake(56.f, 56.f)
+                            forOrientation:(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ? LGPlusButtonsViewOrientationPortrait : LGPlusButtonsViewOrientationAll)];
+    [_plusButtonsViewMain setButtonAtIndex:0 layerCornerRadius:56.f/2.f
+                            forOrientation:(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ? LGPlusButtonsViewOrientationPortrait : LGPlusButtonsViewOrientationAll)];
+    [_plusButtonsViewMain setButtonAtIndex:0 titleFont:[UIFont systemFontOfSize:40.f]
+                            forOrientation:(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ? LGPlusButtonsViewOrientationPortrait : LGPlusButtonsViewOrientationAll)];
+    
+    [_plusButtonsViewMain setButtonAtIndex:0 titleOffset:CGPointMake(0.f, -3.f) forOrientation:LGPlusButtonsViewOrientationAll];
+    [_plusButtonsViewMain setButtonAtIndex:1 backgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1] forState:UIControlStateNormal];
+    [_plusButtonsViewMain setButtonAtIndex:1 backgroundColor:[UIColor colorWithRed:0.f green:0.8 blue:0.f alpha:1.f] forState:UIControlStateHighlighted];
+    [_plusButtonsViewMain setButtonAtIndex:2 backgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1] forState:UIControlStateNormal];
+    [_plusButtonsViewMain setButtonAtIndex:2 backgroundColor:[UIColor colorWithRed:0.f green:0.8 blue:0.f alpha:1.f] forState:UIControlStateHighlighted];
+    [_plusButtonsViewMain setButtonAtIndex:3 backgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1] forState:UIControlStateNormal];
+    [_plusButtonsViewMain setButtonAtIndex:3 backgroundColor:[UIColor colorWithRed:0.f green:0.8 blue:0.f alpha:1.f] forState:UIControlStateHighlighted];
+    [_plusButtonsViewMain setButtonAtIndex:4 backgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1] forState:UIControlStateNormal];
+    [_plusButtonsViewMain setButtonAtIndex:4 backgroundColor:[UIColor colorWithRed:0.f green:0.8 blue:0.f alpha:1.f] forState:UIControlStateHighlighted];
+    [_plusButtonsViewMain setButtonAtIndex:5 backgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1] forState:UIControlStateNormal];
+    [_plusButtonsViewMain setButtonAtIndex:5 backgroundColor:[UIColor colorWithRed:0.f green:0.8 blue:0.f alpha:1.f] forState:UIControlStateHighlighted];
+    [_plusButtonsViewMain setButtonAtIndex:6 backgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1] forState:UIControlStateNormal];
+    [_plusButtonsViewMain setButtonAtIndex:6 backgroundColor:[UIColor colorWithRed:0.f green:0.8 blue:0.f alpha:1.f] forState:UIControlStateHighlighted];
+    [_plusButtonsViewMain setButtonAtIndex:7 backgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1] forState:UIControlStateNormal];
+    [_plusButtonsViewMain setButtonAtIndex:7 backgroundColor:[UIColor colorWithRed:0.f green:0.8 blue:0.f alpha:1.f] forState:UIControlStateHighlighted];
+    
+    
+    
+    
+    [_plusButtonsViewMain setDescriptionsBackgroundColor:[UIColor colorWithRed:186/255.0 green:188/255.0 blue:190/255.0 alpha:1]];
+    [_plusButtonsViewMain setDescriptionsTextColor:[UIColor whiteColor]];
+    [_plusButtonsViewMain setDescriptionsFont:[UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:15] forOrientation:LGPlusButtonsViewOrientationAll];
+    //    [_plusButtonsViewMain setDescriptionsLayerShadowColor:[UIColor colorWithRed:0.1 green:0.1 blue:0.1 alpha:1.f]];
+    //    [_plusButtonsViewMain setDescriptionsLayerShadowOpacity:0.25];
+    //    [_plusButtonsViewMain setDescriptionsLayerShadowRadius:1.f];
+    //    [_plusButtonsViewMain setDescriptionsLayerShadowOffset:CGSizeMake(0.f, 1.f)];
+    [_plusButtonsViewMain setDescriptionsOffset:CGPointMake(24.f, 0.f) forOrientation:LGPlusButtonsViewOrientationAll];
+    [_plusButtonsViewMain setDescriptionsLayerCornerRadius:12.f forOrientation:LGPlusButtonsViewOrientationAll];
+    [_plusButtonsViewMain setDescriptionsContentEdgeInsets:UIEdgeInsetsMake(4.f, 16.f, 4.f, 20.f) forOrientation:LGPlusButtonsViewOrientationAll];
+    
+    for (NSUInteger i=1; i<=7; i++)
+        [_plusButtonsViewMain setButtonAtIndex:i offset:CGPointMake(-6.f, -13.f)
+                                forOrientation:(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ? LGPlusButtonsViewOrientationPortrait : LGPlusButtonsViewOrientationAll)];
+    
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+    {
+        [_plusButtonsViewMain setButtonAtIndex:0 titleOffset:CGPointMake(0.f, -2.f) forOrientation:LGPlusButtonsViewOrientationLandscape];
+        [_plusButtonsViewMain setButtonAtIndex:0 titleFont:[UIFont systemFontOfSize:32.f] forOrientation:LGPlusButtonsViewOrientationLandscape];
+    }
+    
+    
+    [self.view addSubview:_plusButtonsViewMain];
+    [self.view bringSubviewToFront:_plusButtonsViewMain];
+    _plusButtonsViewMain.hidden = YES;
+    
+   // [_plusButtonsViewMain showButtonsAnimated:YES completionHandler:nil];
+}
+
+-(void)postFunction
+{
+    
+    [defaults setObject:@"profilepost" forKey:@"PlusButtonPressed"];
+    
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    
+    PostingViewController * set=[mainStoryboard instantiateViewControllerWithIdentifier:@"PostingViewController"];
+    
+    set.name = [defaults valueForKey:@"Title"] ;
+    
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.3;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    transition.type = kCATransitionPush;
+    transition.subtype = kCATransitionFromLeft;
+    
+    [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
+    
+    [self.navigationController pushViewController:set animated:YES];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"HidePlusButton" object:self userInfo:nil];
+    
 }
 
 - (CGRect)textRectForBounds:(CGRect)bounds
@@ -598,6 +829,17 @@ heightForHeaderAtIndexPath:(NSIndexPath *)indexPath
 
 
 
+- (IBAction)CreatePost_Action:(id)sender
+{
+     _plusButtonsViewMain.hidden = NO;
+    
+
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ShowOpen" object:self userInfo:nil];
+    
+    
+}
+
 - (IBAction)SettingButton_Action:(id)sender
 {
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -933,10 +1175,202 @@ heightForHeaderAtIndexPath:(NSIndexPath *)indexPath
     
     
     
+}
+
+
+//----------------------------Action Sheet----------------------------------------------
+
+- (void) displayImage:(UIImageView*)imageView withImage:(UIImage*)image  {
+    
+    
+    [imageView setImage:image];
+    imageView.contentMode = UIViewContentModeScaleAspectFill;
+    [imageView setupImageViewer];
+    imageView.clipsToBounds = YES;
+}
+
+- (void)ViewTapprofileTappedView:(UITapGestureRecognizer *)recognizer
+{
+    UIActionSheet *popup = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Choose from gallery",@"Take a picture",nil];
+    popup.tag = 777;
+    [popup showInView:self.view];
+}
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSLog(@"actionSheetTaggg==%ld",(long)actionSheet.tag);
+    
+    if ((long)actionSheet.tag == 777)
+    {
+        NSLog(@"INDEXAcrtionShhet==%ld",(long)buttonIndex);
+        
+        if (buttonIndex== 0)
+        {
+            
+            
+            
+            if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary])
+            {
+                UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+                picker.delegate = self;
+                //[picker setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+                picker.sourceType =  UIImagePickerControllerSourceTypePhotoLibrary;
+                picker.allowsEditing = NO;
+                
+                [self presentViewController:picker animated:true completion:nil];
+            }
+        }
+        else  if (buttonIndex== 1)
+        {
+            
+            UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+            picker.delegate = self;
+            picker.allowsEditing = NO;
+            picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+            
+            [self presentViewController:picker animated:true completion:nil];
+        }
+    }
+}
+-(void)imagePickerController:(UIImagePickerController *)picker
+didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    
+    
+    
+    chosenImage = info[UIImagePickerControllerOriginalImage];
+    profileImageView.image=chosenImage;
+    
+    NSData *imageData = UIImageJPEGRepresentation(chosenImage, 0.5);
+    
+    imageData = UIImageJPEGRepresentation(chosenImage, 0.5);
+    ImageNSdata = [Base64 encode:imageData];
+    
+    
+    encodedImage = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,(CFStringRef)ImageNSdata,NULL,(CFStringRef)@"!*'\"();:@&=+$,/?%#[]% ",CFStringConvertNSStringEncodingToEncoding(NSUTF8StringEncoding)));
+    
+    [self savepictureCommunication];
+    
+    [[self navigationController] dismissViewControllerAnimated:YES completion:nil];
+    [picker dismissViewControllerAnimated:YES completion:NULL];
     
     
     
     
+}
+
+
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    
+    
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+    
+}
+
+-(void)savepictureCommunication
+{
+    Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
+    if (networkStatus == NotReachable)
+    {
+        
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"No Internet" message:@"Please make sure you have internet connectivity in order to access Tamm." preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction *action)
+                                   {
+                                       exit(0);
+                                   }];
+        
+        [alertController addAction:actionOk];
+        
+        UIWindow *alertWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+        alertWindow.rootViewController = [[UIViewController alloc] init];
+        alertWindow.windowLevel = UIWindowLevelAlert + 1;
+        [alertWindow makeKeyAndVisible];
+        [alertWindow.rootViewController presentViewController:alertController animated:YES completion:nil];
+        
+        
+    }
+    else
+    {
+        
+        NSString *userid1= @"userid";
+        NSString *useridVal1 =[defaults valueForKey:@"userid"];
+        
+        NSString *profileimage= @"profileimage";
+        
+        
+        NSString *reqStringFUll=[NSString stringWithFormat:@"%@=%@&%@=%@",userid1,useridVal1,profileimage,encodedImage];
+        
+        
+#pragma mark - swipe sesion
+        
+        NSURLSession *session = [NSURLSession sessionWithConfiguration: [NSURLSessionConfiguration defaultSessionConfiguration] delegate: nil delegateQueue: [NSOperationQueue mainQueue]];
+        
+        NSURL *url;
+        NSString *  urlStrLivecount=[urlplist valueForKey:@"savepicture"];;
+        url =[NSURL URLWithString:urlStrLivecount];
+        
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+        
+        [request setHTTPMethod:@"POST"];//Web API Method
+        
+        [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+        
+        request.HTTPBody = [reqStringFUll dataUsingEncoding:NSUTF8StringEncoding];
+        
+        
+        
+        NSURLSessionDataTask *dataTask =[session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
+                                         {
+                                             if(data)
+                                             {
+                                                 NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+                                                 
+                                                 NSInteger statusCode = httpResponse.statusCode;
+                                                 if(statusCode == 200)
+                                                 {
+                                                     NSMutableArray * array_profilepic=[[NSMutableArray alloc]init];
+                                                     SBJsonParser *objSBJsonParser = [[SBJsonParser alloc]init];
+                                                     array_profilepic=[objSBJsonParser objectWithData:data];
+                                                     NSString * ResultString=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+                                                     
+                                                     ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+                                                     ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\t" withString:@""];
+                                                     if (array_profilepic.count !=0)
+                                                     {
+//                                                         Str_profileurl=@"";
+//                                                         Str_profileurl=[[array_profilepic objectAtIndex:0]valueForKey:@"profilepic"];
+                                                        
+                                                     }
+                                                     
+                                                 }
+                                                 else
+                                                 {
+                                                     NSLog(@" error login1 ---%ld",(long)statusCode);
+                                                     
+                                                 }
+                                             }
+                                             else if(error)
+                                             {
+                                                 NSLog(@"error login2.......%@",error.description);
+                                                 
+                                                 
+                                             }
+                                             
+                                         }];
+        [dataTask resume];
+    };
+    
+    
+}
+
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    _plusButtonsViewMain.hidden = YES;
 }
 
 

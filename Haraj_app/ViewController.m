@@ -44,6 +44,7 @@
     
     NSTimer *BadgeTimer;
 }
+
 @property (strong, nonatomic) LGPlusButtonsView *plusButtonsViewMain;
 
 

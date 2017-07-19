@@ -505,6 +505,7 @@
                   nameFb=[Array_sinupFb valueForKey:@"name"];
                   emailFb=[Array_sinupFb valueForKey:@"email"];
                   Fbid= [session userID];
+                  [defaults setObject:Fbid forKey:@"twitterid"];
                     regTypeVal =@"TWITTER";
                   genderfb=@"";
                   profile_picFb=[Array_sinupFb valueForKey:@"profile_image_url"];

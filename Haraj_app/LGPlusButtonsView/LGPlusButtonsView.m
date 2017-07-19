@@ -247,6 +247,11 @@ typedef NS_ENUM(NSUInteger, LGPlusButtonDescriptionsPosition)
         
         
          [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(Hide_PlusButton) name:@"HidePlusButton" object:nil];
+        
+               
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ShowOpen_PlusButton) name:@"ShowOpen" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(HideProfile_PlusButton) name:@"Hide" object:nil];
+        
     }
     return self;
 }
@@ -1275,12 +1280,15 @@ typedef NS_ENUM(NSUInteger, LGPlusButtonDescriptionsPosition)
         [self hideButtonsAnimated:YES completionHandler:nil];
     else
         [self hideAnimated:YES completionHandler:nil];
-
+  [[NSNotificationCenter defaultCenter] postNotificationName:@"HidePlusButtonProfile" object:self userInfo:nil];
     
 }
 
+
 - (void)tapGesture:(UITapGestureRecognizer *)gestureRecognizer
 {
+     [[NSNotificationCenter defaultCenter] postNotificationName:@"HidePlusButtonProfile" object:self userInfo:nil];
+    
     if (self.isFirstButtonIsPlusButton)
         [self hideButtonsAnimated:YES completionHandler:nil];
     else
@@ -2100,5 +2108,27 @@ typedef NS_ENUM(NSUInteger, LGPlusButtonDescriptionsPosition)
                          completion:completion];
     }
 }
+
+
+//------------------Profile Screen Notification Methods-------------------------------------------------
+
+-(void)ShowOpen_PlusButton
+{
+    BOOL animated;
+    
+    [self showButtonsAnimated:animated completionHandler:nil];
+    
+    
+    
+}
+
+-(void)HideProfile_PlusButton
+{
+      BOOL animated;
+    
+    [self hideButtonsAnimated:animated completionHandler:nil];
+}
+
+
 
 @end

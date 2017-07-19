@@ -19,14 +19,15 @@
 #import <MessageUI/MessageUI.h>
 #import <Messages/Messages.h>
 #import "MainNavigationController.h"
-//#import "ContactListViewController.h"
-//#import "FacebookListViewController.h"
-//#import "TwitterListViewController.h"
+#import "ContactListViewController.h"
+#import "FacebookListViewController.h"
+#import "TwitterListViewController.h"
 #import "UIView+RNActivityView.h"
 #import "ChangePasswordViewController.h"
-@interface AccountSettViewController ()<UIAlertViewDelegate,MFMessageComposeViewControllerDelegate>
+#import <CoreLocation/CoreLocation.h>
+@interface AccountSettViewController ()<UIAlertViewDelegate,MFMessageComposeViewControllerDelegate,CLLocationManagerDelegate>
 {
-    NSArray *Array_Title1,*Array_Title2,*Array_Title3,*Array_Title4,*Array_Gender2,*Array_Images;
+    NSArray *Array_Title1,*Array_Title2,*Array_Title3,*Array_Title4,*Array_Gender2,*Array_Images,*Array_TitlePush;
     UIView *sectionView;
     NSUserDefaults *defaults;
     
@@ -40,16 +41,35 @@
     NSString *emailFb,*DobFb,*nameFb,*genderfb,*profile_picFb,*Fbid,*regTypeVal,*EmailValidTxt,*Str_fb_friend_id,*Str_fb_friend_id_Count;
     
     NSMutableArray *fb_friend_id;
+    
+    CGFloat Xpostion;
+    
+    NSString * locationName, *cellloop;
+    
+    CLLocationManager *locationManager;
+    CLGeocoder *geocoder;
+    CLPlacemark *placemark;
+    BOOL location;
+
+
    
 }
 
 @end
 
 @implementation AccountSettViewController
-@synthesize onecell,Twocell2,Threecell3,HeadTopView;
+@synthesize onecell,Twocell2,Threecell3,HeadTopView,Twocellpush2;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+//    locationManager = [[CLLocationManager alloc] init];
+//    geocoder = [[CLGeocoder alloc] init];
+    location = true;
+    locationName = @"Mumbai";//[defaults valueForKey:@"Cityname"];
+    cellloop = @"1";
+
+
+   
     
     CALayer *borderBottom = [CALayer layer];
     borderBottom.backgroundColor = [UIColor colorWithRed:186/255.0 green:188/255.0 blue:190/255.0 alpha:1.0].CGColor;
@@ -64,10 +84,12 @@
     Array_Title1=[[NSArray alloc]initWithObjects:@"Facebook Friends",@"Twitter Friends",@"Contacts", nil];
 Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_twitter.png",@"setting_contacts.png", nil];
  
-    Array_Title2=[[NSArray alloc]initWithObjects:@"Edit Profile",@"Change Password",@"Location:",@"Push Notification Settings",@"Allow public calls",nil];
+    Array_Title2=[[NSArray alloc]initWithObjects:@"Edit Profile",@"Change Password",@"Location:",@"Allow public calls",nil];
     
+   // @"Push Notification Settings",
     
-    
+    Array_TitlePush = [[NSArray alloc]initWithObjects:@"Offers",@"Messages",@"Comments", nil];
+   
     Array_Title3=[[NSArray alloc]initWithObjects:@"Report a Problem",@"Terms",@"About",@"Log Out",@"Delete my account",nil];
     
    
@@ -102,9 +124,14 @@ Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_t
         }
         if (section==1)
         {
-            return Array_Title2.count;;
+            return Array_Title2.count;
         }
-        if (section==2)
+        if (section == 2)
+        {
+            return  Array_TitlePush.count;
+        }
+    
+        if (section==3)//2
         {
             
           return Array_Title3.count;;
@@ -129,6 +156,7 @@ Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_t
 {
     static NSString *Cellid1=@"OneCell";
     static NSString *cellId2=@"TwoCell";
+    static NSString *cellIdPush2=@"TwoCellPush";
     static NSString *cellId3=@"ThreeCell";
 
     
@@ -163,6 +191,10 @@ Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_t
                 
                 Twocell2.LabelVal.text=[Array_Title2 objectAtIndex:indexPath.row];
                 
+               
+                
+                [Twocell2.ChangeButtonOutlet addTarget:self action:@selector(UpdateLocation:) forControlEvents:UIControlEventTouchUpInside];
+                
                 
                 if (indexPath.row == Array_Title2.count-1)
                 {
@@ -174,15 +206,46 @@ Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_t
                 else if (indexPath.row == 2)
                 {
                     
+                    if ([cellloop isEqualToString:@"1"])
+                    {
+                        Twocell2.LabelVal.frame = CGRectMake(Twocell2.LabelVal.frame.origin.x - 15, Twocell2.LabelVal.frame.origin.y, Twocell2.LabelVal.frame.size.width, Twocell2.LabelVal.frame.size.height);
+                        cellloop = @"2";
+                        
+                    }
+                    else
+                    {
+                        
+                    }
                     
-//                    NSMutableAttributedString *text =
-//                    [[NSMutableAttributedString alloc]
-//                     initWithAttributedString: Twocell2.LabelVal.attributedText];
-//                    
-//                    [text addAttribute:NSForegroundColorAttributeName
-//                                 value:[UIColor greenColor]
-//                                 range:NSMakeRange(5, 1)];
-//                    [Twocell2.LabelVal setAttributedText: text];
+                    
+                    
+                    //locationName = [defaults valueForKey:@"Cityname"];
+                    
+                    NSString *text = [NSString stringWithFormat:@"Location: %@",locationName];
+                    
+                    Twocell2.LabelVal.text = text;
+                    
+                    UIImageView *locImage = [[UIImageView alloc]initWithFrame:CGRectMake(345, Twocell2.frame.size.height/2 - 7, 15, 15)];
+                    locImage.image = [UIImage imageNamed:@"Location_on"];
+                    locImage.contentMode = UIViewContentModeScaleAspectFill;
+                    
+                    [Twocell2 addSubview:locImage];
+                    [Twocell2 bringSubviewToFront:locImage];
+                    
+                 
+                    
+                    NSRange range = [Twocell2.LabelVal.text rangeOfString:locationName];
+                    
+                    NSMutableAttributedString *text1 = [[NSMutableAttributedString alloc]
+                     initWithAttributedString: Twocell2.LabelVal.attributedText];
+                    
+                    [text1 addAttribute:NSForegroundColorAttributeName
+                                 value:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]
+                                 range:range];
+                    
+                    [Twocell2.LabelVal setAttributedText: text1];
+                    
+                    
                     
                     Twocell2.switchOutlet.hidden=YES;
                     Twocell2.locationLabel.hidden = YES;//NO
@@ -222,8 +285,26 @@ Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_t
                 break;
                 
                 
+            case 2:
                 
-                case 2:
+            {
+                
+                
+                Twocellpush2 = (AccTwoPushTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdPush2 forIndexPath:indexPath];
+            
+                Twocellpush2.layer.borderColor=[UIColor groupTableViewBackgroundColor].CGColor;
+                Twocellpush2.layer.borderWidth=1.0f;
+                Twocellpush2.LabelVal.text=[Array_TitlePush objectAtIndex:indexPath.row];
+             
+                return Twocellpush2;
+                
+            }
+                
+                break;
+                
+                
+                
+                case 3://2
                 
             {
                 
@@ -259,7 +340,7 @@ Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_t
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     
-        return 4;
+        return 5;
     
     
 }
@@ -331,6 +412,23 @@ Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_t
         Label1.backgroundColor=[UIColor clearColor];
         Label1.textColor=[UIColor lightGrayColor];
         Label1.font=[UIFont fontWithName:@"SanFranciscoDisplay-Medium" size:15.0f];
+        Label1.text=@"Push Notifications";
+        Label1.textAlignment = NSTextAlignmentRight;
+        [sectionView addSubview:Label1];
+        sectionView.tag=section;
+        
+        
+    }
+    if (section==3)
+    {
+        
+        sectionView=[[UIView alloc]initWithFrame:CGRectMake(0, 0,self.view.frame.size.width,44)];
+        [sectionView setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
+        
+        UILabel * Label1=[[UILabel alloc]initWithFrame:CGRectMake(20,15, self.view.frame.size.width-40, sectionView.frame.size.height-5)];
+        Label1.backgroundColor=[UIColor clearColor];
+        Label1.textColor=[UIColor lightGrayColor];
+        Label1.font=[UIFont fontWithName:@"SanFranciscoDisplay-Medium" size:15.0f];
         Label1.text=@"Support";
         Label1.textAlignment = NSTextAlignmentRight;
         [sectionView addSubview:Label1];
@@ -339,7 +437,7 @@ Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_t
         
     }
     
-    if (section==3)
+    if (section==4)
     {
         NSString * appVersionString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
         NSString * appBuildString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
@@ -461,33 +559,15 @@ Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_t
         
         if (indexPath.row==0)
         {
-            //contact list msg sends
-            //    MFMessageComposeViewController *controller = [[MFMessageComposeViewController alloc] init];
-            ////    if([MFMessageComposeViewController canSendText])
-            ////    {
-            //        controller.body = @"Hello  sachin mokashi";
-            //       // controller.recipients = [NSArray arrayWithObjects:@"+918237499204", nil];
-            //
-            //  controller.recipients = [NSArray arrayWithObjects:@"8850519524", @"8237499204", nil];
-            //        controller.messageComposeDelegate = self;
-            //           [self presentModalViewController:controller animated:YES];
-            // }
-            
-           // facebook freindsintigration
-            
-//                FBSDKAppInviteContent *content =[[FBSDKAppInviteContent alloc] init];
-//                NSString *urlString = @"https://fb.me/1317286481660217";
-//                content.appLinkURL = [NSURL URLWithString:urlString];
-//                [FBSDKAppInviteDialog showWithContent:content delegate:self];
-            
+                        
   
             if (![[defaults valueForKey:@"SettingLogin"]isEqualToString:@"FACEBOOK"] ||[[defaults valueForKey:@"SettingLogin"]isEqualToString:@"EMAIL"])
             {
                 if ([[defaults valueForKey:@"facebookconnect"]isEqualToString:@"yes"])
                 {
                     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//                    FacebookListViewController * set=[mainStoryboard instantiateViewControllerWithIdentifier:@"FacebookListViewController"];
-//                    [self.navigationController pushViewController:set animated:YES];
+                    FacebookListViewController * set=[mainStoryboard instantiateViewControllerWithIdentifier:@"FacebookListViewController"];
+                    [self.navigationController pushViewController:set animated:YES];
                 }
                 else
                 {
@@ -497,8 +577,8 @@ Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_t
             else
             {
                 UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//                FacebookListViewController * set=[mainStoryboard instantiateViewControllerWithIdentifier:@"FacebookListViewController"];
-//                [self.navigationController pushViewController:set animated:YES];
+                FacebookListViewController * set=[mainStoryboard instantiateViewControllerWithIdentifier:@"FacebookListViewController"];
+                [self.navigationController pushViewController:set animated:YES];
             }
         }
         
@@ -509,8 +589,8 @@ Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_t
                 if ([[defaults valueForKey:@"twitterconnect"]isEqualToString:@"yes"])
                 {
                     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//                    TwitterListViewController * set=[mainStoryboard instantiateViewControllerWithIdentifier:@"TwitterListViewController"];
-//                    [self.navigationController pushViewController:set animated:YES];
+                    TwitterListViewController * set=[mainStoryboard instantiateViewControllerWithIdentifier:@"TwitterListViewController"];
+                    [self.navigationController pushViewController:set animated:YES];
                 }
                 else
                 {
@@ -520,8 +600,8 @@ Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_t
             else
             {
             UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//            TwitterListViewController * set=[mainStoryboard instantiateViewControllerWithIdentifier:@"TwitterListViewController"];
-//            [self.navigationController pushViewController:set animated:YES];
+            TwitterListViewController * set=[mainStoryboard instantiateViewControllerWithIdentifier:@"TwitterListViewController"];
+            [self.navigationController pushViewController:set animated:YES];
             }
             
         }
@@ -529,8 +609,8 @@ Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_t
         if (indexPath.row==2)
         {
             UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//            ContactListViewController * set=[mainStoryboard instantiateViewControllerWithIdentifier:@"ContactListViewController"];
-//            [self.navigationController pushViewController:set animated:YES];
+            ContactListViewController * set=[mainStoryboard instantiateViewControllerWithIdentifier:@"ContactListViewController"];
+            [self.navigationController pushViewController:set animated:YES];
 
         }
         
@@ -587,7 +667,7 @@ Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_t
         
         
     }
-    if (indexPath.section == 2)
+    if (indexPath.section == 3)
     {
         if (indexPath.row==0)
         {
@@ -924,6 +1004,7 @@ Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_t
                   nameFb=[Array_sinupFb valueForKey:@"name"];
                   emailFb=[Array_sinupFb valueForKey:@"email"];
                   Fbid= [session userID];
+                 [defaults setObject:Fbid forKey:@"twitterid"];
                   [defaults setObject:Fbid forKey:@"twitterids"];
                   [defaults synchronize];
                   regTypeVal =@"TWITTER";
@@ -1237,4 +1318,115 @@ Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_t
     [dataTask resume];
     
 }
+
+-(void) UpdateLocation :(id)sender
+{
+    
+   NSLog(@" update location pressed");
+    
+//    locationManager.delegate = self;
+//    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+//    
+//    [locationManager startUpdatingLocation];
+    
+    locationManager = [[CLLocationManager alloc] init] ;
+    geocoder = [[CLGeocoder alloc] init];
+    locationManager.delegate = self;
+    locationManager.desiredAccuracy =kCLLocationAccuracyThreeKilometers; //kCLLocationAccuracyNearestTenMeters;
+    [locationManager requestWhenInUseAuthorization];
+    [locationManager startUpdatingLocation];
+ 
+}
+
+
+#pragma mark - CLLocationManagerDelegate
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
+{
+    NSLog(@"didUpdateToLocation: %@", newLocation);
+    CLLocation *currentLocation = newLocation;
+    
+    // Reverse Geocoding
+    NSLog(@"Resolving the Address");
+    [geocoder reverseGeocodeLocation:currentLocation completionHandler:^(NSArray *placemarks, NSError *error)
+     {
+         NSLog(@"Found placemarks: %@, error: %@", placemarks, error);
+         if (error == nil && [placemarks count] > 0) {
+             placemark = [placemarks lastObject];
+             NSLog(@"placemark.ISOcountryCode %@",placemark.ISOcountryCode);
+             NSLog(@"placemark.country %@",placemark.country);
+             NSLog(@"placemark.postalCode %@",placemark.postalCode);
+             NSLog(@"placemark.administrativeArea %@",placemark.administrativeArea);
+             NSLog(@"placemark.locality %@",placemark.locality);
+             NSLog(@"placemark.subLocality %@",placemark.subLocality);
+             NSLog(@"placemark.subThoroughfare %@",placemark.subThoroughfare);
+             
+             
+             NSLog(@"placemark.subThoroughfare %@",[defaults valueForKey:@"Cityname"]);
+             
+             
+             if (placemark.locality !=nil && placemark.country !=nil)
+             {
+                 
+                 
+                 [defaults setObject:placemark.locality forKey:@"Cityname"];
+                 [defaults setObject:placemark.country forKey:@"Countryname"];
+                 
+                 locationName = placemark.locality ;
+
+                 
+                 
+                 [locationManager stopUpdatingLocation];
+                 
+                 
+             }
+             
+             
+         }
+         else
+         {
+             NSLog(@"%@", error.debugDescription);
+         }
+     } ];
+    
+    [TableView_Setting reloadData];
+
+}
+-(void)locationManager:(CLLocationManager *)manager didFailWithError:(nonnull NSError *)error
+{
+    if([CLLocationManager locationServicesEnabled])
+    {
+        NSLog(@"Location Services Enabled");
+        if([CLLocationManager authorizationStatus]==kCLAuthorizationStatusDenied)
+        {
+            location = false;
+            
+            
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"App Permission Denied" message:@"To re-enable, please go to Settings and turn on Location Service for this app." preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                               style:UIAlertActionStyleDefault
+                                                             handler:^(UIAlertAction *action)
+                                       {
+                                           [alertController dismissViewControllerAnimated:YES completion:nil];
+                                           [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];
+                                       }];
+            
+            [alertController addAction:actionOk];
+            
+            UIWindow *alertWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+            alertWindow.rootViewController = [[UIViewController alloc] init];
+            alertWindow.windowLevel = UIWindowLevelAlert + 1;
+            [alertWindow makeKeyAndVisible];
+            [alertWindow.rootViewController presentViewController:alertController animated:YES completion:nil];
+            
+        }
+        
+        
+    }
+    
+}
+
+
+
 @end

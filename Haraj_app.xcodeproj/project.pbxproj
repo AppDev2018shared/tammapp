@@ -22,6 +22,14 @@
 		61040CE01EFBC9D100ACE5D6 /* BoostPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 61040CDF1EFBC9D100ACE5D6 /* BoostPost.m */; };
 		61040CE21EFBC9F300ACE5D6 /* BoostPost.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61040CE11EFBC9F300ACE5D6 /* BoostPost.xib */; };
 		6111001B1F14C8470034F058 /* ActivityNextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6111001A1F14C8470034F058 /* ActivityNextViewController.m */; };
+		61172E7A1F1F2B9E0006B2A6 /* ContactAddTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61172E691F1F2B9E0006B2A6 /* ContactAddTableViewCell.m */; };
+		61172E7B1F1F2B9E0006B2A6 /* ContactListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61172E6B1F1F2B9E0006B2A6 /* ContactListViewController.m */; };
+		61172E7C1F1F2B9E0006B2A6 /* ContactTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61172E6D1F1F2B9E0006B2A6 /* ContactTableViewCell.m */; };
+		61172E7D1F1F2B9E0006B2A6 /* FacebookListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61172E701F1F2B9E0006B2A6 /* FacebookListViewController.m */; };
+		61172E7E1F1F2B9E0006B2A6 /* FacebookoneTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61172E721F1F2B9E0006B2A6 /* FacebookoneTableViewCell.m */; };
+		61172E7F1F1F2B9E0006B2A6 /* TwitterListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61172E751F1F2B9E0006B2A6 /* TwitterListViewController.m */; };
+		61172E801F1F2B9E0006B2A6 /* TwitteroneTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61172E771F1F2B9E0006B2A6 /* TwitteroneTableViewCell.m */; };
+		61172E811F1F2B9E0006B2A6 /* TwittertwoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61172E791F1F2B9E0006B2A6 /* TwittertwoTableViewCell.m */; };
 		611D2C781EFCF16A00804839 /* SalePointsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 611D2C771EFCF16900804839 /* SalePointsViewController.m */; };
 		611D2C7B1EFD0C7300804839 /* SaleCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 611D2C7A1EFD0C7300804839 /* SaleCollectionViewCell.m */; };
 		61271D461EBD928C0082E504 /* facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 61271D401EBD928C0082E504 /* facebook.png */; };
@@ -154,6 +162,7 @@
 		61E141821F02593F008C3E7A /* AccTwoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E1417D1F02593F008C3E7A /* AccTwoTableViewCell.m */; };
 		61E8F5B81F1883FB00BAB13D /* MobileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E8F5B71F1883FB00BAB13D /* MobileViewController.m */; };
 		61E8F5BB1F18842C00BAB13D /* EnterCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E8F5BA1F18842C00BAB13D /* EnterCodeViewController.m */; };
+		61EC8C341F1E02B100A5CC0D /* AccTwoPushTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61EC8C331F1E02B100A5CC0D /* AccTwoPushTableViewCell.m */; };
 		61ED095A1EB85369008EAFB7 /* YSLContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61ED09571EB85369008EAFB7 /* YSLContainerViewController.m */; };
 		61ED095B1EB85369008EAFB7 /* YSLScrollMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61ED09591EB85369008EAFB7 /* YSLScrollMenuView.m */; };
 		61ED09991EB85D42008EAFB7 /* CellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 61ED096C1EB85D42008EAFB7 /* CellModel.m */; };
@@ -286,6 +295,22 @@
 		61040CE11EFBC9F300ACE5D6 /* BoostPost.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BoostPost.xib; sourceTree = "<group>"; };
 		611100191F14C8460034F058 /* ActivityNextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityNextViewController.h; sourceTree = "<group>"; };
 		6111001A1F14C8470034F058 /* ActivityNextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityNextViewController.m; sourceTree = "<group>"; };
+		61172E681F1F2B9E0006B2A6 /* ContactAddTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactAddTableViewCell.h; sourceTree = "<group>"; };
+		61172E691F1F2B9E0006B2A6 /* ContactAddTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactAddTableViewCell.m; sourceTree = "<group>"; };
+		61172E6A1F1F2B9E0006B2A6 /* ContactListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactListViewController.h; sourceTree = "<group>"; };
+		61172E6B1F1F2B9E0006B2A6 /* ContactListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactListViewController.m; sourceTree = "<group>"; };
+		61172E6C1F1F2B9E0006B2A6 /* ContactTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactTableViewCell.h; sourceTree = "<group>"; };
+		61172E6D1F1F2B9E0006B2A6 /* ContactTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactTableViewCell.m; sourceTree = "<group>"; };
+		61172E6F1F1F2B9E0006B2A6 /* FacebookListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookListViewController.h; sourceTree = "<group>"; };
+		61172E701F1F2B9E0006B2A6 /* FacebookListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookListViewController.m; sourceTree = "<group>"; };
+		61172E711F1F2B9E0006B2A6 /* FacebookoneTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookoneTableViewCell.h; sourceTree = "<group>"; };
+		61172E721F1F2B9E0006B2A6 /* FacebookoneTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookoneTableViewCell.m; sourceTree = "<group>"; };
+		61172E741F1F2B9E0006B2A6 /* TwitterListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterListViewController.h; sourceTree = "<group>"; };
+		61172E751F1F2B9E0006B2A6 /* TwitterListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwitterListViewController.m; sourceTree = "<group>"; };
+		61172E761F1F2B9E0006B2A6 /* TwitteroneTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitteroneTableViewCell.h; sourceTree = "<group>"; };
+		61172E771F1F2B9E0006B2A6 /* TwitteroneTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwitteroneTableViewCell.m; sourceTree = "<group>"; };
+		61172E781F1F2B9E0006B2A6 /* TwittertwoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwittertwoTableViewCell.h; sourceTree = "<group>"; };
+		61172E791F1F2B9E0006B2A6 /* TwittertwoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwittertwoTableViewCell.m; sourceTree = "<group>"; };
 		611D2C761EFCF16900804839 /* SalePointsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SalePointsViewController.h; sourceTree = "<group>"; };
 		611D2C771EFCF16900804839 /* SalePointsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SalePointsViewController.m; sourceTree = "<group>"; };
 		611D2C791EFD0C7300804839 /* SaleCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaleCollectionViewCell.h; sourceTree = "<group>"; };
@@ -504,6 +529,8 @@
 		61E8F5B71F1883FB00BAB13D /* MobileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MobileViewController.m; sourceTree = "<group>"; };
 		61E8F5B91F18842C00BAB13D /* EnterCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnterCodeViewController.h; sourceTree = "<group>"; };
 		61E8F5BA1F18842C00BAB13D /* EnterCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnterCodeViewController.m; sourceTree = "<group>"; };
+		61EC8C321F1E02B100A5CC0D /* AccTwoPushTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccTwoPushTableViewCell.h; sourceTree = "<group>"; };
+		61EC8C331F1E02B100A5CC0D /* AccTwoPushTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccTwoPushTableViewCell.m; sourceTree = "<group>"; };
 		61ED09561EB85369008EAFB7 /* YSLContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSLContainerViewController.h; sourceTree = "<group>"; };
 		61ED09571EB85369008EAFB7 /* YSLContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YSLContainerViewController.m; sourceTree = "<group>"; };
 		61ED09581EB85369008EAFB7 /* YSLScrollMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSLScrollMenuView.h; sourceTree = "<group>"; };
@@ -844,6 +871,43 @@
 			name = CollectionViewCells;
 			sourceTree = "<group>";
 		};
+		61172E671F1F2B9E0006B2A6 /* ContactList */ = {
+			isa = PBXGroup;
+			children = (
+				61172E681F1F2B9E0006B2A6 /* ContactAddTableViewCell.h */,
+				61172E691F1F2B9E0006B2A6 /* ContactAddTableViewCell.m */,
+				61172E6A1F1F2B9E0006B2A6 /* ContactListViewController.h */,
+				61172E6B1F1F2B9E0006B2A6 /* ContactListViewController.m */,
+				61172E6C1F1F2B9E0006B2A6 /* ContactTableViewCell.h */,
+				61172E6D1F1F2B9E0006B2A6 /* ContactTableViewCell.m */,
+			);
+			path = ContactList;
+			sourceTree = "<group>";
+		};
+		61172E6E1F1F2B9E0006B2A6 /* FacebookList */ = {
+			isa = PBXGroup;
+			children = (
+				61172E6F1F1F2B9E0006B2A6 /* FacebookListViewController.h */,
+				61172E701F1F2B9E0006B2A6 /* FacebookListViewController.m */,
+				61172E711F1F2B9E0006B2A6 /* FacebookoneTableViewCell.h */,
+				61172E721F1F2B9E0006B2A6 /* FacebookoneTableViewCell.m */,
+			);
+			path = FacebookList;
+			sourceTree = "<group>";
+		};
+		61172E731F1F2B9E0006B2A6 /* TwitterList */ = {
+			isa = PBXGroup;
+			children = (
+				61172E741F1F2B9E0006B2A6 /* TwitterListViewController.h */,
+				61172E751F1F2B9E0006B2A6 /* TwitterListViewController.m */,
+				61172E761F1F2B9E0006B2A6 /* TwitteroneTableViewCell.h */,
+				61172E771F1F2B9E0006B2A6 /* TwitteroneTableViewCell.m */,
+				61172E781F1F2B9E0006B2A6 /* TwittertwoTableViewCell.h */,
+				61172E791F1F2B9E0006B2A6 /* TwittertwoTableViewCell.m */,
+			);
+			path = TwitterList;
+			sourceTree = "<group>";
+		};
 		61271D351EBD91E10082E504 /* LoginPages */ = {
 			isa = PBXGroup;
 			children = (
@@ -1177,6 +1241,9 @@
 		61C7FEB01F00F11E00EF278B /* Account Setting */ = {
 			isa = PBXGroup;
 			children = (
+				61172E671F1F2B9E0006B2A6 /* ContactList */,
+				61172E6E1F1F2B9E0006B2A6 /* FacebookList */,
+				61172E731F1F2B9E0006B2A6 /* TwitterList */,
 				61E141831F02602B008C3E7A /* settingimages */,
 				61E141781F02593F008C3E7A /* AccountSettViewController.h */,
 				61E141791F02593F008C3E7A /* AccountSettViewController.m */,
@@ -1184,6 +1251,8 @@
 				61E141771F02593F008C3E7A /* AccOneTableViewCell.m */,
 				61E1417C1F02593F008C3E7A /* AccTwoTableViewCell.h */,
 				61E1417D1F02593F008C3E7A /* AccTwoTableViewCell.m */,
+				61EC8C321F1E02B100A5CC0D /* AccTwoPushTableViewCell.h */,
+				61EC8C331F1E02B100A5CC0D /* AccTwoPushTableViewCell.m */,
 				61E1417A1F02593F008C3E7A /* AccThreeTableViewCell.h */,
 				61E1417B1F02593F008C3E7A /* AccThreeTableViewCell.m */,
 				61E141741F02593F008C3E7A /* AccFourTableViewCell.h */,
@@ -1721,6 +1790,7 @@
 				61ED09A41EB85D42008EAFB7 /* UIImage+GIF.m in Sources */,
 				61271D4E1EBD93ED0082E504 /* LoginWithViewController.m in Sources */,
 				614C160A1EC06B5400B11A9B /* ElectronicViewController.m in Sources */,
+				61172E801F1F2B9E0006B2A6 /* TwitteroneTableViewCell.m in Sources */,
 				6185B3AF1EFA3E440051659D /* ProfileViewController.m in Sources */,
 				61739FED1EE2AF5900018CF1 /* AFURLConnectionOperation.m in Sources */,
 				61739FEB1EE2AF5900018CF1 /* AFNetworkActivityIndicatorManager.m in Sources */,
@@ -1740,10 +1810,13 @@
 				3247807C1EACEE0A00FF4B79 /* ViewController.m in Sources */,
 				61487FEC1ED2ECE7009CEF9B /* PropertyViewController.m in Sources */,
 				61ED09A61EB85D42008EAFB7 /* UIImage+WebP.m in Sources */,
+				61172E7B1F1F2B9E0006B2A6 /* ContactListViewController.m in Sources */,
+				61172E7F1F1F2B9E0006B2A6 /* TwitterListViewController.m in Sources */,
 				61E8F5BB1F18842C00BAB13D /* EnterCodeViewController.m in Sources */,
 				61739FF31EE2AF5900018CF1 /* UIImageView+MHFacebookImageViewer.m in Sources */,
 				618B00091EF921A500434650 /* DetailPropertyTableViewCell.m in Sources */,
 				61739FA31EE2951100018CF1 /* Base64.m in Sources */,
+				61172E7D1F1F2B9E0006B2A6 /* FacebookListViewController.m in Sources */,
 				614C15EB1EC039C100B11A9B /* NSObject+SBJson.m in Sources */,
 				61B8C8751EC1AA1800954A68 /* FirstImageViewCell.m in Sources */,
 				61D3766B1EBC3F6300BA02D4 /* LGPlusButtonsViewShared.m in Sources */,
@@ -1773,6 +1846,7 @@
 				614E896F1ECB0A0300C302E6 /* PostingViewController.m in Sources */,
 				61EDCA081ECB2E270036A250 /* ProductDetailCell.m in Sources */,
 				61271E1B1EBDDD960082E504 /* RNActivityView.m in Sources */,
+				61172E7A1F1F2B9E0006B2A6 /* ContactAddTableViewCell.m in Sources */,
 				61ED09A11EB85D42008EAFB7 /* SDWebImageManager.m in Sources */,
 				614C15F51EC039C100B11A9B /* SBJsonUTF8Stream.m in Sources */,
 				61ED09991EB85D42008EAFB7 /* CellModel.m in Sources */,
@@ -1782,10 +1856,13 @@
 				324780791EACEE0A00FF4B79 /* AppDelegate.m in Sources */,
 				617FD88B1EB9B2DD008B827F /* ImageCollectionViewCell.m in Sources */,
 				61487FEF1ED2ED0F009CEF9B /* PetsViewController.m in Sources */,
+				61EC8C341F1E02B100A5CC0D /* AccTwoPushTableViewCell.m in Sources */,
+				61172E7C1F1F2B9E0006B2A6 /* ContactTableViewCell.m in Sources */,
 				324780761EACEE0A00FF4B79 /* main.m in Sources */,
 				61D376691EBC3F6300BA02D4 /* LGPlusButtonDescription.m in Sources */,
 				61739FE91EE2AF5900018CF1 /* AFImageRequestOperation.m in Sources */,
 				61739FE81EE2AF5900018CF1 /* AFHTTPRequestOperation.m in Sources */,
+				61172E7E1F1F2B9E0006B2A6 /* FacebookoneTableViewCell.m in Sources */,
 				614C16071EC042D900B11A9B /* MainNavigationController.m in Sources */,
 				61E015F41ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.m in Sources */,
 				614C16161EC0739900B11A9B /* FRGWaterfallDecorationReusableView.m in Sources */,
@@ -1834,6 +1911,7 @@
 				6131710E1EC5BB0A00E3BD4C /* EnterPrice.m in Sources */,
 				61271E1C1EBDDD960082E504 /* UIView+RNActivityView.m in Sources */,
 				617FD8911EB9D6D8008B827F /* PatternViewCell.m in Sources */,
+				61172E811F1F2B9E0006B2A6 /* TwittertwoTableViewCell.m in Sources */,
 				61739FE71EE2AF5900018CF1 /* AFHTTPClient.m in Sources */,
 				61487FF21ED2ED20009CEF9B /* FurnitureViewController.m in Sources */,
 				614C15CF1EC0398D00B11A9B /* Reachability.m in Sources */,

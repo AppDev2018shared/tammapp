@@ -46,6 +46,7 @@
 
 
 
+- (IBAction)CreatePost_Action:(id)sender;
 
 - (IBAction)SettingButton_Action:(id)sender;
 - (IBAction)BackButton_Action:(id)sender;

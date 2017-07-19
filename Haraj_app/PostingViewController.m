@@ -289,15 +289,36 @@
 
 -(IBAction)OnClick_btn:(id)sender
 {
-    [self communication_cancelPost];
-    CATransition *transition = [CATransition animation];
-    transition.duration = 0.3;
-    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    transition.type = kCATransitionPush;
-    transition.subtype = kCATransitionFromRight;
-    [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    if ([[defaults valueForKey:@"PlusButtonPressed"] isEqualToString:@"profilepost"])
+    {
+        [defaults setObject:@"" forKey:@"PlusButtonPressed"];
+        [self communication_cancelPost];
+        CATransition *transition = [CATransition animation];
+        transition.duration = 0.3;
+        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+        transition.type = kCATransitionPush;
+        transition.subtype = kCATransitionFromRight;
+        [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
+        [self.navigationController popViewControllerAnimated:YES];
+        
 
+    }
+    else
+    {
+        
+        [self communication_cancelPost];
+        CATransition *transition = [CATransition animation];
+        transition.duration = 0.3;
+        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+        transition.type = kCATransitionPush;
+        transition.subtype = kCATransitionFromRight;
+        [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
+        [self.navigationController popToRootViewControllerAnimated:YES];
+
+        
+    }
+    
+    
 }
 -(void)communication_cancelPost
 {
