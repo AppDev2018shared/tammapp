@@ -1799,6 +1799,7 @@
     
     [self ItemSold_Connection];
     NSLog(@"Bank button Pressed");
+    [self.view endEditing:YES];
 }
 -(void)creditButton_Action:(id)sender
 {
@@ -1806,6 +1807,7 @@
     paymentmodeStr = @"CARD";
     [self ItemSold_Connection];
     NSLog(@"creditButton_Action Pressed");
+    [self.view endEditing:YES];
     
 }
 
@@ -1813,6 +1815,7 @@
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewEnable" object:self userInfo:nil];
     transparentView1.hidden= YES;
+    [self.view endEditing:YES];
 }
 
 - (void)Hide_BoostPopover

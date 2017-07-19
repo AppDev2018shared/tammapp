@@ -156,7 +156,7 @@
     
 //---------------------------Favourite label tap gesture---------------------------------------------------------
     
-    if ([defaults  valueForKey:@"CountFav"] == 0)
+    if ([defaults  valueForKey:@"CountFav"] == 0 || [defaults valueForKey:@"CountFav"] == NULL)
     {
           favoritesValueLabel.text = @"0";
     }
@@ -869,9 +869,9 @@ heightForHeaderAtIndexPath:(NSIndexPath *)indexPath
 
 - (IBAction)CreatePost_Action:(id)sender
 {
-     _plusButtonsViewMain.hidden = NO;
+     //_plusButtonsViewMain.hidden = NO;
   
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"ShowOpen" object:self userInfo:nil];
+   // [[NSNotificationCenter defaultCenter] postNotificationName:@"ShowOpen" object:self userInfo:nil];
     
     
 }
@@ -1640,6 +1640,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     
     [self ItemSold_Connection];
     NSLog(@"Bank button Pressed");
+    [self.view endEditing:YES];
 }
 -(void)creditButton_Action:(id)sender
 {
@@ -1647,19 +1648,19 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     paymentmodeStr = @"CARD";
     [self ItemSold_Connection];
     NSLog(@"creditButton_Action Pressed");
+    [self.view endEditing:YES];
     
 }
 
 - (void)Hide_Popover
 {
-   
+   [self.view endEditing:YES];
     transparentView1.hidden= YES;
 }
 
 #pragma mark - ItemSold Connection
 -(void)ItemSold_Connection
 {
-    
     NSString *postid= @"postid";
     NSString *postidVal = PostIDValue;
     

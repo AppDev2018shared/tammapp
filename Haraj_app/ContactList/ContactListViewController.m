@@ -1249,7 +1249,7 @@
             mailCont.mailComposeDelegate = self;
             [mailCont setToRecipients:[NSArray arrayWithObject:[[ArryMerge_twitterlistSection1 objectAtIndex:sender.tag]valueForKey:@"friendemail"]]];
             
-            [mailCont setSubject:@"Download Care2Dare"];
+            [mailCont setSubject:@"Download Tamm"];
             [mailCont setMessageBody:@"Hey, \n\n Care2Dare is a great app to Challenge your friends to a dare, or for raising money for completing a specific challenge! Use this money to donate it to your favourite Charity.\n\n Visit http://www.care2dareapp.com to download it on your mobile phone and start contributing to the social cause! \n\n Thanks!" isHTML:NO];
             
             [self presentViewController:mailCont animated:YES completion:nil];
