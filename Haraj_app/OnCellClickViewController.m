@@ -1944,7 +1944,8 @@
     {
         NSLog(@"Share Pressed");
         
-        NSString * texttoshare=[NSString stringWithFormat:@"%@%@%@",@"You have been invited to a Play:Date meet-up!\n\nUse the event code:\n",eventidvalue,@" to join the meet-up.\n\nDownload Play:Date on your iPhone from http://www.play-date.ae and find new friends for your children!"];
+        NSString * texttoshare=[NSString stringWithFormat:@"You have been invited to use the Tamm app!\n\n\nDownload the app on your iPhone from http://www.tammapp.com and buy & sell items!"];
+ 
         
        // NSURL *myWebsite = [NSURL URLWithString:@"http://www.codingexplorer.com/"];
 

@@ -482,7 +482,7 @@
     if (networkStatus == NotReachable)
     {
         
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"No Internet" message:@"Please make sure you have internet connectivity in order to access Care2dare." preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"No Internet" message:@"Please make sure you have internet connectivity in order to access Tamm app." preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
                                                            style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
@@ -1079,7 +1079,7 @@
     if (networkStatus == NotReachable)
     {
         
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"No Internet" message:@"Please make sure you have internet connectivity in order to access Care2dare." preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"No Internet" message:@"Please make sure you have internet connectivity in order to access Tamm app." preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
                                                            style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
@@ -1250,7 +1250,7 @@
             [mailCont setToRecipients:[NSArray arrayWithObject:[[ArryMerge_twitterlistSection1 objectAtIndex:sender.tag]valueForKey:@"friendemail"]]];
             
             [mailCont setSubject:@"Download Tamm"];
-            [mailCont setMessageBody:@"Hey, \n\n Care2Dare is a great app to Challenge your friends to a dare, or for raising money for completing a specific challenge! Use this money to donate it to your favourite Charity.\n\n Visit http://www.care2dareapp.com to download it on your mobile phone and start contributing to the social cause! \n\n Thanks!" isHTML:NO];
+            [mailCont setMessageBody:@"Hey, \n\n Tamm is a great app to post items that you wish to sell. Also use it to bid for items that you wish to buy!\n\n Visit http://www.tammapp.com to download it on your mobile phone and start bidding! \n\n Thanks!" isHTML:NO];
             
             [self presentViewController:mailCont animated:YES completion:nil];
             
@@ -1272,7 +1272,7 @@
             
             
             
-            messageController.body = @"Challenge your friends to a dare, or raise money for completing a challenge! Use this money to donate it to your favourite Charity.\n\n Visit http://www.care2dareapp.com to download it on your mobile phone and start contributing to the social cause!"; // Set initial text to example message
+            messageController.body = @"Tamm is a great app to post items that you wish to sell. Also use it to bid for items that you wish to buy!\n\n Visit http://www.tammapp.com to download it on your mobile phone and start bidding! \n\n Thanks!"; // Set initial text to example message
             
             dispatch_async(dispatch_get_main_queue(), ^{ // Present VC when possible
                 [self presentViewController:messageController animated:YES completion:NULL];
@@ -1322,8 +1322,8 @@
             mailCont.mailComposeDelegate = self;
             [mailCont setToRecipients:[NSArray arrayWithObject:[[ArryMerge_twitterlistSection1 objectAtIndex:(long)actionSheet.tag]valueForKey:@"friendemail"]]];
             
-            [mailCont setSubject:@"Download Care2Dare"];
-            [mailCont setMessageBody:@"Hey, \n\n Care2Dare is a great app to Challenge your friends to a dare, or for raising money for completing a specific challenge! Use this money to donate it to your favourite Charity.\n\n Visit http://www.care2dareapp.com to download it on your mobile phone and start contributing to the social cause! \n\n Thanks!" isHTML:NO];
+            [mailCont setSubject:@"Download Tamm"];
+            [mailCont setMessageBody:@"Hey, \n\n Tamm is a great app to post items that you wish to sell. Also use it to bid for items that you wish to buy!\n\n Visit http://www.tammapp.com to download it on your mobile phone and start bidding! \n\n Thanks!" isHTML:NO];
             
             [self presentViewController:mailCont animated:YES completion:nil];
             
@@ -1343,7 +1343,7 @@
             
             
             
-            messageController.body = @"Challenge your friends to a dare, or raise money for completing a challenge! Use this money to donate it to your favourite Charity.\n\n Visit http://www.care2dareapp.com to download it on your mobile phone and start contributing to the social cause!"; // Set initial text to example message
+            messageController.body = @"Hey, \n\n Tamm is a great app to post items that you wish to sell. Also use it to bid for items that you wish to buy!\n\n Visit http://www.tammapp.com to download it on your mobile phone and start bidding! \n\n Thanks!"; // Set initial text to example message
             
             dispatch_async(dispatch_get_main_queue(), ^{ // Present VC when possible
                 [self presentViewController:messageController animated:YES completion:NULL];
@@ -1374,8 +1374,8 @@
         MFMailComposeViewController *mailCont = [[MFMailComposeViewController alloc] init];
         mailCont.mailComposeDelegate = self;
         [mailCont setToRecipients:[NSArray arrayWithObject:[[ArryMerge_twitterlistSection1 objectAtIndex:sender.tag]valueForKey:@"friendemail"]]];
-        [mailCont setSubject:@"Download care2dare"];
-        [mailCont setMessageBody:@"Hey,\n\nChallenge your friends to a dare and help contribute to the society! \n\nVisit http://www.care2dare.com to download it on your mobile phone!\n\nThanks!" isHTML:NO];
+        [mailCont setSubject:@"Download Tamm"];
+        [mailCont setMessageBody:@"Hey, \n\n Tamm is a great app to post items that you wish to sell. Also use it to bid for items that you wish to buy!\n\n Visit http://www.tammapp.com to download it on your mobile phone and start bidding! \n\n Thanks!" isHTML:NO];
         [self presentViewController:mailCont animated:YES completion:nil];
         
     }
@@ -1392,7 +1392,7 @@
         [recipients addObject:[[ArryMerge_twitterlistSection1 objectAtIndex:sender.tag]valueForKey:@"friendmobileno"]]; // Append example phone number to array
         messageController.recipients = recipients; // Set the recipients of the message to the created array
         
-        messageController.body = @"Challenge your friends to a dare and help contribute to the society! Visit http://www.care2dare.com to download it on your mobile phone!"; // Set initial text to example message
+        messageController.body = @"Tamm is a great app to post items that you wish to sell. Also use it to bid for items that you wish to buy! Visit http://www.tammapp.com to download it on your mobile phone and start bidding! Thanks!"; // Set initial text to example message
         
         dispatch_async(dispatch_get_main_queue(), ^{ // Present VC when possible
             [self presentViewController:messageController animated:YES completion:NULL];
@@ -1408,7 +1408,7 @@
     if (networkStatus == NotReachable)
     {
         
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"No Internet" message:@"Please make sure you have internet connectivity in order to access Care2dare." preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"No Internet" message:@"Please make sure you have internet connectivity in order to access Tamm app." preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
                                                            style:UIAlertActionStyleDefault

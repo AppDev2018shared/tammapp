@@ -40,7 +40,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>3</string>
+	<string>8</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -82,14 +82,14 @@
 	<string>Permission to access Media</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Permission to access Camera</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Permission to access Contacts</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Permission to access Location</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Permission to access microphone</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Permission to access Photo Library</string>
-	<key>NSContactsUsageDescription</key>
-	<string>Permission to access Contacts</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>SanFranciscoDisplay-Semibold.otf</string>

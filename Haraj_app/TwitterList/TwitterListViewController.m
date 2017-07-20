@@ -64,7 +64,7 @@
     if (networkStatus == NotReachable)
     {
         
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"No Internet" message:@"Please make sure you have internet connectivity in order to access Care2dare." preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"No Internet" message:@"Please make sure you have internet connectivity in order to access Tamm app." preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
                                                            style:UIAlertActionStyleDefault
@@ -545,7 +545,7 @@
     TWTRComposer *composer = [[TWTRComposer alloc] init];
     NSString *screen_name=[[ArryMerge_twitterlistSection1 objectAtIndex:sender.tag]valueForKey:@"screen_name"];
     
-    [composer setText:[NSString stringWithFormat:@"%@%@%@",@"@",screen_name,@" Download Care2Dare App and challenge your friends for a good cause! Get it from the Appstore now - http://www.care2Dare.com"]];
+    [composer setText:[NSString stringWithFormat:@"%@%@%@",@"@",screen_name,@"Tamm is a great app to post items that you wish to sell. Also use it to bid for items that you wish to buy! Visit http://www.tammapp.com to download it on your mobile phone and start bidding! Thanks!"]];
     //[composer setImage:[UIImage imageNamed:@"twitterBird"]];
     
     // Called from a UIViewController
@@ -611,7 +611,7 @@
     if (networkStatus == NotReachable)
     {
         
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"No Internet" message:@"Please make sure you have internet connectivity in order to access Care2dare." preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"No Internet" message:@"Please make sure you have internet connectivity in order to access Tamm app." preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
                                                            style:UIAlertActionStyleDefault

@@ -200,7 +200,6 @@
 		61F54B751F17887D006A498A /* FirebaseAuth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61F54B411F17887B006A498A /* FirebaseAuth.framework */; };
 		61F54B761F17887D006A498A /* GTMSessionFetcher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61F54B421F17887B006A498A /* GTMSessionFetcher.framework */; };
 		61F54B771F17887D006A498A /* batch-upload in Resources */ = {isa = PBXBuildFile; fileRef = 61F54B441F17887B006A498A /* batch-upload */; };
-		61F54B781F17887D006A498A /* dump_syms in Resources */ = {isa = PBXBuildFile; fileRef = 61F54B451F17887C006A498A /* dump_syms */; };
 		61F54B791F17887D006A498A /* extract-keys in Resources */ = {isa = PBXBuildFile; fileRef = 61F54B461F17887C006A498A /* extract-keys */; };
 		61F54B7A1F17887D006A498A /* FirebaseCrash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61F54B471F17887C006A498A /* FirebaseCrash.framework */; };
 		61F54B7B1F17887D006A498A /* Protobuf.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61F54B481F17887C006A498A /* Protobuf.framework */; };
@@ -1742,7 +1741,6 @@
 				61271D491EBD928C0082E504 /* twitter.png in Resources */,
 				61D3767A1EBC868000BA02D4 /* SanFranciscoDisplay-Regular.otf in Resources */,
 				61F56CD41ECD75A10031E9C1 /* Overlay.png in Resources */,
-				61F54B781F17887D006A498A /* dump_syms in Resources */,
 				3247807F1EACEE0A00FF4B79 /* Main.storyboard in Resources */,
 				61F54B971F178CBF006A498A /* GoogleService-Info (1).plist in Resources */,
 				61271E121EBDDB950082E504 /* FacebookSDKStrings.bundle in Resources */,
