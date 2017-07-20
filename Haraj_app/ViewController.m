@@ -772,6 +772,17 @@
                     
                     
                 }
+                else
+                {
+                    if (Array_ViewPost.count == 1)
+                    {
+                        
+                        [defaults setObject:@"0" forKey:@"CountFav"];
+                    }
+                    
+                    
+                    
+                }
 
                 
             }

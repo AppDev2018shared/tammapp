@@ -250,6 +250,7 @@ typedef NS_ENUM(NSUInteger, LGPlusButtonDescriptionsPosition)
         
                
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ShowOpen_PlusButton) name:@"ShowOpen" object:nil];
+        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(HideProfile_PlusButton) name:@"Hide" object:nil];
         
     }
@@ -1287,7 +1288,7 @@ typedef NS_ENUM(NSUInteger, LGPlusButtonDescriptionsPosition)
 
 - (void)tapGesture:(UITapGestureRecognizer *)gestureRecognizer
 {
-     [[NSNotificationCenter defaultCenter] postNotificationName:@"HidePlusButtonProfile" object:self userInfo:nil];
+   [[NSNotificationCenter defaultCenter] postNotificationName:@"HidePlusButtonProfile" object:self userInfo:nil];
     
     if (self.isFirstButtonIsPlusButton)
         [self hideButtonsAnimated:YES completionHandler:nil];
@@ -1574,6 +1575,8 @@ typedef NS_ENUM(NSUInteger, LGPlusButtonDescriptionsPosition)
                              [_delegate plusButtonsViewDidHideButtons:self];
 
                          [[NSNotificationCenter defaultCenter] postNotificationName:kLGPlusButtonsViewDidHideButtonsNotification object:self userInfo:nil];
+                         
+                         [[NSNotificationCenter defaultCenter] postNotificationName:@"HidePlusButtonProfile" object:self userInfo:nil];
                      }
                  }];
             }
@@ -1582,6 +1585,9 @@ typedef NS_ENUM(NSUInteger, LGPlusButtonDescriptionsPosition)
         [self hideCoverViewAnimated:animated
                       animationType:_buttonsAppearingAnimationType];
     }
+    
+    
+
 }
 
 #pragma mark - Cover View Animations

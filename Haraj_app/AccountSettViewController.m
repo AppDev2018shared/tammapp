@@ -25,6 +25,7 @@
 #import "UIView+RNActivityView.h"
 #import "ChangePasswordViewController.h"
 #import <CoreLocation/CoreLocation.h>
+#import <Social/Social.h>
 @interface AccountSettViewController ()<UIAlertViewDelegate,MFMessageComposeViewControllerDelegate,CLLocationManagerDelegate>
 {
     NSArray *Array_Title1,*Array_Title2,*Array_Title3,*Array_Title4,*Array_Gender2,*Array_Images,*Array_TitlePush;
@@ -81,7 +82,7 @@
 
     
   
-    Array_Title1=[[NSArray alloc]initWithObjects:@"Facebook Friends",@"Twitter Friends",@"Contacts", nil];
+    Array_Title1=[[NSArray alloc]initWithObjects:@"Post on Facebook",@"Twitter Friends",@"Contacts", nil];
 Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_twitter.png",@"setting_contacts.png", nil];
  
     Array_Title2=[[NSArray alloc]initWithObjects:@"Edit Profile",@"Change Password",@"Location:",@"Allow public calls",nil];
@@ -561,25 +562,27 @@ Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_t
         {
                         
   
-            if (![[defaults valueForKey:@"SettingLogin"]isEqualToString:@"FACEBOOK"] ||[[defaults valueForKey:@"SettingLogin"]isEqualToString:@"EMAIL"])
-            {
-                if ([[defaults valueForKey:@"facebookconnect"]isEqualToString:@"yes"])
-                {
-                    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-                    FacebookListViewController * set=[mainStoryboard instantiateViewControllerWithIdentifier:@"FacebookListViewController"];
-                    [self.navigationController pushViewController:set animated:YES];
-                }
-                else
-                {
-                [self logingWithFB];
-                }
-            }
-            else
-            {
-                UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-                FacebookListViewController * set=[mainStoryboard instantiateViewControllerWithIdentifier:@"FacebookListViewController"];
-                [self.navigationController pushViewController:set animated:YES];
-            }
+//            if (![[defaults valueForKey:@"SettingLogin"]isEqualToString:@"FACEBOOK"] ||[[defaults valueForKey:@"SettingLogin"]isEqualToString:@"EMAIL"])
+//            {
+//                if ([[defaults valueForKey:@"facebookconnect"]isEqualToString:@"yes"])
+//                {
+////                    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+////                    FacebookListViewController * set=[mainStoryboard instantiateViewControllerWithIdentifier:@"FacebookListViewController"];
+////                    [self.navigationController pushViewController:set animated:YES];
+//                }
+//                else
+//                {
+//                [self logingWithFB];
+//                }
+//            }
+//            else
+//            {
+////                UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+////                FacebookListViewController * set=[mainStoryboard instantiateViewControllerWithIdentifier:@"FacebookListViewController"];
+////                [self.navigationController pushViewController:set animated:YES];
+//            }
+            [self FBPost];
+            
         }
         
         if (indexPath.row==1)
@@ -1424,6 +1427,75 @@ Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_t
         
         
     }
+    
+}
+
+-(void)FBPost
+{
+    
+    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook])
+        
+    {
+        
+        SLComposeViewController *  fbSLComposeViewController = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
+        
+        //   [fbSLComposeViewController addImage:[UIImage imageNamed:@"anytime.png"]];
+        
+        [fbSLComposeViewController setInitialText:@"Download Tamm from the Appstore!"];
+        
+        [fbSLComposeViewController addURL:[NSURL URLWithString:@"http://www.tammapp.com/"]];
+        
+        
+        
+        [self presentViewController:fbSLComposeViewController animated:YES completion:nil];
+        
+        
+        
+        fbSLComposeViewController.completionHandler = ^(SLComposeViewControllerResult result)
+        
+        {
+            
+            switch(result) {
+                    
+                case SLComposeViewControllerResultCancelled:
+                    
+                    NSLog(@"facebook: CANCELLED");
+                    
+                    break;
+                    
+                case SLComposeViewControllerResultDone:
+                    
+                    NSLog(@"facebook: SHARED");
+                    
+                    break;
+                    
+            }
+            
+        };
+        
+    }
+    
+    else
+        
+    {
+        
+        
+        
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Facebook Unavailable" message:@"Sorry, we're unable to find a Facebook account on your device.\nPlease setup an account in your devices settings and try again." preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
+        
+        [alertController addAction:actionOk];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
+        
+        
+        
+    }
+    
+    
+    
+    
     
 }
 

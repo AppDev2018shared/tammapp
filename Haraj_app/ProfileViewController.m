@@ -154,11 +154,16 @@
     [self viewPostConnection];
     [self salePointsConnection];
     
+    
+    
 //---------------------------Favourite label tap gesture---------------------------------------------------------
     
     if ([defaults  valueForKey:@"CountFav"] == 0 || [defaults valueForKey:@"CountFav"] == NULL)
     {
+        
           favoritesValueLabel.text = @"0";
+        
+        
     }
     else
     {
@@ -240,9 +245,37 @@
 {
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"Hide" object:self userInfo:nil];
-
     
-     _plusButtonsViewMain.hidden = YES;
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        
+//        
+//      //  _plusButtonsViewMain.hidden = YES;
+//        
+//        [UIView animateWithDuration:0.3 animations:^{
+//            
+//            _plusButtonsViewMain.alpha = 0;
+//            
+//        } completion: ^(BOOL finished) {//creates a variable (BOOL) called "finished" that is set to *YES* when animation IS completed.
+//            _plusButtonsViewMain.hidden = YES;
+//            _plusButtonsViewMain.alpha = 1.0;
+//            //if animation is finished ("finished" == *YES*), then hidden = "finished" ... (aka hidden = *YES*)
+//        }];
+//
+//    
+//    
+//    
+//    });
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        
+        _plusButtonsViewMain.alpha = 0;
+        
+    } completion: ^(BOOL finished) {//creates a variable (BOOL) called "finished" that is set to *YES* when animation IS completed.
+        _plusButtonsViewMain.hidden = YES;
+        _plusButtonsViewMain.alpha = 1.0;
+        //if animation is finished ("finished" == *YES*), then hidden = "finished" ... (aka hidden = *YES*)
+    }];
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -251,7 +284,20 @@
 
 
      [self viewPostConnection];
-     favoritesValueLabel.text = [defaults valueForKey:@"CountFav"];
+    
+    if ([defaults  valueForKey:@"CountFav"] == 0 || [defaults valueForKey:@"CountFav"] == NULL)
+    {
+        
+        favoritesValueLabel.text = @"0";
+        
+        
+    }
+    else
+    {
+        favoritesValueLabel.text = [defaults valueForKey:@"CountFav"];
+    }
+    
+    
     
     [self.collectionView reloadData];
     
@@ -869,10 +915,12 @@ heightForHeaderAtIndexPath:(NSIndexPath *)indexPath
 
 - (IBAction)CreatePost_Action:(id)sender
 {
-     //_plusButtonsViewMain.hidden = NO;
+     _plusButtonsViewMain.hidden = NO;
   
-   // [[NSNotificationCenter defaultCenter] postNotificationName:@"ShowOpen" object:self userInfo:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ShowOpen" object:self userInfo:nil];
     
+    
+
     
 }
 
@@ -1406,7 +1454,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    _plusButtonsViewMain.hidden = YES;
+    //_plusButtonsViewMain.hidden = YES;
 }
 
 
