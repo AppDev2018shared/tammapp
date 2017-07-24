@@ -66,5 +66,9 @@
 	<string>http://www.tammapp.com/app/addfriend.php</string>
 	<key>invite_fb_twitter</key>
 	<string>http://www.tammapp.com/app/invite_fb_twitter.php</string>
+	<key>searchcategories</key>
+	<string>http://www.tammapp.com/app/searchcategories.php</string>
+	<key>search</key>
+	<string>http://www.tammapp.com/app/search.php</string>
 </dict>
 </plist>

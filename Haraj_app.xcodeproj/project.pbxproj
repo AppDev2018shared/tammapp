@@ -129,6 +129,9 @@
 		61739FF31EE2AF5900018CF1 /* UIImageView+MHFacebookImageViewer.m in Sources */ = {isa = PBXBuildFile; fileRef = 61739FE61EE2AF5900018CF1 /* UIImageView+MHFacebookImageViewer.m */; };
 		617FD88B1EB9B2DD008B827F /* ImageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 617FD88A1EB9B2DD008B827F /* ImageCollectionViewCell.m */; };
 		617FD8911EB9D6D8008B827F /* PatternViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 617FD8901EB9D6D8008B827F /* PatternViewCell.m */; };
+		618059951F21CBC100323638 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 618059941F21CBC100323638 /* SearchViewController.m */; };
+		618059981F21CF7200323638 /* SearchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 618059971F21CF7200323638 /* SearchTableViewCell.m */; };
+		6180599B1F21F38500323638 /* SearchCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6180599A1F21F38500323638 /* SearchCollectionViewController.m */; };
 		6185B3AF1EFA3E440051659D /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6185B3AE1EFA3E440051659D /* ProfileViewController.m */; };
 		6185B3B21EFA6AC90051659D /* ChoosePostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6185B3B11EFA6AC90051659D /* ChoosePostViewController.m */; };
 		6185B3B51EFA6C1D0051659D /* FavouriteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6185B3B41EFA6C1D0051659D /* FavouriteViewController.m */; };
@@ -475,6 +478,12 @@
 		617FD88A1EB9B2DD008B827F /* ImageCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCollectionViewCell.m; sourceTree = "<group>"; };
 		617FD88F1EB9D6D8008B827F /* PatternViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PatternViewCell.h; sourceTree = "<group>"; };
 		617FD8901EB9D6D8008B827F /* PatternViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PatternViewCell.m; sourceTree = "<group>"; };
+		618059931F21CBC100323638 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
+		618059941F21CBC100323638 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
+		618059961F21CF7100323638 /* SearchTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchTableViewCell.h; sourceTree = "<group>"; };
+		618059971F21CF7200323638 /* SearchTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchTableViewCell.m; sourceTree = "<group>"; };
+		618059991F21F38400323638 /* SearchCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchCollectionViewController.h; sourceTree = "<group>"; };
+		6180599A1F21F38500323638 /* SearchCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchCollectionViewController.m; sourceTree = "<group>"; };
 		6185B3AD1EFA3E440051659D /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
 		6185B3AE1EFA3E440051659D /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		6185B3B01EFA6AC90051659D /* ChoosePostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChoosePostViewController.h; sourceTree = "<group>"; };
@@ -1141,6 +1150,60 @@
 			path = AFNetworking;
 			sourceTree = "<group>";
 		};
+		618059901F21C76A00323638 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				6185B3AD1EFA3E440051659D /* ProfileViewController.h */,
+				6185B3AE1EFA3E440051659D /* ProfileViewController.m */,
+				6185B3B01EFA6AC90051659D /* ChoosePostViewController.h */,
+				6185B3B11EFA6AC90051659D /* ChoosePostViewController.m */,
+				61040CDB1EFBBC1700ACE5D6 /* BoostPostViewController.h */,
+				61040CDC1EFBBC1800ACE5D6 /* BoostPostViewController.m */,
+				6185B3B31EFA6C1D0051659D /* FavouriteViewController.h */,
+				6185B3B41EFA6C1D0051659D /* FavouriteViewController.m */,
+				6185B3B61EFAA2E20051659D /* FavTableViewCell.h */,
+				6185B3B71EFAA2E20051659D /* FavTableViewCell.m */,
+				611D2C761EFCF16900804839 /* SalePointsViewController.h */,
+				611D2C771EFCF16900804839 /* SalePointsViewController.m */,
+				611D2C791EFD0C7300804839 /* SaleCollectionViewCell.h */,
+				611D2C7A1EFD0C7300804839 /* SaleCollectionViewCell.m */,
+			);
+			name = Profile;
+			sourceTree = "<group>";
+		};
+		618059911F21C7B500323638 /* Activity Chat */ = {
+			isa = PBXGroup;
+			children = (
+				61C7FEB11F01079700EF278B /* ActivityViewController.h */,
+				61C7FEB21F01079700EF278B /* ActivityViewController.m */,
+				61C7FEB41F010BD500EF278B /* ActivityTableViewCell.h */,
+				61C7FEB51F010BD500EF278B /* ActivityTableViewCell.m */,
+				611100191F14C8460034F058 /* ActivityNextViewController.h */,
+				6111001A1F14C8470034F058 /* ActivityNextViewController.m */,
+				6163B79F1F077829003631AF /* FriendCahtingViewController.h */,
+				6163B79E1F077829003631AF /* FriendCahtingViewController.m */,
+				6140FC7F1F0B59C200F55751 /* CustomTableViewCellZero.h */,
+				6140FC801F0B59C200F55751 /* CustomTableViewCellZero.m */,
+				6163B7A31F077957003631AF /* CustomTableViewCell.h */,
+				6163B7A41F077957003631AF /* CustomTableViewCell.m */,
+				6163B7A11F0778E6003631AF /* ChatText.plist */,
+			);
+			name = "Activity Chat";
+			sourceTree = "<group>";
+		};
+		618059921F21C81B00323638 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				618059931F21CBC100323638 /* SearchViewController.h */,
+				618059941F21CBC100323638 /* SearchViewController.m */,
+				618059961F21CF7100323638 /* SearchTableViewCell.h */,
+				618059971F21CF7200323638 /* SearchTableViewCell.m */,
+				618059991F21F38400323638 /* SearchCollectionViewController.h */,
+				6180599A1F21F38500323638 /* SearchCollectionViewController.m */,
+			);
+			name = Search;
+			sourceTree = "<group>";
+		};
 		6181A17D1ED6FF58004E1CEF /* mypostVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -1164,33 +1227,9 @@
 		6185B3AC1EFA3DE80051659D /* Top Bar Screens */ = {
 			isa = PBXGroup;
 			children = (
-				6185B3AD1EFA3E440051659D /* ProfileViewController.h */,
-				6185B3AE1EFA3E440051659D /* ProfileViewController.m */,
-				6185B3B01EFA6AC90051659D /* ChoosePostViewController.h */,
-				6185B3B11EFA6AC90051659D /* ChoosePostViewController.m */,
-				61040CDB1EFBBC1700ACE5D6 /* BoostPostViewController.h */,
-				61040CDC1EFBBC1800ACE5D6 /* BoostPostViewController.m */,
-				6185B3B31EFA6C1D0051659D /* FavouriteViewController.h */,
-				6185B3B41EFA6C1D0051659D /* FavouriteViewController.m */,
-				6185B3B61EFAA2E20051659D /* FavTableViewCell.h */,
-				6185B3B71EFAA2E20051659D /* FavTableViewCell.m */,
-				611D2C761EFCF16900804839 /* SalePointsViewController.h */,
-				611D2C771EFCF16900804839 /* SalePointsViewController.m */,
-				611D2C791EFD0C7300804839 /* SaleCollectionViewCell.h */,
-				611D2C7A1EFD0C7300804839 /* SaleCollectionViewCell.m */,
-				61C7FEB11F01079700EF278B /* ActivityViewController.h */,
-				61C7FEB21F01079700EF278B /* ActivityViewController.m */,
-				61C7FEB41F010BD500EF278B /* ActivityTableViewCell.h */,
-				61C7FEB51F010BD500EF278B /* ActivityTableViewCell.m */,
-				611100191F14C8460034F058 /* ActivityNextViewController.h */,
-				6111001A1F14C8470034F058 /* ActivityNextViewController.m */,
-				6163B79F1F077829003631AF /* FriendCahtingViewController.h */,
-				6163B79E1F077829003631AF /* FriendCahtingViewController.m */,
-				6140FC7F1F0B59C200F55751 /* CustomTableViewCellZero.h */,
-				6140FC801F0B59C200F55751 /* CustomTableViewCellZero.m */,
-				6163B7A31F077957003631AF /* CustomTableViewCell.h */,
-				6163B7A41F077957003631AF /* CustomTableViewCell.m */,
-				6163B7A11F0778E6003631AF /* ChatText.plist */,
+				618059921F21C81B00323638 /* Search */,
+				618059901F21C76A00323638 /* Profile */,
+				618059911F21C7B500323638 /* Activity Chat */,
 			);
 			name = "Top Bar Screens";
 			sourceTree = "<group>";
@@ -1810,6 +1849,7 @@
 				614C16171EC0739900B11A9B /* FRGWaterfallHeaderReusableView.m in Sources */,
 				614C16021EC03F1500B11A9B /* HomeNavigationController.m in Sources */,
 				3247807C1EACEE0A00FF4B79 /* ViewController.m in Sources */,
+				618059951F21CBC100323638 /* SearchViewController.m in Sources */,
 				61487FEC1ED2ECE7009CEF9B /* PropertyViewController.m in Sources */,
 				61ED09A61EB85D42008EAFB7 /* UIImage+WebP.m in Sources */,
 				61172E7B1F1F2B9E0006B2A6 /* ContactListViewController.m in Sources */,
@@ -1875,11 +1915,13 @@
 				61ED09A71EB85D42008EAFB7 /* UIImageView+HighlightedWebCache.m in Sources */,
 				61D3766A1EBC3F6300BA02D4 /* LGPlusButtonsView.m in Sources */,
 				6185B3B81EFAA2E20051659D /* FavTableViewCell.m in Sources */,
+				6180599B1F21F38500323638 /* SearchCollectionViewController.m in Sources */,
 				61E1417E1F02593F008C3E7A /* AccFourTableViewCell.m in Sources */,
 				61ED099F1EB85D42008EAFB7 /* SDWebImageDownloader.m in Sources */,
 				61739FEE1EE2AF5900018CF1 /* AFXMLRequestOperation.m in Sources */,
 				614C15F01EC039C100B11A9B /* SBJsonStreamParserState.m in Sources */,
 				61F95A9F1EF5588900DEE62A /* ProductDetailCellProperty.m in Sources */,
+				618059981F21CF7200323638 /* SearchTableViewCell.m in Sources */,
 				61ED09A21EB85D42008EAFB7 /* SDWebImagePrefetcher.m in Sources */,
 				614C15EF1EC039C100B11A9B /* SBJsonStreamParserAdapter.m in Sources */,
 				61EDCA051ECB2DF40036A250 /* AddImageCell.m in Sources */,

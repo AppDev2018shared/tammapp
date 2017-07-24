@@ -22,6 +22,7 @@
 #import "OtherViewController.h"
 #import "ProfileViewController.h"
 #import "ActivityViewController.h"
+#import "SearchViewController.h"
 
 #import "LGPlusButtonsView.h"
 
@@ -463,10 +464,19 @@
         NSLog(@"search Button Pressed");
         
         
-//   UISearchController     *searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-//        searchController.searchResultsUpdater = self;
-//        searchController.dimsBackgroundDuringPresentation = NO;
-//        searchController.searchBar.delegate = self;
+        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        SearchViewController * searchController = [mainStoryboard instantiateViewControllerWithIdentifier:@"SearchViewController"];
+        
+        CATransition *transition = [CATransition animation];
+        transition.duration = 0.3;
+        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+        transition.type = kCATransitionPush;
+        transition.subtype = kCATransitionFromLeft;
+        
+        [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
+        
+        
+        [self.navigationController pushViewController:searchController animated:YES];
         
 
         
