@@ -31,7 +31,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 
 -(IBAction)OnClick_btn:(id)sender;
-
+-(IBAction)ChangeLocations:(id)sender;
 
 @property (strong,nonatomic)ProductDetailCellCar * Cell_DetailCar;
 @property (strong,nonatomic)ProductDetailCellProperty * Cell_DetailProperty;

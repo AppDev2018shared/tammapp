@@ -44,7 +44,7 @@
    // initialTitles = [[NSMutableArray alloc]initWithObjects:@"Cars",@"Electronics", nil ];
     
     Button_Cancel.hidden = YES;
-    
+   
     
     UIView *paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10,searchTextField.frame.size.height)];
     searchTextField.rightView = paddingView;
@@ -53,7 +53,7 @@
     UIView *paddingView1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0,36,22)];
     searchTextField.leftView = paddingView1;
     searchTextField.leftViewMode = UITextFieldViewModeAlways;
-    
+     searchTextField.delegate=self;
     [self searchCategoriesConnection];
     
     
@@ -72,23 +72,23 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 0)
-    {
-        
-        
-        
-    }
-    else
-    {
-        
-    }
-//        return initialTitles.count;
-    return 0;
+//    if (section == 0)
+//    {
+//        
+//        
+//        
+//    }
+//    else
+//    {
+//        
+//    }
+        return initialTitles.count;
+   // return 0;
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -97,15 +97,15 @@
     searchCell =(SearchTableViewCell *)[tableView dequeueReusableCellWithIdentifier:str forIndexPath:indexPath];
     
     
-    if (indexPath.section ==0)
-    {
-        searchCell.titleLabel.text=[[initialTitles objectAtIndex:indexPath.row]valueForKey:@"section1"];
-    }
-    else
-    {
-    searchCell.titleLabel.text=[[initialTitles objectAtIndex:indexPath.row]valueForKey:@"section2"];
-        
-    }
+//    if (indexPath.section ==0)
+//    {
+        searchCell.titleLabel.text=[[initialTitles objectAtIndex:indexPath.row]valueForKey:@"name"];
+//    }
+//    else
+//    {
+//    searchCell.titleLabel.text=[[initialTitles objectAtIndex:indexPath.row]valueForKey:@"section2"];
+//        
+//    }
     
     
     return searchCell;
@@ -127,8 +127,8 @@
     transition.type = kCATransitionPush;
     transition.subtype = kCATransitionFromLeft;
     
-    searchCollection.rowTapCategory = [initialTitles objectAtIndex:indexPath.row];
-    
+  //  searchCollection.rowTapCategory = [initialTitles objectAtIndex:indexPath.row];
+    searchCollection.initialTitles=[initialTitles objectAtIndex:indexPath.row];
     [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
     [self.navigationController pushViewController:searchCollection animated:YES];
     

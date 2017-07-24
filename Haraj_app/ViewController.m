@@ -58,7 +58,8 @@
     [super viewDidLoad];
     
     favouritesCount = 0;
-    
+
+   
     borderBottom_topheder = [CALayer layer];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ViewControllerData) name:@"ViewControllerData" object:nil];
@@ -302,8 +303,8 @@
                                 
                             }];
     
-    
-    _plusButtonsViewMain.coverColor = [UIColor colorWithWhite:1.f alpha:0.90];
+
+    _plusButtonsViewMain.coverColor = [UIColor colorWithWhite:1.f alpha:1.0f];
     _plusButtonsViewMain.position = LGPlusButtonsViewPositionBottomRight;
     _plusButtonsViewMain.plusButtonAnimationType = LGPlusButtonAnimationTypeRotate;
     
@@ -376,7 +377,7 @@
     
   
     [self.view addSubview:_plusButtonsViewMain];
-    
+     
     [self viewPostConnection];
     
  

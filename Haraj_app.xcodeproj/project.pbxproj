@@ -368,7 +368,7 @@
 		61487FF61ED2ED5D009CEF9B /* OtherViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OtherViewController.h; sourceTree = "<group>"; };
 		61487FF71ED2ED5D009CEF9B /* OtherViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtherViewController.m; sourceTree = "<group>"; };
 		614B96D21ED45998008CB090 /* defaultpostimg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = defaultpostimg.jpg; sourceTree = "<group>"; };
-		614C15BC1EC02E9700B11A9B /* Haraj_app.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Haraj_app.entitlements; sourceTree = "<group>"; };
+		614C15BC1EC02E9700B11A9B /* Haraj_app.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Haraj_app.entitlements; path = ../Haraj_app.entitlements; sourceTree = "<group>"; };
 		614C15BE1EC0315500B11A9B /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		614C15BF1EC0315500B11A9B /* TwitterCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TwitterCore.framework; sourceTree = "<group>"; };
 		614C15C01EC0315500B11A9B /* TwitterKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TwitterKit.framework; sourceTree = "<group>"; };
@@ -787,7 +787,6 @@
 				61F54B981F178CCB006A498A /* GoogleService-Info.plist */,
 				61F54B351F17887B006A498A /* Firebase */,
 				9A13F3501EEE9D460069219E /* AllScrollTable */,
-				614C15BC1EC02E9700B11A9B /* Haraj_app.entitlements */,
 				61F56CB21ECD75A10031E9C1 /* ELCImagePicker */,
 				614C160B1EC0730C00B11A9B /* Layout */,
 				61271D8A1EBDC3DF0082E504 /* Frameworks */,
@@ -800,8 +799,6 @@
 				324780A01EACF0E200FF4B79 /* ViewControllers */,
 				324780771EACEE0A00FF4B79 /* AppDelegate.h */,
 				324780781EACEE0A00FF4B79 /* AppDelegate.m */,
-				3247807A1EACEE0A00FF4B79 /* ViewController.h */,
-				3247807B1EACEE0A00FF4B79 /* ViewController.m */,
 				613E82F91ED2B82400B1BC23 /* UrlName.plist */,
 				614B96D21ED45998008CB090 /* defaultpostimg.jpg */,
 				1B3B632D1EDFDD1B00D57715 /* defaultimg.jpg */,
@@ -850,6 +847,8 @@
 		324780A01EACF0E200FF4B79 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				3247807A1EACEE0A00FF4B79 /* ViewController.h */,
+				3247807B1EACEE0A00FF4B79 /* ViewController.m */,
 				324780B31EACF1A000FF4B79 /* CarsViewController.h */,
 				324780B41EACF1A000FF4B79 /* CarsViewController.m */,
 				61487FEA1ED2ECE7009CEF9B /* PropertyViewController.h */,
@@ -1596,6 +1595,7 @@
 		61F56CB21ECD75A10031E9C1 /* ELCImagePicker */ = {
 			isa = PBXGroup;
 			children = (
+				614C15BC1EC02E9700B11A9B /* Haraj_app.entitlements */,
 				61F56CB31ECD75A10031E9C1 /* ELCAlbumPickerController.h */,
 				61F56CB41ECD75A10031E9C1 /* ELCAlbumPickerController.m */,
 				61F56CB51ECD75A10031E9C1 /* ELCAsset.h */,

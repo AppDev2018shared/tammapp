@@ -31,8 +31,8 @@
     
     PatternViewCell *Videocell;
     ImageCollectionViewCell *Imagecell;
-
-    
+    FRGWaterfallCollectionViewLayout *cvLayout;
+    UILabel *imagev;
 }
 
 @end
@@ -55,11 +55,22 @@
     
     searchTextField.text = searchTextEnter;
     
+    UIView *paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10,searchTextField.frame.size.height)];
+    searchTextField.rightView = paddingView;
+    searchTextField.rightViewMode = UITextFieldViewModeAlways;
+    
+    UIView *paddingView1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0,36,22)];
+    searchTextField.leftView = paddingView1;
+    searchTextField.leftViewMode = UITextFieldViewModeAlways;
+    searchTextField.delegate=self;
+
+    
+    
     // Do any additional setup after loading the view.
-    FRGWaterfallCollectionViewLayout *cvLayout = [[FRGWaterfallCollectionViewLayout alloc] init];
-    cvLayout.delegate = self;
+cvLayout = [[FRGWaterfallCollectionViewLayout alloc] init];
+   cvLayout.delegate = self;
     cvLayout.itemWidth = 173.0f;
-    cvLayout.topInset = 1.0f;
+   
     cvLayout.bottomInset = 10.0f;
     cvLayout.stickyHeader = YES;
     
@@ -80,6 +91,28 @@
     activityindicator.center = self.collectionView.center;
     [self.view addSubview:activityindicator];
     
+    
+    
+   
+  
+    
+    if ([[_initialTitles valueForKey:@"typesection"]isEqualToString:@"section1"] )
+    {
+        cvLayout.topInset = 30.0f;
+        //self.collectionView.contentInset = UIEdgeInsetsMake(50, 0, 30, 30);
+     imagev = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width-20, 30)];
+        //imagev.backgroundColor=[UIColor blackColor];
+        imagev.text=[_initialTitles valueForKey:@"name"];
+        imagev.textAlignment = NSTextAlignmentRight;
+        imagev.font = [UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:24];
+        [self.collectionView addSubview: imagev];
+        [self.view addSubview: _collectionView];
+    }
+    else if ([[_initialTitles valueForKey:@"typesection"]isEqualToString:@"section2"] )
+    {
+        cvLayout.topInset = 1.0f;
+        searchTextField.text =[_initialTitles valueForKey:@"name"];
+    }
     
     
     [self SearchPostConnection];
@@ -267,7 +300,7 @@
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(FRGWaterfallCollectionViewLayout *)collectionViewLayout
 heightForHeaderAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 26.0f;//(indexPath.section + 1) * 26.0f;
+    return 0;//(indexPath.section + 1) * 26.0f;
 }
 
 //- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section;
@@ -294,7 +327,7 @@ heightForHeaderAtIndexPath:(NSIndexPath *)indexPath
         label.textAlignment = NSTextAlignmentRight;
         label.font = [UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:24];
         label.text= rowTapCategory;
-        [reusableview addSubview:label];
+       // [reusableview addSubview:label];
         return reusableview;
     }
     return nil;
@@ -349,15 +382,23 @@ heightForHeaderAtIndexPath:(NSIndexPath *)indexPath
         NSString *location= @"location";
         NSString *locationVal = @"OFF";
         
-        NSString *myposts= @"search";
-        NSString *mypostsVal = searchTextEnter;
-        
-        NSString *category= @"category";
-        NSString *categoryVal = rowTapCategory;
-        
-        
-        
-        
+        NSString *category,*categoryVal;
+        if ([[_initialTitles valueForKey:@"typesection"]isEqualToString:@"section1"] )
+        {
+          category= @"category";
+           categoryVal =[_initialTitles valueForKey:@"name"];
+        }
+        else if ([[_initialTitles valueForKey:@"typesection"]isEqualToString:@"section2"] )
+        {
+            category= @"search";
+            categoryVal =[_initialTitles valueForKey:@"name"];
+        }
+        else
+        {
+            category= @"search";
+            categoryVal =searchTextEnter;
+        }
+       
         
         
         
@@ -367,7 +408,7 @@ heightForHeaderAtIndexPath:(NSIndexPath *)indexPath
         NSString *country= @"country";
         NSString *countryVal = [defaults valueForKey:@"Countryname"];;
         
-        NSString *reqStringFUll=[NSString stringWithFormat:@"%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@",userid,useridVal,location,locationVal,city,cityVal,country,countryVal,myposts,mypostsVal,category,categoryVal];
+        NSString *reqStringFUll=[NSString stringWithFormat:@"%@=%@&%@=%@&%@=%@&%@=%@&%@=%@",userid,useridVal,location,locationVal,city,cityVal,country,countryVal,category,categoryVal];
         
         
         //converting  string into data bytes and finding the lenght of the string.
@@ -451,6 +492,7 @@ heightForHeaderAtIndexPath:(NSIndexPath *)indexPath
         
         if ([ResultString isEqualToString:@"noposts"])
         {
+            _label_JsonResult.hidden=NO;
             activityindicator.hidden = YES;
             [activityindicator stopAnimating];
             
@@ -459,6 +501,7 @@ heightForHeaderAtIndexPath:(NSIndexPath *)indexPath
         
         if (Array_SearchPost.count != 0)
         {
+            _label_JsonResult.hidden=YES;
             activityindicator.hidden = YES;
             [activityindicator stopAnimating];
         }
@@ -497,7 +540,41 @@ heightForHeaderAtIndexPath:(NSIndexPath *)indexPath
     
     
 }
-
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    
+    if (textField == searchTextField)
+    {
+        [searchTextField resignFirstResponder];
+    }
+    
+    Button_Cancel.hidden = YES;
+    Button_Back.hidden = NO;
+    
+    
+//    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//    SearchCollectionViewController * searchCollection=[mainStoryboard instantiateViewControllerWithIdentifier:@"SearchCollectionViewController"];
+//    
+//    CATransition *transition = [CATransition animation];
+//    transition.duration = 0.3;
+//    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+//    transition.type = kCATransitionPush;
+//    transition.subtype = kCATransitionFromLeft;
+//    
+//    searchCollection.searchTextEnter = self.searchTextField.text;
+//    
+//    [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
+//    [self.navigationController pushViewController:searchCollection animated:YES];
+    
+   cvLayout.topInset = 1.0f;
+    imagev.hidden=YES;
+    searchTextEnter=textField.text;
+    NSLog(@"Search Action");
+    [_initialTitles removeAllObjects];
+      [activityindicator startAnimating];
+    [self SearchPostConnection];
+    return YES;
+}
 
 - (IBAction)BackButton_Action:(id)sender
 {

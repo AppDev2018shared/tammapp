@@ -135,7 +135,7 @@ typedef NS_ENUM(NSUInteger, LGPlusButtonDescriptionsPosition)
         self.userInteractionEnabled = YES;
 
         // -----
-
+ 
         _coverView = [UIView new];
         _coverView.backgroundColor = [UIColor clearColor];
         _coverView.userInteractionEnabled = YES;

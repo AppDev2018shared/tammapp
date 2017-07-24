@@ -119,7 +119,7 @@
     {
     
     
-    NSURL *url=[NSURL URLWithString:[defaults valueForKey:@"ProImg"]];
+    NSURL *url=[NSURL URLWithString:[defaults valueForKey:@"profileimage"]];
     [profileImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultimg.jpg"] options:SDWebImageRefreshCached];
     [self displayImage:profileImageView withImage:profileImageView.image];
 
@@ -135,9 +135,9 @@
         [profileImageView addGestureRecognizer:ViewTapprofile];
         if(chosenImage == nil)
         {
-            NSURL *url=[NSURL URLWithString:[defaults valueForKey:@"ProImg"]];
+            NSURL *url=[NSURL URLWithString:[defaults valueForKey:@"profileimage"]];
             
-            [profileImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"DefaultImg.jpg"] options:SDWebImageRefreshCached];
+            [profileImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultimg.jpg"] options:SDWebImageRefreshCached];
         }
         else
         {

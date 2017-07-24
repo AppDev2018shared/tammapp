@@ -18,9 +18,10 @@
 @property (weak, nonatomic) IBOutlet UITextField *searchTextField;
 - (IBAction)SearchEditing_Action:(id)sender;
 
+@property (weak, nonatomic) IBOutlet UILabel *label_JsonResult;
 
 
-@property (nonatomic,strong) NSMutableArray *initialTitles;
+@property (nonatomic,strong) NSMutableDictionary *initialTitles;
 @property (nonatomic,retain)NSString *searchTextEnter;
 @property (nonatomic,retain)NSString *rowTapCategory;
 

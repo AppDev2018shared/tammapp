@@ -19,7 +19,7 @@
 #import "UIImageView+MHFacebookImageViewer.h"
 #import "UIImageView+WebCache.h"
 #import <CoreLocation/CoreLocation.h>
-
+#import <CoreLocation/CoreLocation.h>
 
 
 
@@ -44,8 +44,10 @@
     NSURLConnection *Connection_Create, *Connection_Media;
     NSMutableData *webData_Create, *webData_Media;
     NSMutableArray *Array_Create, *Array_Media,*Array_RemovePicture;
+    NSString * locationName, *cellloop;
     NSString *postIDValue ,*mediaTypeVal,* ImageNSdata,*ImageNSdataThumb, *encodedImage, *encodedImageThumb, *mediaIdStr, *imageTag, *removeIndexCount, *propertyType;
-    
+    CLLocationManager *locationManager;
+    CLGeocoder *geocoder;
     UIImage *FrameImage;
     NSNumber *Vedio_Height,*Vedio_Width;
     NSData *imageData,*imageDataThumb;
@@ -53,6 +55,10 @@
     NSInteger indexCount , x;
     UILabel *KMlabel, *Sqmlabel;
     
+    
+  
+    CLPlacemark *placemark;
+    BOOL location;
     NSString *TEXT;
 
     
@@ -765,7 +771,7 @@
                     
                     [detailCell.profileImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultimg.jpg"] options:SDWebImageRefreshCached];
                     
-                    detailCell.usernameLabel.text = [defaults valueForKey:@"UserName"];
+                    detailCell.usernameLabel.text = [defaults valueForKey:@"name"];
                     
                     NSString *locationstr = [NSString stringWithFormat:@"%@, %@",[defaults valueForKey:@"Cityname"],[defaults valueForKey:@"Countryname"]];
                     
@@ -2221,6 +2227,7 @@
 {
     if (error)
     {
+        NSLog(@"errorr===%@",error);
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Server Error" message:@"Error in creating post. Please try again." preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
@@ -2229,6 +2236,7 @@
         [alertController addAction:actionOk];
         
         [self presentViewController:alertController animated:YES completion:nil];
+        
     }
 }
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
@@ -2562,7 +2570,66 @@
     }
     
 }
-
+-(IBAction)ChangeLocations:(id)sender
+{
+    locationManager = [[CLLocationManager alloc] init] ;
+    geocoder = [[CLGeocoder alloc] init];
+    locationManager.delegate = self;
+    locationManager.desiredAccuracy =kCLLocationAccuracyThreeKilometers; //kCLLocationAccuracyNearestTenMeters;
+    [locationManager requestWhenInUseAuthorization];
+    [locationManager startUpdatingLocation];
+}
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
+{
+    NSLog(@"didUpdateToLocation: %@", newLocation);
+    CLLocation *currentLocation = newLocation;
+    
+    // Reverse Geocoding
+    NSLog(@"Resolving the Address");
+    [geocoder reverseGeocodeLocation:currentLocation completionHandler:^(NSArray *placemarks, NSError *error)
+     {
+         NSLog(@"Found placemarks: %@, error: %@", placemarks, error);
+         if (error == nil && [placemarks count] > 0) {
+             placemark = [placemarks lastObject];
+             NSLog(@"placemark.ISOcountryCode %@",placemark.ISOcountryCode);
+             NSLog(@"placemark.country %@",placemark.country);
+             NSLog(@"placemark.postalCode %@",placemark.postalCode);
+             NSLog(@"placemark.administrativeArea %@",placemark.administrativeArea);
+             NSLog(@"placemark.locality %@",placemark.locality);
+             NSLog(@"placemark.subLocality %@",placemark.subLocality);
+             NSLog(@"placemark.subThoroughfare %@",placemark.subThoroughfare);
+             
+             
+             NSLog(@"placemark.subThoroughfare %@",[defaults valueForKey:@"Cityname"]);
+             
+             
+             if (placemark.locality !=nil && placemark.country !=nil)
+             {
+                 
+                 
+                 [defaults setObject:placemark.locality forKey:@"Cityname"];
+                 [defaults setObject:placemark.country forKey:@"Countryname"];
+                 
+                 locationName = placemark.locality ;
+                 
+                 
+                 
+                 [locationManager stopUpdatingLocation];
+                 
+                 
+             }
+             
+             
+         }
+         else
+         {
+             NSLog(@"%@", error.debugDescription);
+         }
+     } ];
+    
+    [_tableView reloadData];
+    
+}
 @end
 
 /*

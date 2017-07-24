@@ -379,7 +379,7 @@ Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_t
         Label1.backgroundColor=[UIColor clearColor];
         Label1.textColor=[UIColor lightGrayColor];
         Label1.font=[UIFont fontWithName:@"SanFranciscoDisplay-Medium" size:15.0f];
-        Label1.text=@"Share";
+        Label1.text=@"Share & Invite";
         Label1.textAlignment = NSTextAlignmentRight;
           [sectionView addSubview:Label1];
         sectionView.tag=section;

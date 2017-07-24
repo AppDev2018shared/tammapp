@@ -33,6 +33,7 @@
     CALayer *borderBottom_mobile = [CALayer layer];
     borderBottom_mobile.backgroundColor = [UIColor whiteColor].CGColor;
     borderBottom_mobile.frame = CGRectMake(0, textfield_MobileNumber.frame.size.height-0.8, textfield_MobileNumber.frame.size.width,0.5f);
+    [textfield_MobileNumber becomeFirstResponder];
     [textfield_MobileNumber.layer addSublayer:borderBottom_mobile];
     
     

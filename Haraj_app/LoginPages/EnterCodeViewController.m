@@ -41,6 +41,7 @@
     CALayer *borderBottom_code = [CALayer layer];
     borderBottom_code.backgroundColor = [UIColor whiteColor].CGColor;
     borderBottom_code.frame = CGRectMake(0, textfield_Code.frame.size.height-0.8, textfield_Code.frame.size.width,0.5f);
+    [textfield_Code becomeFirstResponder];
     [textfield_Code.layer addSublayer:borderBottom_code];
     
     
