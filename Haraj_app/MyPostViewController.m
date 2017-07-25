@@ -1733,7 +1733,7 @@
     
     float j = [askingpriceValString floatValue];
     
-    float k = ((0.75*j)/100);
+    float k = ((1*j)/100); //0.75 instead of 1
     
     myCustomXIBViewObj.caculatedAmountLabel.text =[NSString stringWithFormat:@"$ %0.2f",k]; //[NSString stringWithFormat:@"$ %@",askingpriceValString];
     

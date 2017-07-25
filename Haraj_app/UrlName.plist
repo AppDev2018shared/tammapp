@@ -70,5 +70,7 @@
 	<string>http://www.tammapp.com/app/searchcategories.php</string>
 	<key>search</key>
 	<string>http://www.tammapp.com/app/search.php</string>
+	<key>uploadpostmedia</key>
+	<string>http://www.tammapp.com/app/uploadpostmedia.php</string>
 </dict>
 </plist>

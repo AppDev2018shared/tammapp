@@ -2162,7 +2162,7 @@
     {
         
         NSURL *url;//=[NSURL URLWithString:[urlplist valueForKey:@"singup"]];
-        NSString *  urlStr=[urlplist valueForKey:@"savepicture"];
+        NSString *  urlStr=[urlplist valueForKey:@"uploadpostmedia"];
         url =[NSURL URLWithString:urlStr];
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
         
