@@ -422,6 +422,8 @@
                     
                     NSString *show = [NSString stringWithFormat:@"$%@",[Array_UserInfo valueForKey:@"showamount"]];
                     detailCellCar.priceLabel.text = show;//[dic_request valueForKey:@"showamount"];
+                    detailCellCar.askingPriceLabel.text = [NSString stringWithFormat:@"$%@",[Array_UserInfo valueForKey:@"askingprice"]];
+
                     detailCellCar.timeLabel.text = [Array_UserInfo valueForKey:@"createtime"];
                     detailCellCar.titleLabel.text = [Array_UserInfo valueForKey:@"title"];
                     
@@ -634,6 +636,7 @@
                     
                     NSString *show = [NSString stringWithFormat:@"$%@",[Array_UserInfo valueForKey:@"showamount"]];
                     detailCellProperty.priceLabel.text = show;//[dic_request valueForKey:@"showamount"];
+                    detailCellProperty.askingPriceLabel.text = [NSString stringWithFormat:@"$%@",[Array_UserInfo valueForKey:@"askingprice"]];
                     detailCellProperty.timeLabel.text = [Array_UserInfo valueForKey:@"createtime"];
                     detailCellProperty.titleLabel.text = [Array_UserInfo valueForKey:@"title"];
                     
@@ -851,6 +854,7 @@
                 
                 NSString *show = [NSString stringWithFormat:@"$%@",[Array_UserInfo valueForKey:@"showamount"]];
                 detailCell.priceLabel.text = show;//[dic_request valueForKey:@"showamount"];
+                detailCell.askingPriceLabel.text = [NSString stringWithFormat:@"$%@",[Array_UserInfo valueForKey:@"askingprice"]];
                 detailCell.timeLabel.text = [Array_UserInfo valueForKey:@"createtime"];
                 detailCell.titleLabel.text = [Array_UserInfo valueForKey:@"title"];
                 //detailCell.profileImage.image =

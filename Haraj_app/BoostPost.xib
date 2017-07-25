@@ -47,7 +47,7 @@
                     <color key="textColor" red="0.0" green="0.56470588239999997" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Boost your post to increase your visibility.  Your post will be displayed at the top of your chosen category for limited time." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="27S-5D-BrG">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Boost your post to increase your visibility.  Your post will be displayed at the top of your chosen category for limited time." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="27S-5D-BrG">
                     <frame key="frameInset" minX="13" minY="73" width="250" height="70"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="SanFranciscoDisplay-Regular" family="San Francisco Display" pointSize="14"/>
@@ -127,6 +127,7 @@
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="boostTextLabel" destination="27S-5D-BrG" id="PSP-Ht-Dua"/>
                 <outlet property="closeButton" destination="VBo-9r-EAQ" id="NtD-Rq-K2w"/>
                 <outlet property="imageViewButton1" destination="cRw-XQ-wj0" id="X4q-Jc-Edu"/>
                 <outlet property="imageViewButton2" destination="YI3-6R-nKE" id="yZG-0p-pD6"/>

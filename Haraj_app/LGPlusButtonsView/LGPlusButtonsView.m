@@ -233,7 +233,12 @@ typedef NS_ENUM(NSUInteger, LGPlusButtonDescriptionsPosition)
             [_descriptionWrapperViewsArray addObject:wrapperView];
 
             LGPlusButtonDescription *description = [LGPlusButtonDescription new];
+            
+            
+            
+            
             [wrapperView addSubview:description];
+            
 
             [_descriptionsArray addObject:description];
         }
@@ -1284,6 +1289,27 @@ typedef NS_ENUM(NSUInteger, LGPlusButtonDescriptionsPosition)
   [[NSNotificationCenter defaultCenter] postNotificationName:@"HidePlusButtonProfile" object:self userInfo:nil];
     
 }
+
+
+- (void)tapGesturedescription:(UITapGestureRecognizer *)gestureRecognizer
+{
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"HidePlusButtonProfile" object:self userInfo:nil];
+//    
+//    if (self.isFirstButtonIsPlusButton)
+//        [self hideButtonsAnimated:YES completionHandler:nil];
+//    else
+//        [self hideAnimated:YES completionHandler:nil];
+    
+    NSLog(@"label description tapped");
+}
+
+
+
+
+
+
+
+
 
 
 - (void)tapGesture:(UITapGestureRecognizer *)gestureRecognizer

@@ -72,18 +72,9 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-//    if (section == 0)
-//    {
-//        
-//        
-//        
-//    }
-//    else
-//    {
-//        
-//    }
+
         return initialTitles.count;
-   // return 0;
+   
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -97,16 +88,8 @@
     searchCell =(SearchTableViewCell *)[tableView dequeueReusableCellWithIdentifier:str forIndexPath:indexPath];
     
     
-//    if (indexPath.section ==0)
-//    {
-        searchCell.titleLabel.text=[[initialTitles objectAtIndex:indexPath.row]valueForKey:@"name"];
-//    }
-//    else
-//    {
-//    searchCell.titleLabel.text=[[initialTitles objectAtIndex:indexPath.row]valueForKey:@"section2"];
-//        
-//    }
-    
+
+    searchCell.titleLabel.text=[[initialTitles objectAtIndex:indexPath.row]valueForKey:@"name"];
     
     return searchCell;
     
@@ -295,24 +278,6 @@
                                                  ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\t" withString:@""];
                                                  
                                                  NSLog(@"initialTitles %@",initialTitles);
-                                                 
-//                                                 for (int i=0; i <= initialTitles.count ; i++)
-//                                                 {
-//                                                     if ([[[initialTitles objectAtIndex:i]valueForKey:@"typesection"]isEqualToString:@"section1"])
-//                                                     {
-//                                                         
-//                                                         [Array_1 addObject:[initialTitles objectAtIndex:i]];
-//                                                     }
-//                                                     else
-//                                                     {
-//                                                         [Array_2 addObject:[initialTitles objectAtIndex:i]];
-//                                                     }
-//                                                 }
-                                                 
-                                                 
-                                                 
-                                                 
-                                                 // initialTitles= [initialTitles1 objectAtIndex:0];
                                                  
                                                  
                                                  [self.tableView reloadData];

@@ -71,7 +71,7 @@
     
     
     
-    UIColor *grayColor = [UIColor darkGrayColor];
+    UIColor *grayColor = [UIColor whiteColor];
     NSDictionary *attributes = [NSDictionary dictionaryWithObjects:@[grayColor] forKeys:@[UITextAttributeTextColor]];
     [segmentedControl setTitleTextAttributes:attributes
                                forState:UIControlStateSelected];

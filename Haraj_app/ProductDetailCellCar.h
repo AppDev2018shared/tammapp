@@ -19,6 +19,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *profileImageView;
 @property (weak, nonatomic) IBOutlet UITextField *modelTextField;
 @property (weak, nonatomic) IBOutlet UITextField *mileageTextField;
+@property (weak, nonatomic) IBOutlet UITextField *carMakeTextField;
+@property (weak, nonatomic) IBOutlet UIImageView *carMakeImageView;
 
 
 

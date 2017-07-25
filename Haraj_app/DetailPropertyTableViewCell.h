@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UITextView *detailinfoTextView1;
 @property (weak, nonatomic) IBOutlet UIView *tapView;
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
+@property (weak, nonatomic) IBOutlet UILabel *askingPriceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 
 

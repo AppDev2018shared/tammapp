@@ -21,10 +21,16 @@
 @property (weak, nonatomic) IBOutlet UITextView *detailinfoTextView1;
 @property (weak, nonatomic) IBOutlet UIView *tapView;
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
+@property (weak, nonatomic) IBOutlet UILabel *askingPriceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *modelLabel;
 @property (weak, nonatomic) IBOutlet UILabel *mileageLabel;
+@property (weak, nonatomic) IBOutlet UILabel *carMakeLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *carMakeImage;
+
+
+
 
 
 @property (weak, nonatomic) IBOutlet UIImageView *favouriteImage;

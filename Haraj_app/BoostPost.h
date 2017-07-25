@@ -11,8 +11,11 @@
 @interface BoostPost : UIView
 
 @property (weak, nonatomic) IBOutlet UIButton *closeButton;
-- (IBAction)closeAction:(id)sender;
+
 @property (weak, nonatomic) IBOutlet UILabel *postIdLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *boostTextLabel;
+
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageViewButton1;
 @property (weak, nonatomic) IBOutlet UIImageView *imageViewButton2;

@@ -19,6 +19,10 @@
 
 
 @interface PostingViewController : UIViewController
+{
+    UIView *transparentView1;
+}
+
 
 @property (nonatomic,retain)NSString *name;
 

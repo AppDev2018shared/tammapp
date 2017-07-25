@@ -498,11 +498,15 @@
                         
                     }
                     
+                    detailCellCar.askingPriceLabel.text = [NSString stringWithFormat:@"$%@",[Array_UserInfo valueForKey:@"askingprice"]];
+                    
                     detailCellCar.timeLabel.text = [Array_UserInfo valueForKey:@"createtime"];
                     detailCellCar.titleLabel.text = [Array_UserInfo valueForKey:@"title"];
                     
                     detailCellCar.modelLabel.text = [Array_UserInfo valueForKey:@"carmodel"];
                     detailCellCar.mileageLabel.text = [NSString stringWithFormat:@"%@ KM",[Array_UserInfo valueForKey:@"carmileage"]];
+                    detailCellCar.carMakeLabel.text =[Array_UserInfo valueForKey:@"carmake"];
+                    detailCellCar.carMakeImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png",[Array_UserInfo valueForKey:@"carmake"]]];
                     
                     
                     
@@ -696,6 +700,7 @@
                         detailCellProperty.priceLabel.text = show;
                         
                     }
+                     detailCellProperty.askingPriceLabel.text = [NSString stringWithFormat:@"$%@",[Array_UserInfo valueForKey:@"askingprice"]];
                     
 //                    NSString *show = [NSString stringWithFormat:@"$%@",[Array_UserInfo valueForKey:@"showamount"]];
 //                    detailCellProperty.priceLabel.text = show;//[dic_request valueForKey:@"showamount"];
@@ -899,12 +904,10 @@
                 detailCell.priceLabel.text = show;
                 
             }
+            
+             detailCell.askingPriceLabel.text = [NSString stringWithFormat:@"$%@",[Array_UserInfo valueForKey:@"askingprice"]];
+            
 
-        
-            
-//            NSString *show = [NSString stringWithFormat:@"$%@",[Array_UserInfo valueForKey:@"showamount"]];
-//            detailCell.priceLabel.text = show;//[dic_request valueForKey:@"showamount"];
-            
             detailCell.timeLabel.text = [Array_UserInfo valueForKey:@"createtime"];
             detailCell.titleLabel.text = [Array_UserInfo valueForKey:@"title"];
             
@@ -1417,7 +1420,7 @@
             {
                 
                 
-                return 546+detailCellCar.detailinfoTextView1.frame.size.height-38;
+                return 590+detailCellCar.detailinfoTextView1.frame.size.height-38;
                 
             }
             else
@@ -1425,11 +1428,11 @@
                 
                 if ((long)rHeight==1)
                 {
-                    return 546;
+                    return 590;
                 }
                 else
                 {
-                    return 546 ;
+                    return 590 ;
                 }
                 
                 
