@@ -20,7 +20,7 @@
 #import "Firebase.h"
 @import UserNotifications;
 
-@interface AppDelegate ()<CLLocationManagerDelegate>
+@interface AppDelegate ()<CLLocationManagerDelegate,FIRMessagingDelegate,UNUserNotificationCenterDelegate>
 {
     NSUserDefaults *defaults;
     CLLocationManager *locationManager ;
@@ -35,6 +35,8 @@
 @end
 
 @implementation AppDelegate
+
+NSString *const kGCMMessageIDKey = @"gcm.message_id";
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -141,9 +143,7 @@
     
     //------------------------------token---------------------------------------
     
-    NSString *fcmToken = [FIRMessaging messaging].FCMToken;
-    NSLog(@"FCM registration token: %@", fcmToken);
-    
+        
    
     
     return YES;
@@ -209,6 +209,41 @@
     // TODO: If necessary send token to application server.
     
 }
+
+-(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    
+    // Print message ID.
+    if (userInfo[kGCMMessageIDKey]) {
+        NSLog(@"Message ID: %@", userInfo[kGCMMessageIDKey]);
+    }
+    
+    // Print full message.
+    NSLog(@"%@", userInfo);
+    
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    // If you are receiving a notification message while your app is in the background,
+    // this callback will not be fired till the user taps on the notification launching the application.
+    // TODO: Handle data of notification
+    
+    // With swizzling disabled you must let Messaging know about the message, for Analytics
+    // [[FIRMessaging messaging] appDidReceiveMessage:userInfo];
+    
+    // Print message ID.
+    if (userInfo[kGCMMessageIDKey]) {
+        NSLog(@"Message ID: %@", userInfo[kGCMMessageIDKey]);
+    }
+    
+    // Print full message.
+    NSLog(@"%@", userInfo);
+    
+    completionHandler(UIBackgroundFetchResultNewData);
+}
+
+
 
 
 

@@ -18,6 +18,7 @@
 #import "LoginPageViewController.h"
 #import <FirebaseAuth/FirebaseAuth.h>
 #import "MobileViewController.h"
+#import "Firebase.h"
 
 #define Buttonlogincolor [UIColor colorWithRed:200/255.0 green:200/255.0 blue:200/255.0 alpha:1]
 @interface SignUpViewController ()
@@ -394,9 +395,12 @@
     
     NSString *country= @"country";
     NSString *countryVal =[defaults valueForKey:@"Countryname"];
-    
-    NSString *devicetoken= @"devicetoken";
-    NSString *devicetokenVal =@"123";
+        
+        NSString *fcmToken = [FIRMessaging messaging].FCMToken;
+        NSLog(@"FCM registration token: %@", fcmToken);
+        
+        NSString *devicetoken= @"devicetoken";
+        NSString *devicetokenVal =fcmToken;
     
     NSString *regType= @"regtype";
     NSString *regTypeVal =@"EMAIL";
@@ -804,8 +808,12 @@
     NSString *country= @"country";
     NSString *countryVal =[defaults valueForKey:@"Countryname"];
     
+    
+    NSString *fcmToken = [FIRMessaging messaging].FCMToken;
+    NSLog(@"FCM registration token: %@", fcmToken);
+    
     NSString *devicetoken= @"devicetoken";
-    NSString *devicetokenVal =@"123";
+    NSString *devicetokenVal =fcmToken;
     
     NSString *regType= @"regtype";
     

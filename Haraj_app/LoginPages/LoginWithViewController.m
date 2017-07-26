@@ -19,6 +19,7 @@
 #import "SBJsonParser.h"
 #import "HomeNavigationController.h"
 #import "MobileViewController.h"
+#import "Firebase.h"
 
 
 @interface LoginWithViewController ()
@@ -300,8 +301,12 @@
     NSString *country= @"country";
     NSString *countryVal =[defaults valueForKey:@"Countryname"];
     
+    NSString *fcmToken = [FIRMessaging messaging].FCMToken;
+    NSLog(@"FCM registration token: %@", fcmToken);
+
+    
     NSString *devicetoken= @"devicetoken";
-    NSString *devicetokenVal =@"123";
+    NSString *devicetokenVal =fcmToken;
     
     NSString *regType= @"regtype";
     
