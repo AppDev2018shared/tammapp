@@ -172,7 +172,7 @@ heightForHeaderAtIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@"InfoButton_Action Pressed");
     
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Tip" message:@"Sale points tips" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Sale Points" message:@"Earn loyalty points by transacting on Tamm. You can redeem these points for boosting your post!" preferredStyle:UIAlertControllerStyleAlert];
     
     UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
                                                        style:UIAlertActionStyleDefault

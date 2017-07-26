@@ -597,7 +597,7 @@
     
     NSLog(@"InfoButton_Action Pressed");
     
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Tip" message:@"Pay fees Alert box" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Pay Fee" message:@"Once you sucessfully sell your item to a buyer, please pay a nominal 1% transaction fee to Tamm via Credit card or Bank Transfer." preferredStyle:UIAlertControllerStyleAlert];
     
     UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
                                                        style:UIAlertActionStyleDefault

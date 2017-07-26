@@ -51,6 +51,9 @@
     CLGeocoder *geocoder;
     CLPlacemark *placemark;
     BOOL location;
+    
+    
+    NSString *allowCallStr, *pushOfferStr, *pushMessageStr,*pushCommentStr;
 
 
    
@@ -63,10 +66,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+     defaults=[[NSUserDefaults alloc]init];
+    
 //    locationManager = [[CLLocationManager alloc] init];
 //    geocoder = [[CLGeocoder alloc] init];
     location = true;
-    locationName = @"Mumbai";//[defaults valueForKey:@"Cityname"];
+    locationName = [defaults valueForKey:@"Cityname"];
     cellloop = @"1";
 
 
@@ -96,8 +101,14 @@ Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_t
    
     
     
-    defaults=[[NSUserDefaults alloc]init];
+   
     // Creating refresh control
+    
+    allowCallStr = [defaults valueForKey:@"allowpubliccalls"];
+    pushOfferStr = [defaults valueForKey:@"pushoffers"];
+    pushMessageStr = [defaults valueForKey:@"pushmessages"];
+    pushCommentStr = [defaults valueForKey:@"pushcomments"];
+    
 
     [TableView_Setting reloadData];
   
@@ -189,12 +200,13 @@ Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_t
                 Twocell2 = (AccTwoTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellId2 forIndexPath:indexPath];
                 Twocell2.layer.borderColor=[UIColor groupTableViewBackgroundColor].CGColor;
                 Twocell2.layer.borderWidth=1.0f;
-                
                 Twocell2.LabelVal.text=[Array_Title2 objectAtIndex:indexPath.row];
                 
-               
-                
                 [Twocell2.ChangeButtonOutlet addTarget:self action:@selector(UpdateLocation:) forControlEvents:UIControlEventTouchUpInside];
+                
+                
+                Twocell2.switchOutlet.tag=indexPath.row;
+                [Twocell2.switchOutlet addTarget: self action: @selector(switchOutletAction1:) forControlEvents:UIControlEventValueChanged];
                 
                 
                 if (indexPath.row == Array_Title2.count-1)
@@ -280,7 +292,27 @@ Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_t
                 }
                 }
                 
-                               return Twocell2;
+                
+                if (indexPath.row == 3)
+                {
+                    
+                    
+                    if ([[defaults valueForKey:@"allowpubliccalls"] isEqualToString:@"no"])
+                    {
+                        [Twocell2.switchOutlet setOn:NO animated:YES];
+                    }
+                    else
+                    {
+                        [Twocell2.switchOutlet setOn:YES animated:YES];
+                    }
+                    
+                    
+                    
+                }
+                
+                
+                
+                return Twocell2;
                 
             }
                 break;
@@ -296,6 +328,49 @@ Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_t
                 Twocellpush2.layer.borderColor=[UIColor groupTableViewBackgroundColor].CGColor;
                 Twocellpush2.layer.borderWidth=1.0f;
                 Twocellpush2.LabelVal.text=[Array_TitlePush objectAtIndex:indexPath.row];
+                Twocellpush2.switchOutlet.tag=indexPath.row;
+                [Twocellpush2.switchOutlet addTarget: self action: @selector(switchOutletAction2:) forControlEvents:UIControlEventValueChanged];
+                
+                        
+                if (indexPath.row==0)
+                {
+                    
+                    if ([[defaults valueForKey:@"pushoffers"] isEqualToString:@"no"])
+                    {
+                        [Twocellpush2.switchOutlet setOn:NO animated:YES];
+                    }
+                    else
+                    {
+                        [Twocellpush2.switchOutlet setOn:YES animated:YES];
+                    }
+                }
+                if (indexPath.row==1)
+                {
+                    if ([[defaults valueForKey:@"pushmessages"] isEqualToString:@"no"])
+                    {
+                        [Twocellpush2.switchOutlet setOn:NO animated:YES];
+                    }
+                    else
+                    {
+                        
+                        [Twocellpush2.switchOutlet setOn:YES animated:YES];
+                    }
+                }
+                if (indexPath.row==2)
+                {
+                    if ([[defaults valueForKey:@"pushcomments"] isEqualToString:@"no"])
+                    {
+                        [Twocellpush2.switchOutlet setOn:NO animated:YES];
+                    }
+                    else
+                    {
+                        
+                        [Twocellpush2.switchOutlet setOn:YES animated:YES];
+                    }
+                }
+                
+                
+                
              
                 return Twocellpush2;
                 
@@ -919,26 +994,59 @@ Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_t
     [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
     [self.navigationController popViewControllerAnimated:YES];
     
+    [self saveSettingConnection];
+    
 }
 
-- (IBAction)switchOutletAction:(id)sender
+- (IBAction)switchOutletAction1:(id)sender
 {
     UISwitch *switchObject = (UISwitch *)sender;
-    if (switchObject.tag==0)
+    if (switchObject.tag==3)
     {
         
     
         if ([switchObject isOn])
         {
             [switchObject setOn:NO animated:YES];
-            [defaults setObject:@"OFF" forKey:@"Switch1"];
-            [defaults synchronize];
+            allowCallStr = @"no";
+            
+//            [defaults setObject:@"no" forKey:@"allowpubliccalls"];
+//            [defaults synchronize];
         }
         else
         {
             [switchObject setOn:YES animated:YES];
-            [defaults setObject:@"ON" forKey:@"Switch1"];
-            [defaults synchronize];
+            
+             allowCallStr = @"yes";
+//            [defaults setObject:@"yes" forKey:@"allowpubliccalls"];
+//            [defaults synchronize];
+        }
+        
+    }
+    
+    
+}
+
+- (IBAction)switchOutletAction2:(id)sender
+{
+    UISwitch *switchObject = (UISwitch *)sender;
+    if (switchObject.tag==0)
+    {
+        
+        
+        if ([switchObject isOn])
+        {
+            [switchObject setOn:NO animated:YES];
+            pushOfferStr = @"no";
+//            [defaults setObject:@"OFF" forKey:@"pushoffers"];
+//            [defaults synchronize];
+        }
+        else
+        {
+            [switchObject setOn:YES animated:YES];
+            pushOfferStr = @"yes";
+//            [defaults setObject:@"ON" forKey:@"pushoffers"];
+//            [defaults synchronize];
         }
         
     }
@@ -948,18 +1056,42 @@ Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_t
         if ([switchObject isOn])
         {
             [switchObject setOn:NO animated:YES];
-            [defaults setObject:@"OFF" forKey:@"Switch2"];
-            [defaults synchronize];
+            pushMessageStr = @"no";
+//            [defaults setObject:@"OFF" forKey:@"pushmessages"];
+//            [defaults synchronize];
         }
         else
         {
             [switchObject setOn:YES animated:YES];
-            [defaults setObject:@"ON" forKey:@"Switch2"];
-            [defaults synchronize];
+            pushMessageStr = @"yes";
+//            [defaults setObject:@"ON" forKey:@"pushmessages"];
+//            [defaults synchronize];
+        }
+    }
+    
+    if (switchObject.tag==2)
+    {
+        
+        if ([switchObject isOn])
+        {
+            [switchObject setOn:NO animated:YES];
+            pushCommentStr = @"no";
+            
+//            [defaults setObject:@"OFF" forKey:@"pushcomments"];
+//            [defaults synchronize];
+        }
+        else
+        {
+            [switchObject setOn:YES animated:YES];
+            
+            pushCommentStr = @"yes";
+//            [defaults setObject:@"ON" forKey:@"pushcomments"];
+//            [defaults synchronize];
         }
     }
     
 }
+
 -(void)loginWithTW
 {
    
@@ -1492,7 +1624,128 @@ Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_t
         
         
     }
+   
     
+}
+
+
+-(void)saveSettingConnection
+{
+    
+    NSString *userid= @"userid";
+    NSString *useridval =[defaults valueForKey:@"userid"];
+    
+    NSString *pushoffers= @"pushoffers";
+    NSString *pushoffersVal =pushOfferStr;
+    
+    NSString *pushmessages= @"pushmessages";
+    NSString *pushmessagesVal =pushMessageStr;
+    
+    NSString *pushcomments= @"pushcomments";
+    NSString *pushcommentsVal =pushCommentStr;
+    
+    NSString *allowpubliccalls= @"allowpubliccalls";
+    NSString *allowpubliccallsVal =allowCallStr;
+    
+    NSString *city= @"city";
+    NSString *cityVal =[defaults valueForKey:@"Cityname"];
+    
+    NSString *country= @"country";
+    NSString *countryVal =[defaults valueForKey:@"Countryname"];
+    
+    
+    
+    
+    
+    NSString *reqStringFUll=[NSString stringWithFormat:@"%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@",userid,useridval,pushoffers,pushoffersVal,pushmessages,pushmessagesVal,pushcomments,pushcommentsVal,allowpubliccalls,allowpubliccallsVal,city,cityVal,country,countryVal];
+    
+    
+    
+#pragma mark - swipe sesion
+    
+    NSURLSession *session = [NSURLSession sessionWithConfiguration: [NSURLSessionConfiguration defaultSessionConfiguration] delegate: nil delegateQueue: [NSOperationQueue mainQueue]];
+    
+    NSURL *url;
+    NSString *  urlStrLivecount=[urlplist valueForKey:@"savesettings"];;
+    url =[NSURL URLWithString:urlStrLivecount];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    
+    [request setHTTPMethod:@"POST"];//Web API Method
+    
+    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    
+    request.HTTPBody = [reqStringFUll dataUsingEncoding:NSUTF8StringEncoding];
+    
+    
+    
+    NSURLSessionDataTask *dataTask =[session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
+                                     {
+                                         
+                                         if(data)
+                                         {
+                                             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+                                             NSInteger statusCode = httpResponse.statusCode;
+                                             if(statusCode == 200)
+                                             {
+                                                 
+                                                 
+                                                 NSString * ResultString=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+                                                 
+                                                 ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+                                                 
+                                                 ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\t" withString:@""];
+                                                 
+                                                 if ([ResultString isEqualToString:@"updated"])
+                                                 {
+                                                     
+                                                     [defaults setObject:allowCallStr forKey:@"allowpubliccalls"];
+                                                     [defaults setObject:pushOfferStr forKey:@"pushoffers"];
+                                                     [defaults setObject:pushMessageStr forKey:@"pushmessages"];
+                                                     [defaults setObject:pushCommentStr forKey:@"pushcomments"];
+                                                     [defaults synchronize];
+                                                     
+                                                     
+                                                 }
+                                                 else
+                                                 {
+                                                 
+                                                     
+                                                     
+                                                     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops" message:@"There was an error in updating your settings. Please try again" preferredStyle:UIAlertControllerStyleAlert];
+                                                     
+                                                     UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                                                                        style:UIAlertActionStyleDefault
+                                                                                                      handler:nil];
+                                                     [alertController addAction:actionOk];
+                                                     [self presentViewController:alertController animated:YES completion:nil];
+                                                     
+                                                     
+                                                     
+                                                     
+                                                 }
+                                                 
+                                                 
+                                             }
+                                             
+                                             else
+                                             {
+                                                 NSLog(@" error login1 ---%ld",(long)statusCode);
+                                                 [self.view hideActivityViewWithAfterDelay:0];
+                                             }
+                                             
+                                             
+                                         }
+                                         else if(error)
+                                         {
+                                             [self.view hideActivityViewWithAfterDelay:0];
+                                             NSLog(@"error login2.......%@",error.description);
+                                         }
+                                         
+                                         
+                                     }];
+    [dataTask resume];
+
     
     
     

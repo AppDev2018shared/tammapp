@@ -15,7 +15,7 @@
     [self.switchOutlet setOn:YES animated:YES];
     
     
-    self.switchOutlet.transform = CGAffineTransformMakeScale(0.80, 0.70);
+    //self.switchOutlet.transform = CGAffineTransformMakeScale(0.80, 0.70);
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

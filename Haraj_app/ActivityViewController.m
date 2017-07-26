@@ -16,6 +16,7 @@
 #import "ActivityNextViewController.h"
 #import "OnCellClickViewController.h"
 #import "MyPostViewController.h"
+#import "SearchViewController.h"
 
 
 @interface ActivityViewController ()<UITableViewDataSource, UITableViewDelegate>
@@ -783,6 +784,22 @@
 }
 - (IBAction)SearchButton_Action:(id)sender
 {
+    
+    
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    SearchViewController * searchController = [mainStoryboard instantiateViewControllerWithIdentifier:@"SearchViewController"];
+    
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.3;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    transition.type = kCATransitionPush;
+    transition.subtype = kCATransitionFromLeft;
+    
+    [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
+    
+    
+    [self.navigationController pushViewController:searchController animated:YES];
+
     
 }
 - (IBAction)BackButton_Action:(id)sender

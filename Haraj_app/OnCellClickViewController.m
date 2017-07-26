@@ -1612,7 +1612,7 @@
         [button1 setTag:1];
         [button1 addTarget:self action:@selector(sectionHeaderButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         
-        if ([[Array_UserInfo valueForKey:@"allowcalls" ] isEqualToString:@"YES"] && [[Array_UserInfo valueForKey:@"verifiedmobile" ] isEqualToString:@"yes"] )
+        if ([[Array_UserInfo valueForKey:@"allowcalls" ] isEqualToString:@"YES"] && [[Array_UserInfo valueForKey:@"verifiedmobile" ] isEqualToString:@"yes"] && [[Array_UserInfo valueForKey:@"allowpubliccalls"] isEqualToString:@"yes"] )
         {
             button1.enabled = YES;
         }
@@ -1974,6 +1974,13 @@
     if ([sender tag]== 1)
     {
         NSLog(@"3 Dots Pressed");
+        
+        UIActionSheet *popup = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Flag as inappropriate",nil];
+        popup.tag = 777;
+        [popup showInView:self.view];
+ 
+        
+        
         
         
     }
@@ -2547,7 +2554,7 @@
 
 -(void)Help_ButtonPressed:(id)sender
 {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops" message:@"Help_ButtonPressed." preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Make Offer" message:@"Enter the price that you wish to offer to the seller to buy this item" preferredStyle:UIAlertControllerStyleAlert];
     
     UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
                                                        style:UIAlertActionStyleDefault
@@ -2748,6 +2755,29 @@
 {
     
     NSLog(@"threedots");
+    UIActionSheet *popup = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Flag as inappropriate",nil];
+    popup.tag = 777;
+    [popup showInView:self.view];
+    
+    
+}
+
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if ((long)actionSheet.tag == 777)
+    {
+        NSLog(@"INDEXAcrtionShhet==%ld",(long)buttonIndex);
+        
+        if (buttonIndex== 1)
+        {
+            
+            
+        }
+        if (buttonIndex== 0)
+        {
+          [self flagConnection];
+        }
+    }
     
 }
 -(void) button_favourite_action:(id)sender
@@ -3805,63 +3835,154 @@
     [self.view endEditing:YES];
 }
 
+-(void)flagConnection
+{
+    
+    
+    
+    
+    Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
+    if (networkStatus == NotReachable)
+    {
+        
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"No Internet" message:@"Please make sure you have internet connectivity in order to access Care2dare." preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction *action)
+                                   {
+                                       exit(0);
+                                   }];
+        
+        [alertController addAction:actionOk];
+        
+        UIWindow *alertWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+        alertWindow.rootViewController = [[UIViewController alloc] init];
+        alertWindow.windowLevel = UIWindowLevelAlert + 1;
+        [alertWindow makeKeyAndVisible];
+        [alertWindow.rootViewController presentViewController:alertController animated:YES completion:nil];
+        
+        
+    }
+    else
+    {
+        
+        NSString *userid= @"userid";
+        NSString *useridVal =[defaults valueForKey:@"userid"];
+        
+        NSString *flagid= @"flagid";
+        NSString *flagidVal=[Array_UserInfo  valueForKey:@"postid"];
+        
+        NSString *FlagType= @"flagtype";
+        NSString *FlagTypeval=@"POST";
+        
+        
+        
+        NSString *reqStringFUll=[NSString stringWithFormat:@"%@=%@&%@=%@&%@=%@",userid,useridVal,flagid,flagidVal,FlagType,FlagTypeval];
+        
+        
+#pragma mark - swipe sesion
+        
+        NSURLSession *session = [NSURLSession sessionWithConfiguration: [NSURLSessionConfiguration defaultSessionConfiguration] delegate: nil delegateQueue: [NSOperationQueue mainQueue]];
+        
+        NSURL *url;
+        NSString *  urlStrLivecount=[urlplist valueForKey:@"flag"];;
+        url =[NSURL URLWithString:urlStrLivecount];
+        
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+        
+        [request setHTTPMethod:@"POST"];//Web API Method
+        
+        [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+        
+        request.HTTPBody = [reqStringFUll dataUsingEncoding:NSUTF8StringEncoding];
+        
+        
+        
+        NSURLSessionDataTask *dataTask =[session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
+                                         {
+                                             if(data)
+                                             {
+                                                 NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+                                                 
+                                                 NSInteger statusCode = httpResponse.statusCode;
+                                                 if(statusCode == 200)
+                                                 {
+                                                     
+                                                     
+                                                     
+                                                     
+                                                     //  SBJsonParser *objSBJsonParser = [[SBJsonParser alloc]init];
+                                                     
+                                                     NSString * ResultString=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+                                                     
+                                                     
+                                                     ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+                                                     ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\t" withString:@""];
+                                                     
+                                                     if ([ResultString isEqualToString:@"done"])
+                                                     {
+                                                         
+                                                         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Flagged" message:@"The concerned post has been flagged and the team will review it and take appropriate action. Thank-you for the heads up!" preferredStyle:UIAlertControllerStyleAlert];
+                                                         
+                                                         UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                                                                            style:UIAlertActionStyleDefault
+                                                                                                          handler:nil];
+                                                         [alertController addAction:actionOk];
+                                                         [self presentViewController:alertController animated:YES completion:nil];
+                                                     }
+                                                     if ([ResultString isEqualToString:@"inserterror"])
+                                                     {
+                                                         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops" message:@"The post could not be flagged. Please try again." preferredStyle:UIAlertControllerStyleAlert];
+                                                         
+                                                         UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                                                                            style:UIAlertActionStyleDefault
+                                                                                                          handler:nil];
+                                                         [alertController addAction:actionOk];
+                                                         [self presentViewController:alertController animated:YES completion:nil];
+                                                         
+                                                     }
+                                                     
+                                                     
+                                                     if ([ResultString isEqualToString:@"alreadyflagged"])
+                                                     {
+                                                         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops" message:@"You have already flagged this post. Please wait for our team to review this." preferredStyle:UIAlertControllerStyleAlert];
+                                                         
+                                                         UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                                                                            style:UIAlertActionStyleDefault
+                                                                                                          handler:nil];
+                                                         [alertController addAction:actionOk];
+                                                         [self presentViewController:alertController animated:YES completion:nil];
+                                                         
+                                                     }
+                                                     
+                                                     
+                                                     
+                                                 }
+                                                 else
+                                                 {
+                                                     NSLog(@" error login1 ---%ld",(long)statusCode);
+                                                     
+                                                 }
+                                             }
+                                             else if(error)
+                                             {
+                                                 NSLog(@"error login2.......%@",error.description);
+                                                 
+                                                 
+                                             }
+                                             
+                                         }];
+        [dataTask resume];
+    };
+    
+    
+    
+
+    
+}
+
+
 @end
 
-//Consumer key (API Key):
-//bB8ASgppAnfalb0BHCwa63dqU
-//
-//Consumer secret (API Secret):
-//AC168EC7WKu588JAp04gZkPop2WHbeaznp5O9JQEldAXSnyiMy
-
-
-//com.bba.tamm
-//
-//facebook id: 907643802709363
-//
-//display name:  تم
-//
-//Apple id: 1233044805
-//
-
-
-//- (void)oneFingerSwipeLeft:(UITapGestureRecognizer *)recognizer {
-//    newsList = [[NSMutableArray alloc] init];
-//    
-//    //to animate the view as new view is loaded
-//    [UIView animateWithDuration:0.1 animations:^{
-//        
-//        viewContent.frame = CGRectMake( -viewContent.frame.size.width, viewContent.frame.origin.y , viewContent.frame.size.width, viewContent.frame.size.height);
-//        [self loadData];
-//        
-//    } completion:^(BOOL finished) {
-//        viewContent.frame = CGRectMake( viewContent.frame.size.width,viewContent.frame.origin.y, viewContent.frame.size.width, viewContent.frame.size.height);
-//        
-//        [UIView animateWithDuration:0.3 animations:^{
-//            viewContent.frame = CGRectMake(0.0, viewContent.frame.origin.y, viewContent.frame.size.width, viewContent.frame.size.height);
-//        }];
-//    }];
-//    
-//    selectedDay++;
-//    [self fetchDataFromWeb];
-//}
-
-//- (void)oneFingerSwipeRight:(UITapGestureRecognizer *)recognizer {
-//    newsList = [[NSMutableArray alloc] init];
-//    
-//    //to animate the view as new view is loaded
-//    [UIView animateWithDuration:0.1 animations:^{
-//        
-//        viewContent.frame = CGRectMake( viewContent.frame.size.width, viewContent.frame.origin.y , viewContent.frame.size.width, viewContent.frame.size.height);
-//        [self loadData];
-//        
-//    } completion:^(BOOL finished) {
-//        viewContent.frame = CGRectMake( -viewContent.frame.size.width,viewContent.frame.origin.y, viewContent.frame.size.width, viewContent.frame.size.height);
-//        
-//        [UIView animateWithDuration:0.3 animations:^{
-//            viewContent.frame = CGRectMake(0.0, viewContent.frame.origin.y, viewContent.frame.size.width, viewContent.frame.size.height);
-//        }];
-//    }];
-//    
-//    selectedDay--;
-//    [self fetchDataFromWeb];
-//}

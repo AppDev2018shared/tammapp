@@ -54,7 +54,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" name="SanFranciscoDisplay-Light" family="San Francisco Display" pointSize="15"/>
                         <inset key="titleEdgeInsets" minX="2" minY="0.0" maxX="0.0" maxY="0.0"/>
-                        <state key="normal" title="Change">
+                        <state key="normal" title="Update">
                             <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>
@@ -177,7 +177,7 @@
     </objects>
     <resources>
         <image name="Bedroom" width="56" height="31"/>
-        <image name="Location_on" width="19" height="26"/>
+        <image name="Location_on" width="41" height="55"/>
         <image name="Property1" width="53" height="47"/>
         <image name="steve.jpeg" width="660" height="371"/>
     </resources>

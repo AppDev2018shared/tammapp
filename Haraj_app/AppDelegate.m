@@ -18,6 +18,7 @@
 #import "LoginWithViewController.h"
 #import <FirebaseAuth/FirebaseAuth.h>
 #import "Firebase.h"
+@import UserNotifications;
 
 @interface AppDelegate ()<CLLocationManagerDelegate>
 {
@@ -99,7 +100,7 @@
         
     }
     
-    
+//-------------------------------------Location ---------------------------------------------------------------------
     
     location = true;
     defaults=[[NSUserDefaults alloc]init];
@@ -112,8 +113,38 @@
     [locationManager requestWhenInUseAuthorization];
     [locationManager startUpdatingLocation];
 
-
+//----------------------------------------------------------------------------------------------------------------------
     
+    
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_9_x_Max) {
+        UIUserNotificationType allNotificationTypes =
+        (UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge);
+        UIUserNotificationSettings *settings =
+        [UIUserNotificationSettings settingsForTypes:allNotificationTypes categories:nil];
+        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+    } else {
+        // iOS 10 or later
+#if defined(__IPHONE_10_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
+        // For iOS 10 display notification (sent via APNS)
+        [UNUserNotificationCenter currentNotificationCenter].delegate = self;
+        UNAuthorizationOptions authOptions =
+        UNAuthorizationOptionAlert
+        | UNAuthorizationOptionSound
+        | UNAuthorizationOptionBadge;
+        [[UNUserNotificationCenter currentNotificationCenter] requestAuthorizationWithOptions:authOptions completionHandler:^(BOOL granted, NSError * _Nullable error) {
+        }];
+#endif
+    }
+    
+    [[UIApplication sharedApplication] registerForRemoteNotifications];
+    
+    
+    //------------------------------token---------------------------------------
+    
+    NSString *fcmToken = [FIRMessaging messaging].FCMToken;
+    NSLog(@"FCM registration token: %@", fcmToken);
+    
+   
     
     return YES;
 }
@@ -166,6 +197,24 @@
     
  
 }
+
+
+- (void)messaging:(nonnull FIRMessaging *)messaging didRefreshRegistrationToken:(nonnull NSString *)fcmToken
+{
+    // Note that this callback will be fired everytime a new token is generated, including the first
+    // time. So if you need to retrieve the token as soon as it is available this is where that
+    // should be done.
+    NSLog(@"FCM registration token: %@", fcmToken);
+    
+    // TODO: If necessary send token to application server.
+    
+}
+
+
+
+
+
+#pragma mark - location
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {

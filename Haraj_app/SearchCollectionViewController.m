@@ -67,8 +67,8 @@
     
     
     // Do any additional setup after loading the view.
-cvLayout = [[FRGWaterfallCollectionViewLayout alloc] init];
-   cvLayout.delegate = self;
+    cvLayout = [[FRGWaterfallCollectionViewLayout alloc] init];
+    cvLayout.delegate = self;
     cvLayout.itemWidth = 173.0f;
    
     cvLayout.bottomInset = 10.0f;
@@ -93,7 +93,7 @@ cvLayout = [[FRGWaterfallCollectionViewLayout alloc] init];
     
     
     
-   
+     _label_JsonResult.hidden=YES;
   
     
     if ([[_initialTitles valueForKey:@"typesection"]isEqualToString:@"section1"] )

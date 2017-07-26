@@ -695,6 +695,12 @@
                                         
         [defaults setObject:[NSString stringWithFormat:@"%@",[[array_login objectAtIndex:0]valueForKey:@"mobileno"]] forKey:@"mobileNumber"];
          [defaults setObject:[NSString stringWithFormat:@"%@",[[array_login objectAtIndex:0]valueForKey:@"verified"]] forKey:@"verified"];
+                                        
+    [defaults setObject:[NSString stringWithFormat:@"%@",[[array_login objectAtIndex:0]valueForKey:@"allowpubliccalls"]] forKey:@"allowpubliccalls"];
+   [defaults setObject:[NSString stringWithFormat:@"%@",[[array_login objectAtIndex:0]valueForKey:@"pushcomments"]] forKey:@"pushcomments"];
+   [defaults setObject:[NSString stringWithFormat:@"%@",[[array_login objectAtIndex:0]valueForKey:@"pushmessages"]] forKey:@"pushmessages"];
+   [defaults setObject:[NSString stringWithFormat:@"%@",[[array_login objectAtIndex:0]valueForKey:@"pushoffers"]] forKey:@"pushoffers"];
+                                        
 
                                         
                                         
@@ -1012,6 +1018,12 @@ else
                                                      
                                                      [defaults setObject:[NSString stringWithFormat:@"%@",[[array_login objectAtIndex:0]valueForKey:@"mobileno"]] forKey:@"mobileNumber"];
                                                      [defaults setObject:[NSString stringWithFormat:@"%@",[[array_login objectAtIndex:0]valueForKey:@"verified"]] forKey:@"verified"];
+                                                     
+                                                     
+                                                     [defaults setObject:[NSString stringWithFormat:@"%@",[[array_login objectAtIndex:0]valueForKey:@"allowpubliccalls"]] forKey:@"allowpubliccalls"];
+                                                     [defaults setObject:[NSString stringWithFormat:@"%@",[[array_login objectAtIndex:0]valueForKey:@"pushcomments"]] forKey:@"pushcomments"];
+                                                     [defaults setObject:[NSString stringWithFormat:@"%@",[[array_login objectAtIndex:0]valueForKey:@"pushmessages"]] forKey:@"pushmessages"];
+                                                     [defaults setObject:[NSString stringWithFormat:@"%@",[[array_login objectAtIndex:0]valueForKey:@"pushoffers"]] forKey:@"pushoffers"];
                                                      
                                                      
                                                      [defaults setObject:@"yes" forKey:@"LoginView"];

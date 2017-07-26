@@ -15,6 +15,7 @@
 #import "UIImageView+MHFacebookImageViewer.h"
 #import "BoostPost.h"
 #import "UIView+RNActivityView.h"
+#import "Reachability.h"
 #define FONT_SIZE 15.0f
 #define CELL_CONTENT_WIDTH self.view.frame.size.width-138
 #define CELL_CONTENT_MARGIN 0.0f
@@ -429,6 +430,9 @@
                     
                     detailCellCar.modelLabel.text = [Array_UserInfo valueForKey:@"carmodel"];
                     detailCellCar.mileageLabel.text = [NSString stringWithFormat:@"%@ KM",[Array_UserInfo valueForKey:@"carmileage"]];
+                    
+                    detailCellCar.carMakeLabel.text =[Array_UserInfo valueForKey:@"carmake"];
+                    detailCellCar.carMakeImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png",[Array_UserInfo valueForKey:@"carmake"]]];
                     
                     
                     NSURL *url=[NSURL URLWithString:[Array_UserInfo valueForKey:@"usersprofilepic"]];
@@ -1233,7 +1237,7 @@
             {
                 
                 
-                return 546+detailCellCar.detailinfoTextView1.frame.size.height-38;
+                return 590+detailCellCar.detailinfoTextView1.frame.size.height-38;
                 
             }
             else
@@ -1241,11 +1245,11 @@
                 
                 if ((long)rHeight==1)
                 {
-                    return 546;
+                    return 590;
                 }
                 else
                 {
-                    return 546 ;
+                    return 590 ;
                 }
                 
                 
@@ -1633,8 +1637,33 @@
 
 -(void) button_threedots_action:(id)sender
 {
-     NSLog(@"threedots"); 
+     NSLog(@"threedots");
+    NSLog(@"threedots");
+    UIActionSheet *popup = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Flag as inappropriate",nil];
+    popup.tag = 777;
+    [popup showInView:self.view];
+    
 }
+
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if ((long)actionSheet.tag == 777)
+    {
+        NSLog(@"INDEXAcrtionShhet==%ld",(long)buttonIndex);
+        
+        if (buttonIndex== 1)
+        {
+            
+            
+        }
+        if (buttonIndex== 0)
+        {
+            [self flagConnection];
+        }
+    }
+    
+}
+
 -(void) button_favourite_action:(id)sender
 {
     
@@ -1834,6 +1863,11 @@
     if ([sender tag]== 1)
     {
         NSLog(@"3 Dots Pressed");
+        
+        NSLog(@"threedots");
+        UIActionSheet *popup = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Flag as inappropriate",nil];
+        popup.tag = 777;
+        [popup showInView:self.view];
         
         
     }
@@ -3126,6 +3160,152 @@
     
     
 
+    
+    
+}
+
+-(void)flagConnection
+{
+    
+    
+    Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
+    if (networkStatus == NotReachable)
+    {
+        
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"No Internet" message:@"Please make sure you have internet connectivity in order to access Care2dare." preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction *action)
+                                   {
+                                       exit(0);
+                                   }];
+        
+        [alertController addAction:actionOk];
+        
+        UIWindow *alertWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+        alertWindow.rootViewController = [[UIViewController alloc] init];
+        alertWindow.windowLevel = UIWindowLevelAlert + 1;
+        [alertWindow makeKeyAndVisible];
+        [alertWindow.rootViewController presentViewController:alertController animated:YES completion:nil];
+        
+        
+    }
+    else
+    {
+        
+        NSString *userid= @"userid";
+        NSString *useridVal =[defaults valueForKey:@"userid"];
+        
+        NSString *flagid= @"flagid";
+        NSString *flagidVal=[Array_UserInfo  valueForKey:@"postid"];
+
+        NSString *FlagType= @"flagtype";
+        NSString *FlagTypeval=@"POST";
+        
+        
+        
+        NSString *reqStringFUll=[NSString stringWithFormat:@"%@=%@&%@=%@&%@=%@",userid,useridVal,flagid,flagidVal,FlagType,FlagTypeval];
+        
+        
+#pragma mark - swipe sesion
+        
+        NSURLSession *session = [NSURLSession sessionWithConfiguration: [NSURLSessionConfiguration defaultSessionConfiguration] delegate: nil delegateQueue: [NSOperationQueue mainQueue]];
+        
+        NSURL *url;
+        NSString *  urlStrLivecount=[urlplist valueForKey:@"flag"];;
+        url =[NSURL URLWithString:urlStrLivecount];
+        
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+        
+        [request setHTTPMethod:@"POST"];//Web API Method
+        
+        [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+        
+        request.HTTPBody = [reqStringFUll dataUsingEncoding:NSUTF8StringEncoding];
+        
+        
+        
+        NSURLSessionDataTask *dataTask =[session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
+                                         {
+                                             if(data)
+                                             {
+                                                 NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+                                                 
+                                                 NSInteger statusCode = httpResponse.statusCode;
+                                                 if(statusCode == 200)
+                                                 {
+                                                     
+                                                     
+                                                     
+                                                     
+                                                     //  SBJsonParser *objSBJsonParser = [[SBJsonParser alloc]init];
+                                                     
+                                                     NSString * ResultString=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+                                                     
+                                                     
+                                                     ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+                                                     ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\t" withString:@""];
+                                                     
+                                                     if ([ResultString isEqualToString:@"done"])
+                                                     {
+                                                         
+                                                         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Flagged" message:@"The concerned post has been flagged and the team will review it and take appropriate action. Thank-you for the heads up!" preferredStyle:UIAlertControllerStyleAlert];
+                                                         
+                                                         UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                                                                            style:UIAlertActionStyleDefault
+                                                                                                          handler:nil];
+                                                         [alertController addAction:actionOk];
+                                                         [self presentViewController:alertController animated:YES completion:nil];
+                                                     }
+                                                     if ([ResultString isEqualToString:@"inserterror"])
+                                                     {
+                                                         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops" message:@"The post could not be flagged. Please try again." preferredStyle:UIAlertControllerStyleAlert];
+                                                         
+                                                         UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                                                                            style:UIAlertActionStyleDefault
+                                                                                                          handler:nil];
+                                                         [alertController addAction:actionOk];
+                                                         [self presentViewController:alertController animated:YES completion:nil];
+                                                         
+                                                     }
+                                                     
+                                                     
+                                                     if ([ResultString isEqualToString:@"alreadyflagged"])
+                                                     {
+                                                         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops" message:@"You have already flagged this post. Please wait for our team to review this." preferredStyle:UIAlertControllerStyleAlert];
+                                                         
+                                                         UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                                                                            style:UIAlertActionStyleDefault
+                                                                                                          handler:nil];
+                                                         [alertController addAction:actionOk];
+                                                         [self presentViewController:alertController animated:YES completion:nil];
+                                                         
+                                                     }
+                                                     
+                                                     
+                                                     
+                                                 }
+                                                 else
+                                                 {
+                                                     NSLog(@" error login1 ---%ld",(long)statusCode);
+                                                     
+                                                 }
+                                             }
+                                             else if(error)
+                                             {
+                                                 NSLog(@"error login2.......%@",error.description);
+                                                 
+                                                 
+                                             }
+                                             
+                                         }];
+        [dataTask resume];
+    };
+    
+
+    
     
     
 }

@@ -284,7 +284,7 @@
     cameraUI.videoQuality = UIImagePickerControllerQualityType640x480;
     
     cameraUI.showsCameraControls = YES;
-    cameraUI.videoMaximumDuration = 60.0f;
+    cameraUI.videoMaximumDuration = 15.0f;
     
     cameraUI.allowsEditing = NO;
     
@@ -599,13 +599,10 @@
                     Cell_DetailCar = [[[NSBundle mainBundle]loadNibNamed:@"ProductDetailCellCar" owner:self options:nil] objectAtIndex:0];
                     
                     
-                    
-                    
                     if (Cell_DetailCar == nil)
                     {
                         
                         Cell_DetailCar = [[ProductDetailCellCar alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cell_detailcar];
-                        
                         
                     }
                     
@@ -622,7 +619,9 @@
                     
                     
                     Cell_DetailCar.locationLabel.text = locationstr;
-                    //             detailCell.sellingTextview.delegate=self;
+                    
+                    [Cell_DetailCar.locationChangeButton addTarget:self action:@selector(ChangeLocations:) forControlEvents:UIControlEventTouchUpInside];
+                    
                     
                     if ([Cell_DetailCar.sellingTextview.text isEqualToString:@"What are you selling?"] || [Cell_DetailCar.sellingTextview.text isEqualToString:@""] )
                     {
@@ -716,7 +715,8 @@
                     
                     
                     Cell_DetailProperty.locationLabel.text = locationstr;
-     //             detailCell.sellingTextview.delegate=self;
+                    [Cell_DetailProperty.locationChangeButton addTarget:self action:@selector(ChangeLocations:) forControlEvents:UIControlEventTouchUpInside];
+    
                     
                     if ([Cell_DetailProperty.sellingTextview.text isEqualToString:@"What are you selling?"] || [Cell_DetailProperty.sellingTextview.text isEqualToString:@""] )
                     {
@@ -797,7 +797,7 @@
                     
                     
                     detailCell.locationLabel.text = locationstr;
-                    //             detailCell.sellingTextview.delegate=self;
+                    [detailCell.locationChangeButton addTarget:self action:@selector(ChangeLocations:) forControlEvents:UIControlEventTouchUpInside];
                     
                     if ([detailCell.sellingTextview.text isEqualToString:@"What are you selling?"] || [detailCell.sellingTextview.text isEqualToString:@""] )
                     {
@@ -1333,7 +1333,7 @@
     
     if  ([textField isEqual:Cell_DetailCar.mileageTextField])
     {
-        Cell_DetailCar.mileageTextField.text =@"";
+       // Cell_DetailCar.mileageTextField.text =@"";
         KMlabel.frame = CGRectMake(0, 0, 0, 0);
         KMlabel.hidden = YES;
        
@@ -1789,6 +1789,7 @@
     compressionEncoder.outputURL = outputVideoUrl;
     compressionEncoder.shouldOptimizeForNetworkUse = YES;//Provide output video Url here
     compressionEncoder.videoSettings = @
+    
     {
     AVVideoCodecKey: AVVideoCodecH264,
     AVVideoWidthKey: Vedio_Width,   //Set your resolution width here
@@ -1989,13 +1990,30 @@
         NSString *hashtags;
         NSString *hashtagsVal;
         
+        
+        
+        
+        
 
         
         if ([self.name isEqualToString:@"car"])
         {
             
-            title= @"title";
-            titleVal =Cell_DetailCar.sellingTextview.text;
+            
+             if ([Cell_DetailCar.sellingTextview.text isEqualToString:@"What are you selling?"])
+             {
+                 title= @"title";
+                 titleVal = @"";
+             }
+            else
+            {
+                
+                title= @"title";
+                titleVal =Cell_DetailCar.sellingTextview.text;
+            }
+           
+            
+            
             if ([Cell_DetailCar.hashTextView.text isEqualToString:@"Add some #Hashtags"])
             {
                 hashtags= @"hashtags";
@@ -2012,8 +2030,23 @@
         }
         else if ([self.name isEqualToString:@"property"])
         {
-            title= @"title";
-            titleVal =Cell_DetailProperty.sellingTextview.text;// [defaults valueForKey:@"title"];
+//            title= @"title";
+//            titleVal =Cell_DetailProperty.sellingTextview.text;// [defaults valueForKey:@"title"];
+            
+            if ([Cell_DetailProperty.sellingTextview.text isEqualToString:@"What are you selling?"])
+            {
+                title= @"title";
+                titleVal = @"";
+            }
+            else
+            {
+                
+                title= @"title";
+                titleVal =Cell_DetailProperty.sellingTextview.text;
+            }
+            
+            
+            
     
             if ([Cell_DetailProperty.hashTextView.text isEqualToString:@"Add some #Hashtags"])
             {
@@ -2032,8 +2065,21 @@
         else
         {
             
-            title= @"title";
-            titleVal =detailCell.sellingTextview.text;// [defaults valueForKey:@"title"];
+//            title= @"title";
+//            titleVal =detailCell.sellingTextview.text;// [defaults valueForKey:@"title"];
+            
+            if ([detailCell.sellingTextview.text isEqualToString:@"What are you selling?"])
+            {
+                title= @"title";
+                titleVal = @"";
+            }
+            else
+            {
+                
+                title= @"title";
+                titleVal =detailCell.sellingTextview.text;
+            }
+            
 
             if ([detailCell.hashTextView.text isEqualToString:@"Add some #Hashtags"])
             {

@@ -72,5 +72,9 @@
 	<string>http://www.tammapp.com/app/search.php</string>
 	<key>uploadpostmedia</key>
 	<string>http://www.tammapp.com/app/uploadpostmedia.php</string>
+	<key>savesettings</key>
+	<string>http://www.tammapp.com/app/savesettings.php</string>
+	<key>flag</key>
+	<string>http://www.tammapp.com/app/flag.php</string>
 </dict>
 </plist>
