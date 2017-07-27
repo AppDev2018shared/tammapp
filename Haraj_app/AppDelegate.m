@@ -20,7 +20,7 @@
 #import "Firebase.h"
 @import UserNotifications;
 
-@interface AppDelegate ()<CLLocationManagerDelegate,FIRMessagingDelegate,UNUserNotificationCenterDelegate>
+@interface AppDelegate ()<CLLocationManagerDelegate,UNUserNotificationCenterDelegate>
 {
     NSUserDefaults *defaults;
     CLLocationManager *locationManager ;
@@ -35,8 +35,6 @@
 @end
 
 @implementation AppDelegate
-
-NSString *const kGCMMessageIDKey = @"gcm.message_id";
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -143,6 +141,20 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
     
     //------------------------------token---------------------------------------
     
+    NSString *token = [[FIRInstanceID instanceID] token];
+    
+    NSLog(@"registration token: %@", token);
+    
+    
+    // Add observer to listen for the token refresh notification.
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onTokenRefresh) name:kFIRInstanceIDTokenRefreshNotification object:nil];
+    
+    
+    
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+    
+    
         
    
     
@@ -199,54 +211,37 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
 }
 
 
-- (void)messaging:(nonnull FIRMessaging *)messaging didRefreshRegistrationToken:(nonnull NSString *)fcmToken
-{
-    // Note that this callback will be fired everytime a new token is generated, including the first
-    // time. So if you need to retrieve the token as soon as it is available this is where that
-    // should be done.
-    NSLog(@"FCM registration token: %@", fcmToken);
-    
-    // TODO: If necessary send token to application server.
-    
-}
-
--(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+- (void)onTokenRefresh
 {
     
-    // Print message ID.
-    if (userInfo[kGCMMessageIDKey]) {
-        NSLog(@"Message ID: %@", userInfo[kGCMMessageIDKey]);
-    }
+    // Get the default token if the earlier default token was nil. If the we already
     
-    // Print full message.
-    NSLog(@"%@", userInfo);
+    // had a default token most likely this will be nil too. But that is OK we just
     
-}
-
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
-fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-    // If you are receiving a notification message while your app is in the background,
-    // this callback will not be fired till the user taps on the notification launching the application.
-    // TODO: Handle data of notification
+    // wait for another notification of this type.
     
-    // With swizzling disabled you must let Messaging know about the message, for Analytics
-    // [[FIRMessaging messaging] appDidReceiveMessage:userInfo];
+    NSString *token = [[FIRInstanceID instanceID] token];
     
-    // Print message ID.
-    if (userInfo[kGCMMessageIDKey]) {
-        NSLog(@"Message ID: %@", userInfo[kGCMMessageIDKey]);
-    }
+    NSLog(@"registration token1: %@", token);
     
-    // Print full message.
-    NSLog(@"%@", userInfo);
     
-    completionHandler(UIBackgroundFetchResultNewData);
+    
+    // custom stuff as before.
+    
 }
 
 
 
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:
 
-
+     (void (^)(UIBackgroundFetchResult))completionHandler
+{
+    
+    // Handle your message. With swizzling enabled, no need to indicate
+    
+    // that a message was received.
+    
+}
 
 
 #pragma mark - location

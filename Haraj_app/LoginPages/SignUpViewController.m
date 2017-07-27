@@ -396,11 +396,9 @@
     NSString *country= @"country";
     NSString *countryVal =[defaults valueForKey:@"Countryname"];
         
-        NSString *fcmToken = [FIRMessaging messaging].FCMToken;
-        NSLog(@"FCM registration token: %@", fcmToken);
-        
-        NSString *devicetoken= @"devicetoken";
-        NSString *devicetokenVal =fcmToken;
+    NSString *token = [[FIRInstanceID instanceID] token];
+    NSString *devicetoken= @"devicetoken";
+    NSString *devicetokenVal =token;
     
     NSString *regType= @"regtype";
     NSString *regTypeVal =@"EMAIL";
@@ -809,11 +807,9 @@
     NSString *countryVal =[defaults valueForKey:@"Countryname"];
     
     
-    NSString *fcmToken = [FIRMessaging messaging].FCMToken;
-    NSLog(@"FCM registration token: %@", fcmToken);
-    
+    NSString *token = [[FIRInstanceID instanceID] token];
     NSString *devicetoken= @"devicetoken";
-    NSString *devicetokenVal =fcmToken;
+    NSString *devicetokenVal =token;
     
     NSString *regType= @"regtype";
     

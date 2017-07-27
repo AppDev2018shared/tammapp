@@ -637,7 +637,8 @@
                     [Cell_DetailCar.modelTextField addTarget:self action:@selector(textField_Action:) forControlEvents:UIControlEventEditingChanged];
                     [Cell_DetailCar.mileageTextField addTarget:self action:@selector(textField_Action:) forControlEvents:UIControlEventEditingChanged];
                    
-                    
+                    UIView *dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+                    Cell_DetailCar.carMakeTextField.inputView = dummyView;
                     
 
 
@@ -1943,6 +1944,9 @@
 {
     [detailCell.hashTextView resignFirstResponder];
     
+     [self.view showActivityViewWithLabel:@"Creating post..."];
+    
+    
     NSLog(@"createButtonPressed");
     Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
     NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
@@ -2377,6 +2381,7 @@
         if ([ResultString isEqualToString:@"done"])
         {
             
+             [self.view hideActivityViewWithAfterDelay:0];
             
 #pragma mark - Boost
             

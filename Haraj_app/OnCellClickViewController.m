@@ -3662,6 +3662,51 @@
         NSLog(@"cc %@",Array_MakeOffer);
         NSLog(@"registration_status %@",[[Array_MakeOffer objectAtIndex:0]valueForKey:@"registration_status"]);
         NSLog(@"ResultString %@",ResultString);
+        
+        
+        //--------------------- to check "done" in result string is present or not ---------------------------------------------
+        
+//        NSString *done = @"done";
+//        
+//        NSRange range =[ResultString rangeOfString:done options:NSCaseInsensitiveSearch];
+//        if (range.location != NSNotFound)
+//        {
+//            
+//            
+//            
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewEnable" object:self userInfo:nil];
+//            transparentView.hidden=YES;
+//            [self ChatCommentConnection];
+//            
+//            
+//            
+//            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Offer Accepted" message:@"Thank-you for making your offer. You will be informed if you win the bid or if someone outbids you." preferredStyle:UIAlertControllerStyleAlert];
+//            
+//            UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+//                                                               style:UIAlertActionStyleDefault
+//                                                             handler:^(UIAlertAction * action)
+//                                       {
+//                                           [self.view endEditing:YES];
+//                                           
+//                                           
+//                                           
+//                                       }];
+//            
+//            [alertController addAction:actionOk];
+//            [self presentViewController:alertController animated:YES completion:nil];
+//            
+//            
+//            NSString *askingpriceValString = [NSString stringWithFormat:@"%@",amountTextField.text];
+//            askingpriceValString = [askingpriceValString substringFromIndex:1];
+//            
+//            enteramount = askingpriceValString ;
+//            makeOffer = YES;
+//
+//            NSLog(@"FDFDF");
+//        }
+//        
+        
+        
         if ([ResultString isEqualToString:@"done"])
         {
             
