@@ -376,8 +376,7 @@
                                 
                             }];
     
-    
-    _plusButtonsViewMain.coverColor = [UIColor colorWithWhite:1.f alpha:0.90];
+    _plusButtonsViewMain.coverColor = [UIColor colorWithWhite:1.f alpha:1.0f];
     _plusButtonsViewMain.position = LGPlusButtonsViewPositionBottomRight;
     _plusButtonsViewMain.plusButtonAnimationType = LGPlusButtonAnimationTypeRotate;
     

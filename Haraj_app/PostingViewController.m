@@ -926,7 +926,9 @@
     {
         
         if (Cell_DetailCar.modelTextField.text.length == 0 || Cell_DetailCar.mileageTextField.text.length == 0)
+            
         {
+            
             moreCell.createButton.enabled = NO;
             moreCell .createButton.backgroundColor = [UIColor lightGrayColor];
             
@@ -938,6 +940,8 @@
             moreCell .createButton.backgroundColor = [UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1];
             
         }
+        
+        
         
     }
     
@@ -1342,7 +1346,7 @@
     
     if  ([textField isEqual:Cell_DetailProperty.propertySizeTextField])
     {
-        Cell_DetailProperty.propertySizeTextField.text =@"";
+      //  Cell_DetailProperty.propertySizeTextField.text =@"";
         Sqmlabel.frame = CGRectMake(0, 0, 0, 0);
         Sqmlabel.hidden = YES;
         
@@ -1423,7 +1427,7 @@
     else
     {
         
-        Sqmlabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 40, 50)];
+        Sqmlabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 50)];
         Sqmlabel.text = @" (Sqm)";
         Sqmlabel.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.0];
         Cell_DetailProperty.propertySizeTextField.rightViewMode = UITextFieldViewModeAlways;
@@ -1942,9 +1946,49 @@
 
 -(void)createButtonPressed:(id)sender
 {
+    
+    if ([self.name isEqualToString:@"car"])
+    {
+        
+        
+        if (Cell_DetailCar.carMakeTextField.text.length == 0)
+        {
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Choose Car Make" message:@"Please enter Car Make and try again" preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                               style:UIAlertActionStyleDefault
+                                                             handler:nil];
+            [alertController addAction:actionOk];
+            [self presentViewController:alertController animated:YES completion:nil];
+            
+        }
+        
+        else
+        {
+            [self createPostConnection];
+        }
+        
+    }
+    
+    else
+    {
+        
+        [self createPostConnection];
+        
+    }
+    
+    
+    
+    
+}
+
+
+-(void)createPostConnection
+{
+    
     [detailCell.hashTextView resignFirstResponder];
     
-     [self.view showActivityViewWithLabel:@"Creating post..."];
+    [self.view showActivityViewWithLabel:@"Creating post..."];
     
     
     NSLog(@"createButtonPressed");
@@ -1998,24 +2042,24 @@
         
         
         
-
+        
         
         if ([self.name isEqualToString:@"car"])
         {
             
             
-             if ([Cell_DetailCar.sellingTextview.text isEqualToString:@"What are you selling?"])
-             {
-                 title= @"title";
-                 titleVal = @"";
-             }
+            if ([Cell_DetailCar.sellingTextview.text isEqualToString:@"What are you selling?"])
+            {
+                title= @"title";
+                titleVal = @"";
+            }
             else
             {
                 
                 title= @"title";
                 titleVal =Cell_DetailCar.sellingTextview.text;
             }
-           
+            
             
             
             if ([Cell_DetailCar.hashTextView.text isEqualToString:@"Add some #Hashtags"])
@@ -2034,8 +2078,8 @@
         }
         else if ([self.name isEqualToString:@"property"])
         {
-//            title= @"title";
-//            titleVal =Cell_DetailProperty.sellingTextview.text;// [defaults valueForKey:@"title"];
+            //            title= @"title";
+            //            titleVal =Cell_DetailProperty.sellingTextview.text;// [defaults valueForKey:@"title"];
             
             if ([Cell_DetailProperty.sellingTextview.text isEqualToString:@"What are you selling?"])
             {
@@ -2051,7 +2095,7 @@
             
             
             
-    
+            
             if ([Cell_DetailProperty.hashTextView.text isEqualToString:@"Add some #Hashtags"])
             {
                 hashtags= @"hashtags";
@@ -2069,8 +2113,8 @@
         else
         {
             
-//            title= @"title";
-//            titleVal =detailCell.sellingTextview.text;// [defaults valueForKey:@"title"];
+            //            title= @"title";
+            //            titleVal =detailCell.sellingTextview.text;// [defaults valueForKey:@"title"];
             
             if ([detailCell.sellingTextview.text isEqualToString:@"What are you selling?"])
             {
@@ -2084,7 +2128,7 @@
                 titleVal =detailCell.sellingTextview.text;
             }
             
-
+            
             if ([detailCell.hashTextView.text isEqualToString:@"Add some #Hashtags"])
             {
                 hashtags= @"hashtags";
@@ -2104,7 +2148,7 @@
         
         NSString *carmake = @"carmake";
         NSString *carmakeVal = Cell_DetailCar.carMakeTextField.text;
-
+        
         
         NSString *carmodel = @"carmodel";
         NSString *carmodelVal = Cell_DetailCar.modelTextField.text;
@@ -2122,18 +2166,9 @@
         
         
         
-        
-        
-        
-
-        
-        
-        
         NSString *allowcalls= @"allowcalls";
         NSString *allowcallsVal = [defaults valueForKey:@"CallPressed"];
         
-//        NSString *enddays= @"enddays";
-//        NSString *enddaysVal = [defaults valueForKey:@"slival"];
         
         NSString *askingprice;
         NSString *askingpriceVal;
@@ -2154,8 +2189,8 @@
         NSString *descriptionVal;
         if ([ moreCell.moreTextView.text isEqualToString:@"Tell us more about the product"] )
         {
-          description= @"description";
-          descriptionVal = @"";
+            description= @"description";
+            descriptionVal = @"";
             
         }
         else
@@ -2195,8 +2230,12 @@
         }
         
     }
+
     
 }
+
+
+
 
 -(void)callButtonPressed:(id)sender
 {
@@ -3085,6 +3124,7 @@
 
 -(void)done:(UIBarButtonItem *)button
 {
+    
     
     carPickerView.hidden=YES;
     

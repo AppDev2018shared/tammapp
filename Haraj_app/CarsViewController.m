@@ -275,8 +275,19 @@
         cell.videoImageView.layer.cornerRadius = 10;
         cell.videoImageView.layer.masksToBounds = YES;
         
-        NSString *show = [NSString stringWithFormat:@"$%@",[dic_request valueForKey:@"showamount"]];
-        cell.bidAmountLabel.text = show;//[dic_request valueForKey:@"showamount"];
+        if ([dic_request valueForKey:@"showamount"] > [dic_request valueForKey:@"askingprice"])
+        {
+            NSString *show = [NSString stringWithFormat:@"$%@",[dic_request valueForKey:@"showamount"]];
+            cell.bidAmountLabel.text = show;
+        }
+        else
+        {
+            NSString *show = [NSString stringWithFormat:@"$%@",[dic_request valueForKey:@"askingprice"]];
+            cell.bidAmountLabel.text = show;
+        }
+        
+//        NSString *show = [NSString stringWithFormat:@"$%@",[dic_request valueForKey:@"showamount"]];
+       // cell.bidAmountLabel.text = show;//[dic_request valueForKey:@"showamount"];
         cell.titleLabel.text =  [dic_request valueForKey:@"title"];
         cell.locationLabel.text = [dic_request valueForKey:@"city1"];
         cell.timeLabel.text = [dic_request valueForKey:@"createtime"];
@@ -298,8 +309,22 @@
                                         options:SDWebImageRefreshCached];
         cell.locationLabel.text = [dic_request valueForKey:@"city1"];
         cell.timeLabel.text = [dic_request valueForKey:@"createtime"];
-        NSString *show = [NSString stringWithFormat:@"$%@",[dic_request valueForKey:@"showamount"]];
-        cell.bidAmountLabel.text = show;
+        
+        if ([dic_request valueForKey:@"showamount"] > [dic_request valueForKey:@"askingprice"])
+        {
+            NSString *show = [NSString stringWithFormat:@"$%@",[dic_request valueForKey:@"showamount"]];
+            cell.bidAmountLabel.text = show;
+        }
+        else
+        {
+            NSString *show = [NSString stringWithFormat:@"$%@",[dic_request valueForKey:@"askingprice"]];
+            cell.bidAmountLabel.text = show;
+        }
+
+        
+        
+//        NSString *show = [NSString stringWithFormat:@"$%@",[dic_request valueForKey:@"showamount"]];
+//        cell.bidAmountLabel.text = show;
         cell.titleLabel.text = [dic_request valueForKey:@"title"];
         
         return cell;

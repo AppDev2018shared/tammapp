@@ -1581,7 +1581,7 @@
         {
             return 0 + rect.size.height;
         }
-        else if (Array_SuggestPost.count >=1)
+        else if (Array_SuggestPost.count >=1 && Array_SuggestPost.count < 4)
         {
             
             return 140 + rect.size.height;

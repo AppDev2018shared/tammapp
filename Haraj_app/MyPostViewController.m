@@ -1174,8 +1174,9 @@
                     
                     //                    NSIndexPath* ipath = [NSIndexPath indexPathForRow:Array_Chats.count-1 inSection:3];
                     //                    [self.tableView scrollToRowAtIndexPath: ipath atScrollPosition: UITableViewScrollPositionTop animated: YES];
-                    
-                [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+
+#pragma mark- // latest comment
+              //  [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
                     
                     
                 }
