@@ -92,6 +92,7 @@
     
     
     defaults = [[NSUserDefaults alloc]init];
+    
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
     
     
@@ -107,11 +108,12 @@
     str_LabelCoordinates=@"no";
     
     text = [Array_UserInfo valueForKey:@"description"];
+    
     if ([[defaults valueForKey:@"imagetapped"] isEqualToString:@"yes"])
     {
-                str_postid= [Array_UserInfo  valueForKey:@"postid"];
-                str_userid =[Array_UserInfo valueForKey:@"userid1"];
-                [self SuggestPostConnection];
+        str_postid= [Array_UserInfo  valueForKey:@"postid"];
+        str_userid =[Array_UserInfo valueForKey:@"userid1"];
+        [self SuggestPostConnection];
     }
     
     nochats = @"";
@@ -120,12 +122,12 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(Hide_EnterCommentPopover) name:@"HideEnterCommentPopOver" object:nil];
     
     
-     [defaults setObject:@"no" forKey:@"SeeCommentPressed"];
+    [defaults setObject:@"no" forKey:@"SeeCommentPressed"];
     
     
     if ([[defaults valueForKey:@"Activitynext"]isEqualToString:@"yes"])
     {
-        self.tableView.contentInset = UIEdgeInsetsMake(-20, 0, 0, 0);        
+        self.tableView.contentInset = UIEdgeInsetsMake(-20, 0, 0, 0);
         [defaults setObject:@"no" forKey:@"Activitynext"];
     }
     
@@ -134,14 +136,6 @@
     {
         self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
     }
-   
-    
-
-    
-    
-    
-
-
     
 }
 -(void)viewWillAppear:(BOOL)animated
@@ -235,7 +229,7 @@
                 }
                 
             }
-
+            
             
         }
         else
@@ -248,12 +242,12 @@
         
         
     }
-   
+    
     else if (section == 4)
     {
         return 1;
     }
-   
+    
     return 0;
     
 }
@@ -264,29 +258,25 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-   // imageUrl=[NSURL URLWithString:[[Array_UserInfo valueForKey:@"image_url"] objectAtIndex:indexPath.row]];
     
-//    NSDictionary *dic_request=[Array_UserInfo objectAtIndex:swipeCount];
-//    NSLog(@"dic= %@",dic_request);
     static NSString *cell_two1=@"Cell_Two";
     
     static NSString *cell_details=@"DetailCell";
     static NSString *cell_detailscar=@"DetailCellCar";
     static NSString *cell_detailsproperty=@"DetailCellProperty";
-
-    
-    
     
     static NSString *cell_comments=@"ComCell";
     
     static NSString *cell_suggest=@"PostCell";
+    
     static NSString *post_comments=@"PostCell1";
+    
     switch (indexPath.section)
     {
-                     case 0:
+        case 0:
         {
             
-         
+            
             
             if (total_image >=2)
             {
@@ -307,14 +297,14 @@
                 if (total_image>=3)
                 {
                     Cell_two.bgView.hidden=NO;
-                    Cell_two.countLabel.text =[NSString stringWithFormat:@"%d",total_image-2];
+                    Cell_two.countLabel.text =[NSString stringWithFormat:@"%ld",total_image-2];
                 }
                 else
                 {
                     Cell_two.bgView.hidden=YES;
                     
                 }
-
+                
                 [Cell_two.bgView addGestureRecognizer:moreTap];
                 
                 button_threeDotsx=Cell_two.button_threedots.frame.origin.x;
@@ -334,13 +324,13 @@
                 if ([[Array_UserInfo valueForKey:@"mediatype"] isEqualToString:@"IMAGE"])
                 {
                     Cell_two.image_play1.hidden = YES;
-                   
+                    
                 }
                 else
                 {
                     
                     Cell_two.image_play1.hidden = NO;
-                   
+                    
                 }
                 
                 if ([[Array_UserInfo valueForKey:@"mediatype1"] isEqualToString:@"IMAGE"])
@@ -354,7 +344,7 @@
                 }
                 
                 NSURL *url=[NSURL URLWithString:[Array_UserInfo valueForKey:@"mediathumbnailurl"]];
-                 NSURL *url1=[NSURL URLWithString:[Array_UserInfo valueForKey:@"mediathumbnailurl1"]];
+                NSURL *url1=[NSURL URLWithString:[Array_UserInfo valueForKey:@"mediathumbnailurl1"]];
                 
                 [Cell_two.image1 sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
                 
@@ -385,7 +375,7 @@
                 
                 return Cell_two;
                 
-          
+                
             }
             else
             {
@@ -410,7 +400,7 @@
                 button_arroww=FirstCell.button_back.frame.size.width;
                 button_arrowh=FirstCell.button_back.frame.size.height;
                 
-              
+                
                 if ([[Array_UserInfo valueForKey:@"mediatype"] isEqualToString:@"IMAGE"])
                 {
                     FirstCell.image_play.hidden = YES;
@@ -435,19 +425,19 @@
                 }
                 else
                 {
-                
-                UITapGestureRecognizer *imageTap4 =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(MoreImage:)];
-                [FirstCell.imageView_thumbnails addGestureRecognizer:imageTap4];
+                    
+                    UITapGestureRecognizer *imageTap4 =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(MoreImage:)];
+                    [FirstCell.imageView_thumbnails addGestureRecognizer:imageTap4];
                     [self displayImage:FirstCell.imageView_thumbnails withImage:FirstCell.imageView_thumbnails.image];
                 }
                 
                 
-
+                
                 
                 return FirstCell;
             }
-
-        
+            
+            
         }
             break;
             
@@ -455,7 +445,7 @@
             
             
             if ([[Array_UserInfo valueForKey:@"category"] isEqualToString:@"car"])
-            
+                
             {
                 {
                     
@@ -488,13 +478,13 @@
                         makeOffer = NO;
                         
                         [Array_UserInfo setValue:enteramount forKey:@"showamount"];
-
+                        
                     }
                     else
                     {
-                    
-                    NSString *show = [NSString stringWithFormat:@"$%@",[Array_UserInfo valueForKey:@"showamount"]];
-                    detailCellCar.priceLabel.text = show;
+                        
+                        NSString *show = [NSString stringWithFormat:@"$%@",[Array_UserInfo valueForKey:@"showamount"]];
+                        detailCellCar.priceLabel.text = show;
                         
                     }
                     
@@ -524,14 +514,14 @@
                     [detailCellCar.favouriteImage addGestureRecognizer:favouriteImage_Tapped];
                     
                     
-                    
+#pragma mark- car tap view
                     //------------------------------------------$$$$$$$$$$$$$$$$$$$______________________________
                     
                     detailCellCar.tapView.userInteractionEnabled=YES;
                     detailCellCar.tapView.tag=swipeCount;
                     detailCellCar.detailinfoTextView.tag=swipeCount;
-                    UITapGestureRecognizer *label_Desc_Tapped =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(label_Desc_Tapped_ActionDetails:)];
-                    [detailCellCar.tapView addGestureRecognizer:label_Desc_Tapped];
+//                    UITapGestureRecognizer *label_Desc_Tapped =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(label_Desc_Tapped_ActionDetails:)];
+                 //   [detailCellCar.tapView addGestureRecognizer:label_Desc_Tapped];
                     if ([str_LabelCoordinates isEqualToString:@"no"])
                     {
                         str_LabelCoordinates=@"yes";
@@ -557,7 +547,6 @@
                     }
                     
                     
-                    //[[AllArrayData objectAtIndex:0]valueForKey:@"title"];;
                     
                     
                     CGSize constraint = CGSizeMake(340 - (CELL_CONTENT_MARGIN * 2), 20000.0f);
@@ -570,10 +559,8 @@
                     
                     float rows = (detailCellCar.detailinfoTextView.contentSize.height - detailCellCar.detailinfoTextView.textContainerInset.top - detailCellCar.detailinfoTextView.textContainerInset.bottom) / detailCellCar.detailinfoTextView.font.lineHeight;
                     NSLog(@"Dynamic label rowsline====%f",rows);
-                    //  cell_TwoDetails.label_Desc.numberOfLines=0;
                     
                     [detailCellCar.detailinfoTextView setText:text];
-                    // detailCell.detailinfoTextView.tag=indexPath.row;
                     
                     CGFloat fixedWidth = detailCellCar.detailinfoTextView.frame.size.width;
                     CGSize newSize = [detailCellCar.detailinfoTextView sizeThatFits:CGSizeMake(fixedWidth, MAXFLOAT)];
@@ -594,9 +581,9 @@
                         else if ((long)rHeight==2)
                         {
                             
-                            [detailCellCar.tapView setFrame:CGRectMake(TextView_ViewX,TextView_ViewY, TextView_ViewW,TextView_ViewH*2)];
+                            [detailCellCar.tapView setFrame:CGRectMake(TextView_ViewX,TextView_ViewY, TextView_ViewW,TextView_ViewH*2-6)];
                             
-                            [detailCellCar.detailinfoTextView setFrame:CGRectMake(Cell_DescLabelX,Cell_DescLabelY, Cell_DescLabelW,Cell_DescLabelH*2)];
+                            [detailCellCar.detailinfoTextView setFrame:CGRectMake(Cell_DescLabelX,Cell_DescLabelY, Cell_DescLabelW,Cell_DescLabelH*2-6)];
                             
                             
                         }
@@ -608,9 +595,9 @@
                             UITapGestureRecognizer *label_Desc_Tapped =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(label_Desc_Tapped_ActionDetails:)];
                             [detailCellCar.tapView addGestureRecognizer:label_Desc_Tapped];
                             
-                            [detailCellCar.tapView setFrame:CGRectMake(TextView_ViewX,TextView_ViewY, TextView_ViewW,TextView_ViewH*2)];
+                            [detailCellCar.tapView setFrame:CGRectMake(TextView_ViewX,TextView_ViewY, TextView_ViewW,TextView_ViewH*2-6)];
                             
-                            [detailCellCar.detailinfoTextView setFrame:CGRectMake(Cell_DescLabelX,Cell_DescLabelY, Cell_DescLabelW,Cell_DescLabelH*2)];
+                            [detailCellCar.detailinfoTextView setFrame:CGRectMake(Cell_DescLabelX,Cell_DescLabelY, Cell_DescLabelW,Cell_DescLabelH*2-6)];
                             
                             
                         }
@@ -642,8 +629,8 @@
                     NSLog(@"Dynamic label heightccc====%f",Cell_DescLabelW);
                     NSLog(@"Dynamic label heightccc====%f",Cell_DescLabelH);
                     detailCellCar.tapView.backgroundColor=[UIColor clearColor];
-                    
-                    [detailCellCar.view_CordinateViewTapped setFrame:CGRectMake(detailCellCar.view_CordinateViewTapped.frame.origin.x,(detailCellCar.tapView.frame.origin.y+detailCellCar.tapView.frame.size.height)+23,detailCellCar.view_CordinateViewTapped.frame.size.width, detailCellCar.view_CordinateViewTapped.frame.size.height)];
+//-----23-15 +detailCellCar.tapView.frame.size.height
+                    [detailCellCar.view_CordinateViewTapped setFrame:CGRectMake(detailCellCar.view_CordinateViewTapped.frame.origin.x,(detailCellCar.tapView.frame.origin.y + detailCellCar.tapView.frame.size.height) ,detailCellCar.view_CordinateViewTapped.frame.size.width, detailCellCar.view_CordinateViewTapped.frame.size.height)];
                     
                     [detailCellCar.Button_makeoffer setFrame:CGRectMake(detailCellCar.Button_makeoffer.frame.origin.x,(detailCell.view_CordinateViewTapped.frame.origin.y+detailCellCar.view_CordinateViewTapped.frame.size.height),detailCellCar.Button_makeoffer.frame.size.width, detailCellCar.Button_makeoffer.frame.size.height)];
                     [detailCellCar.Button_makeoffer  addTarget:self action:@selector(makeOfferPressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -700,10 +687,10 @@
                         detailCellProperty.priceLabel.text = show;
                         
                     }
-                     detailCellProperty.askingPriceLabel.text = [NSString stringWithFormat:@"$%@",[Array_UserInfo valueForKey:@"askingprice"]];
+                    detailCellProperty.askingPriceLabel.text = [NSString stringWithFormat:@"$%@",[Array_UserInfo valueForKey:@"askingprice"]];
                     
-//                    NSString *show = [NSString stringWithFormat:@"$%@",[Array_UserInfo valueForKey:@"showamount"]];
-//                    detailCellProperty.priceLabel.text = show;//[dic_request valueForKey:@"showamount"];
+                    //                    NSString *show = [NSString stringWithFormat:@"$%@",[Array_UserInfo valueForKey:@"showamount"]];
+                    //                    detailCellProperty.priceLabel.text = show;//[dic_request valueForKey:@"showamount"];
                     detailCellProperty.timeLabel.text = [Array_UserInfo valueForKey:@"createtime"];
                     detailCellProperty.titleLabel.text = [Array_UserInfo valueForKey:@"title"];
                     
@@ -727,14 +714,14 @@
                     
                     
                     
-                    
+#pragma mark- property tap view
                     //------------------------------------------$$$$$$$$$$$$$$$$$$$______________________________
                     
                     detailCellProperty.tapView.userInteractionEnabled=YES;
                     detailCellProperty.tapView.tag=swipeCount;
                     detailCellProperty.detailinfoTextView.tag=swipeCount;
-                    UITapGestureRecognizer *label_Desc_Tapped =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(label_Desc_Tapped_ActionDetails:)];
-                    [detailCellProperty.tapView addGestureRecognizer:label_Desc_Tapped];
+//                    UITapGestureRecognizer *label_Desc_Tapped =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(label_Desc_Tapped_ActionDetails:)];
+//                    [detailCellProperty.tapView addGestureRecognizer:label_Desc_Tapped];
                     if ([str_LabelCoordinates isEqualToString:@"no"])
                     {
                         str_LabelCoordinates=@"yes";
@@ -845,7 +832,7 @@
                     NSLog(@"Dynamic label heightccc====%f",Cell_DescLabelW);
                     NSLog(@"Dynamic label heightccc====%f",Cell_DescLabelH);
                     detailCellProperty.tapView.backgroundColor=[UIColor clearColor];
-                    
+//---23
                     [detailCellProperty.view_CordinateViewTapped setFrame:CGRectMake(detailCellProperty.view_CordinateViewTapped.frame.origin.x,(detailCellProperty.tapView.frame.origin.y+detailCellProperty.tapView.frame.size.height)+23,detailCellProperty.view_CordinateViewTapped.frame.size.width, detailCellProperty.view_CordinateViewTapped.frame.size.height)];
                     
                     [detailCellProperty.Button_makeoffer setFrame:CGRectMake(detailCellProperty.Button_makeoffer.frame.origin.x,(detailCellProperty.view_CordinateViewTapped.frame.origin.y+detailCellProperty.view_CordinateViewTapped.frame.size.height),detailCellProperty.Button_makeoffer.frame.size.width, detailCellProperty.Button_makeoffer.frame.size.height)];
@@ -859,228 +846,199 @@
                 
             }
             
-
+            
             
             
             else
-            
-        {
-            
-            
-            detailCell = [[[NSBundle mainBundle]loadNibNamed:@"DetailTableViewCell" owner:self options:nil] objectAtIndex:0];
-            
-            if (detailCell == nil)
+                
             {
                 
-                detailCell = [[DetailTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cell_details];
                 
+                detailCell = [[[NSBundle mainBundle]loadNibNamed:@"DetailTableViewCell" owner:self options:nil] objectAtIndex:0];
                 
-            }
-            
-            
-            [detailCell.detailinfoTextView setText:text];
-            detailCell.locationLabel.text = [Array_UserInfo valueForKey:@"city1"];
-            detailCell.hashtagLabel.text = [Array_UserInfo valueForKey:@"hashtags"];
-            detailCell.postidLabel.text = [NSString stringWithFormat:@"POST ID: %@",[Array_UserInfo valueForKey:@"postid"]];
-            [defaults setObject:[Array_UserInfo valueForKey:@"postid"] forKey:@"post-id"];
-            
-            
-            detailCell.usernameLabel.text = [Array_UserInfo valueForKey:@"usersname"];
-            detailCell.durationLabel.text = [Array_UserInfo valueForKey:@"postdur"];
-            
-            if (makeOffer)
-            {
-                NSString *show = [NSString stringWithFormat:@"$%@",enteramount ];
-                detailCell.priceLabel.text = show;
-                makeOffer = NO;
-                
-                [Array_UserInfo setValue:enteramount forKey:@"showamount"];
-                
-            }
-            else
-            {
-                
-                NSString *show = [NSString stringWithFormat:@"$%@",[Array_UserInfo valueForKey:@"showamount"]];
-                detailCell.priceLabel.text = show;
-                
-            }
-            
-             detailCell.askingPriceLabel.text = [NSString stringWithFormat:@"$%@",[Array_UserInfo valueForKey:@"askingprice"]];
-            
-
-            detailCell.timeLabel.text = [Array_UserInfo valueForKey:@"createtime"];
-            detailCell.titleLabel.text = [Array_UserInfo valueForKey:@"title"];
-            
-            
-            NSURL *url=[NSURL URLWithString:[Array_UserInfo valueForKey:@"usersprofilepic"]];
-            
-            [detailCell.profileImage sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultimg.jpg"] options:SDWebImageRefreshCached];
-            detailCell.profileImage.layer.cornerRadius = detailCell.profileImage.frame.size.height / 2;
-            detailCell.profileImage.clipsToBounds = YES;
-            
-            
-            detailCell.favouriteImage.userInteractionEnabled = YES;
-            detailCell.favouriteImage.tag=swipeCount;
-            UITapGestureRecognizer *favouriteImage_Tapped =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(favouriteImage_ActionDetails:)];
-            [detailCell.favouriteImage addGestureRecognizer:favouriteImage_Tapped];
-            
-            
-//            
-//            if ([[Array_UserInfo valueForKey:@"favourite"]isEqualToString:@"TRUE"])
-//            {
-//                [detailCell.favouriteImage setImage:[UIImage imageNamed:@"Barfavouritefill"]];
-//            }
-//            else
-//            {
-//                [detailCell.favouriteImage setImage:[UIImage imageNamed:@"Barfavourite"]];
-//               
-//            }
-//            
-//#pragma mark - fdgfhjdgj;
-//            
-//            if (fav)
-//            {
-//                
-//                
-//                if ([str_fav isEqualToString:@"inserted"])
-//                {
-//                    [detailCell .favouriteImage setImage:[UIImage imageNamed:@"Barfavouritefill"]];
-//                }
-//                else
-//                {
-//                    [detailCell .favouriteImage setImage:[UIImage imageNamed:@"Barfavourite"]];
-//                    
-//                }
-//                
-//                fav = false;
-//                
-//            }
-//            
-  //------------------------------------------$$$$$$$$$$$$$$$$$$$______________________________
-            
-            detailCell.tapView.userInteractionEnabled=YES;
-            detailCell.tapView.tag=swipeCount;
-           detailCell.detailinfoTextView.tag=swipeCount;
-            UITapGestureRecognizer *label_Desc_Tapped =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(label_Desc_Tapped_ActionDetails:)];
-            [detailCell.tapView addGestureRecognizer:label_Desc_Tapped];
-            if ([str_LabelCoordinates isEqualToString:@"no"])
-            {
-                str_LabelCoordinates=@"yes";
-                
-                Cell_DescLabelX=detailCell.detailinfoTextView.frame.origin.x;
-                Cell_DescLabelY=detailCell.detailinfoTextView.frame.origin.y;
-                Cell_DescLabelW=detailCell.detailinfoTextView.frame.size.width;
-                Cell_DescLabelH=detailCell.detailinfoTextView.frame.size.height;
-                
-                TextView_ViewX=detailCell.tapView.frame.origin.x;
-                TextView_ViewY=detailCell.tapView.frame.origin.y;
-                TextView_ViewW=detailCell.tapView.frame.size.width;
-                TextView_ViewH=detailCell.tapView.frame.size.height;
-                
-                FavIV_Y=(detailCell.view_CordinateViewTapped.frame.origin.y-(detailCell.tapView.frame.origin.y+detailCell.tapView.frame.size.height));
-                
-                NSLog(@"Dynamic label heightc====%f",Cell_DescLabelX);
-                NSLog(@"Dynamic label heightc====%f",Cell_DescLabelY);
-                NSLog(@"Dynamic label heightc====%f",Cell_DescLabelW);
-                NSLog(@"Dynamic label heightc====%f",Cell_DescLabelH);
-                  NSLog(@"FavIV_Y====%f",FavIV_Y);
-                
-            }
-
-            
-      //[[AllArrayData objectAtIndex:0]valueForKey:@"title"];;
-            
-            
-            CGSize constraint = CGSizeMake(340 - (CELL_CONTENT_MARGIN * 2), 20000.0f);
-            
-            CGSize size = [text sizeWithFont:[UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:17] constrainedToSize:constraint lineBreakMode:UILineBreakModeWordWrap];
-            
-            CGFloat height = MAX(size.height, 30.0f);
-            NSLog(@"Dynamic label height====%f",height);
-            
-            
-            float rows = (detailCell.detailinfoTextView.contentSize.height - detailCell.detailinfoTextView.textContainerInset.top - detailCell.detailinfoTextView.textContainerInset.bottom) / detailCell.detailinfoTextView.font.lineHeight;
-            NSLog(@"Dynamic label rowsline====%f",rows);
-            //  cell_TwoDetails.label_Desc.numberOfLines=0;
-            
-            [detailCell.detailinfoTextView setText:text];
-           // detailCell.detailinfoTextView.tag=indexPath.row;
-          
-            CGFloat fixedWidth = detailCell.detailinfoTextView.frame.size.width;
-            CGSize newSize = [detailCell.detailinfoTextView sizeThatFits:CGSizeMake(fixedWidth, MAXFLOAT)];
-            NSInteger rHeight = size.height/17;
-            NSLog(@"No of lines: %ld",(long)rHeight);
-            detailCell.detailinfoTextView1.hidden=YES;
-            if ([str_TappedLabel isEqualToString:@"no"])
-            {
-                if ((long)rHeight==1)
+                if (detailCell == nil)
                 {
                     
-                    [detailCell.tapView setFrame:CGRectMake(TextView_ViewX,TextView_ViewY, TextView_ViewW,TextView_ViewH)];
-                    
-                    [detailCell.detailinfoTextView setFrame:CGRectMake(Cell_DescLabelX,Cell_DescLabelY, Cell_DescLabelW,Cell_DescLabelH)];
-                    
-                    
-                }
-                else if ((long)rHeight==2)
-                {
-                    
-                  [detailCell.tapView setFrame:CGRectMake(TextView_ViewX,TextView_ViewY, TextView_ViewW,TextView_ViewH*2)];
-                    
-                    [detailCell.detailinfoTextView setFrame:CGRectMake(Cell_DescLabelX,Cell_DescLabelY, Cell_DescLabelW,Cell_DescLabelH*2)];
-                    
-                    
-                }
-                else if ((long)rHeight>=3)
-                {
-                    detailCell.tapView.userInteractionEnabled=YES;
-                    detailCell.detailinfoTextView.textContainer.maximumNumberOfLines = 0;
-                    detailCell.detailinfoTextView.textContainer.lineBreakMode = NSLineBreakByTruncatingTail;
-                    UITapGestureRecognizer *label_Desc_Tapped =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(label_Desc_Tapped_ActionDetails:)];
-                    [detailCell.tapView addGestureRecognizer:label_Desc_Tapped];
-                    
-                    [detailCell.tapView setFrame:CGRectMake(TextView_ViewX,TextView_ViewY, TextView_ViewW,TextView_ViewH*2)];
-                    
-                    [detailCell.detailinfoTextView setFrame:CGRectMake(Cell_DescLabelX,Cell_DescLabelY, Cell_DescLabelW,Cell_DescLabelH*2)];
+                    detailCell = [[DetailTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cell_details];
                     
                     
                 }
                 
-            }
-            else
-            {
+                
+                [detailCell.detailinfoTextView setText:text];
+                detailCell.locationLabel.text = [Array_UserInfo valueForKey:@"city1"];
+                detailCell.hashtagLabel.text = [Array_UserInfo valueForKey:@"hashtags"];
+                detailCell.postidLabel.text = [NSString stringWithFormat:@"POST ID: %@",[Array_UserInfo valueForKey:@"postid"]];
+                [defaults setObject:[Array_UserInfo valueForKey:@"postid"] forKey:@"post-id"];
                 
                 
-                CGRect newFrame = detailCell.detailinfoTextView.frame;
-                newFrame.size = CGSizeMake(fmaxf(newSize.width, fixedWidth), newSize.height);
+                detailCell.usernameLabel.text = [Array_UserInfo valueForKey:@"usersname"];
+                detailCell.durationLabel.text = [Array_UserInfo valueForKey:@"postdur"];
+                
+                if (makeOffer)
+                {
+                    NSString *show = [NSString stringWithFormat:@"$%@",enteramount ];
+                    detailCell.priceLabel.text = show;
+                    makeOffer = NO;
+                    
+                    [Array_UserInfo setValue:enteramount forKey:@"showamount"];
+                    
+                }
+                else
+                {
+                    
+                    NSString *show = [NSString stringWithFormat:@"$%@",[Array_UserInfo valueForKey:@"showamount"]];
+                    detailCell.priceLabel.text = show;
+                    
+                }
+                
+                detailCell.askingPriceLabel.text = [NSString stringWithFormat:@"$%@",[Array_UserInfo valueForKey:@"askingprice"]];
+                
+                
+                detailCell.timeLabel.text = [Array_UserInfo valueForKey:@"createtime"];
+                detailCell.titleLabel.text = [Array_UserInfo valueForKey:@"title"];
+                
+                
+                NSURL *url=[NSURL URLWithString:[Array_UserInfo valueForKey:@"usersprofilepic"]];
+                
+                [detailCell.profileImage sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultimg.jpg"] options:SDWebImageRefreshCached];
+                detailCell.profileImage.layer.cornerRadius = detailCell.profileImage.frame.size.height / 2;
+                detailCell.profileImage.clipsToBounds = YES;
+                
+                
+                detailCell.favouriteImage.userInteractionEnabled = YES;
+                detailCell.favouriteImage.tag=swipeCount;
+                UITapGestureRecognizer *favouriteImage_Tapped =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(favouriteImage_ActionDetails:)];
+                [detailCell.favouriteImage addGestureRecognizer:favouriteImage_Tapped];
+                
+                
+                
+                //------------------------------------------$$$$$$$$$$$$$$$$$$$______________________________---------
+#pragma mark- tap view
                 
                 detailCell.tapView.userInteractionEnabled=YES;
+                detailCell.tapView.tag=swipeCount;
+                detailCell.detailinfoTextView.tag=swipeCount;
+//                UITapGestureRecognizer *label_Desc_Tapped =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(label_Desc_Tapped_ActionDetails:)];
+//                [detailCell.tapView addGestureRecognizer:label_Desc_Tapped];
+                if ([str_LabelCoordinates isEqualToString:@"no"])
+                {
+                    str_LabelCoordinates=@"yes";
+                    
+                    Cell_DescLabelX=detailCell.detailinfoTextView.frame.origin.x;
+                    Cell_DescLabelY=detailCell.detailinfoTextView.frame.origin.y;
+                    Cell_DescLabelW=detailCell.detailinfoTextView.frame.size.width;
+                    Cell_DescLabelH=detailCell.detailinfoTextView.frame.size.height;
+                    
+                    TextView_ViewX=detailCell.tapView.frame.origin.x;
+                    TextView_ViewY=detailCell.tapView.frame.origin.y;
+                    TextView_ViewW=detailCell.tapView.frame.size.width;
+                    TextView_ViewH=detailCell.tapView.frame.size.height;
+                    
+                    FavIV_Y=(detailCell.view_CordinateViewTapped.frame.origin.y-(detailCell.tapView.frame.origin.y+detailCell.tapView.frame.size.height));
+                    
+                    NSLog(@"Dynamic label heightc====%f",Cell_DescLabelX);
+                    NSLog(@"Dynamic label heightc====%f",Cell_DescLabelY);
+                    NSLog(@"Dynamic label heightc====%f",Cell_DescLabelW);
+                    NSLog(@"Dynamic label heightc====%f",Cell_DescLabelH);
+                    NSLog(@"FavIV_Y====%f",FavIV_Y);
+                    
+                }
                 
-                UITapGestureRecognizer *label_Desc_Tapped =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(label_Desc_Tapped_ActionDetails:)];
-                [detailCell.tapView addGestureRecognizer:label_Desc_Tapped];
-                [detailCell.tapView setFrame:CGRectMake(TextView_ViewX,TextView_ViewY, newFrame.size.width,newFrame.size.height)];
-                [detailCell.detailinfoTextView setFrame:newFrame];
+                
+                //[[AllArrayData objectAtIndex:0]valueForKey:@"title"];;
                 
                 
+                CGSize constraint = CGSizeMake(340 - (CELL_CONTENT_MARGIN * 2), 20000.0f);
+                
+                CGSize size = [text sizeWithFont:[UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:17] constrainedToSize:constraint lineBreakMode:UILineBreakModeWordWrap];
+                
+                CGFloat height = MAX(size.height, 30.0f);
+                NSLog(@"Dynamic label height====%f",height);
+                
+                
+                float rows = (detailCell.detailinfoTextView.contentSize.height - detailCell.detailinfoTextView.textContainerInset.top - detailCell.detailinfoTextView.textContainerInset.bottom) / detailCell.detailinfoTextView.font.lineHeight;
+                NSLog(@"Dynamic label rowsline====%f",rows);
+                //  cell_TwoDetails.label_Desc.numberOfLines=0;
+                
+                [detailCell.detailinfoTextView setText:text];
+                // detailCell.detailinfoTextView.tag=indexPath.row;
+                
+                CGFloat fixedWidth = detailCell.detailinfoTextView.frame.size.width;
+                CGSize newSize = [detailCell.detailinfoTextView sizeThatFits:CGSizeMake(fixedWidth, MAXFLOAT)];
+                NSInteger rHeight = size.height/17;
+                NSLog(@"No of lines: %ld",(long)rHeight);
+                detailCell.detailinfoTextView1.hidden=YES;
+                if ([str_TappedLabel isEqualToString:@"no"])
+                {
+                    if ((long)rHeight==1)
+                    {
+                        
+                        [detailCell.tapView setFrame:CGRectMake(TextView_ViewX,TextView_ViewY, TextView_ViewW,TextView_ViewH)];
+                        
+                        [detailCell.detailinfoTextView setFrame:CGRectMake(Cell_DescLabelX,Cell_DescLabelY, Cell_DescLabelW,Cell_DescLabelH)];
+                        
+                        
+                    }
+                    else if ((long)rHeight==2)
+                    {
+                        
+                        [detailCell.tapView setFrame:CGRectMake(TextView_ViewX,TextView_ViewY, TextView_ViewW,TextView_ViewH*2)];
+                        
+                        [detailCell.detailinfoTextView setFrame:CGRectMake(Cell_DescLabelX,Cell_DescLabelY, Cell_DescLabelW,Cell_DescLabelH*2)];
+                        
+                        
+                    }
+                    else if ((long)rHeight>=3)
+                    {
+                        detailCell.tapView.userInteractionEnabled=YES;
+                        detailCell.detailinfoTextView.textContainer.maximumNumberOfLines = 0;
+                        detailCell.detailinfoTextView.textContainer.lineBreakMode = NSLineBreakByTruncatingTail;
+                        UITapGestureRecognizer *label_Desc_Tapped =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(label_Desc_Tapped_ActionDetails:)];
+                        [detailCell.tapView addGestureRecognizer:label_Desc_Tapped];
+                        
+                        [detailCell.tapView setFrame:CGRectMake(TextView_ViewX,TextView_ViewY, TextView_ViewW,TextView_ViewH*2)];
+                        
+                        [detailCell.detailinfoTextView setFrame:CGRectMake(Cell_DescLabelX,Cell_DescLabelY, Cell_DescLabelW,Cell_DescLabelH*2)];
+                        
+                        
+                    }
+                    
+                }
+                else
+                {
+                    
+                    
+                    CGRect newFrame = detailCell.detailinfoTextView.frame;
+                    newFrame.size = CGSizeMake(fmaxf(newSize.width, fixedWidth), newSize.height);
+                    
+                    detailCell.tapView.userInteractionEnabled=YES;
+                    
+                    UITapGestureRecognizer *label_Desc_Tapped =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(label_Desc_Tapped_ActionDetails:)];
+                    [detailCell.tapView addGestureRecognizer:label_Desc_Tapped];
+                    [detailCell.tapView setFrame:CGRectMake(TextView_ViewX,TextView_ViewY, newFrame.size.width,newFrame.size.height)];
+                    [detailCell.detailinfoTextView setFrame:newFrame];
+                    
+                    
+                }
+                
+                NSLog(@"Dynamic label heightccc====%f",Cell_DescLabelX);
+                NSLog(@"Dynamic label heightccc====%f",Cell_DescLabelY);
+                NSLog(@"Dynamic label heightccc====%f",Cell_DescLabelW);
+                NSLog(@"Dynamic label heightccc====%f",Cell_DescLabelH);
+                detailCell.tapView.backgroundColor=[UIColor clearColor];
+//---23
+                [detailCell.view_CordinateViewTapped setFrame:CGRectMake(detailCell.view_CordinateViewTapped.frame.origin.x,(detailCell.tapView.frame.origin.y+detailCell.tapView.frame.size.height)+23,detailCell.view_CordinateViewTapped.frame.size.width, detailCell.view_CordinateViewTapped.frame.size.height)];
+                
+                [detailCell.Button_makeoffer setFrame:CGRectMake(detailCell.Button_makeoffer.frame.origin.x,(detailCell.view_CordinateViewTapped.frame.origin.y+detailCell.view_CordinateViewTapped.frame.size.height),detailCell.Button_makeoffer.frame.size.width, detailCell.Button_makeoffer.frame.size.height)];
+                [detailCell.Button_makeoffer  addTarget:self action:@selector(makeOfferPressed:) forControlEvents:UIControlEventTouchUpInside];
+                
+                
+                
+                return detailCell;
             }
-            
-            NSLog(@"Dynamic label heightccc====%f",Cell_DescLabelX);
-            NSLog(@"Dynamic label heightccc====%f",Cell_DescLabelY);
-            NSLog(@"Dynamic label heightccc====%f",Cell_DescLabelW);
-            NSLog(@"Dynamic label heightccc====%f",Cell_DescLabelH);
-            detailCell.tapView.backgroundColor=[UIColor clearColor];
-            
-            [detailCell.view_CordinateViewTapped setFrame:CGRectMake(detailCell.view_CordinateViewTapped.frame.origin.x,(detailCell.tapView.frame.origin.y+detailCell.tapView.frame.size.height)+23,detailCell.view_CordinateViewTapped.frame.size.width, detailCell.view_CordinateViewTapped.frame.size.height)];
-            
-             [detailCell.Button_makeoffer setFrame:CGRectMake(detailCell.Button_makeoffer.frame.origin.x,(detailCell.view_CordinateViewTapped.frame.origin.y+detailCell.view_CordinateViewTapped.frame.size.height),detailCell.Button_makeoffer.frame.size.width, detailCell.Button_makeoffer.frame.size.height)];
-              [detailCell.Button_makeoffer  addTarget:self action:@selector(makeOfferPressed:) forControlEvents:UIControlEventTouchUpInside];
-            
-            
-           
-            return detailCell;
-        }
             break;
-
+            
         case 2:
         {
             
@@ -1104,7 +1062,7 @@
             return cell_postcomments;
         }
             break;
-
+            
         case 3:
         {
             
@@ -1127,7 +1085,7 @@
             [ComCell.commentofferLabel setFont:[UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:20]];
             [ComCell.commentmsgLabel setFont:[UIFont fontWithName:@"SanFranciscoDisplay-medium" size:15]];
             
-                        
+            
             if (Array_Chats.count == 0 )
             {
                 ComCell.commentmsgLabel.text = @"No Chats available";
@@ -1223,18 +1181,18 @@
                 }
                 
                 
-
+                
                 
             }
             return ComCell;
         }
             
-             break;
-
+            break;
             
             
-    
-    
+            
+            
+            
 #pragma mark -suggest cell
         case 4:
         {
@@ -1366,12 +1324,12 @@
             
         }
             break;
-
-    
+            
+            
     }
     [self.view endEditing:YES];
     return nil;
-
+    
 }
 
 - (void)myAction
@@ -1420,19 +1378,29 @@
             {
                 
                 
-                return 590+detailCellCar.detailinfoTextView1.frame.size.height-38;
+                return 544+detailCellCar.detailinfoTextView1.frame.size.height-38;
                 
             }
             else
             {
                 
-                if ((long)rHeight==1)
+                if((long)rHeight==0)
                 {
-                    return 590;
+                    return 544;
                 }
+                
+                else if ((long)rHeight==1)
+                {
+                    return 544;
+                }
+//                else if ((long)rHeight==2)
+//                {
+//                   return 590;
+//                }
+                
                 else
                 {
-                    return 590 ;
+                    return 544 + 38 ;
                 }
                 
                 
@@ -1477,7 +1445,7 @@
                 }
                 else
                 {
-                    return 627 ;
+                    return 627 + 38 ;
                 }
                 
                 
@@ -1524,7 +1492,7 @@
                 }
                 else
                 {
-                    return 456 + 38 ;
+                    return 456 + 20;
                 }
                 
                 

@@ -208,6 +208,8 @@
     activityindicator.color = [UIColor grayColor] ;
     [activityindicator startAnimating];
     activityindicator.center = containerVC.view.center;
+    
+   // [self.view addSubview:activityindicator];
     [containerVC.view addSubview:activityindicator];
     
 
@@ -490,11 +492,19 @@
     }
     else
     {
+        
+        activityindicator.hidden = NO;
+        [activityindicator startAnimating];
+
+        
+        
+        
         if ([[defaults valueForKey:@"locationPresed"] isEqualToString:@"ON"])
         {
             [location setImage:[UIImage imageNamed:@"Location_off"] forState:UIControlStateNormal];
             locationLabel.hidden = YES;
             [defaults setObject:@"OFF" forKey:@"locationPresed"];
+           
             
         }
         else
@@ -509,6 +519,9 @@
 //            [[NSNotificationCenter defaultCenter] postNotificationName:@"arrayCar_Info" object:self userInfo:arrayCar_Info];
 
         }
+        
+        
+
         
         NSDictionary *arrayCar_Info7 =
         [NSDictionary dictionaryWithObjectsAndKeys:Array_ViewPost,@"", nil];
@@ -569,6 +582,8 @@
 
 -(void)viewPostConnection
 {
+   
+    
     Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
     NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
     if (networkStatus == NotReachable)

@@ -173,27 +173,27 @@
                                 <color key="textColor" red="0.0" green="0.56470588239999997" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="AskingPrice" translatesAutoresizingMaskIntoConstraints="NO" id="mVE-S7-fiR">
+                                <frame key="frameInset" minX="84" minY="24" width="45" height="45"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Asking Price" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OMa-Y7-hTB">
+                                <frame key="frameInset" minX="54" minY="69" width="105" height="36"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="SanFranciscoDisplay-Semibold" family="San Francisco Display" pointSize="15"/>
+                                <color key="textColor" red="0.1960784314" green="0.1960784314" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="$20000" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nfj-KF-FL7">
+                                <frame key="frameInset" minX="24" minY="105" width="164" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="SanFranciscoDisplay-Heavy" family="San Francisco Display" pointSize="18"/>
+                                <color key="textColor" red="0.0" green="0.56470588239999997" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </view>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="AskingPrice" translatesAutoresizingMaskIntoConstraints="NO" id="mVE-S7-fiR">
-                        <frame key="frameInset" minX="84" minY="492" width="45" height="45"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Asking Price" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OMa-Y7-hTB">
-                        <frame key="frameInset" minX="54" minY="537" width="105" height="36"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" name="SanFranciscoDisplay-Semibold" family="San Francisco Display" pointSize="15"/>
-                        <color key="textColor" red="0.1960784314" green="0.1960784314" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="$20000" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nfj-KF-FL7">
-                        <frame key="frameInset" minX="24" minY="573" width="164" height="30"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" name="SanFranciscoDisplay-Heavy" family="San Francisco Display" pointSize="18"/>
-                        <color key="textColor" red="0.0" green="0.56470588239999997" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                 </subviews>
             </tableViewCellContentView>
             <connections>
@@ -220,7 +220,7 @@
     <resources>
         <image name="AskingPrice" width="88" height="59"/>
         <image name="Bedroom" width="56" height="31"/>
-        <image name="HighestPrice" width="29" height="29"/>
+        <image name="HighestPrice" width="91" height="94"/>
         <image name="Location_on" width="41" height="55"/>
         <image name="Property1" width="53" height="47"/>
         <image name="defaultimg.jpg" width="200" height="200"/>

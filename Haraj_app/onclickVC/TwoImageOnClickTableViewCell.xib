@@ -64,7 +64,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lC2-Ed-TXl">
-                        <frame key="frameInset" minX="23" minY="15" width="7" height="29"/>
+                        <frame key="frameInset" minX="23" minY="15" width="9" height="29"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <state key="normal" image="3dots"/>
                     </button>
@@ -94,9 +94,9 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="3dots" width="12" height="59"/>
+        <image name="3dots" width="19" height="71"/>
         <image name="Moreimages" width="19" height="19"/>
         <image name="Play" width="88" height="88"/>
-        <image name="Whitearrow" width="28" height="25"/>
+        <image name="Whitearrow" width="35" height="31"/>
     </resources>
 </document>

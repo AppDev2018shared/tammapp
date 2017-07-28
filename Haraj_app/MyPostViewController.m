@@ -251,6 +251,8 @@
                     
                     
                 }
+                Cell_two.button_threedots.hidden = YES;
+                
                 [Cell_two.button_threedots addTarget:self action:@selector(button_threedots_action:) forControlEvents:UIControlEventTouchUpInside];
                 [Cell_two.button_favourite addTarget:self action:@selector(button_favourite_action:) forControlEvents:UIControlEventTouchUpInside];
                 [Cell_two.button_back addTarget:self action:@selector(button_back_action:) forControlEvents:UIControlEventTouchUpInside];
@@ -258,7 +260,7 @@
                 if (total_image>=3)
                 {
                     Cell_two.bgView.hidden=NO;
-                    Cell_two.countLabel.text =[NSString stringWithFormat:@"%d",total_image-2];
+                    Cell_two.countLabel.text =[NSString stringWithFormat:@"%ld",total_image-2];
                 }
                 else
                 {
@@ -339,6 +341,7 @@
             else
             {
                 FirstCell = [tableView dequeueReusableCellWithIdentifier:@"ImageCell"];
+                FirstCell.button_threedots.hidden = YES;
                 [FirstCell.button_threedots addTarget:self action:@selector(button_threedots_action:) forControlEvents:UIControlEventTouchUpInside];
                 [FirstCell.button_favourite addTarget:self action:@selector(button_favourite_action:) forControlEvents:UIControlEventTouchUpInside];
                 [FirstCell.button_back addTarget:self action:@selector(button_back_action:) forControlEvents:UIControlEventTouchUpInside];
@@ -1342,7 +1345,7 @@
                 }
                 else
                 {
-                    return 456 + 38 ;
+                    return 456;
                 }
                 
                 
@@ -2268,7 +2271,7 @@
             imageView = [[UIImageView alloc] initWithFrame:frame];
             imageView.userInteractionEnabled=YES;
             imageView.clipsToBounds=YES;
-            imageView.contentMode = UIViewContentModeScaleAspectFill;
+            imageView.contentMode = UIViewContentModeScaleAspectFit;
             imageView.tag=i;
             
             playButton=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50, 50)];
