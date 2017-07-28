@@ -488,8 +488,8 @@
                     detailCellCar.tapView.userInteractionEnabled=YES;
                     detailCellCar.tapView.tag=swipeCount;
                     detailCellCar.detailinfoTextView.tag=swipeCount;
-                    UITapGestureRecognizer *label_Desc_Tapped =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(label_Desc_Tapped_ActionDetails:)];
-                    [detailCellCar.tapView addGestureRecognizer:label_Desc_Tapped];
+//                    UITapGestureRecognizer *label_Desc_Tapped =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(label_Desc_Tapped_ActionDetails:)];
+//                    [detailCellCar.tapView addGestureRecognizer:label_Desc_Tapped];
                     if ([str_LabelCoordinates isEqualToString:@"no"])
                     {
                         str_LabelCoordinates=@"yes";
@@ -601,7 +601,7 @@
                     NSLog(@"Dynamic label heightccc====%f",Cell_DescLabelH);
                     detailCellCar.tapView.backgroundColor=[UIColor clearColor];
                     
-                    [detailCellCar.view_CordinateViewTapped setFrame:CGRectMake(detailCellCar.view_CordinateViewTapped.frame.origin.x,(detailCellCar.tapView.frame.origin.y+detailCellCar.tapView.frame.size.height)+23,detailCellCar.view_CordinateViewTapped.frame.size.width, detailCellCar.view_CordinateViewTapped.frame.size.height)];
+                    [detailCellCar.view_CordinateViewTapped setFrame:CGRectMake(detailCellCar.view_CordinateViewTapped.frame.origin.x,(detailCellCar.tapView.frame.origin.y+detailCellCar.tapView.frame.size.height),detailCellCar.view_CordinateViewTapped.frame.size.width, detailCellCar.view_CordinateViewTapped.frame.size.height)];
                     
                     [detailCellCar.Button_makeoffer setFrame:CGRectMake(detailCellCar.Button_makeoffer.frame.origin.x,(detailCell.view_CordinateViewTapped.frame.origin.y+detailCellCar.view_CordinateViewTapped.frame.size.height),detailCellCar.Button_makeoffer.frame.size.width, detailCellCar.Button_makeoffer.frame.size.height)];
                     [detailCellCar.Button_makeoffer  addTarget:self action:@selector(makeOfferPressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -703,8 +703,8 @@
                     detailCellProperty.tapView.userInteractionEnabled=YES;
                     detailCellProperty.tapView.tag=swipeCount;
                     detailCellProperty.detailinfoTextView.tag=swipeCount;
-                    UITapGestureRecognizer *label_Desc_Tapped =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(label_Desc_Tapped_ActionDetails:)];
-                    [detailCellProperty.tapView addGestureRecognizer:label_Desc_Tapped];
+//                    UITapGestureRecognizer *label_Desc_Tapped =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(label_Desc_Tapped_ActionDetails:)];
+//                    [detailCellProperty.tapView addGestureRecognizer:label_Desc_Tapped];
                     if ([str_LabelCoordinates isEqualToString:@"no"])
                     {
                         str_LabelCoordinates=@"yes";
@@ -965,6 +965,7 @@
                 NSInteger rHeight = size.height/17;
                 NSLog(@"No of lines: %ld",(long)rHeight);
                 detailCell.detailinfoTextView1.hidden=YES;
+                
                 if ([str_TappedLabel isEqualToString:@"no"])
                 {
                     if ((long)rHeight==1)
@@ -1241,19 +1242,25 @@
             {
                 
                 
-                return 590+detailCellCar.detailinfoTextView1.frame.size.height-38;
+                return 544+detailCellCar.detailinfoTextView1.frame.size.height-38;
                 
             }
             else
             {
                 
-                if ((long)rHeight==1)
+                if((long)rHeight==0)
                 {
-                    return 590;
+                    return 544;
                 }
+                
+                else if ((long)rHeight==1)
+                {
+                    return 544;
+                }
+
                 else
                 {
-                    return 590 ;
+                    return 544 ;
                 }
                 
                 
