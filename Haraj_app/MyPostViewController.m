@@ -16,6 +16,7 @@
 #import "BoostPost.h"
 #import "UIView+RNActivityView.h"
 #import "Reachability.h"
+#import "UIView+WebCache.h" 
 #define FONT_SIZE 15.0f
 #define CELL_CONTENT_WIDTH self.view.frame.size.width-138
 #define CELL_CONTENT_MARGIN 0.0f
@@ -552,9 +553,9 @@
                         else if ((long)rHeight==2)
                         {
                             
-                            [detailCellCar.tapView setFrame:CGRectMake(TextView_ViewX,TextView_ViewY, TextView_ViewW,TextView_ViewH*2)];
+                            [detailCellCar.tapView setFrame:CGRectMake(TextView_ViewX,TextView_ViewY, TextView_ViewW,TextView_ViewH*1.6)];
                             
-                            [detailCellCar.detailinfoTextView setFrame:CGRectMake(Cell_DescLabelX,Cell_DescLabelY, Cell_DescLabelW,Cell_DescLabelH*2)];
+                            [detailCellCar.detailinfoTextView setFrame:CGRectMake(Cell_DescLabelX,Cell_DescLabelY, Cell_DescLabelW,Cell_DescLabelH*1.6)];
                             
                             
                         }
@@ -566,9 +567,9 @@
                             UITapGestureRecognizer *label_Desc_Tapped =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(label_Desc_Tapped_ActionDetails:)];
                             [detailCellCar.tapView addGestureRecognizer:label_Desc_Tapped];
                             
-                            [detailCellCar.tapView setFrame:CGRectMake(TextView_ViewX,TextView_ViewY, TextView_ViewW,TextView_ViewH*2)];
+                            [detailCellCar.tapView setFrame:CGRectMake(TextView_ViewX,TextView_ViewY, TextView_ViewW,TextView_ViewH*1.6)];
                             
-                            [detailCellCar.detailinfoTextView setFrame:CGRectMake(Cell_DescLabelX,Cell_DescLabelY, Cell_DescLabelW,Cell_DescLabelH*2)];
+                            [detailCellCar.detailinfoTextView setFrame:CGRectMake(Cell_DescLabelX,Cell_DescLabelY, Cell_DescLabelW,Cell_DescLabelH*1.6)];
                             
                             
                         }
@@ -601,7 +602,7 @@
                     NSLog(@"Dynamic label heightccc====%f",Cell_DescLabelH);
                     detailCellCar.tapView.backgroundColor=[UIColor clearColor];
                     
-                    [detailCellCar.view_CordinateViewTapped setFrame:CGRectMake(detailCellCar.view_CordinateViewTapped.frame.origin.x,(detailCellCar.tapView.frame.origin.y+detailCellCar.tapView.frame.size.height),detailCellCar.view_CordinateViewTapped.frame.size.width, detailCellCar.view_CordinateViewTapped.frame.size.height)];
+                    [detailCellCar.view_CordinateViewTapped setFrame:CGRectMake(detailCellCar.view_CordinateViewTapped.frame.origin.x,(detailCellCar.view_CordinateViewTapped.frame.origin.y+detailCellCar.tapView.frame.size.height) - 38,detailCellCar.view_CordinateViewTapped.frame.size.width, detailCellCar.view_CordinateViewTapped.frame.size.height)];
                     
                     [detailCellCar.Button_makeoffer setFrame:CGRectMake(detailCellCar.Button_makeoffer.frame.origin.x,(detailCell.view_CordinateViewTapped.frame.origin.y+detailCellCar.view_CordinateViewTapped.frame.size.height),detailCellCar.Button_makeoffer.frame.size.width, detailCellCar.Button_makeoffer.frame.size.height)];
                     [detailCellCar.Button_makeoffer  addTarget:self action:@selector(makeOfferPressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -767,9 +768,9 @@
                         else if ((long)rHeight==2)
                         {
                             
-                            [detailCellProperty.tapView setFrame:CGRectMake(TextView_ViewX,TextView_ViewY, TextView_ViewW,TextView_ViewH*2)];
+                            [detailCellProperty.tapView setFrame:CGRectMake(TextView_ViewX,TextView_ViewY, TextView_ViewW,TextView_ViewH*1.6)];
                             
-                            [detailCellProperty.detailinfoTextView setFrame:CGRectMake(Cell_DescLabelX,Cell_DescLabelY, Cell_DescLabelW,Cell_DescLabelH*2)];
+                            [detailCellProperty.detailinfoTextView setFrame:CGRectMake(Cell_DescLabelX,Cell_DescLabelY, Cell_DescLabelW,Cell_DescLabelH*1.6)];
                             
                             
                         }
@@ -781,9 +782,9 @@
                             UITapGestureRecognizer *label_Desc_Tapped =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(label_Desc_Tapped_ActionDetails:)];
                             [detailCellProperty.tapView addGestureRecognizer:label_Desc_Tapped];
                             
-                            [detailCellProperty.tapView setFrame:CGRectMake(TextView_ViewX,TextView_ViewY, TextView_ViewW,TextView_ViewH*2)];
+                            [detailCellProperty.tapView setFrame:CGRectMake(TextView_ViewX,TextView_ViewY, TextView_ViewW,TextView_ViewH*1.6)];
                             
-                            [detailCellProperty.detailinfoTextView setFrame:CGRectMake(Cell_DescLabelX,Cell_DescLabelY, Cell_DescLabelW,Cell_DescLabelH*2)];
+                            [detailCellProperty.detailinfoTextView setFrame:CGRectMake(Cell_DescLabelX,Cell_DescLabelY, Cell_DescLabelW,Cell_DescLabelH*1.6)];
                             
                             
                         }
@@ -816,7 +817,7 @@
                     NSLog(@"Dynamic label heightccc====%f",Cell_DescLabelH);
                     detailCellProperty.tapView.backgroundColor=[UIColor clearColor];
                     
-                    [detailCellProperty.view_CordinateViewTapped setFrame:CGRectMake(detailCellProperty.view_CordinateViewTapped.frame.origin.x,(detailCellProperty.tapView.frame.origin.y+detailCellProperty.tapView.frame.size.height)+23,detailCellProperty.view_CordinateViewTapped.frame.size.width, detailCellProperty.view_CordinateViewTapped.frame.size.height)];
+                    [detailCellProperty.view_CordinateViewTapped setFrame:CGRectMake(detailCellProperty.view_CordinateViewTapped.frame.origin.x,(detailCellProperty.view_CordinateViewTapped.frame.origin.y+detailCellProperty.tapView.frame.size.height) - 38,detailCellProperty.view_CordinateViewTapped.frame.size.width, detailCellProperty.view_CordinateViewTapped.frame.size.height)];
                     
                     [detailCellProperty.Button_makeoffer setFrame:CGRectMake(detailCellProperty.Button_makeoffer.frame.origin.x,(detailCellProperty.view_CordinateViewTapped.frame.origin.y+detailCellProperty.view_CordinateViewTapped.frame.size.height),detailCellProperty.Button_makeoffer.frame.size.width, detailCellProperty.Button_makeoffer.frame.size.height)];
                     [detailCellProperty.Button_makeoffer  addTarget:self action:@selector(makeOfferPressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -982,9 +983,9 @@
                     else if ((long)rHeight==2)
                     {
                         
-                        [detailCell.tapView setFrame:CGRectMake(TextView_ViewX,TextView_ViewY, TextView_ViewW,TextView_ViewH*2)];
+                        [detailCell.tapView setFrame:CGRectMake(TextView_ViewX,TextView_ViewY, TextView_ViewW,TextView_ViewH*1.6)];
                         
-                        [detailCell.detailinfoTextView setFrame:CGRectMake(Cell_DescLabelX,Cell_DescLabelY, Cell_DescLabelW,Cell_DescLabelH*2)];
+                        [detailCell.detailinfoTextView setFrame:CGRectMake(Cell_DescLabelX,Cell_DescLabelY, Cell_DescLabelW,Cell_DescLabelH*1.6)];
                         
                         
                     }
@@ -999,9 +1000,9 @@
                         
                         
                         
-                        [detailCell.tapView setFrame:CGRectMake(TextView_ViewX,TextView_ViewY, TextView_ViewW,TextView_ViewH*2)];
+                        [detailCell.tapView setFrame:CGRectMake(TextView_ViewX,TextView_ViewY, TextView_ViewW,TextView_ViewH*1.6)];
                         
-                        [detailCell.detailinfoTextView setFrame:CGRectMake(Cell_DescLabelX,Cell_DescLabelY, Cell_DescLabelW,Cell_DescLabelH*2)];
+                        [detailCell.detailinfoTextView setFrame:CGRectMake(Cell_DescLabelX,Cell_DescLabelY, Cell_DescLabelW,Cell_DescLabelH*1.6)];
                         
                         
                     }
@@ -1030,7 +1031,7 @@
                 NSLog(@"Dynamic label heightccc====%f",Cell_DescLabelH);
                 detailCell.tapView.backgroundColor=[UIColor clearColor];
                 
-                [detailCell.view_CordinateViewTapped setFrame:CGRectMake(detailCell.view_CordinateViewTapped.frame.origin.x,(detailCell.tapView.frame.origin.y+detailCell.tapView.frame.size.height)+23,detailCell.view_CordinateViewTapped.frame.size.width, detailCell.view_CordinateViewTapped.frame.size.height)];
+                [detailCell.view_CordinateViewTapped setFrame:CGRectMake(detailCell.view_CordinateViewTapped.frame.origin.x,(detailCell.view_CordinateViewTapped.frame.origin.y+detailCell.tapView.frame.size.height) - 38,detailCell.view_CordinateViewTapped.frame.size.width, detailCell.view_CordinateViewTapped.frame.size.height)];
                 
                 [detailCell.Button_makeoffer setFrame:CGRectMake(detailCell.Button_makeoffer.frame.origin.x,(detailCell.view_CordinateViewTapped.frame.origin.y+detailCell.view_CordinateViewTapped.frame.size.height),detailCell.Button_makeoffer.frame.size.width, detailCell.Button_makeoffer.frame.size.height)];
                 [detailCell.Button_makeoffer  addTarget:self action:@selector(makeOfferPressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -1225,11 +1226,11 @@
             
             CGSize constraint = CGSizeMake(345 - (CELL_CONTENT_MARGIN * 2), 20000.0f);
             
-            CGSize size = [text sizeWithFont:[UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:24.0] constrainedToSize:constraint lineBreakMode:UILineBreakModeWordWrap];
+            CGSize size = [text sizeWithFont:[UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:17.0] constrainedToSize:constraint lineBreakMode:UILineBreakModeWordWrap];
             
             CGFloat height = MAX(size.height, 30.0f);
             NSLog(@"Dynamic label height====%f",height);
-            NSInteger rHeight = size.height/24;
+            NSInteger rHeight = size.height/17;
             [detailCellCar.detailinfoTextView1 setText:text];
             
             
@@ -1242,7 +1243,7 @@
             {
                 
                 
-                return 544+detailCellCar.detailinfoTextView1.frame.size.height-38;
+                return 545+detailCellCar.detailinfoTextView1.frame.size.height-36;
                 
             }
             else
@@ -1250,17 +1251,17 @@
                 
                 if((long)rHeight==0)
                 {
-                    return 544;
+                    return 545;
                 }
                 
                 else if ((long)rHeight==1)
                 {
-                    return 544;
+                    return 545;
                 }
 
                 else
                 {
-                    return 544 ;
+                    return 545 + 25 ;
                 }
                 
                 
@@ -1276,11 +1277,11 @@
             
             CGSize constraint = CGSizeMake(345 - (CELL_CONTENT_MARGIN * 2), 20000.0f);
             
-            CGSize size = [text sizeWithFont:[UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:24.0] constrainedToSize:constraint lineBreakMode:UILineBreakModeWordWrap];
+            CGSize size = [text sizeWithFont:[UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:17.0] constrainedToSize:constraint lineBreakMode:UILineBreakModeWordWrap];
             
             CGFloat height = MAX(size.height, 30.0f);
             NSLog(@"Dynamic label height====%f",height);
-            NSInteger rHeight = size.height/24;
+            NSInteger rHeight = size.height/17;
             [detailCellProperty.detailinfoTextView1 setText:text];
             
             
@@ -1293,19 +1294,23 @@
             {
                 
                 
-                return 627+detailCellProperty.detailinfoTextView1.frame.size.height-38;
+                return 583+detailCellProperty.detailinfoTextView1.frame.size.height - 36;
                 
             }
             else
             {
                 
-                if ((long)rHeight==1)
+                if ((long)rHeight == 0)
                 {
-                    return 627;
+                    return 583;
+                }
+                else if ((long)rHeight == 1)
+                {
+                    return 583;
                 }
                 else
                 {
-                    return 627 ;
+                    return 583 + 25 ;
                 }
                 
                 
@@ -1323,11 +1328,11 @@
             
             CGSize constraint = CGSizeMake(345 - (CELL_CONTENT_MARGIN * 2), 20000.0f);
             
-            CGSize size = [text sizeWithFont:[UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:24.0] constrainedToSize:constraint lineBreakMode:UILineBreakModeWordWrap];
+            CGSize size = [text sizeWithFont:[UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:17.0] constrainedToSize:constraint lineBreakMode:UILineBreakModeWordWrap];
             
             CGFloat height = MAX(size.height, 30.0f);
             NSLog(@"Dynamic label height====%f",height);
-            NSInteger rHeight = size.height/24;
+            NSInteger rHeight = size.height/17;
             [detailCell.detailinfoTextView1 setText:text];
             
             
@@ -1340,19 +1345,24 @@
             {
                 
                 
-                return 456+detailCell.detailinfoTextView1.frame.size.height-38;
+                return 412+detailCell.detailinfoTextView1.frame.size.height - 36;
                 
             }
             else
             {
                 
-                if ((long)rHeight==1)
+                if ((long)rHeight == 0)
                 {
-                    return 456;
+                    return 412;
                 }
+                else if ((long)rHeight==1)
+                {
+                    return 412;
+                }
+                
                 else
                 {
-                    return 456;
+                    return 412 + 20;
                 }
                 
                 
@@ -2456,7 +2466,7 @@
                                                          imageView = [[UIImageView alloc] initWithFrame:frame];
                                                          imageView.userInteractionEnabled=YES;
                                                          imageView.clipsToBounds=YES;
-                                                         imageView.contentMode = UIViewContentModeScaleAspectFill;
+                                                         imageView.contentMode = UIViewContentModeScaleAspectFit;
                                                          imageView.tag=i;
                                                          
                                                          playButton=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50, 50)];
@@ -2472,6 +2482,10 @@
                                                          
                                                         
                                   NSURL *url=[NSURL URLWithString:[[Array_Moreimages objectAtIndex:i] valueForKey:@"mediathumbnailurl"]];
+                                                         
+                                    [imageView sd_setShowActivityIndicatorView:YES];
+                                    [imageView sd_setIndicatorStyle:UIActivityIndicatorViewStyleGray];
+
                                     [imageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] options:SDWebImageRefreshCached];
                                               
                                   

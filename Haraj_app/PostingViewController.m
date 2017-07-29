@@ -18,6 +18,7 @@
 #import "MHFacebookImageViewer.h"
 #import "UIImageView+MHFacebookImageViewer.h"
 #import "UIImageView+WebCache.h"
+#import "UIView+WebCache.h"
 #import <CoreLocation/CoreLocation.h>
 #import <CoreLocation/CoreLocation.h>
 #import "BoostPost.h"
@@ -3113,6 +3114,8 @@
     
     Cell_DetailCar.carMakeImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png",Cell_DetailCar.carMakeTextField.text]];
     
+    
+    
 }
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
@@ -3124,8 +3127,7 @@
 
 -(void)done:(UIBarButtonItem *)button
 {
-    
-    
+   
     carPickerView.hidden=YES;
     
     toolBar.hidden=YES;
