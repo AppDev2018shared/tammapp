@@ -14,6 +14,7 @@
 #import "Reachability.h"
 #import "SBJsonParser.h"
 #import "UIImageView+WebCache.h"
+#import "AFNetworking.h"
 
 
 
@@ -37,13 +38,24 @@
 
 @implementation SalePointsViewController
 @synthesize pointsLabel,greetingLabel;
-
+@synthesize labelheding,backbutton,Button_help,view_line;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
     NSString *plistPath = [[NSBundle mainBundle]pathForResource:@"UrlName" ofType:@"plist"];
     urlplist = [NSDictionary dictionaryWithContentsOfFile:plistPath];
+
+    if (self.view.frame.size.width==375 && self.view.frame.size.height==812)
+    {
+        
+        [view_line setFrame:CGRectMake(view_line.frame.origin.x, view_line.frame.origin.y+6, view_line.frame.size.width, 1)];
+        [labelheding setFrame:CGRectMake(labelheding.frame.origin.x, labelheding.frame.origin.y+16, labelheding.frame.size.width, 26)];
+        
+        [backbutton setFrame:CGRectMake(backbutton.frame.origin.x, backbutton.frame.origin.y+16, backbutton.frame.size.width, 30)];
+        [Button_help setFrame:CGRectMake(Button_help.frame.origin.x, Button_help.frame.origin.y+16, Button_help.frame.size.width, 30)];
+    }
+    
     
     defaults = [[NSUserDefaults alloc]init];
     
@@ -124,8 +136,7 @@
     }
     else
     {
-        [cell.postImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"]
-                                        options:SDWebImageRefreshCached];
+        [cell.postImageView setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"]];
         cell.whiteTickView.image = [UIImage imageNamed:@"Whitetick"];
     }
     
@@ -172,7 +183,10 @@ heightForHeaderAtIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@"InfoButton_Action Pressed");
     
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Sale Points" message:@"Earn loyalty points by transacting on Tamm. You can redeem these points for boosting your post!" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"نقاط البيع" message:@"اكسب نقاط ولاء عن طريقك بيعك في تطبيق تم. تستطيع استخدام هذه النقاط كوسيلة دفع لتروّج إعلانك!" preferredStyle:UIAlertControllerStyleAlert];
+
+//    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Sale Points" message:@"Earn loyalty points by transacting on Tamm. You can redeem these points for boosting your post!" preferredStyle:UIAlertControllerStyleAlert];
+
     
     UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
                                                        style:UIAlertActionStyleDefault
@@ -397,25 +411,31 @@ heightForHeaderAtIndexPath:(NSIndexPath *)indexPath
                                                  ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\t" withString:@""];
                                                  
                                                  NSLog(@"Array_SalePoints %@",Array_SalePoints);
+                                                 if (Array_SalePoints.count !=0)
+                                                 {
+                                                     
                                                  
-                                                 if ([ResultString isEqualToString:@""])
+                        if ([[[Array_SalePoints objectAtIndex:0]valueForKey:@"salepoints"] isEqualToString:@"0"])
                                                  {
                                                      greetingLabel.text = @"You have not yet earned any points";
                                                      
                                                      pointsLabel.text = @"0 Points";
                                                      
                                                  }
-                                                 else if ([ResultString isEqualToString:@"1"])
+                                                 else if ([[[Array_SalePoints objectAtIndex:0]valueForKey:@"salepoints"] isEqualToString:@"1"])
                                                  {
-                                                     pointsLabel.text = [NSString stringWithFormat:@"%@ Point",ResultString];
+                                                     greetingLabel.text = @"Congratulations! You have earned";
+                                                     
+                                                     pointsLabel.text = [NSString stringWithFormat:@"%@ Point",[[Array_SalePoints objectAtIndex:0]valueForKey:@"salepoints"]];
 
                                                  }
                                                  else
                                                  {
+                                                   greetingLabel.text = @"Congratulations! You have earned";
                                                  
-                                                 pointsLabel.text = [NSString stringWithFormat:@"%@ Points",ResultString];
+                                                   pointsLabel.text = [NSString stringWithFormat:@"%@ Points",[[Array_SalePoints objectAtIndex:0]valueForKey:@"salepoints"]];
                                                  }
-                                                 
+                                                 }
                                                  if ([ResultString isEqualToString:@"done"])
                                                  {
                                                      

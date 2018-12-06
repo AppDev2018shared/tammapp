@@ -172,13 +172,18 @@
 -(void)verifyMobileConnection
 
 {
+   
+    
     
     
     NSString *userid= @"userid";
     NSString *useridVal =[defaults valueForKey:@"userid"];
     
     NSString *mobileid = @"mobileno";
-    NSString *mobileNumberVal =[defaults valueForKey:@"mobileNumber"];
+    NSString *mobileNumberVal2=[defaults valueForKey:@"mobileNumber"];
+    NSUInteger values=[mobileNumberVal2 integerValue];
+    
+    NSString *mobileNumberVal =[NSString stringWithFormat:@"%ld",values]; //[defaults valueForKey:@"mobileNumber"];
     
     
     
@@ -233,7 +238,8 @@
                                                      [self.view hideActivityViewWithAfterDelay:0];
                                                      
                                                      [defaults setObject:@"yes" forKey:@"verified"];
-
+                                                     [defaults setObject:@"yes" forKey:@"LoginView"];
+                                                     [defaults synchronize];
                                                      HomeNavigationController *loginController=[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"HomeNavigationController"];
                                                      [[UIApplication sharedApplication].keyWindow setRootViewController:loginController];
                                                      
@@ -243,7 +249,7 @@
                                                  if ([ResultString isEqualToString:@"updateerror"])
                                                  {
                                                      
-                                                     
+                                                    [defaults setObject:@"no" forKey:@"LoginView"];
                                                      
                                                      UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Update Error!!!" message:@"Sorry your number could not be updated, please try later" preferredStyle:UIAlertControllerStyleAlert];
                                                      
@@ -281,11 +287,7 @@
                                      }];
     [dataTask resume];
     
-    
-    
-    
-    
-    
+   
     
 }
 

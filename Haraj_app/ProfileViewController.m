@@ -1,4 +1,4 @@
-//
+ //
 //  ProfileViewController.m
 //  Haraj_app
 //
@@ -16,7 +16,6 @@
 #import "SBJsonParser.h"
 #import "Reachability.h"
 #import "MyPostViewController.h"
-#import "AllViewSwapeViewController.h"
 #import "FavouriteViewController.h"
 #import "SalePointsViewController.h"
 #import "ChoosePostViewController.h"
@@ -28,6 +27,9 @@
 #import "PostingViewController.h"
 #import "EnterPrice.h"
 #import "UIView+RNActivityView.h"
+#import "AFNetworking.h"
+#import "RootViewController.h"
+
 
 
 
@@ -55,6 +57,8 @@
     PatternViewCell *Videocell;
     ImageCollectionViewCell *Imagecell;
     
+    CGFloat cellWidth,cellHeight,cellVideoHeight;
+    
 }
 
 @property (strong, nonatomic) LGPlusButtonsView *plusButtonsViewMain;
@@ -62,7 +66,7 @@
 @end
 
 @implementation ProfileViewController
-@synthesize searchTextField,searchImageView,profileImageView,nameLabel,lastnameLabel,favoritesValueLabel,postValueLabel,salepointValueLabel,favouriteLabel,saleLabel,postLabel,payImageView,payLabel,boostImageview,boostLabel,isFiltered;
+@synthesize searchTextField,searchImageView,profileImageView,nameLabel,lastnameLabel,favoritesValueLabel,postValueLabel,salepointValueLabel,favouriteLabel,saleLabel,postLabel,payImageView,payLabel,boostImageview,boostLabel,isFiltered,Button_Back,Button_setting,Img_Search,Button_CircleGreen,Label_CircleFrontgreen;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -80,8 +84,44 @@
     searchTextField.leftView = paddingView1;
     searchTextField.leftViewMode = UITextFieldViewModeAlways;
     
-   
+    if ([[UIScreen mainScreen]bounds].size.width == 320)
+    {
+        searchTextField.font = [UIFont fontWithName:@"SanFranciscoDiplay-Bold" size:16];
+        
+        cellWidth = 160.0f;
+        cellHeight = 210.0;
+        cellVideoHeight = 260.0;
+        
+    }
+    else if ([[UIScreen mainScreen]bounds].size.width == 414)
+    {
+        cellWidth = 200.0f;
+        cellHeight = 255.0;
+        cellVideoHeight = 310.0;
+    }
+    else
+    {
+        cellWidth = 173.0f;
+        cellHeight = 225.0;
+        cellVideoHeight = 275.0;
+    }
     
+   
+    if (self.view.frame.size.width==375 && self.view.frame.size.height==812)
+    {
+        
+        
+         [Label_CircleFrontgreen setFrame:CGRectMake(Label_CircleFrontgreen.frame.origin.x, Label_CircleFrontgreen.frame.origin.y+8, Label_CircleFrontgreen.frame.size.width, 40)];
+        
+         [Button_CircleGreen setFrame:CGRectMake(Button_CircleGreen.frame.origin.x, Button_CircleGreen.frame.origin.y+5, Button_CircleGreen.frame.size.width, 40)];
+        
+        [searchTextField setFrame:CGRectMake(searchTextField.frame.origin.x, searchTextField.frame.origin.y+17, searchTextField.frame.size.width, 35)];
+        [Button_setting setFrame:CGRectMake(Button_setting.frame.origin.x, Button_setting.frame.origin.y+13, Button_setting.frame.size.width, 30)];
+        [Button_Back setFrame:CGRectMake(Button_Back.frame.origin.x, Button_Back.frame.origin.y+16, Button_Back.frame.size.width, 30)];
+        [Img_Search setFrame:CGRectMake(Img_Search.frame.origin.x, Img_Search.frame.origin.y+13, Img_Search.frame.size.width, 22)];
+        
+        [profileImageView setFrame:CGRectMake(profileImageView.frame.origin.x, profileImageView.frame.origin.y+12, profileImageView.frame.size.width, 100)];
+    }
     
     
     
@@ -96,7 +136,7 @@
     // Do any additional setup after loading the view.
     FRGWaterfallCollectionViewLayout *cvLayout = [[FRGWaterfallCollectionViewLayout alloc] init];
     cvLayout.delegate = self;
-    cvLayout.itemWidth = 173.0f;
+    cvLayout.itemWidth = cellWidth;//173.0f;
     cvLayout.topInset = 1.0f;
     cvLayout.bottomInset = 10.0f;
     cvLayout.stickyHeader = YES;
@@ -119,8 +159,13 @@
     {
     
     
-    NSURL *url=[NSURL URLWithString:[defaults valueForKey:@"profileimage"]];
-    [profileImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultimg.jpg"] options:SDWebImageRefreshCached];
+   // NSURL *url=[NSURL URLWithString:[defaults valueForKey:@"profileimage"]];
+ // [profileImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultimg.jpg"] options:SDWebImageRefreshCached];
+        
+//    [profileImageView sd_setImageWithURL:[NSURL URLWithString:[defaults valueForKey:@"profileimage"]] placeholderImage:[UIImage imageNamed:@"defaultimg.jpg"]options:SDWebImageRefreshCached];
+        
+        [profileImageView setImageWithURL:[NSURL URLWithString:[defaults valueForKey:@"profileimage"]] placeholderImage:[UIImage imageNamed:@"defaultimg.jpg"]];
+        
     [self displayImage:profileImageView withImage:profileImageView.image];
 
         
@@ -137,7 +182,8 @@
         {
             NSURL *url=[NSURL URLWithString:[defaults valueForKey:@"profileimage"]];
             
-            [profileImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultimg.jpg"] options:SDWebImageRefreshCached];
+            [profileImageView setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultimg.jpg"]];
+            
         }
         else
         {
@@ -158,17 +204,17 @@
     
 //---------------------------Favourite label tap gesture---------------------------------------------------------
     
-    if ([defaults  valueForKey:@"CountFav"] == 0 || [defaults valueForKey:@"CountFav"] == NULL)
-    {
-        
-          favoritesValueLabel.text = @"0";
-        
-        
-    }
-    else
-    {
-         favoritesValueLabel.text = [defaults valueForKey:@"CountFav"];
-    }
+//    if ([defaults  valueForKey:@"CountFav"] == 0 || [defaults valueForKey:@"CountFav"] == NULL)
+//    {
+//        
+//          favoritesValueLabel.text = @"0";
+//        
+//        
+//    }
+//    else
+//    {
+//         favoritesValueLabel.text = [defaults valueForKey:@"CountFav"];
+//    }
     
    //  favoritesValueLabel.text = [defaults valueForKey:@"CountFav"];
      favoritesValueLabel.userInteractionEnabled = YES;
@@ -273,6 +319,7 @@
     } completion: ^(BOOL finished) {//creates a variable (BOOL) called "finished" that is set to *YES* when animation IS completed.
         _plusButtonsViewMain.hidden = YES;
         _plusButtonsViewMain.alpha = 1.0;
+       
         //if animation is finished ("finished" == *YES*), then hidden = "finished" ... (aka hidden = *YES*)
     }];
     
@@ -285,18 +332,18 @@
 
      [self viewPostConnection];
     
-    if ([defaults  valueForKey:@"CountFav"] == 0 || [defaults valueForKey:@"CountFav"] == NULL)
-    {
-        
-        favoritesValueLabel.text = @"0";
-        
-        
-    }
-    else
-    {
-        favoritesValueLabel.text = [defaults valueForKey:@"CountFav"];
-    }
-    
+//    if ([defaults  valueForKey:@"CountFav"] == 0 || [defaults valueForKey:@"CountFav"] == NULL)
+//    {
+//        
+//        favoritesValueLabel.text = @"0";
+//        
+//        
+//    }
+//    else
+//    {
+//        favoritesValueLabel.text = [defaults valueForKey:@"CountFav"];
+//    }
+//    
     
     
     [self.collectionView reloadData];
@@ -327,7 +374,7 @@
                                     
                                     PostingViewController * set=[mainStoryboard instantiateViewControllerWithIdentifier:@"PostingViewController"];
                                     
-                                    set.name = @"car" ;
+                                    set.name = @"سيارات";//car
                                     
                                     CATransition *transition = [CATransition animation];
                                     transition.duration = 0.3;
@@ -343,35 +390,34 @@
                                 }
                                 else if(index == 2)
                                 {
-                                    [defaults setValue:@"property" forKey:@"Title"];
+                                    [defaults setValue:@"عقار" forKey:@"Title"];//property
                                     [self postFunction];
                                 }
                                 else if(index == 3)
                                 {
-                                    [defaults setValue:@"electronics" forKey:@"Title"];
+                                    [defaults setValue:@"إلكترونيات" forKey:@"Title"];//electronics
                                     [self postFunction];
                                 }
                                 else if(index == 4)
                                 {
-                                    [defaults setValue:@"pets" forKey:@"Title"];
+                                    [defaults setValue:@" حيوانات أليفة" forKey:@"Title"];//pets
                                     [self postFunction];
                                 }
                                 else if(index == 5)
                                 {
-                                    [defaults setValue:@"furniture" forKey:@"Title"];
+                                    [defaults setValue:@"أثاث" forKey:@"Title"];//furniture
                                     [self postFunction];
                                 }
                                 else if(index == 6)
                                 {
-                                    [defaults setValue:@"services" forKey:@"Title"];
+                                    [defaults setValue:@"خدمات" forKey:@"Title"];//services
                                     [self postFunction];
                                 }
                                 else if(index == 7)
                                 {
-                                    [defaults setValue:@"others" forKey:@"Title"];
+                                    [defaults setValue:@"أخرى" forKey:@"Title"];//others
                                     [self postFunction];
                                 }
-                                
                                 
                                 
                             }];
@@ -381,7 +427,10 @@
     _plusButtonsViewMain.plusButtonAnimationType = LGPlusButtonAnimationTypeRotate;
     
     [_plusButtonsViewMain setButtonsTitles:@[@"", @"", @"", @"",@"",@"",@"",@""] forState:UIControlStateNormal];
-    [_plusButtonsViewMain setDescriptionsTexts:@[@"", @"Cars", @"Property", @"Electronics", @"Pets", @"Furniture", @"Services", @"Other"]];
+  //  [_plusButtonsViewMain setDescriptionsTexts:@[@"", @"Cars", @"Property", @"Electronics", @"Pets", @"Furniture", @"Services", @"Other"]];
+    [_plusButtonsViewMain setDescriptionsTexts:@[@"", @"سيارات", @"عقار", @"إلكترونيات", @"حيوانات أليفة", @" أثاث", @"خدمات", @" أخرى"]];
+    
+    
     [_plusButtonsViewMain setButtonsImages:@[[UIImage imageNamed:@"Float"], [UIImage imageNamed:@"Cars"], [UIImage imageNamed:@"Property"], [UIImage imageNamed:@"Electronics"], [UIImage imageNamed:@"Pets"], [UIImage imageNamed:@"Furniture"], [UIImage imageNamed:@"Services"], [UIImage imageNamed:@"Other"]]
                                   forState:UIControlStateNormal
                             forOrientation:LGPlusButtonsViewOrientationAll];
@@ -437,9 +486,24 @@
     [_plusButtonsViewMain setDescriptionsLayerCornerRadius:12.f forOrientation:LGPlusButtonsViewOrientationAll];
     [_plusButtonsViewMain setDescriptionsContentEdgeInsets:UIEdgeInsetsMake(4.f, 16.f, 4.f, 20.f) forOrientation:LGPlusButtonsViewOrientationAll];
     
-    for (NSUInteger i=1; i<=7; i++)
-        [_plusButtonsViewMain setButtonAtIndex:i offset:CGPointMake(-6.f, -13.f)
-                                forOrientation:(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ? LGPlusButtonsViewOrientationPortrait : LGPlusButtonsViewOrientationAll)];
+    
+    
+    if ([[UIScreen mainScreen]bounds].size.width == 320)
+    {
+        for (NSUInteger i=1; i<=7; i++)
+            [_plusButtonsViewMain setButtonAtIndex:i offset:CGPointMake(-6.f, -6.f)
+                                    forOrientation:(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ? LGPlusButtonsViewOrientationPortrait : LGPlusButtonsViewOrientationAll)];
+    }
+    else
+    {
+        for (NSUInteger i=1; i<=7; i++)
+            [_plusButtonsViewMain setButtonAtIndex:i offset:CGPointMake(-6.f, -13.f)
+                                    forOrientation:(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ? LGPlusButtonsViewOrientationPortrait : LGPlusButtonsViewOrientationAll)];
+    }
+    
+//    for (NSUInteger i=1; i<=7; i++)
+//        [_plusButtonsViewMain setButtonAtIndex:i offset:CGPointMake(-6.f, -13.f)
+//                                forOrientation:(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ? LGPlusButtonsViewOrientationPortrait : LGPlusButtonsViewOrientationAll)];
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
     {
@@ -573,54 +637,54 @@
 
 //-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 //{
-//    
-//    if (string.length == 0)
-//    {
-//         isFiltered = NO;
-//         [_filteredArray removeAllObjects];
-//          [_filteredArray addObjectsFromArray:Array_ViewPost];
-//       
-//    }
-//    else
-//    {
-//        
-//        //set boolean flag
-//        
-//        isFiltered = YES;
-//        
-//        
-//        //alloc and init filtered data
-//        
-//        _filteredArray = [[NSMutableArray alloc]init];
-//        
-//        [_filteredArray removeAllObjects];
-//        //fast enumeration
-//        
-//        for (NSDictionary *obj in Array_ViewPost)
-//        {
-//            NSString *sTemp = [obj valueForKey:@"title"];
-//            
-//            NSRange titleRange = [sTemp rangeOfString:string options:NSCaseInsensitiveSearch];
-//            
-//            if (titleRange.location != NSNotFound)
-//            {
-//                [_filteredArray addObject:obj];
-//            }
-//            
-//            
-////            if (titleRange.length > 0)
+////
+////    if (string.length == 0)
+////    {
+////         isFiltered = NO;
+////         [_filteredArray removeAllObjects];
+////          [_filteredArray addObjectsFromArray:Array_ViewPost];
+////       
+////    }
+////    else
+////    {
+////        
+////        //set boolean flag
+////        
+////        isFiltered = YES;
+////        
+////        
+////        //alloc and init filtered data
+////        
+////        _filteredArray = [[NSMutableArray alloc]init];
+////        
+////        [_filteredArray removeAllObjects];
+////        //fast enumeration
+////        
+////        for (NSDictionary *obj in Array_ViewPost)
+////        {
+////            NSString *sTemp = [obj valueForKey:@"title"];
+////            
+////            NSRange titleRange = [sTemp rangeOfString:string options:NSCaseInsensitiveSearch];
+////            
+////            if (titleRange.location != NSNotFound)
 ////            {
 ////                [_filteredArray addObject:obj];
-////
 ////            }
-//
-//        }
-//        
-//        [self.collectionView reloadData];
-//        
-//    }
-//    
-//    
+////            
+////            
+//////            if (titleRange.length > 0)
+//////            {
+//////                [_filteredArray addObject:obj];
+//////
+//////            }
+////
+////        }
+////        
+////        [self.collectionView reloadData];
+////        
+////    }
+////    
+////    
 //    return true;
 //}
 
@@ -689,7 +753,7 @@
     }
 
     
-    return YES;
+    return NO;
 }
 
 
@@ -706,7 +770,7 @@
     
     if (myCustomXIBViewObj.priceTextField.text.length == 0)
     {
-        myCustomXIBViewObj.priceTextField.text = @"$";
+        myCustomXIBViewObj.priceTextField.text = @"ر.س";//$
         
     }
     
@@ -761,7 +825,6 @@
    // NSDictionary *dic_request=[Array_ViewPost objectAtIndex:indexPath.row];
     NSLog(@"dic= %@",dic_request);
     
-    NSString *xyz = [dic_request valueForKey:@"mediatype"];
     
     if([NSNull null] ==[[Array_ViewPost  objectAtIndex:0]valueForKey:@"mediatype"] || [[dic_request valueForKey:@"mediatype"] isEqualToString:@"VIDEO"])
     {
@@ -769,16 +832,38 @@
         Videocell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"PatternCell" forIndexPath:indexPath];
         
         NSURL * url=[NSURL URLWithString:[dic_request valueForKey:@"mediathumbnailurl"]];
-        if([NSNull null] ==[dic_request valueForKey:@"mediathumbnailurl"])
+        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+        Videocell.activityIndicatorVideo.hidden = NO;
+        [Videocell.activityIndicatorVideo startAnimating];
+        
+        if([NSNull null] ==[dic_request valueForKey:@"mediathumbnailurl"] ||[[dic_request valueForKey:@"mediathumbnailurl"]isEqualToString:@""] )
         {
             
             Videocell.videoImageView.image =[UIImage imageNamed:@"defaultpostimg.jpg"];
             Videocell.playImageView.image = [UIImage imageNamed:@""];
+            Videocell.activityIndicatorVideo.hidden = YES;
+            [Videocell.activityIndicatorVideo stopAnimating];
         }
         else
         {
-            [Videocell.videoImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"]
-                                            options:SDWebImageRefreshCached];
+         
+            [Videocell.videoImageView setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image)
+             {
+                 Videocell.videoImageView.image = image;
+                 Videocell.activityIndicatorVideo.hidden = YES;
+                 [Videocell.activityIndicatorVideo stopAnimating];
+             }
+                                                failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error)
+             {
+                 Videocell.activityIndicatorVideo.hidden = YES;
+                 [Videocell.activityIndicatorVideo stopAnimating];
+             }
+             ];
+            
+            
+            
+            
+            
             Videocell.playImageView.image = [UIImage imageNamed:@"Play"];
             //[cell.videoImageView sd_setImageWithURL:url];
             
@@ -787,8 +872,20 @@
         Videocell.videoImageView.layer.cornerRadius = 10;
         Videocell.videoImageView.layer.masksToBounds = YES;
         
-        NSString *show = [NSString stringWithFormat:@"$%@",[dic_request valueForKey:@"showamount"]];
-        Videocell.bidAmountLabel.text = show;//[dic_request valueForKey:@"showamount"];
+      //  NSString *show = [NSString stringWithFormat:@"ر.س%@",[dic_request valueForKey:@"showamount"]];//$
+        //Videocell.bidAmountLabel.text = show;//[dic_request valueForKey:@"showamount"];
+        
+        if ([[dic_request valueForKey:@"showamount"]floatValue] > [[dic_request valueForKey:@"askingprice"]floatValue])
+        {
+            NSString *show = [NSString stringWithFormat:@"ر.س%@",[dic_request valueForKey:@"showamount"]];//$
+            Videocell.bidAmountLabel.text = show;
+        }
+        else
+        {
+            NSString *show = [NSString stringWithFormat:@"ر.س%@",[dic_request valueForKey:@"askingprice"]];//$
+            Videocell.bidAmountLabel.text = show;
+        }
+        
         Videocell.titleLabel.text =  [dic_request valueForKey:@"title"];
         Videocell.locationLabel.text = [dic_request valueForKey:@"city1"];
         Videocell.timeLabel.text = [dic_request valueForKey:@"createtime"];
@@ -809,16 +906,53 @@
         
         Imagecell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"ImageCell" forIndexPath:indexPath];
         //        [cell.videoImageView sd_setImageWithURL:url];
+        
+        Imagecell.activityIndicator.hidden = NO;
+        [Imagecell.activityIndicator startAnimating];
         Imagecell.videoImageView.layer.cornerRadius = 10;
         Imagecell.videoImageView.layer.masksToBounds = YES;
         NSURL * url=[NSURL URLWithString:[dic_request valueForKey:@"mediathumbnailurl"]];
-        [Imagecell.videoImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"]
-                                        options:SDWebImageRefreshCached];
+        
+        
+        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+        
+        [Imagecell.videoImageView setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image)
+         {
+             Imagecell.videoImageView.image = image;
+             Imagecell.activityIndicator.hidden = YES;
+             [Imagecell.activityIndicator stopAnimating];
+         }
+                                            failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error)
+         {
+             Imagecell.activityIndicator.hidden = YES;
+             [Imagecell.activityIndicator stopAnimating];
+         }
+         ];
+
+        if([NSNull null] ==[dic_request valueForKey:@"mediathumbnailurl"] || [[dic_request valueForKey:@"mediathumbnailurl"] isEqualToString:@""])
+        {
+            
+           
+            Imagecell.activityIndicator.hidden = YES;
+            [Imagecell.activityIndicator stopAnimating];
+        }
+      //  [Imagecell.videoImageView setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"]];
         
         Imagecell.locationLabel.text = [dic_request valueForKey:@"city1"];
         Imagecell.timeLabel.text = [dic_request valueForKey:@"createtime"];
-        NSString *show = [NSString stringWithFormat:@"$%@",[dic_request valueForKey:@"showamount"]];
-        Imagecell.bidAmountLabel.text = show;
+//        NSString *show = [NSString stringWithFormat:@"ر.س%@",[dic_request valueForKey:@"showamount"]];//$
+//        Imagecell.bidAmountLabel.text = show;
+        
+        if ([[dic_request valueForKey:@"showamount"]floatValue] > [[dic_request valueForKey:@"askingprice"]floatValue])
+        {
+            NSString *show = [NSString stringWithFormat:@"ر.س%@",[dic_request valueForKey:@"showamount"]];//$
+            Imagecell.bidAmountLabel.text = show;
+        }
+        else
+        {
+            NSString *show = [NSString stringWithFormat:@"ر.س%@",[dic_request valueForKey:@"askingprice"]];//$
+            Imagecell.bidAmountLabel.text = show;
+        }
         Imagecell.titleLabel.text = [dic_request valueForKey:@"title"];
       
         
@@ -841,7 +975,12 @@
     
     
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    AllViewSwapeViewController * set1=[mainStoryboard instantiateViewControllerWithIdentifier:@"AllViewSwapeViewController"];
+    
+    
+   // AllViewSwapeViewController * set1=[mainStoryboard instantiateViewControllerWithIdentifier:@"AllViewSwapeViewController"];
+    
+    RootViewController * set1=[mainStoryboard instantiateViewControllerWithIdentifier:@"RootViewController"];
+
     
     
     CATransition *transition = [CATransition animation];
@@ -890,12 +1029,12 @@
     if ([[dic_request valueForKey:@"mediatype"] isEqualToString:@"VIDEO"] )
         
     {
-        height = 275.0;
+        height = cellVideoHeight;//275.0;
     }
     else
     {
         
-        height = 225.0;
+        height = cellHeight;//225.0;
         
     }
     return height;
@@ -1018,16 +1157,17 @@ heightForHeaderAtIndexPath:(NSIndexPath *)indexPath
         NSString *myposts= @"myposts";
         NSString *mypostsVal = @"YES";
         
-       
+        NSString *mypostsDummy= @"dummy";
+        NSString *mypostsDummyVAl = @"dummy";
 
         
         NSString *city= @"city";
-        NSString *cityVal = [defaults valueForKey:@"Cityname"];
+        NSString *cityVal = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,(CFStringRef)[defaults valueForKey:@"Cityname"],NULL,(CFStringRef)@"!*\"();:@&=+$,/?%#[]% ",CFStringConvertNSStringEncodingToEncoding(NSUTF8StringEncoding)));
 
         NSString *country= @"country";
-        NSString *countryVal = [defaults valueForKey:@"Countryname"];;
+        NSString *countryVal = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,(CFStringRef)[defaults valueForKey:@"Countryname"],NULL,(CFStringRef)@"!*\"();:@&=+$,/?%#[]% ",CFStringConvertNSStringEncodingToEncoding(NSUTF8StringEncoding)));
         
-        NSString *reqStringFUll=[NSString stringWithFormat:@"%@=%@&%@=%@&%@=%@&%@=%@&%@=%@",userid,useridVal,location,locationVal,city,cityVal,country,countryVal,myposts,mypostsVal];
+        NSString *reqStringFUll=[NSString stringWithFormat:@"%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@",userid,useridVal,location,locationVal,city,cityVal,country,countryVal,myposts,mypostsVal,mypostsDummy,mypostsDummyVAl];
         
         
         //converting  string into data bytes and finding the lenght of the string.
@@ -1196,19 +1336,15 @@ heightForHeaderAtIndexPath:(NSIndexPath *)indexPath
                                                  ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\t" withString:@""];
                                                  
                                                  NSLog(@"Array_SalePoints %@",Array_SalePoints);
-                                                 
-                                                 if ([ResultString isEqualToString:@""])
+                                               
+                                                 if (Array_SalePoints.count !=0)
                                                  {
-                                                    
+                                                     favoritesValueLabel.text = [NSString stringWithFormat:@"%@",[[Array_SalePoints objectAtIndex:0] valueForKey:@"totalfav"]];
                                                      
-                                                     salepointValueLabel.text = @"0";
+                                                     salepointValueLabel.text =[NSString stringWithFormat:@"%@",[[Array_SalePoints objectAtIndex:0] valueForKey:@"salepoints"]];
                                                      
                                                  }
-                                                 else //if ([ResultString isEqualToString:@"1"])
-                                                 {
-                                                     salepointValueLabel.text =ResultString;
-                                                     
-                                                 }
+                                                
 //                                                 else
 //                                                 {
 //                                                     
@@ -1425,9 +1561,12 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
                                                      ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\t" withString:@""];
                                                      if (array_profilepic.count !=0)
                                                      {
-                                                        Str_profileurl=@"";
-                                                         Str_profileurl=[[array_profilepic objectAtIndex:0]valueForKey:@"ProImg"];
-                                                        
+    
+  Str_profileurl=@"";
+                                                         Str_profileurl=[[array_profilepic objectAtIndex:0]valueForKey:@"profilepic"];
+                            [defaults setObject:Str_profileurl forKey:@"profileimage"];
+        
+       
                                                      }
                                                      
                                                  }
@@ -1503,7 +1642,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     UILabel * label1 = [[UILabel alloc]initWithFrame:CGRectMake(147, 8, 86, 30)];
     label1.font = [UIFont fontWithName:@"SanFranciscoDisplay-Medium" size:16];
     label1.textAlignment = NSTextAlignmentCenter;
-    label1.text = @"ITEM SOLD";
+    label1.text = @"السلع المباعة";//@"ITEM SOLD";
     label1.textColor = [UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1];
     [grayView addSubview:label1];
     
@@ -1513,10 +1652,10 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     
     [grayView addSubview:imageView];
     
-    UILabel * label2 = [[UILabel alloc]initWithFrame:CGRectMake(112, 41, 150, 18)];
+    UILabel * label2 = [[UILabel alloc]initWithFrame:CGRectMake(87, 41, 175, 18)];
     label2.font = [UIFont fontWithName:@"SanFranciscoDisplay-Semibold" size:11];
     label2.textAlignment = NSTextAlignmentRight;
-    label2.text = [NSString stringWithFormat:@"POST ID: %@",PostIDValue];//@"POST ID: 3589278W3";
+    label2.text = [NSString stringWithFormat:@"%@%@",PostIDValue,@" :رقم الإعلان"];//POST ID [NSString stringWithFormat:@"رمز الإعلان: %@",PostIDValue];//@"POST ID: 3589278W3";
     
     
   //  label2.text = [NSString stringWithFormat:@"POST ID: %@",[[Array_ViewPost objectAtIndex:(long)button.tag]valueForKey:@"postid"]];
@@ -1527,7 +1666,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     UILabel * label3 = [[UILabel alloc]initWithFrame:CGRectMake(8, 67, 254, 21)];
     label3.font = [UIFont fontWithName:@"SanFranciscoDisplay-Medium" size:14];
     label3.textAlignment = NSTextAlignmentRight;
-    label3.text = @"Are you sure this item has been sold?";
+        label3.text = @"متأكد أنه تم بيع السلعة؟";//@"Are you sure this item has been sold?";
     [grayView addSubview:label3];
     
     
@@ -1535,12 +1674,12 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     label4.font = [UIFont fontWithName:@"SanFranciscoDisplay-Medium" size:14];
     label4.textAlignment = NSTextAlignmentRight;
     label4.numberOfLines = 2;
-    label4.text = @"Selecting confirm will remove item from تم";
+    label4.text = @"اختيار تأكيد سوف يزيل السلعه.";//@"Selecting confirm will remove item from تم";
     [grayView addSubview:label4];
     
     
     UIButton *confirm=[[UIButton alloc]initWithFrame:CGRectMake(0, 130, 275, 32)];
-    [confirm setTitle:@"CONFIRM" forState:UIControlStateNormal];
+    [confirm setTitle:@"تأكيد" forState:UIControlStateNormal];//CONFIRM
     [confirm setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [confirm setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
     confirm.titleLabel.font = [UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:16];
@@ -1563,12 +1702,10 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 }
 - (void)confirm:(id)sender
 {
+    
+    /* PAYMENTS POPUP (CREDIT CARD / BANK)
     transparentView1=[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     transparentView1.backgroundColor=[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.3];
-    
-    
-    //    NSArray *nibContents = [[NSBundle mainBundle] loadNibNamed:@"EnterPrice" owner:self options:nil];
-    //    UIView *myView = [nibContents objectAtIndex:0];
     
     myCustomXIBViewObj =[[[NSBundle mainBundle] loadNibNamed:@"EnterPrice" owner:self options:nil]objectAtIndex:0];
     
@@ -1579,14 +1716,25 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     
     [myCustomXIBViewObj.bankButton addTarget:self action:@selector(bankButton_Action:) forControlEvents:UIControlEventTouchUpInside];
     [myCustomXIBViewObj.bankButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    
     [myCustomXIBViewObj.creditButton addTarget:self action:@selector(creditButton_Action:) forControlEvents:UIControlEventTouchUpInside];
     [myCustomXIBViewObj.creditButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
     
+    if ([[UIScreen mainScreen]bounds].size.width == 414)
+    {
+        [myCustomXIBViewObj.bankButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, -212)];
+        [myCustomXIBViewObj.creditButton setImageEdgeInsets:UIEdgeInsetsMake(5, 0, 0, -176)];
+    }
+    else
+    {
+        
+    }
+   
     [myCustomXIBViewObj.priceTextField addTarget:self action:@selector(enterInLabel ) forControlEvents:UIControlEventEditingChanged];
     
     myCustomXIBViewObj.priceTextField.delegate = self;
     [myCustomXIBViewObj.priceTextField becomeFirstResponder];
-    myCustomXIBViewObj.postIdLabel.text = [NSString stringWithFormat:@"POST ID: %@",PostIDValue];//[NSString stringWithFormat:@"POST ID: %@",[Array_ViewPost  valueForKey:@"postid"]];
+    myCustomXIBViewObj.postIdLabel.text =[NSString stringWithFormat:@"%@%@",PostIDValue,@" :رقم الإعلان"];//POST ID [NSString stringWithFormat:@"رمز الإعلان: %@",PostIDValue];//[NSString stringWithFormat:@"POST ID: %@",[Array_ViewPost  valueForKey:@"postid"]];
     myCustomXIBViewObj.layer.cornerRadius = 10;
     myCustomXIBViewObj.clipsToBounds = YES;
     
@@ -1603,7 +1751,14 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     
     myCustomXIBViewObj.creditButton.enabled = NO;
     [myCustomXIBViewObj.creditButton setBackgroundColor:[UIColor grayColor]];
+    */
     
+    [self.view showActivityViewWithLabel:@"Closing Post..."];
+    paymentmodeStr = @"FREE";
+    [self ItemSold_Connection];
+    NSLog(@"item_sold_free Pressed");
+    [self.view endEditing:YES];
+    [defaults setObject:@"yes" forKey:@"refreshView"];
     
 }
 
@@ -1614,16 +1769,20 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 
 -(void)enterInLabel
 {
+//    NSString *askingpriceValString = [NSString stringWithFormat:@"%@",myCustomXIBViewObj.priceTextField.text];
+//    askingpriceValString = [askingpriceValString substringFromIndex:1];
+    
     NSString *askingpriceValString = [NSString stringWithFormat:@"%@",myCustomXIBViewObj.priceTextField.text];
-    askingpriceValString = [askingpriceValString substringFromIndex:1];
+    askingpriceValString = [askingpriceValString stringByReplacingOccurrencesOfString:@"ر.س" withString:@""];
+    
     
     float j = [askingpriceValString floatValue];
     
     float k = ((1*j)/100); //0.75 instead of 1
     
-    myCustomXIBViewObj.caculatedAmountLabel.text =[NSString stringWithFormat:@"$ %0.2f",k]; //[NSString stringWithFormat:@"$ %@",askingpriceValString];
+    myCustomXIBViewObj.caculatedAmountLabel.text =[NSString stringWithFormat:@"ر.س %0.2f",k]; //[NSString stringWithFormat:@"$ %@",askingpriceValString];
     
-    if ([myCustomXIBViewObj.priceTextField.text isEqualToString:@"$"])
+    if ([myCustomXIBViewObj.priceTextField.text isEqualToString:@"ر.س"])
     {
         
         myCustomXIBViewObj.bankButton.enabled = NO;
@@ -1649,9 +1808,19 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
+    
+    
+    if (textField == searchTextField)
+    {
+        
+    }
+    else if (textField == myCustomXIBViewObj.priceTextField)
+    {
+    
+    
     NSString *newText = [myCustomXIBViewObj.priceTextField.text stringByReplacingCharactersInRange:range withString:string];
     
-    if (![newText hasPrefix:@"$"])
+    if (![newText hasPrefix:@"ر.س"])//$
     {
         
         myCustomXIBViewObj.bankButton.enabled = NO;
@@ -1674,6 +1843,8 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     
     NSLog(@"%lu",textField.text.length);
     
+    }
+    
     return YES;
     
 }
@@ -1682,12 +1853,39 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 
 -(void)bankButton_Action:(id)sender
 {
-    [self.view showActivityViewWithLabel:@"Making payment..."];
+ 
+  //[self.view showActivityViewWithLabel:@"Making payment..."];
     paymentmodeStr = @"BANK";
     
-    [self ItemSold_Connection];
+  //  [self ItemSold_Connection];
     NSLog(@"Bank button Pressed");
     [self.view endEditing:YES];
+    
+    
+    UIAlertController * alert=[UIAlertController alertControllerWithTitle:@"Bank Details" message:@"Please transfer the amount to the below bank details:\n\nBank name: ABC Bank\nBank branch: JVPD\nIFSC Code : 123ABC\nAccount No.:7894123415487\n\nPlease mail us the reference no. to support@tammapp.com once you have made the payment.\n\nAre you sure you wish to make payment?"preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* yesButton = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action)
+                                {
+                                    [self.view showActivityViewWithLabel:@"Making payment..."];
+                                    [self ItemSold_Connection];
+                                    [defaults setObject:@"yes" forKey:@"refreshView"];
+                                 
+                                }];
+    UIAlertAction* noButton = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action)
+                               {
+                                  
+                                   
+                               }];
+    
+    
+    [alert addAction:yesButton];
+    [alert addAction:noButton];
+   
+    
+    [self presentViewController:alert animated:YES completion:nil];
+    
+    
+    
 }
 -(void)creditButton_Action:(id)sender
 {
@@ -1696,7 +1894,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     [self ItemSold_Connection];
     NSLog(@"creditButton_Action Pressed");
     [self.view endEditing:YES];
-    
+    [defaults setObject:@"yes" forKey:@"refreshView"];
 }
 
 - (void)Hide_Popover
@@ -1716,15 +1914,19 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     
     
     
+//    NSString *enterPriceString = [NSString stringWithFormat:@"%@",myCustomXIBViewObj.priceTextField.text];
+//    enterPriceString = [enterPriceString substringFromIndex:1];
     NSString *enterPriceString = [NSString stringWithFormat:@"%@",myCustomXIBViewObj.priceTextField.text];
-    enterPriceString = [enterPriceString substringFromIndex:1];
+    enterPriceString = [enterPriceString stringByReplacingOccurrencesOfString:@"ر.س" withString:@""];
+    NSInteger number = [enterPriceString intValue];
     
     NSString *price= @"sellprice";
-    NSString *priceVal = enterPriceString;
+    NSString *priceVal = [NSString stringWithFormat:@"%ld",number];
     
-    
+//    NSString *transactionString = [NSString stringWithFormat:@"%@",myCustomXIBViewObj.caculatedAmountLabel.text];
+//    transactionString = [transactionString substringFromIndex:1];
     NSString *transactionString = [NSString stringWithFormat:@"%@",myCustomXIBViewObj.caculatedAmountLabel.text];
-    transactionString = [transactionString substringFromIndex:1];
+    transactionString = [transactionString stringByReplacingOccurrencesOfString:@"ر.س" withString:@""];
     
     NSString *transaction= @"commission";
     NSString *transactionVal = transactionString;
@@ -1785,6 +1987,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
                                                      
                                                      [self.view endEditing:YES];
                                                      transparentView1.hidden= YES;
+                                                     transparentView.hidden = YES; //for confirm popup
                                                 
 //                                                     CATransition *transition = [CATransition animation];
 //                                                     transition.duration = 0.3;

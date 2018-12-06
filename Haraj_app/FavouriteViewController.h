@@ -13,8 +13,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *postCountLabel;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIView *view_line;
+@property (weak, nonatomic) IBOutlet  UILabel *labelheding;
 
-
+@property (weak, nonatomic) IBOutlet UIButton *backbutton;
 - (IBAction)BackButton_Action:(id)sender;
 
 @end

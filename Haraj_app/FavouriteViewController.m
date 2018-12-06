@@ -11,7 +11,9 @@
 #import "Reachability.h"
 #import "SBJsonParser.h"
 #import "UIImageView+WebCache.h"
-#import "AllViewSwapeViewController.h"
+
+#import "AFNetworking.h"
+#import "RootViewController.h"
 
 @interface FavouriteViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -32,11 +34,21 @@
 @end
 
 @implementation FavouriteViewController
-@synthesize postCountLabel;
+@synthesize postCountLabel,labelheding,backbutton,view_line;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    if (self.view.frame.size.width==375 && self.view.frame.size.height==812)
+    {
+        
+        
+        [view_line setFrame:CGRectMake(view_line.frame.origin.x, view_line.frame.origin.y+6, view_line.frame.size.width, 1)];
+        
+        [labelheding setFrame:CGRectMake(labelheding.frame.origin.x, labelheding.frame.origin.y+16, labelheding.frame.size.width, 26)];
+        
+        [backbutton setFrame:CGRectMake(backbutton.frame.origin.x, backbutton.frame.origin.y+16, backbutton.frame.size.width, 30)];
+        
+    }
     defaults = [[NSUserDefaults alloc]init];
    // postCountLabel.text = [defaults valueForKey:@"CountFav"];
     
@@ -96,25 +108,46 @@
     FavouriteCell.postImageView.layer.cornerRadius = 10;
     FavouriteCell.postImageView.layer.masksToBounds = YES;
     
-    FavouriteCell.postIdLabel.text =[NSString stringWithFormat:@"POST ID:%@",[dic_request valueForKey:@"postid"]] ;
+    FavouriteCell.postIdLabel.text =[NSString stringWithFormat:@"%@%@",[dic_request valueForKey:@"postid"],@" :رقم الإعلان"];//POST ID[NSString stringWithFormat:@"POST ID:%@",[dic_request valueForKey:@"postid"]] ;
     FavouriteCell.durationLabel.text = [dic_request valueForKey:@"postdur"];
     FavouriteCell.titleLabel.text = [dic_request valueForKey:@"title"];
     
     
     NSURL * url=[NSURL URLWithString:[dic_request valueForKey:@"mediathumbnailurl"]];
-    [FavouriteCell.postImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"]
-                                    options:SDWebImageRefreshCached];
+    [FavouriteCell.postImageView setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"]];
 
-    
-    
-    
-    
-    
     
     return FavouriteCell;
 
     
 }
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    if ([[UIScreen mainScreen]bounds].size.width ==320)
+    {
+        return 89;
+    }
+    
+    else if ([[UIScreen mainScreen]bounds].size.width == 414)
+    {
+        return 113;
+    }
+    else
+    {
+        return 103;
+    }
+    
+    
+    
+    //return 50;
+    
+    
+    
+}
+
+
 
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -129,7 +162,8 @@
 {
     
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    AllViewSwapeViewController * set1=[mainStoryboard instantiateViewControllerWithIdentifier:@"AllViewSwapeViewController"];
+    
+    RootViewController * set1=[mainStoryboard instantiateViewControllerWithIdentifier:@"RootViewController"];
     
     
     CATransition *transition = [CATransition animation];

@@ -191,6 +191,8 @@
 		61B8C8851EC1E61100954A68 /* steve.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 61B8C8841EC1E61100954A68 /* steve.jpeg */; };
 		61C7FEB31F01079700EF278B /* ActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61C7FEB21F01079700EF278B /* ActivityViewController.m */; };
 		61C7FEB61F010BD500EF278B /* ActivityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61C7FEB51F010BD500EF278B /* ActivityTableViewCell.m */; };
+		61CB73721F2C9FE6003A57ED /* UIScrollView+SVInfiniteScrolling.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CB736F1F2C9FE6003A57ED /* UIScrollView+SVInfiniteScrolling.m */; };
+		61CB73731F2C9FE6003A57ED /* UIScrollView+SVPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CB73711F2C9FE6003A57ED /* UIScrollView+SVPullToRefresh.m */; };
 		61CBAE6B1F03BBC200B8065D /* tammlogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 61CBAE6A1F03BBC100B8065D /* tammlogo.png */; };
 		61D376681EBC3F6300BA02D4 /* LGPlusButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D376611EBC3F6300BA02D4 /* LGPlusButton.m */; };
 		61D376691EBC3F6300BA02D4 /* LGPlusButtonDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D376631EBC3F6300BA02D4 /* LGPlusButtonDescription.m */; };
@@ -306,11 +308,12 @@
 		61F95AA01EF5588900DEE62A /* ProductDetailCellProperty.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61F95A9E1EF5588900DEE62A /* ProductDetailCellProperty.xib */; };
 		9A09B8C21EF1672C00421BF7 /* PostHeaderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A09B8C01EF1672C00421BF7 /* PostHeaderTableViewCell.m */; };
 		9A09B8C31EF1672C00421BF7 /* PostHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A09B8C11EF1672C00421BF7 /* PostHeaderTableViewCell.xib */; };
-		9A13F3561EEE9DB40069219E /* YSLContainerViewController1.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A13F3531EEE9DB40069219E /* YSLContainerViewController1.m */; };
-		9A13F35A1EEE9DE90069219E /* AllViewSwapeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A13F3591EEE9DE90069219E /* AllViewSwapeViewController.m */; };
 		9AD3F1A01EF2851E005A215D /* EnterComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AD3F19F1EF2851E005A215D /* EnterComment.m */; };
 		9AD3F1A21EF28542005A215D /* EnterComment.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AD3F1A11EF28542005A215D /* EnterComment.xib */; };
-		9AEB1F0A1EF1020E00BD9DEF /* MoreImageScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB1F091EF1020E00BD9DEF /* MoreImageScrollViewController.m */; };
+		F92EF1F61F35A2E80012BB27 /* AutolayoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F92EF1F51F35A2E80012BB27 /* AutolayoutViewController.m */; };
+		F99241C31F30543C009BF9B0 /* PostFooterTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F99241C11F30543C009BF9B0 /* PostFooterTableViewCell.m */; };
+		F99241C41F30543C009BF9B0 /* PostFooterTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F99241C21F30543C009BF9B0 /* PostFooterTableViewCell.xib */; };
+		F9C51C1D1F3B3C3E0050A9B9 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9C51C1C1F3B3C3E0050A9B9 /* RootViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -605,6 +608,11 @@
 		61C7FEB21F01079700EF278B /* ActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityViewController.m; sourceTree = "<group>"; };
 		61C7FEB41F010BD500EF278B /* ActivityTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityTableViewCell.h; sourceTree = "<group>"; };
 		61C7FEB51F010BD500EF278B /* ActivityTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityTableViewCell.m; sourceTree = "<group>"; };
+		61CB736D1F2C9FE6003A57ED /* SVPullToRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPullToRefresh.h; sourceTree = "<group>"; };
+		61CB736E1F2C9FE6003A57ED /* UIScrollView+SVInfiniteScrolling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+SVInfiniteScrolling.h"; sourceTree = "<group>"; };
+		61CB736F1F2C9FE6003A57ED /* UIScrollView+SVInfiniteScrolling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+SVInfiniteScrolling.m"; sourceTree = "<group>"; };
+		61CB73701F2C9FE6003A57ED /* UIScrollView+SVPullToRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+SVPullToRefresh.h"; sourceTree = "<group>"; };
+		61CB73711F2C9FE6003A57ED /* UIScrollView+SVPullToRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+SVPullToRefresh.m"; sourceTree = "<group>"; };
 		61CBAE6A1F03BBC100B8065D /* tammlogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tammlogo.png; sourceTree = "<group>"; };
 		61D376601EBC3F6300BA02D4 /* LGPlusButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGPlusButton.h; sourceTree = "<group>"; };
 		61D376611EBC3F6300BA02D4 /* LGPlusButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGPlusButton.m; sourceTree = "<group>"; };
@@ -794,15 +802,22 @@
 		9A09B8BF1EF1672B00421BF7 /* PostHeaderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostHeaderTableViewCell.h; sourceTree = "<group>"; };
 		9A09B8C01EF1672C00421BF7 /* PostHeaderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostHeaderTableViewCell.m; sourceTree = "<group>"; };
 		9A09B8C11EF1672C00421BF7 /* PostHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostHeaderTableViewCell.xib; sourceTree = "<group>"; };
-		9A13F3521EEE9DB40069219E /* YSLContainerViewController1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSLContainerViewController1.h; sourceTree = "<group>"; };
-		9A13F3531EEE9DB40069219E /* YSLContainerViewController1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YSLContainerViewController1.m; sourceTree = "<group>"; };
-		9A13F3581EEE9DE90069219E /* AllViewSwapeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllViewSwapeViewController.h; sourceTree = "<group>"; };
-		9A13F3591EEE9DE90069219E /* AllViewSwapeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllViewSwapeViewController.m; sourceTree = "<group>"; };
 		9AD3F19E1EF2851E005A215D /* EnterComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnterComment.h; sourceTree = "<group>"; };
 		9AD3F19F1EF2851E005A215D /* EnterComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnterComment.m; sourceTree = "<group>"; };
 		9AD3F1A11EF28542005A215D /* EnterComment.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EnterComment.xib; sourceTree = "<group>"; };
-		9AEB1F081EF1020E00BD9DEF /* MoreImageScrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreImageScrollViewController.h; sourceTree = "<group>"; };
-		9AEB1F091EF1020E00BD9DEF /* MoreImageScrollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreImageScrollViewController.m; sourceTree = "<group>"; };
+		F906BA4E1F6650AB0034C040 /* Cairo-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cairo-Black.ttf"; sourceTree = "<group>"; };
+		F906BA4F1F6650AB0034C040 /* Cairo-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cairo-Bold.ttf"; sourceTree = "<group>"; };
+		F906BA501F6650AB0034C040 /* Cairo-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cairo-ExtraLight.ttf"; sourceTree = "<group>"; };
+		F906BA511F6650AB0034C040 /* Cairo-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cairo-Light.ttf"; sourceTree = "<group>"; };
+		F906BA521F6650AB0034C040 /* Cairo-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cairo-Regular.ttf"; sourceTree = "<group>"; };
+		F906BA531F6650AB0034C040 /* Cairo-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cairo-SemiBold.ttf"; sourceTree = "<group>"; };
+		F92EF1F41F35A2E80012BB27 /* AutolayoutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutolayoutViewController.h; sourceTree = "<group>"; };
+		F92EF1F51F35A2E80012BB27 /* AutolayoutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutolayoutViewController.m; sourceTree = "<group>"; };
+		F99241C01F30543C009BF9B0 /* PostFooterTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostFooterTableViewCell.h; sourceTree = "<group>"; };
+		F99241C11F30543C009BF9B0 /* PostFooterTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostFooterTableViewCell.m; sourceTree = "<group>"; };
+		F99241C21F30543C009BF9B0 /* PostFooterTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostFooterTableViewCell.xib; sourceTree = "<group>"; };
+		F9C51C1B1F3B3C3E0050A9B9 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		F9C51C1C1F3B3C3E0050A9B9 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -899,12 +914,12 @@
 			children = (
 				61F54B981F178CCB006A498A /* GoogleService-Info.plist */,
 				61F54B351F17887B006A498A /* Firebase */,
-				9A13F3501EEE9D460069219E /* AllScrollTable */,
 				61F56CB21ECD75A10031E9C1 /* ELCImagePicker */,
 				614C160B1EC0730C00B11A9B /* Layout */,
 				61271D8A1EBDC3DF0082E504 /* Frameworks */,
 				61271D3F1EBD927C0082E504 /* Images */,
 				61271D351EBD91E10082E504 /* LoginPages */,
+				F906BA4D1F66507C0034C040 /* Cario Font Arabic */,
 				61D3766E1EBC867F00BA02D4 /* sanfranciscofont */,
 				61D3765F1EBC3F6300BA02D4 /* LGPlusButtonsView */,
 				61ED095C1EB85D09008EAFB7 /* CollectionView */,
@@ -962,14 +977,14 @@
 			children = (
 				3247807A1EACEE0A00FF4B79 /* ViewController.h */,
 				3247807B1EACEE0A00FF4B79 /* ViewController.m */,
+				324780AE1EACF17E00FF4B79 /* AllViewController.h */,
+				324780AF1EACF17E00FF4B79 /* AllViewController.m */,
 				324780B31EACF1A000FF4B79 /* CarsViewController.h */,
 				324780B41EACF1A000FF4B79 /* CarsViewController.m */,
 				61487FEA1ED2ECE7009CEF9B /* PropertyViewController.h */,
 				61487FEB1ED2ECE7009CEF9B /* PropertyViewController.m */,
 				614C16081EC06B5400B11A9B /* ElectronicViewController.h */,
 				614C16091EC06B5400B11A9B /* ElectronicViewController.m */,
-				324780AE1EACF17E00FF4B79 /* AllViewController.h */,
-				324780AF1EACF17E00FF4B79 /* AllViewController.m */,
 				61487FED1ED2ED0F009CEF9B /* PetsViewController.h */,
 				61487FEE1ED2ED0F009CEF9B /* PetsViewController.m */,
 				61487FF01ED2ED20009CEF9B /* FurnitureViewController.h */,
@@ -978,6 +993,8 @@
 				61487FF41ED2ED42009CEF9B /* ServicesViewController.m */,
 				61487FF61ED2ED5D009CEF9B /* OtherViewController.h */,
 				61487FF71ED2ED5D009CEF9B /* OtherViewController.m */,
+				F92EF1F41F35A2E80012BB27 /* AutolayoutViewController.h */,
+				F92EF1F51F35A2E80012BB27 /* AutolayoutViewController.m */,
 				610E594F1ED5674300AA2DE6 /* CollectionViewCells */,
 			);
 			name = ViewControllers;
@@ -1051,10 +1068,10 @@
 		61172E671F1F2B9E0006B2A6 /* ContactList */ = {
 			isa = PBXGroup;
 			children = (
-				61172E681F1F2B9E0006B2A6 /* ContactAddTableViewCell.h */,
-				61172E691F1F2B9E0006B2A6 /* ContactAddTableViewCell.m */,
 				61172E6A1F1F2B9E0006B2A6 /* ContactListViewController.h */,
 				61172E6B1F1F2B9E0006B2A6 /* ContactListViewController.m */,
+				61172E681F1F2B9E0006B2A6 /* ContactAddTableViewCell.h */,
+				61172E691F1F2B9E0006B2A6 /* ContactAddTableViewCell.m */,
 				61172E6C1F1F2B9E0006B2A6 /* ContactTableViewCell.h */,
 				61172E6D1F1F2B9E0006B2A6 /* ContactTableViewCell.m */,
 			);
@@ -1131,6 +1148,7 @@
 			children = (
 				6163B7A61F0779B8003631AF /* UIViewController+KeyboardAnimation.h */,
 				6163B7A71F0779B8003631AF /* UIViewController+KeyboardAnimation.m */,
+				61CB736C1F2C9FE6003A57ED /* PullToreRefresh */,
 				61D3906B1F2C84D40078AE4E /* SDWebImageSdk */,
 				61739FCC1EE2AF5900018CF1 /* ImageZoomIn */,
 				61739FA01EE2951100018CF1 /* BaseEncoding */,
@@ -1441,6 +1459,9 @@
 				615ED1411EDEE6C1001E6B0A /* CommentsTableViewCell.h */,
 				615ED1421EDEE6C1001E6B0A /* CommentsTableViewCell.m */,
 				615ED1431EDEE6C1001E6B0A /* CommentsTableViewCell.xib */,
+				F99241C01F30543C009BF9B0 /* PostFooterTableViewCell.h */,
+				F99241C11F30543C009BF9B0 /* PostFooterTableViewCell.m */,
+				F99241C21F30543C009BF9B0 /* PostFooterTableViewCell.xib */,
 				615ED1461EDEE6D2001E6B0A /* SuggestedTableViewCell.h */,
 				615ED1471EDEE6D2001E6B0A /* SuggestedTableViewCell.m */,
 				615ED1481EDEE6D2001E6B0A /* SuggestedTableViewCell.xib */,
@@ -1471,6 +1492,18 @@
 				613403351F1CBD1200DA9489 /* ChangePasswordViewController.m */,
 			);
 			name = "Account Setting";
+			sourceTree = "<group>";
+		};
+		61CB736C1F2C9FE6003A57ED /* PullToreRefresh */ = {
+			isa = PBXGroup;
+			children = (
+				61CB736D1F2C9FE6003A57ED /* SVPullToRefresh.h */,
+				61CB736E1F2C9FE6003A57ED /* UIScrollView+SVInfiniteScrolling.h */,
+				61CB736F1F2C9FE6003A57ED /* UIScrollView+SVInfiniteScrolling.m */,
+				61CB73701F2C9FE6003A57ED /* UIScrollView+SVPullToRefresh.h */,
+				61CB73711F2C9FE6003A57ED /* UIScrollView+SVPullToRefresh.m */,
+			);
+			path = PullToreRefresh;
 			sourceTree = "<group>";
 		};
 		61D3765F1EBC3F6300BA02D4 /* LGPlusButtonsView */ = {
@@ -1558,7 +1591,7 @@
 		61E015F01ED6BB6B0037C72C /* onclickVC */ = {
 			isa = PBXGroup;
 			children = (
-				9A13F3511EEE9DB40069219E /* AllTablescroll */,
+				9A13F3511EEE9DB40069219E /* ArrayScrollController */,
 				614C161C1EC0919200B11A9B /* OnCellClickViewController.h */,
 				614C161D1EC0919200B11A9B /* OnCellClickViewController.m */,
 			);
@@ -1811,24 +1844,27 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		9A13F3501EEE9D460069219E /* AllScrollTable */ = {
+		9A13F3511EEE9DB40069219E /* ArrayScrollController */ = {
 			isa = PBXGroup;
 			children = (
+				F9C51C1B1F3B3C3E0050A9B9 /* RootViewController.h */,
+				F9C51C1C1F3B3C3E0050A9B9 /* RootViewController.m */,
 			);
-			name = AllScrollTable;
+			name = ArrayScrollController;
+			path = AllTablescroll;
 			sourceTree = "<group>";
 		};
-		9A13F3511EEE9DB40069219E /* AllTablescroll */ = {
+		F906BA4D1F66507C0034C040 /* Cario Font Arabic */ = {
 			isa = PBXGroup;
 			children = (
-				9A13F3581EEE9DE90069219E /* AllViewSwapeViewController.h */,
-				9A13F3591EEE9DE90069219E /* AllViewSwapeViewController.m */,
-				9A13F3521EEE9DB40069219E /* YSLContainerViewController1.h */,
-				9A13F3531EEE9DB40069219E /* YSLContainerViewController1.m */,
-				9AEB1F081EF1020E00BD9DEF /* MoreImageScrollViewController.h */,
-				9AEB1F091EF1020E00BD9DEF /* MoreImageScrollViewController.m */,
+				F906BA4E1F6650AB0034C040 /* Cairo-Black.ttf */,
+				F906BA4F1F6650AB0034C040 /* Cairo-Bold.ttf */,
+				F906BA501F6650AB0034C040 /* Cairo-ExtraLight.ttf */,
+				F906BA511F6650AB0034C040 /* Cairo-Light.ttf */,
+				F906BA521F6650AB0034C040 /* Cairo-Regular.ttf */,
+				F906BA531F6650AB0034C040 /* Cairo-SemiBold.ttf */,
 			);
-			path = AllTablescroll;
+			name = "Cario Font Arabic";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2021,6 +2057,7 @@
 				6103E8121F2755BD00A630FE /* Rolls Royce.png in Resources */,
 				6103E8161F2755BD00A630FE /* Tesla.png in Resources */,
 				613E82FA1ED2B82500B1BC23 /* UrlName.plist in Resources */,
+				F99241C41F30543C009BF9B0 /* PostFooterTableViewCell.xib in Resources */,
 				61ED09B51EB87ED1008EAFB7 /* swift.jpg in Resources */,
 				6103E80D1F2755BD00A630FE /* Mustang.png in Resources */,
 				6103E7EC1F2755BD00A630FE /* Alfa Romeo.png in Resources */,
@@ -2088,6 +2125,7 @@
 				618B00091EF921A500434650 /* DetailPropertyTableViewCell.m in Sources */,
 				61739FA31EE2951100018CF1 /* Base64.m in Sources */,
 				61172E7D1F1F2B9E0006B2A6 /* FacebookListViewController.m in Sources */,
+				F92EF1F61F35A2E80012BB27 /* AutolayoutViewController.m in Sources */,
 				614C15EB1EC039C100B11A9B /* NSObject+SBJson.m in Sources */,
 				61D3909D1F2C84D40078AE4E /* MKAnnotationView+WebCache.m in Sources */,
 				61B8C8751EC1AA1800954A68 /* FirstImageViewCell.m in Sources */,
@@ -2095,6 +2133,7 @@
 				61E141811F02593F008C3E7A /* AccThreeTableViewCell.m in Sources */,
 				61040CE01EFBC9D100ACE5D6 /* BoostPost.m in Sources */,
 				61EDCA0B1ECB2E3F0036A250 /* MoreDetailCell.m in Sources */,
+				61CB73731F2C9FE6003A57ED /* UIScrollView+SVPullToRefresh.m in Sources */,
 				61ED095B1EB85369008EAFB7 /* YSLScrollMenuView.m in Sources */,
 				61487FF81ED2ED5D009CEF9B /* OtherViewController.m in Sources */,
 				6163B7A01F077829003631AF /* FriendCahtingViewController.m in Sources */,
@@ -2110,8 +2149,8 @@
 				61D390AB1F2C84D40078AE4E /* UIImage+WebP.m in Sources */,
 				324780B11EACF17E00FF4B79 /* AllViewController.m in Sources */,
 				1B3B63361EDFF51B00D57715 /* FRHyperLabel.m in Sources */,
-				9AEB1F0A1EF1020E00BD9DEF /* MoreImageScrollViewController.m in Sources */,
 				6163B7A81F0779B8003631AF /* UIViewController+KeyboardAnimation.m in Sources */,
+				F9C51C1D1F3B3C3E0050A9B9 /* RootViewController.m in Sources */,
 				61F56CCF1ECD75A10031E9C1 /* ELCImagePickerController.m in Sources */,
 				61D390A11F2C84D40078AE4E /* SDImageCacheConfig.m in Sources */,
 				614C15EE1EC039C100B11A9B /* SBJsonStreamParserAccumulator.m in Sources */,
@@ -2140,7 +2179,6 @@
 				61E015F41ED6BB9A0037C72C /* TwoImageOnClickTableViewCell.m in Sources */,
 				614C16161EC0739900B11A9B /* FRGWaterfallDecorationReusableView.m in Sources */,
 				614C15EC1EC039C100B11A9B /* SBJsonParser.m in Sources */,
-				9A13F35A1EEE9DE90069219E /* AllViewSwapeViewController.m in Sources */,
 				61040CDD1EFBBC1800ACE5D6 /* BoostPostViewController.m in Sources */,
 				61F56CD01ECD75A10031E9C1 /* ELCOverlayImageView.m in Sources */,
 				61D3766A1EBC3F6300BA02D4 /* LGPlusButtonsView.m in Sources */,
@@ -2156,7 +2194,6 @@
 				614C15EF1EC039C100B11A9B /* SBJsonStreamParserAdapter.m in Sources */,
 				61EDCA051ECB2DF40036A250 /* AddImageCell.m in Sources */,
 				61F56CCA1ECD75A10031E9C1 /* ELCAlbumPickerController.m in Sources */,
-				9A13F3561EEE9DB40069219E /* YSLContainerViewController1.m in Sources */,
 				61E141801F02593F008C3E7A /* AccountSettViewController.m in Sources */,
 				61D3909E1F2C84D40078AE4E /* NSData+ImageContentType.m in Sources */,
 				61D376681EBC3F6300BA02D4 /* LGPlusButton.m in Sources */,
@@ -2186,6 +2223,7 @@
 				617FD8911EB9D6D8008B827F /* PatternViewCell.m in Sources */,
 				61172E811F1F2B9E0006B2A6 /* TwittertwoTableViewCell.m in Sources */,
 				61739FE71EE2AF5900018CF1 /* AFHTTPClient.m in Sources */,
+				61CB73721F2C9FE6003A57ED /* UIScrollView+SVInfiniteScrolling.m in Sources */,
 				61487FF21ED2ED20009CEF9B /* FurnitureViewController.m in Sources */,
 				614C15CF1EC0398D00B11A9B /* Reachability.m in Sources */,
 				61D390A21F2C84D40078AE4E /* SDWebImageCompat.m in Sources */,
@@ -2201,6 +2239,7 @@
 				61739FF11EE2AF5900018CF1 /* UIImageView+AFNetworking.m in Sources */,
 				61D390A91F2C84D40078AE4E /* UIImage+GIF.m in Sources */,
 				614C15CA1EC0389200B11A9B /* LoginPageViewController.m in Sources */,
+				F99241C31F30543C009BF9B0 /* PostFooterTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2332,8 +2371,8 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = Haraj_app/Haraj_app.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
-				ENABLE_BITCODE = YES;
+				DEVELOPMENT_TEAM = BARZUNFUBS;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Haraj_app/Frameworks/FacebookSDK",
@@ -2354,7 +2393,7 @@
 				);
 				GCC_NO_COMMON_BLOCKS = NO;
 				INFOPLIST_FILE = Haraj_app/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bba.tamm;
@@ -2373,8 +2412,8 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = Haraj_app/Haraj_app.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
-				ENABLE_BITCODE = YES;
+				DEVELOPMENT_TEAM = BARZUNFUBS;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Haraj_app/Frameworks/FacebookSDK",
@@ -2395,7 +2434,7 @@
 				);
 				GCC_NO_COMMON_BLOCKS = NO;
 				INFOPLIST_FILE = Haraj_app/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bba.tamm;

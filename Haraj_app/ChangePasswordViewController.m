@@ -20,11 +20,20 @@
 @end
 
 @implementation ChangePasswordViewController
-
+@synthesize backbutton,labelheding,view_line;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    if (self.view.frame.size.width==375 && self.view.frame.size.height==812)
+    {
+     
+        [backbutton setFrame:CGRectMake(backbutton.frame.origin.x, backbutton.frame.origin.y+11, backbutton.frame.size.width, 28)];
+        [labelheding setFrame:CGRectMake(labelheding.frame.origin.x, labelheding.frame.origin.y+11, labelheding.frame.size.width, 28)];
+        [view_line setFrame:CGRectMake(view_line.frame.origin.x, view_line.frame.origin.y+8, view_line.frame.size.width, 1)];
+        
+        
+        
+    }
     defaults=[[NSUserDefaults alloc]init];
     NSString *plistPath = [[NSBundle mainBundle]pathForResource:@"UrlName" ofType:@"plist"];
     urlplist = [NSDictionary dictionaryWithContentsOfFile:plistPath];

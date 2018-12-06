@@ -12,6 +12,8 @@
 #import "Reachability.h"
 #import "UIImageView+WebCache.h"
 #import "EnterPrice.h"
+#import "AFNetworking.h"
+#import "UIView+RNActivityView.h"
 
 @interface ChoosePostViewController ()<UITableViewDataSource, UITableViewDelegate,UITextFieldDelegate,UITextViewDelegate>
 {
@@ -35,11 +37,20 @@
 @end
 
 @implementation ChoosePostViewController
-
+@synthesize labelheding,backbutton,Button_help,view_line;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    if (self.view.frame.size.width==375 && self.view.frame.size.height==812)
+    {
+        
+         [view_line setFrame:CGRectMake(view_line.frame.origin.x, view_line.frame.origin.y+
+                                        6, view_line.frame.size.width, 1)];
+        [labelheding setFrame:CGRectMake(labelheding.frame.origin.x, labelheding.frame.origin.y+16, labelheding.frame.size.width, 26)];
+        
+        [backbutton setFrame:CGRectMake(backbutton.frame.origin.x, backbutton.frame.origin.y+16, backbutton.frame.size.width, 30)];
+          [Button_help setFrame:CGRectMake(Button_help.frame.origin.x, Button_help.frame.origin.y+16, Button_help.frame.size.width, 30)];
+    }
     
     defaults = [[NSUserDefaults alloc]init];
    
@@ -92,14 +103,13 @@
     FavouriteCell.postImageView.layer.cornerRadius = 10;
     FavouriteCell.postImageView.layer.masksToBounds = YES;
     
-    FavouriteCell.postIdLabel.text =[NSString stringWithFormat:@"POST ID:%@",[dic_request valueForKey:@"postid"]] ;
+    FavouriteCell.postIdLabel.text = [NSString stringWithFormat:@"%@%@",[dic_request valueForKey:@"postid"],@" :رقم الإعلان"];//POST ID     [NSString stringWithFormat:@"POST ID:%@",[dic_request valueForKey:@"postid"]] ;
     FavouriteCell.durationLabel.text = [dic_request valueForKey:@"postdur"];
     FavouriteCell.titleLabel.text = [dic_request valueForKey:@"title"];
     
     
     NSURL * url=[NSURL URLWithString:[dic_request valueForKey:@"mediathumbnailurl"]];
-    [FavouriteCell.postImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"]
-                                            options:SDWebImageRefreshCached];
+    [FavouriteCell.postImageView setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"]];
     
     
     
@@ -109,6 +119,24 @@
     
     return FavouriteCell;
     
+    
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    if ([[UIScreen mainScreen]bounds].size.width ==320)
+    {
+        return 89;
+    }
+    else if ([[UIScreen mainScreen]bounds].size.width == 414)
+    {
+        return 113;
+    }
+    else
+    {
+        return 103;
+    }
     
 }
 
@@ -138,7 +166,7 @@
     
     myCustomXIBViewObj.priceTextField.delegate = self;
     [myCustomXIBViewObj.priceTextField becomeFirstResponder];
-    myCustomXIBViewObj.postIdLabel.text =[NSString stringWithFormat:@"POST ID: %@",[[Array_ViewPost  valueForKey:@"postid"]objectAtIndex:indexPath.row]];
+    myCustomXIBViewObj.postIdLabel.text =[NSString stringWithFormat:@"%@%@",[[Array_ViewPost  valueForKey:@"postid"]objectAtIndex:indexPath.row],@" :رقم الإعلان"];//POST ID  [NSString stringWithFormat:@"POST ID: %@",[[Array_ViewPost  valueForKey:@"postid"]objectAtIndex:indexPath.row]];
     
     postIdVal =[[Array_ViewPost  valueForKey:@"postid"]objectAtIndex:indexPath.row];
     
@@ -159,6 +187,16 @@
     
     myCustomXIBViewObj.creditButton.enabled = NO;
     [myCustomXIBViewObj.creditButton setBackgroundColor:[UIColor grayColor]];
+    
+    if ([[UIScreen mainScreen]bounds].size.width == 414)
+    {
+        [myCustomXIBViewObj.bankButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, -212)];
+        [myCustomXIBViewObj.creditButton setImageEdgeInsets:UIEdgeInsetsMake(5, 0, 0, -176)];
+    }
+    else
+    {
+        
+    }
 
     
 
@@ -166,16 +204,19 @@
 
 -(void)enterInLabel
 {
+//    NSString *askingpriceValString = [NSString stringWithFormat:@"%@",myCustomXIBViewObj.priceTextField.text];
+//    askingpriceValString = [askingpriceValString substringFromIndex:1];
+    
     NSString *askingpriceValString = [NSString stringWithFormat:@"%@",myCustomXIBViewObj.priceTextField.text];
-    askingpriceValString = [askingpriceValString substringFromIndex:1];
+    askingpriceValString = [askingpriceValString stringByReplacingOccurrencesOfString:@"ر.س" withString:@""];
     
     float j = [askingpriceValString floatValue];
     
     float k = ((1*j)/100); //0.75 instead of 1
     
-    myCustomXIBViewObj.caculatedAmountLabel.text =[NSString stringWithFormat:@"$ %0.2f",k]; //[NSString stringWithFormat:@"$ %@",askingpriceValString];
+    myCustomXIBViewObj.caculatedAmountLabel.text =[NSString stringWithFormat:@"ر.س %0.2f",k]; //[NSString stringWithFormat:@"$ %@",askingpriceValString];//$
     
-    if ([myCustomXIBViewObj.priceTextField.text isEqualToString:@"$"])
+    if ([myCustomXIBViewObj.priceTextField.text isEqualToString:@"ر.س"])//$
     {
         
         myCustomXIBViewObj.bankButton.enabled = NO;
@@ -192,7 +233,7 @@
 {
     if (myCustomXIBViewObj.priceTextField.text.length == 0)
     {
-        myCustomXIBViewObj.priceTextField.text = @"$";
+        myCustomXIBViewObj.priceTextField.text = @"ر.س";//$
         
     }
     
@@ -203,7 +244,7 @@
 {
     NSString *newText = [myCustomXIBViewObj.priceTextField.text stringByReplacingCharactersInRange:range withString:string];
     
-    if (![newText hasPrefix:@"$"])
+    if (![newText hasPrefix:@"ر.س"])//$
     {
         
         myCustomXIBViewObj.bankButton.enabled = NO;
@@ -234,12 +275,38 @@
 {
     paymentmodeStr = @"BANK";
     
-    [self ItemSold_Connection];
+   // [self ItemSold_Connection];
     NSLog(@"Bank button Pressed");
+    [self.view endEditing:YES];
+    
+    UIAlertController * alert=[UIAlertController alertControllerWithTitle:@"Bank Details" message:@"Please transfer the amount to the below bank details:\n\nBank name: ABC Bank\nBank branch: JVPD\nIFSC Code : 123ABC\nAccount No.:7894123415487\n\nPlease mail us the reference no. to support@tammapp.com once you have made the payment.\n\nAre you sure you wish to make payment?"preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* yesButton = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action)
+                                {
+                                    [self.view showActivityViewWithLabel:@"Making payment..."];
+                                    [self ItemSold_Connection];
+                                  //  [defaults setObject:@"yes" forKey:@"refreshView"];
+                                    
+                                }];
+    UIAlertAction* noButton = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action)
+                               {
+                                   
+                                   
+                               }];
+    
+    
+    [alert addAction:yesButton];
+    [alert addAction:noButton];
+
+    [self presentViewController:alert animated:YES completion:nil];
+    
+    
 }
 -(void)creditButton_Action:(id)sender
 {
-    
+   // [defaults setObject:@"yes" forKey:@"refreshView"];
+    [self.view showActivityViewWithLabel:@"Making payment..."];
+    [self.view endEditing:YES];
     paymentmodeStr = @"CARD";
     [self ItemSold_Connection];
     NSLog(@"creditButton_Action Pressed");
@@ -268,15 +335,21 @@
     
     
     
+//    NSString *enterPriceString = [NSString stringWithFormat:@"%@",myCustomXIBViewObj.priceTextField.text];
+//    enterPriceString = [enterPriceString substringFromIndex:1];
     NSString *enterPriceString = [NSString stringWithFormat:@"%@",myCustomXIBViewObj.priceTextField.text];
-    enterPriceString = [enterPriceString substringFromIndex:1];
+    enterPriceString = [enterPriceString stringByReplacingOccurrencesOfString:@"ر.س" withString:@""];
+    
+    NSInteger number = [enterPriceString intValue];
     
     NSString *price= @"sellprice";
-    NSString *priceVal = enterPriceString;
+    NSString *priceVal = [NSString stringWithFormat:@"%ld",number];
     
     
+//    NSString *transactionString = [NSString stringWithFormat:@"%@",myCustomXIBViewObj.caculatedAmountLabel.text];
+//    transactionString = [transactionString substringFromIndex:1];
     NSString *transactionString = [NSString stringWithFormat:@"%@",myCustomXIBViewObj.caculatedAmountLabel.text];
-    transactionString = [transactionString substringFromIndex:1];
+    transactionString = [transactionString stringByReplacingOccurrencesOfString:@"ر.س" withString:@""];
     
     NSString *transaction= @"commission";
     NSString *transactionVal = transactionString;
@@ -397,7 +470,7 @@
                                                  }
                                                  
                                                  
-                                                 
+                                                 [self.view hideActivityViewWithAfterDelay:0];
                                                  
                                                  
                                                  
@@ -597,8 +670,10 @@
     
     NSLog(@"InfoButton_Action Pressed");
     
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Pay Fee" message:@"Once you sucessfully sell your item to a buyer, please pay a nominal 1% transaction fee to Tamm via Credit card or Bank Transfer." preferredStyle:UIAlertControllerStyleAlert];
-    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"دفع الرسوم" message:@"بمجرد بيع سلعتك عن طريق تطبيق تم، الرجاء دفع ١٪‏ رسوم البيع من قيمة السلعة لتطبيق تم عن طريق بطاقة الائتمان او التحويل البنكي." preferredStyle:UIAlertControllerStyleAlert];
+
+//    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Pay Fee" message:@"Once you sucessfully sell your item to a buyer, please pay a nominal 1% transaction fee to Tamm via Credit card or Bank Transfer." preferredStyle:UIAlertControllerStyleAlert];
+
     UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
                                                        style:UIAlertActionStyleDefault
                                                      handler:nil];

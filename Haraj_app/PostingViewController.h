@@ -15,6 +15,9 @@
 #import "Base64.h"
 #import "ProductDetailCellCar.h"
 #import "ProductDetailCellProperty.h"
+#import "MoreDetailCell.h"
+#import "AddImageCell.h"
+#import "ProductDetailCell.h"
 
 
 
@@ -29,15 +32,21 @@
 - (BOOL) startCameraControllerFromViewController: (UIViewController*) controller
                                    usingDelegate: (id <UIImagePickerControllerDelegate,
                                                    UINavigationControllerDelegate>) delegate;
+@property (weak, nonatomic) IBOutlet UIView *NavigationView;
 
 @property (strong, nonatomic) NSURL *videoURL;
 @property (strong, nonatomic) MPMoviePlayerController *videoController;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 
+
+@property (weak, nonatomic) IBOutlet UIButton *backButton;
 -(IBAction)OnClick_btn:(id)sender;
 -(IBAction)ChangeLocations:(id)sender;
 
 @property (strong,nonatomic)ProductDetailCellCar * Cell_DetailCar;
 @property (strong,nonatomic)ProductDetailCellProperty * Cell_DetailProperty;
+@property (strong,nonatomic)MoreDetailCell * moreCell;
+@property (strong,nonatomic)AddImageCell *imageCell;
+@property (strong,nonatomic)ProductDetailCell *detailCell;
 
 @end

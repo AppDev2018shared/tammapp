@@ -23,6 +23,12 @@
 @property (weak, nonatomic) IBOutlet UIImageView *carMakeImageView;
 
 
+@property (weak, nonatomic) IBOutlet UIImageView *DownArrowImageView;
+@property (weak, nonatomic) IBOutlet UIButton *Button_carMakeButton;
+
+
+
+
 
 
 @end

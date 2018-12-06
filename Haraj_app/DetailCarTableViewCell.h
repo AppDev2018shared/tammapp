@@ -39,4 +39,11 @@
 @property (weak, nonatomic) IBOutlet UIButton *Button_makeoffer;
 @property (weak, nonatomic) IBOutlet UIView *view_CordinateViewTapped;
 
+//------------uielements for autolayout---------
+@property (weak, nonatomic) IBOutlet UIImageView *askingPriceImageview;
+@property (weak, nonatomic) IBOutlet UILabel *askingPriceHeadingLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *highestOfferImageview;
+@property (weak, nonatomic) IBOutlet UILabel *highestOfferHeadingLabel;
+@property (weak, nonatomic) IBOutlet UIView *backgroundKMView;
+
 @end

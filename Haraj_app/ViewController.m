@@ -23,6 +23,7 @@
 #import "ProfileViewController.h"
 #import "ActivityViewController.h"
 #import "SearchViewController.h"
+#import "SVPullToRefresh.h"
 
 #import "LGPlusButtonsView.h"
 
@@ -39,11 +40,15 @@
     NSDictionary *urlplist;
     NSURLConnection *Connection_ViewPost;
     NSMutableData *webData_ViewPost;
-    NSMutableArray *Array_ViewPost,*Array_Car,*Array_Property,*Array_Electronics,*Array_Pets,*Array_Furniture,*Array_Others,*Array_Services,*Array_ActivityTicker;
+    NSMutableArray *Array_ViewPost,*Array_Car,*Array_Property,*Array_Electronics,*Array_Pets,*Array_Furniture,*Array_Others,*Array_Services,*Array_ActivityTicker,*Array_ViewPost1;
     
     int favouritesCount;
     
+    NSInteger pageCount,pageCount1,pageCount2,pageCount3,pageCount4,pageCount5,pageCount6,pageCount7,pageCount8;
+    
     NSTimer *BadgeTimer;
+    NSString *categorynameStr;
+    
 }
 
 @property (strong, nonatomic) LGPlusButtonsView *plusButtonsViewMain;
@@ -54,16 +59,45 @@
 @implementation ViewController
 @synthesize navigationView,profile,activity,search,location,locationLabel,nameLabel,badgeLabel;
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
+
     
     favouritesCount = 0;
-
-   
-    borderBottom_topheder = [CALayer layer];
-
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ViewControllerData) name:@"ViewControllerData" object:nil];
+    pageCount = 0 ;
     
+    
+    Array_ViewPost =[[NSMutableArray alloc]init];
+    Array_Car = [[NSMutableArray alloc]init];
+    Array_Property= [[NSMutableArray alloc]init];
+    Array_Electronics=[[NSMutableArray alloc]init];
+    Array_Furniture=[[NSMutableArray alloc]init];
+    Array_Pets=[[NSMutableArray alloc]init];
+    Array_Services=[[NSMutableArray alloc]init];
+    Array_Others=[[NSMutableArray alloc]init];
+    NSLog(@"frame sizeaaa=%f",self.view.frame.size.height);
+    if (self.view.frame.size.width==375 && self.view.frame.size.height==812)
+    {
+         [navigationView setFrame:CGRectMake(navigationView.frame.origin.x, navigationView.frame.origin.y, navigationView.frame.size.width,90)];
+        
+        [profile setFrame:CGRectMake(profile.frame.origin.x, profile.frame.origin.y+16, profile.frame.size.width, 30)];
+         [activity setFrame:CGRectMake(activity.frame.origin.x, activity.frame.origin.y+16, activity.frame.size.width, 30)];
+         [search setFrame:CGRectMake(search.frame.origin.x, search.frame.origin.y+16, search.frame.size.width, 30)];
+         [location setFrame:CGRectMake(location.frame.origin.x, location.frame.origin.y+16, location.frame.size.width, 30)];
+         [nameLabel setFrame:CGRectMake(nameLabel.frame.origin.x, nameLabel.frame.origin.y+14,40, 40)];
+        
+         [badgeLabel setFrame:CGRectMake(badgeLabel.frame.origin.x, badgeLabel.frame.origin.y+18, badgeLabel.frame.size.width, 22)];
+        
+         [locationLabel setFrame:CGRectMake(locationLabel.frame.origin.x, locationLabel.frame.origin.y+8, locationLabel.frame.size.width, 20)];
+    }
+    categorynameStr = @"all";
+    
+    borderBottom_topheder = [CALayer layer];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ViewControllerData) name:@"ViewControllerData" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(PullToRefreshTop:) name:@"PullToRefreshTop" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(PullToRefreshBottom:) name:@"PullToRefreshBottom" object:nil];
     
     
     NSString *plistPath = [[NSBundle mainBundle]pathForResource:@"UrlName" ofType:@"plist"];
@@ -71,12 +105,11 @@
     
     
     defaults = [[NSUserDefaults alloc]init];
-//  [defaults setObject:@"no" forKey:@"LoginView"];
-    [defaults synchronize];
+   // [defaults synchronize];
     
     self.navigationController.navigationBar.hidden=YES;
     
-//    [defaults setObject:@"ON" forKey:@"locationPresed"];
+    //    [defaults setObject:@"ON" forKey:@"locationPresed"];
     
     
     
@@ -86,46 +119,46 @@
     badgeLabel.clipsToBounds = YES;
     badgeLabel.hidden = YES;
     
-     BadgeTimer =  [NSTimer scheduledTimerWithTimeInterval:3.0f target:self selector:@selector(ActivityTicker_Connection) userInfo:nil  repeats:YES];
+    BadgeTimer =  [NSTimer scheduledTimerWithTimeInterval:3.0f target:self selector:@selector(ActivityTicker_Connection) userInfo:nil  repeats:YES];
     
     
     //--------------------------------------------------------------------------------
-
     
     
-   
+    
+    
     [profile setImage:[UIImage imageNamed:@"Profile"] forState:UIControlStateNormal];
     [profile setContentMode:UIViewContentModeScaleAspectFit];
     profile.tag = 1;
     [profile addTarget:self action:@selector(topButton:) forControlEvents:UIControlEventTouchUpInside];
-   
     
-   
+    
+    
     [activity setImage:[UIImage imageNamed:@"Activity"] forState:UIControlStateNormal];
     [activity setContentMode:UIViewContentModeScaleAspectFit];
     activity.tag = 2;
     [activity addTarget:self action:@selector(topButton:) forControlEvents:UIControlEventTouchUpInside];
     
- 
+    
     [search setImage:[UIImage imageNamed:@"Search"] forState:UIControlStateNormal];
     [search setContentMode:UIViewContentModeScaleAspectFit];
     search.tag = 3;
     [search addTarget:self action:@selector(topButton:) forControlEvents:UIControlEventTouchUpInside];
+   
     
     
- 
-     // [location setImage:[UIImage imageNamed:@"Location_off"] forState:UIControlStateNormal];
-      location.tag = 4;
-      [location addTarget:self action:@selector(topButton:) forControlEvents:UIControlEventTouchUpInside];
-     // [defaults setObject:@"OFF" forKey:@"locationPresed"];
+    // [location setImage:[UIImage imageNamed:@"Location_off"] forState:UIControlStateNormal];
+    location.tag = 4;
+    [location addTarget:self action:@selector(topButton:) forControlEvents:UIControlEventTouchUpInside];
+    // [defaults setObject:@"OFF" forKey:@"locationPresed"];
     
     
     if ([[defaults valueForKey:@"locationPresed"] isEqualToString:@"ON"])
     {
         [location setImage:[UIImage imageNamed:@"Location_on"] forState:UIControlStateNormal];
-       
+        
         locationLabel.hidden = NO;
-
+        
         
     }
     else
@@ -136,53 +169,53 @@
         locationLabel.hidden = YES;
     }
     [location setContentMode:UIViewContentModeScaleAspectFit];
-
+    
     
     locationLabel.textColor = [UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1];
     locationLabel.text = [defaults valueForKey:@"Cityname"];
     locationLabel.textAlignment = NSTextAlignmentCenter;
     locationLabel.font = [UIFont fontWithName:@"SanFranciscoDisplay-Medium" size:14];
-   
     
     
-   
+    
+    
     nameLabel.image = [UIImage imageNamed:@"NameLogo"];
     nameLabel.contentMode = UIViewContentModeScaleAspectFill;
     
     
-  
-   
-  
-
     
-    //View Controllers
+    
+    
+    
+    
+    //View Controllers loading on container view
     
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     
     CarsViewController *carVC =[mainStoryboard instantiateViewControllerWithIdentifier:@"CarsViewController"];
-    carVC.title = @"Cars";
+    carVC.title = @"سيارات";//@"Cars";
     
     PropertyViewController *propertyVC = [mainStoryboard instantiateViewControllerWithIdentifier:@"PropertyViewController"];
-    propertyVC.title = @"Property";
+    propertyVC.title =@"عقار"; //@"Property";
     
     
     ElectronicViewController *electronicVC = [mainStoryboard instantiateViewControllerWithIdentifier:@"ElectronicViewController"];
-    electronicVC.title = @"Electronics";
+    electronicVC.title = @"إلكترونيات";//@"Electronics";
     
     AllViewController *allVC = [mainStoryboard instantiateViewControllerWithIdentifier:@"AllViewController"];
-    allVC.title = @"All";
+    allVC.title = @"الكل";//@"All";
     
     PetsViewController *petsVC = [mainStoryboard instantiateViewControllerWithIdentifier:@"PetsViewController"];
-    petsVC.title = @"Pets";
+    petsVC.title = @"حيوانات أليفة";//@"Pets";
     
     FurnitureViewController * furnitureVC=[mainStoryboard instantiateViewControllerWithIdentifier:@"FurnitureViewController"];
-    furnitureVC.title = @"Furniture";
+    furnitureVC.title = @"أثاث";//@"Furniture";
     
     ServicesViewController *serviceVC = [mainStoryboard instantiateViewControllerWithIdentifier:@"ServicesViewController"];
-    serviceVC.title = @"Services";
+    serviceVC.title = @"خدمات";//@"Services";
     
     OtherViewController * otherVC=[mainStoryboard instantiateViewControllerWithIdentifier:@"OtherViewController"];
-    otherVC.title = @"Other";
+    otherVC.title = @"أخرى";//@"Other";
     
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
     
@@ -192,10 +225,10 @@
     float navigationHeight =self.navigationController.navigationBar.frame.size.height;
     
     YSLContainerViewController *containerVC = [[YSLContainerViewController alloc]initWithControllers:@[allVC,carVC,propertyVC,electronicVC,petsVC,furnitureVC,serviceVC,otherVC]topBarHeight:statusHeight + navigationHeight
-                                                            parentViewController:self];
+                                                                                parentViewController:self];
     
     //frame added....
-   // containerVC.view.frame = CGRectMake(0,0,containerVC.view.frame.size.width, containerVC.view.frame.size.height);
+    // containerVC.view.frame = CGRectMake(0,0,containerVC.view.frame.size.width, containerVC.view.frame.size.height);
     
     containerVC.delegate = self;
     containerVC.menuItemFont = [UIFont fontWithName:@"SanFranciscoDisplay-Medium" size:18];
@@ -209,16 +242,34 @@
     [activityindicator startAnimating];
     activityindicator.center = containerVC.view.center;
     
-   // [self.view addSubview:activityindicator];
+    // [self.view addSubview:activityindicator];
     [containerVC.view addSubview:activityindicator];
     
-
+    
+    
     
     [self.view addSubview:navigationView];
     [self viewPostConnection];
+    if ([[defaults valueForKey:@"tabindex"] isEqualToString:@"1"])
+    {
+        
+        
+        [defaults setObject:@"0" forKey:@"tabindex"];
+        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        ActivityViewController * activity=[mainStoryboard instantiateViewControllerWithIdentifier:@"ActivityViewController"];
+        
+        CATransition *transition = [CATransition animation];
+        transition.duration = 0.3;
+        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+        transition.type = kCATransitionPush;
+        transition.subtype = kCATransitionFromLeft;
+        
+        [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
+        
+        [self.navigationController pushViewController:activity animated:YES];
+    }
+    //  [self ActivityTicker_Connection];
     
-  //  [self ActivityTicker_Connection];
-
 }
 
 - (void) viewDidLayoutSubviews {
@@ -256,7 +307,7 @@
                                     
                                     PostingViewController * set=[mainStoryboard instantiateViewControllerWithIdentifier:@"PostingViewController"];
                                     
-                                     set.name = @"car" ;
+                                     set.name = @"سيارات";//@"car";
                                     
                                     CATransition *transition = [CATransition animation];
                                     transition.duration = 0.3;
@@ -272,32 +323,32 @@
                                 }
                                 else if(index == 2)
                                 {
-                                    [defaults setValue:@"property" forKey:@"Title"];
+                                    [defaults setValue:@"عقار" forKey:@"Title"];//property
                                     [self postFunction];
                                 }
                                 else if(index == 3)
                                 {
-                                    [defaults setValue:@"electronics" forKey:@"Title"];
+                                    [defaults setValue:@"إلكترونيات" forKey:@"Title"];//electronics
                                     [self postFunction];
                                 }
                                 else if(index == 4)
                                 {
-                                    [defaults setValue:@"pets" forKey:@"Title"];
+                                    [defaults setValue:@"حيوانات أليفة" forKey:@"Title"];//pets
                                     [self postFunction];
                                 }
                                 else if(index == 5)
                                 {
-                                    [defaults setValue:@"furniture" forKey:@"Title"];
+                                    [defaults setValue:@"أثاث" forKey:@"Title"];//furniture
                                     [self postFunction];
                                 }
                                 else if(index == 6)
                                 {
-                                    [defaults setValue:@"services" forKey:@"Title"];
+                                    [defaults setValue:@"خدمات" forKey:@"Title"];//services
                                     [self postFunction];
                                 }
                                 else if(index == 7)
                                 {
-                                    [defaults setValue:@"others" forKey:@"Title"];
+                                    [defaults setValue:@"أخرى" forKey:@"Title"];//others
                                     [self postFunction];
                                 }
                                 
@@ -310,8 +361,16 @@
     _plusButtonsViewMain.position = LGPlusButtonsViewPositionBottomRight;
     _plusButtonsViewMain.plusButtonAnimationType = LGPlusButtonAnimationTypeRotate;
     
+    
+    
     [_plusButtonsViewMain setButtonsTitles:@[@"", @"", @"", @"",@"",@"",@"",@""] forState:UIControlStateNormal];
-    [_plusButtonsViewMain setDescriptionsTexts:@[@"", @"Cars", @"Property", @"Electronics", @"Pets", @"Furniture", @"Services", @"Other"]];
+   // [_plusButtonsViewMain setDescriptionsTexts:@[@"", @"Cars", @"Property", @"Electronics", @"Pets", @"Furniture", @"Services", @"Other"]];
+    
+  
+    
+     [_plusButtonsViewMain setDescriptionsTexts:@[@"", @"سيارات", @"عقار", @"إلكترونيات", @"حيوانات أليفة", @" أثاث", @"خدمات", @" أخرى"]];
+    
+    
     [_plusButtonsViewMain setButtonsImages:@[[UIImage imageNamed:@"Float"], [UIImage imageNamed:@"Cars"], [UIImage imageNamed:@"Property"], [UIImage imageNamed:@"Electronics"], [UIImage imageNamed:@"Pets"], [UIImage imageNamed:@"Furniture"], [UIImage imageNamed:@"Services"], [UIImage imageNamed:@"Other"]]
                                   forState:UIControlStateNormal
                             forOrientation:LGPlusButtonsViewOrientationAll];
@@ -329,7 +388,7 @@
 //    [_plusButtonsViewMain setButtonsLayerShadowOpacity:0.5];
 //    [_plusButtonsViewMain setButtonsLayerShadowRadius:3.f];
 //    [_plusButtonsViewMain setButtonsLayerShadowOffset:CGSizeMake(0.f, 2.f)];
-    
+  
     [_plusButtonsViewMain setButtonAtIndex:0 size:CGSizeMake(56.f, 56.f)
                             forOrientation:(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ? LGPlusButtonsViewOrientationPortrait : LGPlusButtonsViewOrientationAll)];
     [_plusButtonsViewMain setButtonAtIndex:0 layerCornerRadius:56.f/2.f
@@ -363,13 +422,37 @@
 //    [_plusButtonsViewMain setDescriptionsLayerShadowOpacity:0.25];
 //    [_plusButtonsViewMain setDescriptionsLayerShadowRadius:1.f];
 //    [_plusButtonsViewMain setDescriptionsLayerShadowOffset:CGSizeMake(0.f, 1.f)];
+    
     [_plusButtonsViewMain setDescriptionsOffset:CGPointMake(24.f, 0.f) forOrientation:LGPlusButtonsViewOrientationAll];
     [_plusButtonsViewMain setDescriptionsLayerCornerRadius:12.f forOrientation:LGPlusButtonsViewOrientationAll];
     [_plusButtonsViewMain setDescriptionsContentEdgeInsets:UIEdgeInsetsMake(4.f, 16.f, 4.f, 20.f) forOrientation:LGPlusButtonsViewOrientationAll];
     
-    for (NSUInteger i=1; i<=7; i++)
-        [_plusButtonsViewMain setButtonAtIndex:i offset:CGPointMake(-6.f, -13.f)
-                                forOrientation:(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ? LGPlusButtonsViewOrientationPortrait : LGPlusButtonsViewOrientationAll)];
+    if ([[UIScreen mainScreen]bounds].size.width == 320)
+    {
+        for (NSUInteger i=1; i<=7; i++)
+            [_plusButtonsViewMain setButtonAtIndex:i offset:CGPointMake(-6.f, -6.f)
+                                    forOrientation:(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ? LGPlusButtonsViewOrientationPortrait : LGPlusButtonsViewOrientationAll)];
+    }
+    else if ([[UIScreen mainScreen]bounds].size.width == 414)
+    {
+        for (NSUInteger i=1; i<=7; i++)
+            [_plusButtonsViewMain setButtonAtIndex:i offset:CGPointMake(-6.f, -18.f)
+                                    forOrientation:(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ? LGPlusButtonsViewOrientationPortrait : LGPlusButtonsViewOrientationAll)];
+        
+    }
+    else
+    {
+        for (NSUInteger i=1; i<=7; i++)
+            [_plusButtonsViewMain setButtonAtIndex:i offset:CGPointMake(-6.f, -13.f)
+                                    forOrientation:(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ? LGPlusButtonsViewOrientationPortrait : LGPlusButtonsViewOrientationAll)];
+    }
+    
+//    for (NSUInteger i=1; i<=7; i++)
+//        [_plusButtonsViewMain setButtonAtIndex:i offset:CGPointMake(-6.f, -13.f)
+//                                forOrientation:(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ? LGPlusButtonsViewOrientationPortrait : LGPlusButtonsViewOrientationAll)];
+//    
+    
+    
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
     {
@@ -379,7 +462,10 @@
     
   
     [self.view addSubview:_plusButtonsViewMain];
-     
+    
+    
+    
+    
     [self viewPostConnection];
     
  
@@ -413,31 +499,26 @@
 
 -(void)topButton:(id)sender
 {
+    
+  
+    
     if ([sender tag]== 1)
     {
         NSLog(@"Profile Button Pressed");
         
         
-            UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-            ProfileViewController * profile=[mainStoryboard instantiateViewControllerWithIdentifier:@"ProfileViewController"];
+        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        ProfileViewController * profile=[mainStoryboard instantiateViewControllerWithIdentifier:@"ProfileViewController"];
         
+        CATransition *transition = [CATransition animation];
+        transition.duration = 0.3;
+        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+        transition.type = kCATransitionPush;
+        transition.subtype = kCATransitionFromLeft;
         
+        [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
+        [self.navigationController pushViewController:profile animated:YES];
         
-     //   FavouriteViewController * profile=[mainStoryboard instantiateViewControllerWithIdentifier:@"FavouriteViewController"];
-        
-            CATransition *transition = [CATransition animation];
-            transition.duration = 0.3;
-            transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-            transition.type = kCATransitionPush;
-            transition.subtype = kCATransitionFromLeft;
-        
-            [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
-        
-        //    set1.Array_Alldata = Array_ViewPost;
-        //    set1.tuchedIndex = indexPath.row;
-            [self.navigationController pushViewController:profile animated:YES];
-        //    
-        //    NSLog(@"Selected Index= %lditem",(long)indexPath.row);
         
         
     }
@@ -458,7 +539,7 @@
         [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
         
         [self.navigationController pushViewController:activity animated:YES];
-
+        
         
         
     }
@@ -481,14 +562,6 @@
         
         [self.navigationController pushViewController:searchController animated:YES];
         
-
-        
-
-        
-        
-        
-        
-        
     }
     else
     {
@@ -496,9 +569,6 @@
         activityindicator.hidden = NO;
         [activityindicator startAnimating];
 
-        
-        
-        
         if ([[defaults valueForKey:@"locationPresed"] isEqualToString:@"ON"])
         {
             [location setImage:[UIImage imageNamed:@"Location_off"] forState:UIControlStateNormal];
@@ -513,14 +583,22 @@
             [location setImage:[UIImage imageNamed:@"Location_on"] forState:UIControlStateNormal];
             locationLabel.hidden = NO;
             [defaults setObject:@"ON" forKey:@"locationPresed"];
-//            NSDictionary *arrayCar_Info =
-//            [NSDictionary dictionaryWithObjectsAndKeys:Array_Car,@"", nil];
-//            
-//            [[NSNotificationCenter defaultCenter] postNotificationName:@"arrayCar_Info" object:self userInfo:arrayCar_Info];
+            
+            
 
         }
         
+        [Array_ViewPost removeAllObjects];
+        [Array_Car removeAllObjects];
+        [Array_Property removeAllObjects];
+        [Array_Electronics removeAllObjects];
+        [Array_Pets removeAllObjects];
+        [Array_Furniture removeAllObjects];
+        [Array_Services removeAllObjects];
+        [Array_Others removeAllObjects];
         
+        
+    
 
         
         NSDictionary *arrayCar_Info7 =
@@ -555,18 +633,168 @@
         [NSDictionary dictionaryWithObjectsAndKeys:Array_Others,@"", nil];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"arrayother_Info" object:self userInfo:arrayCar_Info5];
         
-        [self viewPostConnection];
+        
         
         NSLog(@"location Button Pressed");
         
+        pageCount=0;
+        pageCount1=0;
+        pageCount2=0;
+        pageCount3=0;
+        pageCount4=0;
+        pageCount5=0;
+        pageCount6=0;
+        pageCount7=0;
+        pageCount8=0;
+        
+
+       [self viewPostConnection];
     }
 }
 
-#pragma mark -- YSLContainerViewControllerDelegate
+#pragma mark - YSLContainerViewControllerDelegate
+
 - (void)containerViewItemIndex:(NSInteger)index currentController:(UIViewController *)controller
 {
         NSLog(@"current Index : %ld",(long)index);
         NSLog(@"current controller : %@",controller);
+    
+    
+    
+    if ((long)index == 0)
+    {
+        categorynameStr = @"all";
+        pageCount=pageCount1;
+        if (Array_ViewPost.count == 0)
+        {
+            activityindicator.hidden = NO;
+            [activityindicator startAnimating];
+        }
+        else
+        {
+            activityindicator.hidden = YES;
+            [activityindicator stopAnimating];
+        }
+        
+    }
+    else if ((long)index == 1)
+    {
+        categorynameStr = @"car";
+        
+        if (Array_Car.count == 0)
+        {
+            activityindicator.hidden = NO;
+            [activityindicator startAnimating];
+        }
+        else
+        {
+        activityindicator.hidden = YES;
+        [activityindicator stopAnimating];
+        }
+        pageCount=pageCount2;
+        
+    }
+    else if ((long)index == 2)
+    {
+        categorynameStr = @"property";
+        
+        if (Array_Property.count == 0)
+        {
+            activityindicator.hidden = NO;
+            [activityindicator startAnimating];
+        }
+        else
+        {
+            activityindicator.hidden = YES;
+            [activityindicator stopAnimating];
+        }
+        pageCount=pageCount3;
+    }
+    else if ((long)index == 3)
+    {
+        categorynameStr = @"electronics";
+        
+        if (Array_Electronics.count == 0)
+        {
+            activityindicator.hidden = NO;
+            [activityindicator startAnimating];
+        }
+        else
+        {
+            activityindicator.hidden = YES;
+            [activityindicator stopAnimating];
+        }
+        pageCount=pageCount4;
+    }
+    else if ((long)index == 4)
+    {
+        categorynameStr = @"pets";
+        
+        if (Array_Pets.count == 0)
+        {
+            activityindicator.hidden = NO;
+            [activityindicator startAnimating];
+        }
+        else
+        {
+            activityindicator.hidden = YES;
+            [activityindicator stopAnimating];
+        }
+        pageCount=pageCount5;
+    }
+    else if ((long)index == 5)
+    {
+        categorynameStr = @"furniture";
+        if (Array_Furniture.count == 0)
+        {
+            activityindicator.hidden = NO;
+            [activityindicator startAnimating];
+            
+        }
+        else
+        {
+            activityindicator.hidden = YES;
+            [activityindicator stopAnimating];
+        }
+        pageCount=pageCount6;
+    }
+    else if ((long)index == 6)
+    {
+        categorynameStr = @"services";
+        if (Array_Services.count == 0)
+        {
+            activityindicator.hidden = NO;
+            [activityindicator startAnimating];
+        }
+        else
+        {
+            activityindicator.hidden = YES;
+            [activityindicator stopAnimating];
+        }
+        pageCount=pageCount7;
+    }
+    else
+    {
+        categorynameStr = @"others";
+        if (Array_Others.count == 0)
+        {
+            activityindicator.hidden = NO;
+            [activityindicator startAnimating];
+            
+        }
+        else
+        {
+            activityindicator.hidden = YES;
+            [activityindicator stopAnimating];
+        }
+        pageCount=pageCount8;
+    }
+    
+    [self viewPostConnection];
+    
+    
+    
+    
     
     
     
@@ -608,8 +836,9 @@
     }
     else
     {
+    
         
-        NSURL *url;//=[NSURL URLWithString:[urlplist valueForKey:@"singup"]];
+        NSURL *url;
         NSString *  urlStr=[urlplist valueForKey:@"viewpost"];
         url =[NSURL URLWithString:urlStr];
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
@@ -617,21 +846,25 @@
         [request setHTTPMethod:@"POST"];//Web API Method
         
         [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-        
-        
-        
+ 
         NSString *userid= @"userid";
         NSString *useridVal =[defaults valueForKey:@"userid"];
+        
+        NSString *category = @"category";
+        NSString *categoryVal = categorynameStr;
         
         NSString *location1= @"location";
         NSString *location1Val = [defaults valueForKey:@"locationPresed"];
         
         NSString *city= @"city";
-        NSString *cityVal = [defaults valueForKey:@"Cityname"];
+        NSString *cityVal =(NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,(CFStringRef)[defaults valueForKey:@"Cityname"],NULL,(CFStringRef)@"!*\"();:@&=+$,/?%#[]% ",CFStringConvertNSStringEncodingToEncoding(NSUTF8StringEncoding)));
         NSString *country= @"country";
-        NSString *countryVal =[defaults valueForKey:@"Countryname"];
+        NSString *countryVal =(NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,(CFStringRef)[defaults valueForKey:@"Countryname"],NULL,(CFStringRef)@"!*\"();:@&=+$,/?%#[]% ",CFStringConvertNSStringEncodingToEncoding(NSUTF8StringEncoding)));;
         
-        NSString *reqStringFUll=[NSString stringWithFormat:@"%@=%@&%@=%@&%@=%@&%@=%@",userid,useridVal,location1,location1Val,city,cityVal,country,countryVal];
+        NSString *pages= @"pages";
+        NSString *pagesVal =[NSString stringWithFormat:@"%ld",(long)pageCount];
+        
+        NSString *reqStringFUll=[NSString stringWithFormat:@"%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@",userid,useridVal,location1,location1Val,city,cityVal,country,countryVal,pages,pagesVal,category,categoryVal];
         
         
         //converting  string into data bytes and finding the lenght of the string.
@@ -685,25 +918,26 @@
     if (connection==Connection_ViewPost)
     {
         
-        Array_ViewPost=[[NSMutableArray alloc]init];
-        Array_Car = [[NSMutableArray alloc]init];
-        Array_Property= [[NSMutableArray alloc]init];
-        Array_Electronics=[[NSMutableArray alloc]init];
-        Array_Furniture=[[NSMutableArray alloc]init];
-        Array_Pets=[[NSMutableArray alloc]init];
-        Array_Services=[[NSMutableArray alloc]init];
-        Array_Others=[[NSMutableArray alloc]init];
+
+        Array_ViewPost1=[[NSMutableArray alloc]init];
+//        Array_Car = [[NSMutableArray alloc]init];
+//        Array_Property= [[NSMutableArray alloc]init];
+//        Array_Electronics=[[NSMutableArray alloc]init];
+//        Array_Furniture=[[NSMutableArray alloc]init];
+//        Array_Pets=[[NSMutableArray alloc]init];
+//        Array_Services=[[NSMutableArray alloc]init];
+//        Array_Others=[[NSMutableArray alloc]init];
       
         SBJsonParser *objSBJsonParser = [[SBJsonParser alloc]init];
-        Array_ViewPost=[objSBJsonParser objectWithData:webData_ViewPost];
+        Array_ViewPost1=[objSBJsonParser objectWithData:webData_ViewPost];
         NSString * ResultString=[[NSString alloc]initWithData:webData_ViewPost encoding:NSUTF8StringEncoding];
         
         ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
         ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\t" withString:@""];
         
-        NSLog(@"cc %@",Array_ViewPost);
-        NSLog(@"count= %lu",(unsigned long)Array_ViewPost.count);
-        NSLog(@"registration_status %@",[[Array_ViewPost objectAtIndex:0]valueForKey:@"registration_status"]);
+        NSLog(@"cc %@",Array_ViewPost1);
+        NSLog(@"count= %lu",(unsigned long)Array_ViewPost1.count);
+        //NSLog(@"registration_status %@",[[Array_ViewPost1 objectAtIndex:0]valueForKey:@"registration_status"]);
         NSLog(@"ResultString %@",ResultString);
         
         if ([ResultString isEqualToString:@"noposts"])
@@ -711,81 +945,186 @@
             activityindicator.hidden = YES;
             [activityindicator stopAnimating];
             
-//            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"" message:@"No post availables" preferredStyle:UIAlertControllerStyleAlert];
-//            
-//            UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
-//                                                               style:UIAlertActionStyleDefault
-//                                                             handler:nil];
-//            [alertController addAction:actionOk];
-//            [self presentViewController:alertController animated:YES completion:nil];
-            
         }
         
-        if (Array_ViewPost.count != 0)
+        
+        
+        
+        if (Array_ViewPost1.count != 0)
         {
+            
+            
+            
+            
             activityindicator.hidden = YES;
             [activityindicator stopAnimating];
             
+            if ([categorynameStr isEqualToString:@"all"])
+            {
+                if (pageCount1 == 0)
+                {
+                    [Array_ViewPost removeAllObjects];
+                    
+                }
+               
+                
+                if ([[Array_ViewPost valueForKeyPath:@"pages"]containsObject:[[Array_ViewPost1 objectAtIndex:Array_ViewPost1.count-1]valueForKey:@"pages"]])
+                {
+                    
+                }
+                else
+                {
+                    
+                    [Array_ViewPost addObjectsFromArray:Array_ViewPost1];
+                    pageCount1 ++;
+                }
+                
+                
+
+                
+            }
+            
+            else if ([categorynameStr isEqualToString:@"car"])
+            {
+                if (pageCount2 == 0)
+                {
+                    [Array_Car removeAllObjects];
+                    
+                }
+                
+                if ([[Array_Car valueForKeyPath:@"pages"]containsObject:[[Array_ViewPost1 objectAtIndex:Array_ViewPost1.count-1]valueForKey:@"pages"]])
+                {
+                    
+                    
+                }
+                else
+                {
+                    [Array_Car addObjectsFromArray:Array_ViewPost1];
+                    pageCount2 ++;
+                }
+
+               // [Array_Car addObjectsFromArray:Array_ViewPost1];
+            }
+            else if ([categorynameStr isEqualToString:@"property"])
+            {
+                if (pageCount3 == 0)
+                {
+                    [Array_Property removeAllObjects];
+                }
+                
+                if ([[Array_Property valueForKeyPath:@"pages"]containsObject:[[Array_ViewPost1 objectAtIndex:Array_ViewPost1.count-1]valueForKey:@"pages"]])
+                {
+                    
+                }
+                else
+                {
+                    [Array_Property addObjectsFromArray:Array_ViewPost1];
+                    pageCount3++;
+                }
+
+               // [Array_Property addObjectsFromArray:Array_ViewPost1];
+            }
+            else if ([categorynameStr isEqualToString:@"electronics"])
+            {
+                if (pageCount4 == 0)
+                {
+                    [Array_Electronics removeAllObjects];
+                }
+                
+                if ([[Array_Electronics valueForKeyPath:@"pages"]containsObject:[[Array_ViewPost1 objectAtIndex:Array_ViewPost1.count-1]valueForKey:@"pages"]])
+                {
+                    
+                }
+                else
+                {
+                    [Array_Electronics addObjectsFromArray:Array_ViewPost1];
+                    pageCount4++;
+                }
+
+               // [Array_Electronics addObjectsFromArray:Array_ViewPost1];
+            }
+            else if ([categorynameStr isEqualToString:@"pets"])
+            {
+                if (pageCount5 == 0)
+                {
+                    [Array_Pets removeAllObjects];
+                }
+                if ([[Array_Pets valueForKeyPath:@"pages"]containsObject:[[Array_ViewPost1 objectAtIndex:Array_ViewPost1.count-1]valueForKey:@"pages"]])
+                {
+                    
+                }
+                else
+                {
+                    [Array_Pets addObjectsFromArray:Array_ViewPost1];
+                    pageCount5++;
+                }
+
+                //[Array_Pets addObjectsFromArray:Array_ViewPost1];
+            }
+            else if ([categorynameStr isEqualToString:@"furniture"])
+            {
+                if (pageCount6 == 0)
+                {
+                    [Array_Furniture removeAllObjects];
+                }
+                if ([[Array_Furniture valueForKeyPath:@"pages"]containsObject:[[Array_ViewPost1 objectAtIndex:Array_ViewPost1.count-1]valueForKey:@"pages"]])
+                {
+                    
+                }
+                else
+                {
+                    [Array_Furniture addObjectsFromArray:Array_ViewPost1];
+                    pageCount6++;
+                }
+
+                //[Array_Furniture addObjectsFromArray:Array_ViewPost1];
+            }
+            else if ([categorynameStr isEqualToString:@"services"])
+            {
+                if (pageCount7 == 0)
+                {
+                    [Array_Services removeAllObjects];
+                }
+                
+                if ([[Array_Services valueForKeyPath:@"pages"]containsObject:[[Array_ViewPost1 objectAtIndex:Array_ViewPost1.count-1]valueForKey:@"pages"]])
+                {
+                    
+                }
+                else
+                {
+                    [Array_Services addObjectsFromArray:Array_ViewPost1];
+                    pageCount7++;
+                }
+
+                //[Array_Services addObjectsFromArray:Array_ViewPost1];
+            }
+            else
+            {
+                if (pageCount8 == 0)
+                {
+                    [Array_Others removeAllObjects];
+                }
+                
+                if ([[Array_Others valueForKeyPath:@"pages"]containsObject:[[Array_ViewPost1 objectAtIndex:Array_ViewPost1.count-1]valueForKey:@"pages"]])
+                {
+                    
+                }
+                else
+                {
+                    [Array_Others addObjectsFromArray:Array_ViewPost1];
+                    pageCount8++;
+                }
+
+//                [Array_Others addObjectsFromArray:Array_ViewPost1];
+            }
+            
+
+            
+            
+            
             for (int i=0; i<Array_ViewPost.count; i++)
             {
-                if ([[[Array_ViewPost objectAtIndex:i]valueForKey:@"category"]isEqualToString:@"car"])
-                {
-                    
-                    
-                    [Array_Car addObject:[Array_ViewPost objectAtIndex:i]];
-                    
-                    NSLog(@"Array car = %@",Array_Car);
-                    
-                }
-                if ([[[Array_ViewPost objectAtIndex:i]valueForKey:@"category"]isEqualToString:@"property"])
-                {
-                    
-                    
-                    [Array_Property addObject:[Array_ViewPost objectAtIndex:i]];
-                    
-                }
-                if ([[[Array_ViewPost objectAtIndex:i]valueForKey:@"category"]isEqualToString:@"electronics"])
-                {
-                    
-                    
-                    [Array_Electronics addObject:[Array_ViewPost objectAtIndex:i]];
-                    NSLog(@"Car array = %@",Array_Electronics);
-                    
-                }
-                if ([[[Array_ViewPost objectAtIndex:i]valueForKey:@"category"]isEqualToString:@"pets"])
-                {
-                    
-                    
-                    [Array_Pets addObject:[Array_ViewPost objectAtIndex:i]];
-                    NSLog(@"Car array = %@",Array_Pets);
-                    
-                }
-                
-                if ([[[Array_ViewPost objectAtIndex:i]valueForKey:@"category"]isEqualToString:@"furniture"])
-                {
-                    
-                    
-                    [Array_Furniture addObject:[Array_ViewPost objectAtIndex:i]];
-                    NSLog(@"Car array = %@",Array_Furniture);
-                    
-                }
-                
-                if ([[[Array_ViewPost objectAtIndex:i]valueForKey:@"category"]isEqualToString:@"others"])
-                {
-                    
-                    
-                    [Array_Others addObject:[Array_ViewPost objectAtIndex:i]];
-                    NSLog(@"Car array = %@",Array_Others);
-                    
-                }
-                if ([[[Array_ViewPost objectAtIndex:i]valueForKey:@"category"]isEqualToString:@"services"])
-                {
-                    
-                    
-                    [Array_Services addObject:[Array_ViewPost objectAtIndex:i]];
-                    NSLog(@"Car array = %@",Array_Services);
-                    
-                }
+
                 
                 if ([[[Array_ViewPost objectAtIndex:i]valueForKey:@"favourite"]isEqualToString:@"TRUE"])
                 {
@@ -814,7 +1153,7 @@
             }
             
             
-            // all NSNotificationCenter defaultCenter callings
+            // All NSNotificationCenter defaultCenter callings
             
             NSDictionary *arrayCar_Info1 =
             [NSDictionary dictionaryWithObjectsAndKeys:Array_ViewPost,@"arrayall_Data", nil];
@@ -864,10 +1203,9 @@
                 [NSDictionary dictionaryWithObjectsAndKeys:Array_Furniture,@"arrayfur_Data", nil];
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"arrayfur_Info" object:self userInfo:arrayCar_Info];
-            }
-            if (Array_Services.count != 0)
+            }           if (Array_Services.count != 0)
             {
-                
+            
                 NSDictionary *arrayCar_Info =
                 [NSDictionary dictionaryWithObjectsAndKeys:Array_Services,@"arrayservice_Data", nil];
                 
@@ -883,8 +1221,117 @@
             }
             
         }
+        if ([ResultString isEqualToString:@"noposts"])
+        {
        
+           
+           
+           
+           
+           activityindicator.hidden = YES;
+           [activityindicator stopAnimating];
+           
+           if ([categorynameStr isEqualToString:@"all"])
+           {
                
+                   [Array_ViewPost removeAllObjects];
+               
+               NSDictionary *arrayCar_Info1 =
+               [NSDictionary dictionaryWithObjectsAndKeys:Array_ViewPost,@"arrayall_Data", nil];
+               
+               [[NSNotificationCenter defaultCenter] postNotificationName:@"arrayall_Info" object:self userInfo:arrayCar_Info1];
+               
+           }
+           
+           else if ([categorynameStr isEqualToString:@"car"])
+           {
+               
+             
+                   [Array_Car removeAllObjects];
+              
+               NSDictionary *arrayCar_Info =
+               [NSDictionary dictionaryWithObjectsAndKeys:Array_Car,@"arrayCar_Data", nil];
+               
+               [[NSNotificationCenter defaultCenter] postNotificationName:@"arrayCar_Info" object:self userInfo:arrayCar_Info];
+           }
+           else if ([categorynameStr isEqualToString:@"property"])
+           {
+              
+                   [Array_Property removeAllObjects];
+               NSDictionary *arrayCar_Info =
+               [NSDictionary dictionaryWithObjectsAndKeys:Array_Property,@"arrayproperty_Data", nil];
+               
+               [[NSNotificationCenter defaultCenter] postNotificationName:@"arrayproperty_Info" object:self userInfo:arrayCar_Info];
+               
+               // [Array_Property addObjectsFromArray:Array_ViewPost1];
+           }
+           else if ([categorynameStr isEqualToString:@"electronics"])
+           {
+               
+                   [Array_Electronics removeAllObjects];
+               NSDictionary *arrayCar_Info =
+               [NSDictionary dictionaryWithObjectsAndKeys:Array_Electronics,@"arrayelectronic_Data", nil];
+               
+               [[NSNotificationCenter defaultCenter] postNotificationName:@"arrayelectronic_Info" object:self userInfo:arrayCar_Info];
+               
+               // [Array_Electronics addObjectsFromArray:Array_ViewPost1];
+           }
+           else if ([categorynameStr isEqualToString:@"pets"])
+           {
+              
+                   [Array_Pets removeAllObjects];
+               NSDictionary *arrayCar_Info =
+               [NSDictionary dictionaryWithObjectsAndKeys:Array_Pets,@"arraypets_Data", nil];
+               
+               [[NSNotificationCenter defaultCenter] postNotificationName:@"arraypets_Info" object:self userInfo:arrayCar_Info];
+               
+               //[Array_Pets addObjectsFromArray:Array_ViewPost1];
+           }
+           else if ([categorynameStr isEqualToString:@"furniture"])
+           {
+              
+                   [Array_Furniture removeAllObjects];
+               NSDictionary *arrayCar_Info =
+               [NSDictionary dictionaryWithObjectsAndKeys:Array_Furniture,@"arrayfur_Data", nil];
+               
+               [[NSNotificationCenter defaultCenter] postNotificationName:@"arrayfur_Info" object:self userInfo:arrayCar_Info];
+               
+               //[Array_Furniture addObjectsFromArray:Array_ViewPost1];
+           }
+           else if ([categorynameStr isEqualToString:@"services"])
+           {
+               
+                   [Array_Services removeAllObjects];
+               NSDictionary *arrayCar_Info =
+               [NSDictionary dictionaryWithObjectsAndKeys:Array_Services,@"arrayservice_Data", nil];
+               
+               [[NSNotificationCenter defaultCenter] postNotificationName:@"arrayservice_Info" object:self userInfo:arrayCar_Info];
+               
+               //[Array_Services addObjectsFromArray:Array_ViewPost1];
+           }
+           else
+           {
+               
+                   [Array_Others removeAllObjects];
+               NSDictionary *arrayCar_Info =
+               [NSDictionary dictionaryWithObjectsAndKeys:Array_Others,@"arrayother_Data", nil];
+               
+               [[NSNotificationCenter defaultCenter] postNotificationName:@"arrayother_Info" object:self userInfo:arrayCar_Info];
+               
+               //                [Array_Others addObjectsFromArray:Array_ViewPost1];
+           }
+           
+//            [Array_ViewPost removeAllObjects];
+//            
+//            NSDictionary *arrayCar_Info1 =
+//            [NSDictionary dictionaryWithObjectsAndKeys:Array_ViewPost,@"arrayall_Data", nil];
+//            
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"arrayall_Info" object:self userInfo:arrayCar_Info1];
+           
+           
+           
+      }
+        
         
         
         
@@ -893,6 +1340,146 @@
 
 -(void)ViewControllerData
 {
+    
+//    if ([categorynameStr isEqualToString:@"all"])
+//    {
+//       categorynameStr = @"all";
+//      
+//        if (Array_ViewPost.count == 0)
+//        {
+//              pageCount=0;
+//            activityindicator.hidden = NO;
+//            [activityindicator startAnimating];
+//        }
+//        else
+//        {
+//            pageCount=pageCount1;
+//            activityindicator.hidden = YES;
+//            [activityindicator stopAnimating];
+//        }
+//        
+//    }
+//    else if  ([categorynameStr isEqualToString:@"car"])
+//    {
+//        categorynameStr = @"car";
+//        
+//        if (Array_Car.count == 0)
+//        {pageCount=0;
+//            activityindicator.hidden = NO;
+//            [activityindicator startAnimating];
+//        }
+//        else
+//        {pageCount=pageCount2;
+//            activityindicator.hidden = YES;
+//            [activityindicator stopAnimating];
+//        }
+//        
+//        
+//    }
+//    else if  ([categorynameStr isEqualToString:@"property"])
+//    {
+//        categorynameStr = @"property";
+//        
+//        if (Array_Property.count == 0)
+//        {
+//              pageCount=0;
+//            activityindicator.hidden = NO;
+//            [activityindicator startAnimating];
+//        }
+//        else
+//        {  pageCount=pageCount3;
+//            activityindicator.hidden = YES;
+//            [activityindicator stopAnimating];
+//        }
+//      
+//    }
+//    else if  ([categorynameStr isEqualToString:@"electronics"])
+//    {
+//        categorynameStr = @"electronics";
+//        
+//        if (Array_Electronics.count == 0)
+//        {
+//            pageCount=0;
+//            activityindicator.hidden = NO;
+//            [activityindicator startAnimating];
+//        }
+//        else
+//        {
+//            pageCount=pageCount4;
+//            activityindicator.hidden = YES;
+//            [activityindicator stopAnimating];
+//        }
+//        
+//    }
+//    else if  ([categorynameStr isEqualToString:@"pets"])
+//    {
+//        categorynameStr = @"pets";
+//        
+//        if (Array_Pets.count == 0)
+//        { pageCount=0;
+//            activityindicator.hidden = NO;
+//            [activityindicator startAnimating];
+//        }
+//        else
+//        { pageCount=pageCount5;
+//            activityindicator.hidden = YES;
+//            [activityindicator stopAnimating];
+//        }
+//       
+//    }
+//    else if ([categorynameStr isEqualToString:@"furniture"])
+//    {
+//        categorynameStr = @"furniture";
+//        if (Array_Furniture.count == 0)
+//        {
+//             pageCount=0;
+//            activityindicator.hidden = NO;
+//            [activityindicator startAnimating];
+//            
+//        }
+//        else
+//        {
+//             pageCount=pageCount6;
+//            activityindicator.hidden = YES;
+//            [activityindicator stopAnimating];
+//        }
+//       
+//    }
+//    else if ([categorynameStr isEqualToString:@"services"])
+//    {
+//        categorynameStr = @"services";
+//        if (Array_Services.count == 0)
+//        {
+//            pageCount=0;
+//            activityindicator.hidden = NO;
+//            [activityindicator startAnimating];
+//        }
+//        else
+//        {
+//            pageCount=pageCount7;
+//            activityindicator.hidden = YES;
+//            [activityindicator stopAnimating];
+//        }
+//        
+//    }
+//    else
+//    {
+//        categorynameStr = @"others";
+//        if (Array_Others.count == 0)
+//        {
+//            activityindicator.hidden = NO;
+//            [activityindicator startAnimating];
+//            
+//        }
+//        else
+//        {
+//            activityindicator.hidden = YES;
+//            [activityindicator stopAnimating];
+//        }
+//        pageCount=pageCount8;
+//    }
+    
+    
     [self viewPostConnection];
     
 }
@@ -902,7 +1489,7 @@
 -(void)ActivityTicker_Connection
 {
     
-    NSLog(@"FAVORITE TAPPED");
+   
     
     
     NSString *userid= @"userid";
@@ -1021,6 +1608,99 @@
     
     
 }
+-(void)PullToRefreshTop: (NSNotification*) notification
+{
+   
+    if ([categorynameStr isEqualToString:@"all"])
+    {
+         pageCount1 = 0;
+         pageCount=pageCount1;
+    }
+    if ([categorynameStr isEqualToString:@"car"])
+    {
+        pageCount2 = 0;
+        pageCount=pageCount2;
+    }
+    if ([categorynameStr isEqualToString:@"property"])
+    {
+        pageCount3 = 0;
+        pageCount=pageCount3;
+    }
+    if ([categorynameStr isEqualToString:@"electronics"])
+    {
+        pageCount4 = 0;
+        pageCount=pageCount4;
+    }
+    if ([categorynameStr isEqualToString:@"pets"])
+    {
+        pageCount5 = 0;
+        pageCount=pageCount5;
+    }
+    if ([categorynameStr isEqualToString:@"furniture"])
+    {
+        pageCount6 = 0;
+        pageCount=pageCount6;
+    }
+    if ([categorynameStr isEqualToString:@"services"])
+    {
+        pageCount7 = 0;
+        pageCount=pageCount7;
+    }
+    if ([categorynameStr isEqualToString:@"others"])
+    {
+        pageCount8 = 0;
+        pageCount=pageCount8;
+    }
+    
+    [self viewPostConnection];
+    
+}
+-(void)PullToRefreshBottom: (NSNotification*) notification
+{
+    
+     //pageCount=1;
+    if ([categorynameStr isEqualToString:@"all"])
+    {
+        
+        pageCount=pageCount1;
+    }
+    if ([categorynameStr isEqualToString:@"car"])
+    {
+       
+        pageCount=pageCount2;
+    }
+    if ([categorynameStr isEqualToString:@"property"])
+    {
+     
+        pageCount=pageCount3;
+    }
+    if ([categorynameStr isEqualToString:@"electronics"])
+    {
+        
+        pageCount=pageCount4;
+    }
+    if ([categorynameStr isEqualToString:@"pets"])
+    {
+       
+        pageCount=pageCount5;
+    }
+    if ([categorynameStr isEqualToString:@"furniture"])
+    {
+        
+        pageCount=pageCount6;
+    }
+    if ([categorynameStr isEqualToString:@"services"])
+    {
+      
+        pageCount=pageCount7;
+    }
+    if ([categorynameStr isEqualToString:@"others"])
+    {
+       
+        pageCount=pageCount8;
+    }
 
+   [self viewPostConnection];
+}
 
 @end

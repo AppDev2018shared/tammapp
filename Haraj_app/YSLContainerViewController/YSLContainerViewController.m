@@ -58,7 +58,7 @@ static const CGFloat kYSLScrollMenuViewHeight = 40;
     
     // ContentScrollview setup
     _contentScrollView = [[UIScrollView alloc]init];
-    _contentScrollView.frame = CGRectMake(0,_topBarHeight + kYSLScrollMenuViewHeight + 20, self.view.frame.size.width, self.view.frame.size.height - (_topBarHeight + kYSLScrollMenuViewHeight));
+    _contentScrollView.frame = CGRectMake(0,_topBarHeight + kYSLScrollMenuViewHeight + 5, self.view.frame.size.width, self.view.frame.size.height - (_topBarHeight + kYSLScrollMenuViewHeight));
     _contentScrollView.backgroundColor = [UIColor clearColor];
     _contentScrollView.pagingEnabled = YES;
     _contentScrollView.delegate = self;
@@ -79,7 +79,7 @@ static const CGFloat kYSLScrollMenuViewHeight = 40;
         }
     }
     // meunView
-    _menuView = [[YSLScrollMenuView alloc]initWithFrame:CGRectMake(0, _topBarHeight, self.view.frame.size.width, kYSLScrollMenuViewHeight + 20)];
+    _menuView = [[YSLScrollMenuView alloc]initWithFrame:CGRectMake(0, _topBarHeight, self.view.frame.size.width, kYSLScrollMenuViewHeight + 5)];
     _menuView.backgroundColor = [UIColor clearColor];
     _menuView.delegate = self;
     _menuView.viewbackgroudColor = self.menuBackGroudColor;

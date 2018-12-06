@@ -38,7 +38,7 @@
 @property(weak,nonatomic)IBOutlet UIView * BackGround_MainViews;
 @property(weak,nonatomic)IBOutlet UIView * BackTextViews;
 ;
-
+@property(weak,nonatomic)IBOutlet UIButton * Button_Back;
 
 @property(weak,nonatomic)IBOutlet UIButton * Button_Flag_Button;
 

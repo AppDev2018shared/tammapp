@@ -16,6 +16,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *greetingLabel;
 @property (weak, nonatomic) IBOutlet UILabel *pointsLabel;
 
+@property (weak, nonatomic) IBOutlet  UILabel *labelheding;
+@property (weak, nonatomic) IBOutlet  UIButton *Button_help;
+@property (weak, nonatomic) IBOutlet UIButton *backbutton;
+@property (weak, nonatomic) IBOutlet UIView *view_line;
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 

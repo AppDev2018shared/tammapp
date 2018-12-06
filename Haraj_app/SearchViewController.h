@@ -13,8 +13,8 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIButton *Button_Back;
 @property (weak, nonatomic) IBOutlet UIButton *Button_Cancel;
-
-
+@property (weak, nonatomic) IBOutlet UIImageView *Img_Search;
+@property (weak, nonatomic) IBOutlet UIView *view_line;
 @property (weak, nonatomic) IBOutlet UITextField *searchTextField;
 - (IBAction)SearchEditing_Action:(id)sender;
 

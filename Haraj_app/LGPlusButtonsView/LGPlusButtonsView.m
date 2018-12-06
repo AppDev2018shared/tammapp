@@ -148,10 +148,29 @@ typedef NS_ENUM(NSUInteger, LGPlusButtonDescriptionsPosition)
         
         
         // heading for floating button
-        UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(95, 100, 40, 25)];
+        
+        UILabel *titleLabel;// = [[UILabel alloc] initWithFrame:CGRectMake(95, 100, 40, 25)];
+        
+        if ([[UIScreen mainScreen]bounds].size.width == 320)
+        {
+            titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(128, 60, 40, 25)];
+        }
+        else if ([[UIScreen mainScreen]bounds].size.width == 414)
+        {
+            titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(220, 120 , 40, 25)];// x =120
+        }
+        else
+        {
+            titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(95, 100, 40, 25)];
+        }
+        
         titleLabel.font = [UIFont fontWithName:@"SanFranciscoDisplay-Semibold" size:21];
         titleLabel.textColor = [UIColor colorWithRed:65/255.0 green:65/255.0 blue:65/255.0 alpha:1];
-        titleLabel.text = @"What would you like to post?";
+        //titleLabel.text = @"What would you like to post?";
+        titleLabel.text = @" ماذا تريد أن تعرض؟";
+        titleLabel.textAlignment = NSTextAlignmentRight;
+        
+        
         [titleLabel sizeToFit];
         titleLabel.backgroundColor = [UIColor clearColor];
         [_coverView addSubview:titleLabel];
@@ -1035,10 +1054,18 @@ typedef NS_ENUM(NSUInteger, LGPlusButtonDescriptionsPosition)
     _contentView.frame = contentViewFrame;
 
     // -----
-
+    CGFloat topY=0,leftx=0;
+        if ([UIScreen mainScreen].bounds.size.width==375 && [UIScreen mainScreen].bounds.size.height==812)
+        {
+            topY=10;
+            leftx=10;
+            
+        }
     CGPoint buttonsContentViewOrigin = CGPointZero;
+    
     if (_position == LGPlusButtonsViewPositionBottomRight)
-        buttonsContentViewOrigin = CGPointMake(contentViewFrame.size.width-buttonsContentViewSize.width, contentViewFrame.size.height-buttonsContentViewSize.height);
+    buttonsContentViewOrigin = CGPointMake((contentViewFrame.size.width-buttonsContentViewSize.width)-leftx, (contentViewFrame.size.height-buttonsContentViewSize.height)-topY);
+
     else if (_position == LGPlusButtonsViewPositionBottomLeft)
         buttonsContentViewOrigin = CGPointMake(0.f, contentViewFrame.size.height-buttonsContentViewSize.height);
     else if (_position == LGPlusButtonsViewPositionTopRight)
@@ -1057,14 +1084,18 @@ typedef NS_ENUM(NSUInteger, LGPlusButtonDescriptionsPosition)
     // -----
 
     CGRect descriptionsContentViewFrame = CGRectZero;
-
+    CGFloat leftxx=0.f;
+    if ([UIScreen mainScreen].bounds.size.width==375 && [UIScreen mainScreen].bounds.size.width==375)
+    {
+        leftxx=-10.f;
+    }
     if (_descriptionsPosition == LGPlusButtonDescriptionsPositionLeft)
-        descriptionsContentViewFrame = CGRectMake(0.f,
+        descriptionsContentViewFrame = CGRectMake(leftxx,
                                                   buttonsContentViewFrame.origin.y,
                                                   contentViewFrame.size.width-buttonsContentViewFrame.size.width,
                                                   buttonsContentViewFrame.size.height);
     else
-        descriptionsContentViewFrame = CGRectMake(buttonsContentViewFrame.origin.x+buttonsContentViewFrame.size.width,
+        descriptionsContentViewFrame = CGRectMake((buttonsContentViewFrame.origin.x+buttonsContentViewFrame.size.width),
                                                   buttonsContentViewFrame.origin.y,
                                                   contentViewFrame.size.width-(buttonsContentViewFrame.origin.x+buttonsContentViewFrame.size.width),
                                                   buttonsContentViewFrame.size.height);

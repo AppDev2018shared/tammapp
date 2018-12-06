@@ -14,8 +14,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *Button_Back;
 @property (weak, nonatomic) IBOutlet UIButton *Button_Cancel;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
-
+@property (weak, nonatomic) IBOutlet UIImageView *Img_Search;
 @property (weak, nonatomic) IBOutlet UITextField *searchTextField;
+@property (weak, nonatomic) IBOutlet UIView *view_line;
 - (IBAction)SearchEditing_Action:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UILabel *label_JsonResult;

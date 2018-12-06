@@ -10,7 +10,7 @@
 #import "FRHyperLabel.h"
 
 @interface SignUpViewController : UIViewController
-
+@property (weak, nonatomic) IBOutlet UIImageView *Image_logo;
 @property(nonatomic,weak)IBOutlet UILabel * Label_TitleName;
 @property(nonatomic,weak)IBOutlet UITextField * textfield_name;
 @property(nonatomic,weak)IBOutlet UITextField * textfield_Emailname;

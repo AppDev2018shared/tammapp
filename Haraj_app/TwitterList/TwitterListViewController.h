@@ -16,5 +16,8 @@
 @property(strong,nonatomic)TwitteroneTableViewCell *cell_twitter;
 @property(strong,nonatomic)TwittertwoTableViewCell *cell_twitter2;
 @property(strong,nonatomic)IBOutlet UISearchBar *searchbar;
+
+@property(strong,nonatomic)IBOutlet UIButton *BackButton;
+@property(strong,nonatomic)IBOutlet UILabel *label_heading;
 -(IBAction)Button_Back:(id)sender;
 @end

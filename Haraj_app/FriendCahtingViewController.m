@@ -8,6 +8,7 @@
 #import "UIImageView+MHFacebookImageViewer.h"
 #import "Reachability.h"
 #import "SBJsonParser.h"
+#import "AFNetworking.h"
 
 static NSString* const CellIdentifier = @"DynamicTableViewCell";
 #define FONT_SIZE 16.0f
@@ -69,10 +70,12 @@ static const CGFloat kButtonSpaceHided = 24.0f;
 @implementation FriendCahtingViewController
 @synthesize HeadTopView,Table_Friend_chat,Label_UserName,Image_UserProfile;
 @synthesize AllDataArray,TextViews,BackTextViews;
-@synthesize textOne,tableOne,ViewTextViewOne,Cell_one1,Cell_Zero;
-- (void)viewDidLoad {
+@synthesize textOne,tableOne,ViewTextViewOne,Cell_one1,Cell_Zero,Button_Back;
+- (void)viewDidLoad
+{
     
     [super viewDidLoad];
+    
     defaults=[[NSUserDefaults alloc]init];
     previousArray  = [[NSArray alloc]init];
     
@@ -91,10 +94,19 @@ static const CGFloat kButtonSpaceHided = 24.0f;
         tableViewFrame.origin.y = 56;
         self.Table_Friend_chat.frame = tableViewFrame;
     }
-   
+    if ([UIScreen mainScreen].bounds.size.width==375 && [UIScreen mainScreen].bounds.size.height==812)
+    {
+        CGRect tableViewFrame = self.Table_Friend_chat.frame;
+         tableViewFrame.origin.y = self.Table_Friend_chat.frame.origin.y+12;
+        tableViewFrame.size.height = self.Table_Friend_chat.frame.size.height-12;
+        self.Table_Friend_chat.frame = tableViewFrame;
+    }
+    else
+    {
         CGRect tableViewFrame = self.Table_Friend_chat.frame;
         tableViewFrame.size.height = self.Table_Friend_chat.frame.size.height-8;
         self.Table_Friend_chat.frame = tableViewFrame;
+    }
     
     
     NSString * documnetPath1=[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
@@ -124,9 +136,18 @@ static const CGFloat kButtonSpaceHided = 24.0f;
   
     
     NSURL * url=[NSURL URLWithString:[[AllDataArray objectAtIndex:0] valueForKey:@"profilepic"]];
-    [Image_UserProfile sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"DefaultImg.jpg"]options:SDWebImageRefreshCached];
-    Image_UserProfile.layer.cornerRadius = Image_UserProfile.frame.size.height / 2;
-    Image_UserProfile.clipsToBounds = YES;
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    [Image_UserProfile setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"DefaultImg.jpg"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image)
+    {
+        Image_UserProfile.image = image;
+    }
+failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error)
+    {
+        
+    }
+      ];
+    
+    
 
     
     
@@ -149,9 +170,26 @@ static const CGFloat kButtonSpaceHided = 24.0f;
     NSLog(@"Length Of textttt==%f",size.width);
     NSLog(@"Length Of textttt==%f",widthCal);
     NSLog(@"Length Of textttt==%f",ToatalWidth);
+    if ([UIScreen mainScreen].bounds.size.width==375 && [UIScreen mainScreen].bounds.size.height==812)
+    {
+       [Image_UserProfile setFrame:CGRectMake(ToatalWidth,Image_UserProfile.frame.origin.y+11, 35,35)];
+        
+          [Button_Back setFrame:CGRectMake(Button_Back.frame.origin.x, Button_Back.frame.origin.y+12, Button_Back.frame.size.width, 30)];
+        [Label_UserName setFrame:CGRectMake(Image_UserProfile.frame.origin.x+Image_UserProfile.frame.size.width+10,Label_UserName.frame.origin.y, Label_UserName.frame.size.width, Label_UserName.frame.size.height)];
+    }
+    else
+    {
+        [Image_UserProfile setFrame:CGRectMake(ToatalWidth,Image_UserProfile.frame.origin.y, Image_UserProfile.frame.size.width, Image_UserProfile.frame.size.height)];
+        
+        
+        [Label_UserName setFrame:CGRectMake(Image_UserProfile.frame.origin.x+Image_UserProfile.frame.size.width+10,Label_UserName.frame.origin.y, Label_UserName.frame.size.width, Label_UserName.frame.size.height)];
+   
+    }
+   
     
-    [Image_UserProfile setFrame:CGRectMake(ToatalWidth,Image_UserProfile.frame.origin.y, Image_UserProfile.frame.size.width, Image_UserProfile.frame.size.height)];
-    [Label_UserName setFrame:CGRectMake(Image_UserProfile.frame.origin.x+Image_UserProfile.frame.size.width+10,Label_UserName.frame.origin.y, Label_UserName.frame.size.width, Label_UserName.frame.size.height)];
+    Image_UserProfile.layer.cornerRadius = Image_UserProfile.frame.size.height / 2;
+    Image_UserProfile.clipsToBounds = YES;
+    
     _BlackViewOne.backgroundColor=[UIColor whiteColor];
     CALayer *borderTop = [CALayer layer];
     borderTop.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.10f].CGColor;
@@ -225,6 +263,10 @@ static const CGFloat kButtonSpaceHided = 24.0f;
         
     }
     
+    else if ([[UIScreen mainScreen]bounds].size.width==375 && [[UIScreen mainScreen]bounds].size.height==812.00)
+    {
+        ww=249.0;
+    }
     
     
     th=Table_Friend_chat.frame.size.height;
@@ -443,12 +485,22 @@ if ([[[AllDataArray objectAtIndex:0]valueForKey:@"matchedfbid"] isEqualToString:
     [self an_subscribeKeyboardWithAnimations:^(CGRect keyboardRect, NSTimeInterval duration, BOOL isShowing) {
         if (isShowing) {
            
-            self.tabBarBottomSpace.constant = CGRectGetHeight(keyboardRect);
-          
-          
+//            self.tabBarBottomSpace.constant = CGRectGetHeight(keyboardRect);
+//
+//
+//                Table_Friend_chat.frame = CGRectMake(0,yt, tw, th-(textBlueh+CGRectGetHeight(keyboardRect)));
+//            keyboradHeight=(textBlueh+CGRectGetHeight(keyboardRect));
+            if ([UIScreen mainScreen].bounds.size.width==375.00 && [UIScreen mainScreen].bounds.size.height==812.00)
+            {
+                [_textOneBlue setFrame:CGRectMake(0,self.view.frame.size.height-_textOneBlue.frame.size.height-keyboardRect.size.height, _textOneBlue.frame.size.width, _textOneBlue.frame.size.height)];
+                
                 Table_Friend_chat.frame = CGRectMake(0,yt, tw, th-(textBlueh+CGRectGetHeight(keyboardRect)));
-            keyboradHeight=(textBlueh+CGRectGetHeight(keyboardRect));
-    
+                keyboradHeight=(textBlueh+CGRectGetHeight(keyboardRect));
+            }
+            else
+            {
+                self.tabBarBottomSpace.constant = CGRectGetHeight(keyboardRect);
+            }
             
             if(Array_Comment1.count>=1)
             {
@@ -471,11 +523,24 @@ if ([[[AllDataArray objectAtIndex:0]valueForKey:@"matchedfbid"] isEqualToString:
         }
         else
         {
+//            NSLog(@"keyboard cordinates==heightdisable==%f", CGRectGetHeight(keyboardRect));
+//
+//            self.tabBarBottomSpace.constant = 0.0f;
+//           Table_Friend_chat.frame = CGRectMake(0,yt, tw, th);
+//             keyboradHeight= 0.0f;
+            
             NSLog(@"keyboard cordinates==heightdisable==%f", CGRectGetHeight(keyboardRect));
-  
-            self.tabBarBottomSpace.constant = 0.0f;
-           Table_Friend_chat.frame = CGRectMake(0,yt, tw, th);
-             keyboradHeight= 0.0f;
+            if ([UIScreen mainScreen].bounds.size.width==375.00 && [UIScreen mainScreen].bounds.size.height==812.00)
+            {
+                [_textOneBlue setFrame:CGRectMake(0,(self.view.frame.size.height-_textOneBlue.frame.size.height)-34, _textOneBlue.frame.size.width, _textOneBlue.frame.size.height)];
+            }
+            else
+            {
+                self.tabBarBottomSpace.constant = 0.0f;
+            }
+            //
+            Table_Friend_chat.frame = CGRectMake(0,yt, tw, th);
+            keyboradHeight=0.0f;
             
         }
         
@@ -532,11 +597,27 @@ if ([[[AllDataArray objectAtIndex:0]valueForKey:@"matchedfbid"] isEqualToString:
         
         Cell_Zero.postImageView.layer.cornerRadius = 10;
         Cell_Zero.postImageView.layer.masksToBounds = YES;
+        
         NSURL * url=[NSURL URLWithString:[[AllDataArray objectAtIndex:indexPath.row] valueForKey:@"mediathumbnailurl"]];
-        [Cell_Zero.postImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"]
-                                                  options:SDWebImageRefreshCached];
+        
+     //   [Cell_Zero.postImageView setImageWithURL:[[AllDataArray objectAtIndex:indexPath.row] valueForKey:@"mediathumbnailurl"] placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"]];
+        
+        
+       
+        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+        [Cell_Zero.postImageView setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image)
+         {
+             Cell_Zero.postImageView.image = image;
+         }
+                                          failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error)
+         {
+             
+         }
+         ];
+        
+        
 
-        Cell_Zero.postIdLabel.text =[NSString stringWithFormat:@"POST ID:%@", [[AllDataArray objectAtIndex:indexPath.row]valueForKey:@"postid"]];
+        Cell_Zero.postIdLabel.text = [NSString stringWithFormat:@"%@%@",[[AllDataArray objectAtIndex:indexPath.row]valueForKey:@"postid"],@" :رقم الإعلان"];//POST ID[NSString stringWithFormat:@"POST ID:%@", [[AllDataArray objectAtIndex:indexPath.row]valueForKey:@"postid"]];
         
         NSLog(@"AllDataArray=%@",AllDataArray);
         
@@ -748,8 +829,20 @@ if ([[[AllDataArray objectAtIndex:0]valueForKey:@"matchedfbid"] isEqualToString:
                     
                     
                     
-                    NSURL * url=[[AllDataArray objectAtIndex:0]valueForKey:@"profilepic"];
-                    [desc_Imagepro sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"DefaultImg.jpg"]options:SDWebImageRefreshCached];
+                    NSURL * url=[NSURL URLWithString:[[AllDataArray objectAtIndex:0]valueForKey:@"profilepic"]];
+                 //   [desc_Imagepro setImageWithURL:[[AllDataArray objectAtIndex:0]valueForKey:@"profilepic"] placeholderImage:[UIImage imageNamed:@"DefaultImg.jpg"]];
+                    
+                    
+                    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+                    [desc_Imagepro setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"DefaultImg.jpg"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image)
+                     {
+                         desc_Imagepro.image = image;
+                     }
+                                                            failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error)
+                     {
+                         
+                     }
+                     ];
                     
                     
                     label.backgroundColor=[UIColor colorWithRed:255/255.0 green:244/255.0 blue:96/255.0 alpha:0.7];
@@ -777,8 +870,21 @@ if ([[[AllDataArray objectAtIndex:0]valueForKey:@"matchedfbid"] isEqualToString:
                 }
                 else
                 {
-                    NSURL * url=[defaults valueForKey:@"ProImg"];
-                    [desc_Imagepro sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"DefaultImg.jpg"]options:SDWebImageRefreshCached];
+                    NSURL * url=[NSURL URLWithString:[defaults valueForKey:@"ProImg"]];
+                //    [desc_Imagepro setImageWithURL:[defaults valueForKey:@"ProImg"] placeholderImage:[UIImage imageNamed:@"DefaultImg.jpg"]];
+                    
+                    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+                    [desc_Imagepro setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"DefaultImg.jpg"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image)
+                     {
+                         desc_Imagepro.image = image;
+                     }
+                                                  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error)
+                     {
+                         
+                     }
+                     ];
+                    
+                    
                     if ([[defaults valueForKey:@"gender"] isEqualToString:@"Boy"])
                     {
                         label.backgroundColor=[UIColor colorWithRed:220/255.0 green:242/255.0 blue:253/255.0 alpha:1];
@@ -832,8 +938,22 @@ if ([[[AllDataArray objectAtIndex:0]valueForKey:@"matchedfbid"] isEqualToString:
                 CGFloat imgheight=[[[Array_Comment1 objectAtIndex:indexPath.row-1]valueForKey:@"imageheight"] floatValue];
                 
                 
-                NSURL * url=[[Array_Comment1 objectAtIndex:indexPath.row-1]valueForKey:@"imageurl"];
-                [Chat_UserImage sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"DefaultImg.jpg"]options:SDWebImageRefreshCached];
+                NSURL * url=[NSURL URLWithString:[[Array_Comment1 objectAtIndex:indexPath.row-1]valueForKey:@"imageurl"]];
+                
+             //   [Chat_UserImage setImageWithURL:[[Array_Comment1 objectAtIndex:indexPath.row-1]valueForKey:@"imageurl"] placeholderImage:[UIImage imageNamed:@"DefaultImg.jpg"]];
+                
+                NSURLRequest *request = [NSURLRequest requestWithURL:url];
+                [Chat_UserImage setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"DefaultImg.jpg"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image)
+                 {
+                     Chat_UserImage.image = image;
+                 }
+                                              failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error)
+                 {
+                     
+                 }
+                 ];
+                
+                
                 Chat_UserImage.clipsToBounds=YES;
                 Chat_UserImage.layer.cornerRadius=9.0f;
                 Chat_UserImage.contentMode=UIViewContentModeScaleAspectFit;
@@ -841,14 +961,33 @@ if ([[[AllDataArray objectAtIndex:0]valueForKey:@"matchedfbid"] isEqualToString:
                 
                 
                 
-                
-                
-                
-                if ([[defaults valueForKey:@"userid1"] isEqualToString:[[Array_Comment1 objectAtIndex:indexPath.row-1]valueForKey:@"receiveruserid"]])
+//                if ([[defaults valueForKey:@"userid"] isEqualToString:[[Array_Comment1 objectAtIndex:indexPath.row-1]valueForKey:@"receiveruserid"]])
+//                
+//
+                if ([[defaults valueForKey:@"userid"] isEqualToString:[[Array_Comment1 objectAtIndex:indexPath.row-1]valueForKey:@"receiveruserid"]])
                 {
                     
-                    NSURL * url=[[AllDataArray objectAtIndex:0]valueForKey:@"profilepic"];
-                    [desc_Imagepro sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"DefaultImg.jpg"]options:SDWebImageRefreshCached];
+                
+//                if (![[defaults valueForKey:@"userid1"] isEqualToString:[[Array_Comment1 objectAtIndex:indexPath.row-1]valueForKey:@"receiveruserid"]])
+//                {
+                 NSURL * url=[NSURL URLWithString:[[AllDataArray objectAtIndex:0]valueForKey:@"profilepic"]];
+                    
+               
+                   
+                    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+                    [desc_Imagepro setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"DefaultImg.jpg"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image)
+                     {
+                         desc_Imagepro.image = image;
+                     }
+                                                   failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error)
+                     {
+                         
+                     }
+                     ];
+
+                    
+                    
+                    
                     
                     [Chat_UserImage setFrame:CGRectMake(52,4+label_time.frame.size.height,imgwidth,imgheight)];
                     Chat_UserImage.clipsToBounds=YES;
@@ -863,10 +1002,20 @@ if ([[[AllDataArray objectAtIndex:0]valueForKey:@"matchedfbid"] isEqualToString:
                 }
                 else
                 {
+                 NSURL * url=[NSURL URLWithString:[defaults valueForKey:@"ProImg"]];
+    
                     
-                    
-                    NSURL * url=[defaults valueForKey:@"profilepic"];
-                    [desc_Imagepro sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"DefaultImg.jpg"]options:SDWebImageRefreshCached];
+                    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+                    [desc_Imagepro setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"DefaultImg.jpg"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image)
+                     {
+                         desc_Imagepro.image = image;
+                     }
+                                                  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error)
+                     {
+                         
+                     }
+                     ];
+
                     
                     
                     [Chat_UserImage setFrame:CGRectMake((self.view.frame.size.width-64)-imgwidth,4+label_time.frame.size.height,imgwidth,imgheight)];

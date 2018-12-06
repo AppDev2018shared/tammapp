@@ -16,7 +16,9 @@
 #import "SBJsonParser.h"
 #import "Reachability.h"
 #import "UIView+RNActivityView.h"
-#import "AllViewSwapeViewController.h"
+#import "RootViewController.h"
+
+#import "AFNetworking.h"
 
 
 @interface SearchCollectionViewController ()<UICollectionViewDataSource, UICollectionViewDelegate,UICollectionViewDelegate,FRGWaterfallCollectionViewDelegate,UITextFieldDelegate>
@@ -33,13 +35,15 @@
     ImageCollectionViewCell *Imagecell;
     FRGWaterfallCollectionViewLayout *cvLayout;
     UILabel *imagev;
+    
+     CGFloat cellWidth,cellHeight,cellVideoHeight;
 }
 
 @end
 
 @implementation SearchCollectionViewController
 
-@synthesize searchTextField,Button_Back,Button_Cancel,searchTextEnter,rowTapCategory;
+@synthesize searchTextField,Button_Back,Button_Cancel,searchTextEnter,rowTapCategory,Img_Search,view_line;
 
 
 - (void)viewDidLoad {
@@ -66,10 +70,42 @@
 
     
     
+    
+    if ([[UIScreen mainScreen]bounds].size.width == 320)
+    {
+        cellWidth = 160.0f;
+        cellHeight = 210.0;
+        cellVideoHeight = 260.0;
+    }
+    else if ([[UIScreen mainScreen]bounds].size.width == 414)
+    {
+        cellWidth = 200.0f;
+        cellHeight = 255.0;
+        cellVideoHeight = 310.0;
+    }
+    else
+    {
+        cellWidth = 173.0f;
+        cellHeight = 225.0;
+        cellVideoHeight = 275.0;
+        
+        
+        
+        
+        
+    }
+    if (self.view.frame.size.width==375 && self.view.frame.size.height==812)
+    {
+        [searchTextField setFrame:CGRectMake(searchTextField.frame.origin.x, searchTextField.frame.origin.y+17, searchTextField.frame.size.width, 35)];
+        [Button_Cancel setFrame:CGRectMake(Button_Cancel.frame.origin.x, Button_Cancel.frame.origin.y+13, Button_Cancel.frame.size.width, 20)];
+        [Button_Back setFrame:CGRectMake(Button_Back.frame.origin.x, Button_Back.frame.origin.y+16, Button_Back.frame.size.width, 30)];
+        [Img_Search setFrame:CGRectMake(Img_Search.frame.origin.x, Img_Search.frame.origin.y+13, Img_Search.frame.size.width, 22)];
+           [view_line setFrame:CGRectMake(view_line.frame.origin.x, view_line.frame.origin.y+6, view_line.frame.size.width, 1)];
+    }
     // Do any additional setup after loading the view.
     cvLayout = [[FRGWaterfallCollectionViewLayout alloc] init];
     cvLayout.delegate = self;
-    cvLayout.itemWidth = 173.0f;
+    cvLayout.itemWidth = cellWidth;//173.0f;
    
     cvLayout.bottomInset = 10.0f;
     cvLayout.stickyHeader = YES;
@@ -183,10 +219,9 @@
         }
         else
         {
-            [Videocell.videoImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"]
-                                                 options:SDWebImageRefreshCached];
+            [Videocell.videoImageView setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"]];
             Videocell.playImageView.image = [UIImage imageNamed:@"Play"];
-            //[cell.videoImageView sd_setImageWithURL:url];
+          
             
         }
         
@@ -214,17 +249,45 @@
     {
         
         Imagecell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"ImageCell" forIndexPath:indexPath];
-        //        [cell.videoImageView sd_setImageWithURL:url];
+     
         Imagecell.videoImageView.layer.cornerRadius = 10;
         Imagecell.videoImageView.layer.masksToBounds = YES;
         NSURL * url=[NSURL URLWithString:[dic_request valueForKey:@"mediathumbnailurl"]];
-        [Imagecell.videoImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"]
-                                             options:SDWebImageRefreshCached];
+        
+        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+        [Imagecell.videoImageView setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image)
+         {
+             Imagecell.videoImageView.image = image;
+             Imagecell.activityIndicator.hidden = YES;
+             [Imagecell.activityIndicator stopAnimating];
+         }
+                                                 failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error)
+         {
+             Imagecell.activityIndicator.hidden = YES;
+             [Imagecell.activityIndicator stopAnimating];
+         }
+         ];
+
+        
+        
+       // [Imagecell.videoImageView setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"]];
         
         Imagecell.locationLabel.text = [dic_request valueForKey:@"city1"];
         Imagecell.timeLabel.text = [dic_request valueForKey:@"createtime"];
-        NSString *show = [NSString stringWithFormat:@"$%@",[dic_request valueForKey:@"showamount"]];
-        Imagecell.bidAmountLabel.text = show;
+        
+        if ([[dic_request valueForKey:@"showamount"]floatValue] > [[dic_request valueForKey:@"askingprice"]floatValue])
+        {
+            NSString *show = [NSString stringWithFormat:@"ر.س%@",[dic_request valueForKey:@"showamount"]];//$
+            Imagecell.bidAmountLabel.text = show;
+        }
+        else
+        {
+            NSString *show = [NSString stringWithFormat:@"ر.س%@",[dic_request valueForKey:@"askingprice"]];//$
+            Imagecell.bidAmountLabel.text = show;
+        }
+        
+//        NSString *show = [NSString stringWithFormat:@"$%@",[dic_request valueForKey:@"showamount"]];
+//        Imagecell.bidAmountLabel.text = show;
         Imagecell.titleLabel.text = [dic_request valueForKey:@"title"];
         
         
@@ -247,7 +310,7 @@
     
     
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    AllViewSwapeViewController * set1=[mainStoryboard instantiateViewControllerWithIdentifier:@"AllViewSwapeViewController"];
+    RootViewController * set1=[mainStoryboard instantiateViewControllerWithIdentifier:@"RootViewController"];
     
     
     CATransition *transition = [CATransition animation];
@@ -284,12 +347,12 @@
     if ([[dic_request valueForKey:@"mediatype"] isEqualToString:@"VIDEO"] )
         
     {
-        height = 275.0;
+        height = cellVideoHeight;//275.0;
     }
     else
     {
         
-        height = 225.0;
+        height = cellHeight;
         
     }
     return height;
@@ -396,17 +459,17 @@ heightForHeaderAtIndexPath:(NSIndexPath *)indexPath
         else
         {
             category= @"search";
-            categoryVal =searchTextEnter;
+            categoryVal =(NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,(CFStringRef)searchTextEnter,NULL,(CFStringRef)@"!*\"();:@&=+$,/?%#[]% ",CFStringConvertNSStringEncodingToEncoding(NSUTF8StringEncoding)));
         }
        
         
         
         
         NSString *city= @"city";
-        NSString *cityVal = [defaults valueForKey:@"Cityname"];
+        NSString *cityVal =(NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,(CFStringRef)[defaults valueForKey:@"Cityname"],NULL,(CFStringRef)@"!*\"();:@&=+$,/?%#[]% ",CFStringConvertNSStringEncodingToEncoding(NSUTF8StringEncoding))) ;
         
         NSString *country= @"country";
-        NSString *countryVal = [defaults valueForKey:@"Countryname"];;
+        NSString *countryVal =(NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,(CFStringRef)[defaults valueForKey:@"Countryname"],NULL,(CFStringRef)@"!*\"();:@&=+$,/?%#[]% ",CFStringConvertNSStringEncodingToEncoding(NSUTF8StringEncoding))) ;;
         
         NSString *reqStringFUll=[NSString stringWithFormat:@"%@=%@&%@=%@&%@=%@&%@=%@&%@=%@",userid,useridVal,location,locationVal,city,cityVal,country,countryVal,category,categoryVal];
         

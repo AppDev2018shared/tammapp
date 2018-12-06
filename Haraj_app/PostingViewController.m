@@ -22,22 +22,22 @@
 #import <CoreLocation/CoreLocation.h>
 #import <CoreLocation/CoreLocation.h>
 #import "BoostPost.h"
-
+#import "UIViewController+KeyboardAnimation.h"
 
 
 @interface PostingViewController ()<UITableViewDataSource, UITableViewDelegate,UIScrollViewDelegate,UIActionSheetDelegate,UITextViewDelegate,UITextFieldDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,NSURLConnectionDelegate,UIPickerViewDataSource,UIPickerViewDelegate,UIGestureRecognizerDelegate>
 {
-    MoreDetailCell *moreCell;
-    AddImageCell *imageCell;
-    ProductDetailCell *detailCell;
+   // MoreDetailCell *moreCell;
+//    AddImageCell *imageCell;
+//    ProductDetailCell *detailCell;
     NSUserDefaults * defaults;
     UIImage *chosenImage ;
     UIImageView *imageView,*Image_View;
     UIImagePickerController *imagePicker, *cameraUI, *pcker1;
-    NSInteger count,imageCount;
-    NSMutableArray *imageArray, *array_MediaTypes, *array_VideoUrl,* Array_mediaTypeId, *ImageId;
-    
-    UILabel *sellingPlaceholder,*hashPlaceholder,*morePlaceholder,*Label_confirm1;
+    NSInteger count,imageCount,x,indexCount_image;
+    NSMutableArray *imageArray, *array_MediaTypes, *array_VideoUrl,*ImageId,*Array_ImageMediaId,*Array_ImagesMediaIndex,*Array_RemoveImages;
+    // NSMutableArray *imageArray, *array_MediaTypes, *array_VideoUrl,* Array_mediaTypeId, ;
+    UILabel *hashPlaceholder,*morePlaceholder,*Label_confirm1,*sellingPlaceholder1,*sellingPlaceholder2,*sellingPlaceholder3;
     
     UIView * transperentViewIndicator,*whiteView1,* transperentViewIndicator11,*whiteView111;
     UIActivityIndicatorView *indicatorAlert;
@@ -54,14 +54,16 @@
     NSNumber *Vedio_Height,*Vedio_Width;
     NSData *imageData,*imageDataThumb;
     MPMoviePlayerViewController *movieController ;
-    NSInteger indexCount , x;
+    
     UILabel *KMlabel, *Sqmlabel;
     
+    int i;
     
+    CGFloat Tablevie_height;
   
     CLPlacemark *placemark;
     BOOL location;
-    NSString *TEXT;
+    NSString *TEXT,*Str_TxtField_Flag;
     
     BoostPost *myBoostXIBViewObj;
     NSString *boostpackVal,*boostAmountVal, *postIdVal;
@@ -71,6 +73,9 @@
     NSArray *pickerArray;
     UIPickerView *carPickerView;
     UIToolbar *toolBar;
+    
+    UIBarButtonItem *doneButton;
+    NSInteger myLastPressed;
 
 
     
@@ -80,23 +85,38 @@
 @end
 
 @implementation PostingViewController
-@synthesize nameLabel,Cell_DetailCar,Cell_DetailProperty;
+@synthesize nameLabel,Cell_DetailCar,Cell_DetailProperty,backButton,moreCell,imageCell,detailCell,NavigationView;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    indexCount = 0;
+    if (self.view.frame.size.width==375 && self.view.frame.size.height==812)
+    {
+        
+        
+         [NavigationView setFrame:CGRectMake(NavigationView.frame.origin.x, NavigationView.frame.origin.y, NavigationView.frame.size.width,80)];
+        
+        [nameLabel setFrame:CGRectMake(nameLabel.frame.origin.x, nameLabel.frame.origin.y+20, nameLabel.frame.size.width, 31)];
+        
+        [backButton setFrame:CGRectMake(backButton.frame.origin.x+2, backButton.frame.origin.y+23, backButton.frame.size.width-8, 31)];
+        
+        [_tableView setFrame:CGRectMake(_tableView.frame.origin.x, _tableView.frame.origin.y+40, _tableView.frame.size.width,_tableView.frame.size.height-40)];
+        
+    }
+   indexCount_image = 0;
     imageCount = 0;
     count = 0;
     imageArray = [[NSMutableArray alloc]init];
     array_MediaTypes = [[NSMutableArray alloc]init];
     array_VideoUrl = [[NSMutableArray alloc]init];
-    Array_mediaTypeId= [[NSMutableArray alloc]init];
-    ImageId = [[NSMutableArray alloc]init];
+    Array_RemoveImages=[[NSMutableArray alloc]init];
+    Array_ImageMediaId=[[NSMutableArray alloc]init];
+    Array_ImagesMediaIndex=[[NSMutableArray alloc]init];
+    Tablevie_height=self.tableView.frame.size.height;
+   ImageId = [[NSMutableArray alloc]init];
 
     Image_View = [[UIImageView alloc]init];
     pcker1=[[UIImagePickerController alloc]init];
-     pcker1.delegate = self;
+    pcker1.delegate = self;
     
     defaults = [[NSUserDefaults alloc]init];
     [defaults setObject:@"NO" forKey:@"CallPressed"];
@@ -113,8 +133,11 @@
     
    
     
-    nameLabel.text = [NSString stringWithFormat:@"Post your %@",self.name];
-    nameLabel.font = [UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:26];
+   // nameLabel.text = [NSString stringWithFormat:@"Post your %@",self.name];
+    nameLabel.text = [NSString stringWithFormat:@"عرض %@",self.name];
+    NSLog(@"abc = %@",nameLabel.text);
+    
+    nameLabel.font = [UIFont fontWithName:@"Cairo-Bold" size:26];
     nameLabel.textColor = [UIColor whiteColor];
    
     
@@ -138,6 +161,12 @@
     
     NSDateFormatter *dateFormatter=[[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyMMddHHmmss"];
+    
+    [NSLocale availableLocaleIdentifiers];
+    NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
+                        [dateFormatter setLocale:locale];
+    
+    
     // or @"yyyy-MM-dd hh:mm:ss a" if you prefer the time with AM/PM
     NSLog(@" date=%@",[dateFormatter stringFromDate:[NSDate date]]);
     postIDValue = [NSString stringWithFormat:@"P%@%@",[dateFormatter stringFromDate:[NSDate date]],randomString];
@@ -162,7 +191,7 @@
     
     
     Label_confirm1.text=@"Preparing...";
-    Label_confirm1.font=[UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:16.0];
+    Label_confirm1.font=[UIFont fontWithName:@"Cairo-Bold" size:16.0];
     Label_confirm1.textColor=[UIColor whiteColor];
     Label_confirm1.textAlignment=NSTextAlignmentCenter;
     
@@ -183,26 +212,73 @@
     NSString * xyz1 = [abc displayNameForKey:NSLocaleCountryCode value:xyz];
     NSLog(@" country name %@",xyz1);
     
-    sellingPlaceholder = [[UILabel alloc]initWithFrame:(CGRectMake(140, 42, 200, 21))];
-    hashPlaceholder = [[UILabel alloc]initWithFrame:(CGRectMake(120, 35, 225, 21))];
+    float sellingx,hashx;
+    
+    if ([[UIScreen mainScreen]bounds].size.width == 320)
+    {
+        sellingx =85.0;
+        hashx = 75.0;
+        
+        [moreCell.morePlaceholder setFrame:CGRectMake(moreCell.morePlaceholder.frame.origin.x, 65, moreCell.morePlaceholder.frame.size.width, moreCell.morePlaceholder.frame.size.height)];
+        
+    }
+    else if([[UIScreen mainScreen]bounds].size.width == 414)
+    {
+        sellingx = 185.0;
+        
+    }
+    
+    else
+    {
+        sellingx = 140.0;
+        hashx = 120.0;
+        
+        
+    }
+    
+    if ([[UIScreen mainScreen]bounds].size.width == 414)
+    {
+        [backButton setFrame:CGRectMake(358, 17, 40,34)];
+        
+    }
+    
+    
+    sellingPlaceholder1 = [[UILabel alloc]initWithFrame:(CGRectMake(sellingx, 42, 200, 21))];
+    sellingPlaceholder2 = [[UILabel alloc]initWithFrame:(CGRectMake(sellingx, 42, 200, 21))];
+    sellingPlaceholder3 = [[UILabel alloc]initWithFrame:(CGRectMake(sellingx, 42, 200, 21))];
+    hashPlaceholder = [[UILabel alloc]initWithFrame:(CGRectMake(hashx, 35, 225, 21))];
     
     
     
     propertyType = @"RENT";
     [Cell_DetailProperty.rentButton setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
     [Cell_DetailProperty.rentButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    Cell_DetailProperty.rentButton.titleLabel.font = [UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:22];
+    Cell_DetailProperty.rentButton.titleLabel.font = [UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:28];
     
     [Cell_DetailProperty.saleButton setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
     [Cell_DetailProperty.saleButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     Cell_DetailProperty.saleButton.titleLabel.font = [UIFont fontWithName:@"SanFranciscoDisplay-Regular" size:22];
 
-
+Str_TxtField_Flag=@"no";
     
-
     
+    
+//-----------------------------------Keyboard Notification--------------------------------------------
+    
+//    
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(keyboardWillShow:)
+//                                                 name:UIKeyboardWillShowNotification
+//                                               object:nil];
+//    
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(keyboardWillHide:)
+//                                                 name:UIKeyboardWillHideNotification
+//                                               object:nil];
+ 
     
 }
+
 -(void)viewWillAppear:(BOOL)animated
 {
     UIBarButtonItem *btn = [[UIBarButtonItem alloc]
@@ -214,12 +290,21 @@
     
     btn.tintColor= [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = btn;
-
+    
+[self subscribeToKeyboard];
 }
 
 -(void)tap:(UITapGestureRecognizer *)tapRec
 {
+    
+//    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
+//    self.tableView.contentInset = contentInsets;
+//    self.tableView.scrollIndicatorInsets = contentInsets;
+    
+ [self.tableView setFrame:CGRectMake(0,self.tableView.frame.origin.y, self.tableView.frame.size.width,Tablevie_height)];
+    
     [[self view] endEditing: YES];
+    
 }
 
 -(void)galleryButtonPressed:(id)sender
@@ -407,6 +492,15 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:(247.0f/255.0f) green:(247.0f/255.0f) blue:(247.0f/255.0f) alpha:1];
+    
+    [super viewWillDisappear:true];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self
+//                                                    name:UIKeyboardDidShowNotification
+//                                                  object:nil];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self
+//                                                    name:UIKeyboardWillHideNotification
+//                                                  object:nil];
+     [self an_unsubscribeKeyboard];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -442,9 +536,11 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    static NSString *cell_ImageCell = @"ImageCell";
     static NSString *cell_detailcar=@"CellCar";
     static NSString *cell_detailproperty=@"CellProperty";
+    static NSString *cell_detail=@"ProductCell";
+    static NSString *cell_more=@"MoreCell";
     
 
     
@@ -453,7 +549,15 @@
     {
         case 0:
         {
-            imageCell = [tableView dequeueReusableCellWithIdentifier:@"ImageCell"];
+            imageCell = [tableView dequeueReusableCellWithIdentifier:cell_ImageCell];
+            if (imageCell == nil)
+            {
+               // imageCell = [tableView dequeueReusableCellWithIdentifier:cell_ImageCell];
+                imageCell = [[AddImageCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cell_ImageCell];
+                
+            }
+            
+            
             
             [imageCell.galleryButton  addTarget:self action:@selector(galleryButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
             [imageCell.videoButton  addTarget:self action:@selector(videoButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -491,13 +595,14 @@
             }
 
             
-            for (int i=0; i<imageArray.count; i++)
+            for (i=0; i<imageArray.count; i++)
                 
             {
                 
+                NSString * Str_booleanVal=@"no";
                 imageView=[[UIImageView alloc]init];
                 imageView.frame=CGRectMake(x,0, 100, imageCell.scrollView.frame.size.height);
-                [imageView setTag:i];
+                [imageView setTag:[[ImageId objectAtIndex:i]integerValue]];
                 imageView.userInteractionEnabled=YES;
                 imageView.image=[imageArray objectAtIndex:i];
                 
@@ -505,16 +610,12 @@
                 imageView.clipsToBounds = YES;
                 
                 
-//                UITapGestureRecognizer * ImageTap =[[UITapGestureRecognizer alloc] initWithTarget:self
-//                                                                                           action:@selector(ImageTapped:)];
-//                [imageView addGestureRecognizer:ImageTap];
+
                 
                 UIImageView *playButton = [[UIImageView alloc]initWithFrame:CGRectMake((imageView.frame.size.width / 2) - 20, (imageView.frame.size.height / 2) - 20, 40, 40)];
                 playButton.backgroundColor = [UIColor clearColor];
                 [playButton setImage:[UIImage imageNamed:@"Play"]];
-//                UITapGestureRecognizer * ImageTap1 =[[UITapGestureRecognizer alloc] initWithTarget:self
-//                                                                                action:@selector(ImageTapped:)];
-//                [playButton addGestureRecognizer:ImageTap1];
+
                 playButton.tag = i;
                 [imageView addSubview:playButton];
                 
@@ -534,50 +635,46 @@
                 }
                 
                 
-                NSLog(@"INDEXC OF image arrsy=%d",i);
-                for (int j = 0; j < Array_mediaTypeId.count; j++)
-                    {
-                        NSLog(@"INDEXC OF image arrsy=%d",j);
-                        NSLog(@"INDEXC OF imageiii arrsy=%d",i);
-                        NSLog(@"Array_mediaTypeId OF values arrsy=%@",[[Array_mediaTypeId objectAtIndex:j] valueForKey:@"indexid"]);
-                         NSLog(@"ImageId OF values ImageId=%@",[ImageId objectAtIndex:i]);
-
-                        if ([[ImageId objectAtIndex:i] isEqualToString:[[Array_mediaTypeId objectAtIndex:j] valueForKey:@"indexid"]])
-                        {
-                            NSLog(@"INDEXC OF image arrsy11111=%d",j);
-                            NSLog(@"INDEXC OF imageiii arrsy1111=%d",i);
-                            NSLog(@"Array_mediaTypeId OF values1111 arrsy1111=%@",[[Array_mediaTypeId objectAtIndex:j] valueForKey:@"indexid"]);
-                            NSLog(@"ImageId OF values ImageId111111=%@",[ImageId objectAtIndex:i]);
-
-                            UITapGestureRecognizer * ImageTap =[[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                                       action:@selector(ImageTapped:)];
-                            [imageView addGestureRecognizer:ImageTap];
-                            
-                                            UITapGestureRecognizer * ImageTap1 =[[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                                            action:@selector(ImageTapped:)];
-                                            [playButton addGestureRecognizer:ImageTap1];
-
-
-                            imageView.alpha = 1;
-                            break;
-                            
-                        }
-                        else
-                            
-                        {
-                            UITapGestureRecognizer * ImageTap =[[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                                       action:@selector(ImageTappedRemove:)];
-                            [imageView addGestureRecognizer:ImageTap];
-                            
-                            UITapGestureRecognizer * ImageTap1 =[[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                                            action:@selector(ImageTappedRemove:)];
-                            [playButton addGestureRecognizer:ImageTap1];
-
-                            imageView.alpha = 0.5;
-                        }
-                        
+                
+               
+                for (int j = 0; j < Array_ImagesMediaIndex.count; j++)
+                   {
+                       if ([[ImageId objectAtIndex:i] isEqualToString:[Array_ImagesMediaIndex objectAtIndex:j]])
+                       {
+                         Str_booleanVal=@"yes";
+                           break;
+                       }
+                                               
+                                               
+                     }
+                if ([Str_booleanVal isEqualToString:@"yes"])
+                {
+                     imageView.alpha = 1;
+                    
+        UITapGestureRecognizer * ImageTap =[[UITapGestureRecognizer alloc] initWithTarget:self
+                            action:@selector(ImageTapped:)];
+            [imageView addGestureRecognizer:ImageTap];
+           UITapGestureRecognizer * ImageTap1 =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ImageTapped:)];
+        [playButton addGestureRecognizer:ImageTap1];
+                    
+                    
+                    
                 }
-
+                else
+                {
+                    
+        UITapGestureRecognizer * ImageTap =[[UITapGestureRecognizer alloc] initWithTarget:self
+        action:@selector(ImageTappedRemove:)];
+    [imageView addGestureRecognizer:ImageTap];
+                    
+    UITapGestureRecognizer * ImageTap1 =[[UITapGestureRecognizer alloc] initWithTarget:self
+    action:@selector(ImageTappedRemove:)];
+    [playButton addGestureRecognizer:ImageTap1];
+                     imageView.alpha = 0.5;
+                }
+                
+                
+          
                 x -= 110;
 
             }
@@ -590,21 +687,20 @@
         case 1:
             
             
-            if ([self.name isEqualToString:@"car"])
+            if ([self.name isEqualToString:@"سيارات"])//car
             {
                 
                 
                 
                 {
                     
-                    Cell_DetailCar = [[[NSBundle mainBundle]loadNibNamed:@"ProductDetailCellCar" owner:self options:nil] objectAtIndex:0];
                     
+                    Cell_DetailCar = [tableView dequeueReusableCellWithIdentifier:cell_detailcar];
                     
                     if (Cell_DetailCar == nil)
                     {
                         
-                        Cell_DetailCar = [[ProductDetailCellCar alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cell_detailcar];
-                        
+                        Cell_DetailCar = [[[NSBundle mainBundle]loadNibNamed:@"ProductDetailCellCar" owner:self options:nil] objectAtIndex:0];
                     }
                     
                     Cell_DetailCar.profileImageView.layer.cornerRadius = Cell_DetailCar.profileImageView.frame.size.height / 2;
@@ -612,7 +708,7 @@
                     
                     NSURL *url=[NSURL URLWithString:[defaults valueForKey:@"profileimage"]];
                     
-                    [Cell_DetailCar.profileImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultimg.jpg"] options:SDWebImageRefreshCached];
+                    [Cell_DetailCar.profileImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultimg.jpg"]];
                     
                     Cell_DetailCar.usernameLabel.text = [defaults valueForKey:@"UserName"];
                     
@@ -623,12 +719,17 @@
                     
                     [Cell_DetailCar.locationChangeButton addTarget:self action:@selector(ChangeLocations:) forControlEvents:UIControlEventTouchUpInside];
                     
+                    Cell_DetailCar.DownArrowImageView.userInteractionEnabled = YES;
+                    UITapGestureRecognizer * DownImageTap =[[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                                   action:@selector(DownArrowImageTapped:)];
+                    [Cell_DetailCar.DownArrowImageView addGestureRecognizer:DownImageTap];
                     
-                    if ([Cell_DetailCar.sellingTextview.text isEqualToString:@"What are you selling?"] || [Cell_DetailCar.sellingTextview.text isEqualToString:@""] )
+                    
+                    if ([Cell_DetailCar.sellingTextview.text isEqualToString:@"ماذا ترغب في البيع؟"] || [Cell_DetailCar.sellingTextview.text isEqualToString:@""] )//What are you selling?
                     {
-                        Cell_DetailCar.sellingTextview.text = @"What are you selling?";
+                        Cell_DetailCar.sellingTextview.text = @"ماذا ترغب في البيع؟";//what are you selling
                         Cell_DetailCar.sellingTextview.textColor = [UIColor blackColor];
-                        sellingPlaceholder.hidden = NO;
+                        sellingPlaceholder1.hidden = NO;
                         
                         moreCell.createButton.enabled = NO;
                         moreCell .createButton.backgroundColor = [UIColor lightGrayColor];
@@ -637,7 +738,8 @@
                     [Cell_DetailCar.carMakeTextField addTarget:self action:@selector(textField_Action:) forControlEvents:UIControlEventEditingChanged];
                     [Cell_DetailCar.modelTextField addTarget:self action:@selector(textField_Action:) forControlEvents:UIControlEventEditingChanged];
                     [Cell_DetailCar.mileageTextField addTarget:self action:@selector(textField_Action:) forControlEvents:UIControlEventEditingChanged];
-                   
+                    
+                  
                     UIView *dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
                     Cell_DetailCar.carMakeTextField.inputView = dummyView;
                     
@@ -647,12 +749,13 @@
                     [Cell_DetailCar.sellingTextview setAutocorrectionType:UITextAutocorrectionTypeNo];
                     
       //            sellingPlaceholder = [[UILabel alloc]initWithFrame:(CGRectMake(140, 42, 200, 21))];
-                    sellingPlaceholder.text = @"This is your post headline";
-                    sellingPlaceholder.textColor = [UIColor lightGrayColor];
-                    sellingPlaceholder.textAlignment = NSTextAlignmentRight;
-                    [Cell_DetailCar.sellingTextview addSubview:sellingPlaceholder];
-                    [Cell_DetailCar.contentView bringSubviewToFront:sellingPlaceholder];
-                    
+                    sellingPlaceholder1.text = @"هذا عنوان إعلانك";//@"This is your post headline";
+                    sellingPlaceholder1.font = [UIFont fontWithName:@"Cairo-Bold" size:17];
+                    sellingPlaceholder1.textColor = [UIColor lightGrayColor];
+                    sellingPlaceholder1.textAlignment = NSTextAlignmentRight;
+                    [Cell_DetailCar.sellingTextview addSubview:sellingPlaceholder1];
+                    [Cell_DetailCar.contentView bringSubviewToFront:sellingPlaceholder1];
+                   
                     
                     Cell_DetailCar.hashTextView.delegate=self;
                     
@@ -674,42 +777,42 @@
                     [Cell_DetailCar.contentView bringSubviewToFront:hashPlaceholder];
                     
                     
-                    
-
-                    
-                    
-                    
                     return Cell_DetailCar;
                 }
                 
             }
             
             
-            if ([self.name isEqualToString:@"property"])
+            if ([self.name isEqualToString:@"عقار"])//property
             {
                 
                 
                 {
                     
-                    Cell_DetailProperty = [[[NSBundle mainBundle]loadNibNamed:@"ProductDetailCellProperty" owner:self options:nil] objectAtIndex:0];
-                    
-                    
-                    
+                    Cell_DetailProperty = [tableView dequeueReusableCellWithIdentifier:cell_detailproperty];
                     
                     if (Cell_DetailProperty == nil)
                     {
                         
-                        Cell_DetailProperty = [[ProductDetailCellProperty alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cell_detailproperty];
-                        
-                        
+                        Cell_DetailProperty = [[[NSBundle mainBundle]loadNibNamed:@"ProductDetailCellProperty" owner:self options:nil] objectAtIndex:0];
                     }
+                    
+//                    Cell_DetailProperty = [[[NSBundle mainBundle]loadNibNamed:@"ProductDetailCellProperty" owner:self options:nil] objectAtIndex:0];
+//                
+//                    
+//                    if (Cell_DetailProperty == nil)
+//                    {
+//                        
+//                        Cell_DetailProperty = [[ProductDetailCellProperty alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cell_detailproperty];
+//                    }
+                    
                     
                     Cell_DetailProperty.profileImageView.layer.cornerRadius = Cell_DetailProperty.profileImageView.frame.size.height / 2;
                     Cell_DetailProperty.profileImageView.clipsToBounds = YES;
                     
                     NSURL *url=[NSURL URLWithString:[defaults valueForKey:@"profileimage"]];
                     
-                    [Cell_DetailProperty.profileImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultimg.jpg"] options:SDWebImageRefreshCached];
+                    [Cell_DetailProperty.profileImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultimg.jpg"]];
                     
                     Cell_DetailProperty.usernameLabel.text = [defaults valueForKey:@"UserName"];
                     
@@ -720,11 +823,11 @@
                     [Cell_DetailProperty.locationChangeButton addTarget:self action:@selector(ChangeLocations:) forControlEvents:UIControlEventTouchUpInside];
     
                     
-                    if ([Cell_DetailProperty.sellingTextview.text isEqualToString:@"What are you selling?"] || [Cell_DetailProperty.sellingTextview.text isEqualToString:@""] )
+                    if ([Cell_DetailProperty.sellingTextview.text isEqualToString:@"ماذا ترغب في البيع؟"] || [Cell_DetailProperty.sellingTextview.text isEqualToString:@""] )//What are you selling?
                     {
-                        Cell_DetailProperty.sellingTextview.text = @"What are you selling?";
+                        Cell_DetailProperty.sellingTextview.text = @"ماذا ترغب في البيع؟";//what are you selling?
                         Cell_DetailProperty.sellingTextview.textColor = [UIColor blackColor];
-                        sellingPlaceholder.hidden = NO;
+                        sellingPlaceholder2.hidden = NO;
                         
                         moreCell.createButton.enabled = NO;
                         moreCell .createButton.backgroundColor = [UIColor lightGrayColor];
@@ -734,11 +837,12 @@
                     [Cell_DetailProperty.sellingTextview setAutocorrectionType:UITextAutocorrectionTypeNo];
                     
                     //            sellingPlaceholder = [[UILabel alloc]initWithFrame:(CGRectMake(140, 42, 200, 21))];
-                    sellingPlaceholder.text = @"This is your post headline";
-                    sellingPlaceholder.textColor = [UIColor lightGrayColor];
-                    sellingPlaceholder.textAlignment = NSTextAlignmentRight;
-                    [Cell_DetailProperty.sellingTextview addSubview:sellingPlaceholder];
-                    [Cell_DetailProperty.contentView bringSubviewToFront:sellingPlaceholder];
+                    sellingPlaceholder2.text = @"هذا عنوان إعلانك";//@"This is your post headline";
+                    sellingPlaceholder2.font = [UIFont fontWithName:@"Cairo-Bold" size:17];
+                    sellingPlaceholder2.textColor = [UIColor lightGrayColor];
+                    sellingPlaceholder2.textAlignment = NSTextAlignmentRight;
+                    [Cell_DetailProperty.sellingTextview addSubview:sellingPlaceholder2];
+                    [Cell_DetailProperty.contentView bringSubviewToFront:sellingPlaceholder2];
                     
                     
                     Cell_DetailProperty.hashTextView.delegate=self;
@@ -782,16 +886,21 @@
             {
                 
                 {
+                    detailCell = [tableView dequeueReusableCellWithIdentifier:cell_detail];
+                    if (detailCell == nil)
+                    {
+                       // detailCell = [tableView dequeueReusableCellWithIdentifier:@"ProductCell"];
+                        detailCell = [[ProductDetailCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cell_detail];
+
+                    }
                     
-                    
-                    detailCell = [tableView dequeueReusableCellWithIdentifier:@"ProductCell"];
                     
                     detailCell.profileImageView.layer.cornerRadius = detailCell.profileImageView.frame.size.height / 2;
                     detailCell.profileImageView.clipsToBounds = YES;
                     
                     NSURL *url=[NSURL URLWithString:[defaults valueForKey:@"profileimage"]];
                     
-                    [detailCell.profileImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultimg.jpg"] options:SDWebImageRefreshCached];
+                    [detailCell.profileImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultimg.jpg"]];
                     
                     detailCell.usernameLabel.text = [defaults valueForKey:@"name"];
                     
@@ -801,11 +910,11 @@
                     detailCell.locationLabel.text = locationstr;
                     [detailCell.locationChangeButton addTarget:self action:@selector(ChangeLocations:) forControlEvents:UIControlEventTouchUpInside];
                     
-                    if ([detailCell.sellingTextview.text isEqualToString:@"What are you selling?"] || [detailCell.sellingTextview.text isEqualToString:@""] )
+                    if ([detailCell.sellingTextview.text isEqualToString:@"ماذا ترغب في البيع؟"] || [detailCell.sellingTextview.text isEqualToString:@""] )//What are you selling?
                     {
-                        detailCell.sellingTextview.text = @"What are you selling?";
+                        detailCell.sellingTextview.text = @"ماذا ترغب في البيع؟";//What are you selling?
                         detailCell.sellingTextview.textColor = [UIColor blackColor];
-                        sellingPlaceholder.hidden = NO;
+                        sellingPlaceholder3.hidden = NO;
                         
                         moreCell.createButton.enabled = NO;
                         moreCell .createButton.backgroundColor = [UIColor lightGrayColor];
@@ -815,11 +924,12 @@
                     [detailCell.sellingTextview setAutocorrectionType:UITextAutocorrectionTypeNo];
                     
       //            sellingPlaceholder = [[UILabel alloc]initWithFrame:(CGRectMake(140, 42, 200, 21))];
-                    sellingPlaceholder.text = @"This is your post headline";
-                    sellingPlaceholder.textColor = [UIColor lightGrayColor];
-                    sellingPlaceholder.textAlignment = NSTextAlignmentRight;
-                    [detailCell.sellingTextview addSubview:sellingPlaceholder];
-                    [detailCell.contentView bringSubviewToFront:sellingPlaceholder];
+                    sellingPlaceholder3.text = @"هذا عنوان إعلانك";//@"This is your post headline";
+                    sellingPlaceholder3.font = [UIFont fontWithName:@"Cairo-Bold" size:17];
+                    sellingPlaceholder3.textColor = [UIColor lightGrayColor];
+                    sellingPlaceholder3.textAlignment = NSTextAlignmentRight;
+                    [detailCell.sellingTextview addSubview:sellingPlaceholder3];
+                    [detailCell.contentView bringSubviewToFront:sellingPlaceholder3];
                     
                     
                     detailCell.hashTextView.delegate=self;
@@ -850,26 +960,79 @@
             
         case 2:
         {
-            moreCell = [tableView dequeueReusableCellWithIdentifier:@"MoreCell"];
+            moreCell = [tableView dequeueReusableCellWithIdentifier:cell_more];
             
-            moreCell.currentDays_Label.text =[NSString stringWithFormat:@"%.f",moreCell.slider.value];
+            if (moreCell == nil)
+            {
+                //moreCell = [tableView dequeueReusableCellWithIdentifier:@"MoreCell"];
+                 moreCell = [[MoreDetailCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cell_more];
 
-            moreCell.slider.maximumValue = 30;
-            moreCell.slider.minimumValue = 1;
-            moreCell.slider.continuous = TRUE;
-            [moreCell.slider  addTarget:self action:@selector(sliderChanged:) forControlEvents:UIControlEventValueChanged];
-            moreCell.slider.tag = 1;
+            }
+            
+            if ([self.name isEqualToString:@"سيارات"])//car
+            {
+                
+            }
+            else  if ([self.name isEqualToString:@"عقار"])//property
+            {
+                moreCell.morePlaceholder.text = @"مثل: مساحته، عدد الغرف، مسبح، حديقة مجاورة، الخ.";
+                
+            }
+            else  if ([self.name isEqualToString:@"إلكترونيات"])//electronics
+            {
+                moreCell.morePlaceholder.text = @"مثل: موديله، ضمان متوفر من الوكيل، الخ.";
+            }
+            else  if ([self.name isEqualToString:@"حيوانات أليفة"])//pets
+            {
+                moreCell.morePlaceholder.text = @"مثل: اصله، شهادة تطعيم، الخ.";
+            }
+            else  if ([self.name isEqualToString:@"أثاث"])//furniture
+            {
+                moreCell.morePlaceholder.text = @"مثل: جديد، لونه، قماشه، الخ.";
+            }
+            else  if ([self.name isEqualToString:@"خدمات"])//services
+            {
+                moreCell.morePlaceholder.text = @"مثل: شرح وافي للخدمة المطلوبة.";
+            }
+            else  if ([self.name isEqualToString:@"أخرى"])//others
+            {
+                moreCell.morePlaceholder.text = @"مثل: شرح وافي للمنتج او الخدمة المعروضة.";
+            }
+            
+
+            
+            
+            
+            
+//            moreCell.currentDays_Label.text =[NSString stringWithFormat:@"%.f",moreCell.slider.value];
+//
+//            moreCell.slider.maximumValue = 30;
+//            moreCell.slider.minimumValue = 1;
+//            moreCell.slider.continuous = TRUE;
+//            [moreCell.slider  addTarget:self action:@selector(sliderChanged:) forControlEvents:UIControlEventValueChanged];
+//            moreCell.slider.tag = 1;
             
             moreCell.moreTextView.delegate =self;
             
-            if ([moreCell.moreTextView.text isEqualToString:@"Tell us more about the product"] || [moreCell.moreTextView.text isEqualToString:@""] )
+            if ([moreCell.moreTextView.text isEqualToString:@"أخبرنا أكثر عن منتجك"] || [moreCell.moreTextView.text isEqualToString:@""] )//Tell us more about the product
             {
                 
 
-            moreCell.moreTextView.text = @"Tell us more about the product";
+            moreCell.moreTextView.text = @"أخبرنا أكثر عن منتجك";//@"Tell us more about the product";
             moreCell.moreTextView.textColor = [UIColor blackColor];
             }
-            [detailCell.hashTextView setAutocorrectionType:UITextAutocorrectionTypeNo];
+            
+            
+            
+            if ([[UIScreen mainScreen]bounds].size.width == 320)
+            {
+                [moreCell.morePlaceholder setFrame:CGRectMake(moreCell.morePlaceholder.frame.origin.x - 5, 65, moreCell.morePlaceholder.frame.size.width, moreCell.morePlaceholder.frame.size.height)];
+            }
+            else
+            {
+                
+            }
+            //[detailCell.hashTextView setAutocorrectionType:UITextAutocorrectionTypeNo];
 
             [moreCell.createButton  addTarget:self action:@selector(createButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
             [moreCell.callButton  addTarget:self action:@selector(callButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -888,6 +1051,8 @@
 }
 
 
+
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section==0)
@@ -897,17 +1062,17 @@
     else if (indexPath.section == 1)
     {
         
-        if ([self.name isEqualToString:@"car"])
+        if ([self.name isEqualToString:@"سيارات"])//car
         {
-            return 378;
+            return 311;//378;
         }
-        else  if ([self.name isEqualToString:@"property"])
+        else  if ([self.name isEqualToString:@"عقار"])//property
         {
-            return 422;
+            return 364;//422;
         }
         else
         {
-            return 253;
+            return 196;//253;
         }
     }
     else if (indexPath.section == 2)
@@ -923,42 +1088,59 @@
 
 -(void)textField_Action:(id)sender
 {
-    if ([self.name isEqualToString:@"car"])
+    if ([self.name isEqualToString:@"سيارات"])//car
     {
-        
-        if (Cell_DetailCar.modelTextField.text.length == 0 || Cell_DetailCar.mileageTextField.text.length == 0)
-            
+        if (([Cell_DetailCar.sellingTextview.text isEqualToString:@"ماذا ترغب في البيع؟"] || [Cell_DetailCar.sellingTextview.text isEqualToString:@""]) || Cell_DetailCar.mileageTextField.text.length ==0 || Cell_DetailCar.modelTextField.text.length ==0 || Cell_DetailCar.carMakeTextField.text.length ==0 )
         {
             
             moreCell.createButton.enabled = NO;
-            moreCell .createButton.backgroundColor = [UIColor lightGrayColor];
-            
+            [moreCell.createButton setBackgroundColor:[UIColor lightGrayColor]];
             
         }
         else
         {
-            moreCell.createButton.enabled =YES;
-            moreCell .createButton.backgroundColor = [UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1];
+            moreCell.createButton.enabled = YES;
+            [moreCell.createButton setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
+            
+            
+            
             
         }
-        
+
+//        if (Cell_DetailCar.modelTextField.text.length == 0 || Cell_DetailCar.mileageTextField.text.length == 0)
+//            
+//        {
+//            
+//            moreCell.createButton.enabled = NO;
+//            moreCell .createButton.backgroundColor = [UIColor lightGrayColor];
+//            
+//            
+//        }
+//        else
+//        {
+//            moreCell.createButton.enabled =YES;
+//            moreCell .createButton.backgroundColor = [UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1];
+//            
+//        }
+//        
         
         
     }
     
-    else if ([self.name isEqualToString:@"property"])
+    else if ([self.name isEqualToString:@"عقار"])//property
     {
-        if (Cell_DetailProperty.propertySizeTextField.text.length == 0 || Cell_DetailProperty.noOfBedroomTextField.text.length == 0)
+        if (([Cell_DetailProperty.sellingTextview.text isEqualToString:@"ماذا ترغب في البيع؟"] || [Cell_DetailProperty.sellingTextview.text isEqualToString:@""]) || Cell_DetailProperty.propertySizeTextField.text.length ==0 || Cell_DetailProperty.noOfBedroomTextField.text.length ==0 )
         {
-            moreCell.createButton.enabled = NO;
-            moreCell .createButton.backgroundColor = [UIColor lightGrayColor];
             
+            moreCell.createButton.enabled = NO;
+            [moreCell.createButton setBackgroundColor:[UIColor lightGrayColor]];
             
         }
         else
         {
-            moreCell.createButton.enabled =YES;
-            moreCell .createButton.backgroundColor = [UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1];
+            moreCell.createButton.enabled = YES;
+            [moreCell.createButton setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
+            
             
         }
 
@@ -1002,79 +1184,156 @@
 #pragma mark - UITextView and UITextField Delegates
 - (void)textViewDidChange:(UITextView *)textView
 {
-    if ([textView.text isEqualToString:@"What are you selling?"] || [textView.text isEqualToString:@""])
+    
+   
+    
+    
+    if ([self.name isEqualToString:@"سيارات"])//car
     {
-        textView.text = @"";
-        sellingPlaceholder.hidden = YES;
+        if ([textView.text isEqual:Cell_DetailCar.sellingTextview])//What are you selling?
+        {
+        if ([textView.text isEqualToString:@"ماذا ترغب في البيع؟"] || [textView.text isEqualToString:@""])//What are you selling?
+        {
+            textView.text = @"";
+            sellingPlaceholder1.hidden = NO;
+           
+            
+        }
+            
+        }
+        if ([textView.text isEqual:moreCell.moreTextView])//What are you selling?
+        {
+            if ([textView.text isEqualToString:@""])
+            {
+                moreCell.morePlaceholder.hidden=NO;
+            }
+            else
+            {
+               moreCell.morePlaceholder.hidden=YES;
+            }
+            
+            
+        }
+      
+        
+    if (([Cell_DetailCar.sellingTextview.text isEqualToString:@"ماذا ترغب في البيع؟"] || [Cell_DetailCar.sellingTextview.text isEqualToString:@""]) || Cell_DetailCar.mileageTextField.text.length ==0 || Cell_DetailCar.modelTextField.text.length ==0 || Cell_DetailCar.carMakeTextField.text.length ==0 )
+        {
+          
+            moreCell.createButton.enabled = NO;
+            [moreCell.createButton setBackgroundColor:[UIColor lightGrayColor]];
+            
+        }
+        else
+        {
+            moreCell.createButton.enabled = YES;
+            [moreCell.createButton setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
+           
+            
+            
+         
+        }
+        
+       
+    }
+    
+    else if([self.name isEqualToString:@"عقار"])//property
+    {
+        
+        
+        
+    
+        if ([textView.text isEqual:Cell_DetailProperty.sellingTextview])//What are you selling?
+        {
+
+        
+        if ([textView.text isEqualToString:@"ماذا ترغب في البيع؟"] || [textView.text isEqualToString:@""])//What are you selling?
+        {
+            textView.text = @"";
+            sellingPlaceholder2.hidden = NO;
+            
+            
+        }
+        
+    }
+    if ([textView.text isEqual:moreCell.moreTextView])//What are you selling?
+    {
+        if ([textView.text isEqualToString:@""])
+        {
+            moreCell.morePlaceholder.hidden=NO;
+        }
+        else
+        {
+            moreCell.morePlaceholder.hidden=YES;
+        }
+        
+        
+    }
+        
+       
+   
+    
+    if (([Cell_DetailProperty.sellingTextview.text isEqualToString:@"ماذا ترغب في البيع؟"] || [Cell_DetailProperty.sellingTextview.text isEqualToString:@""]) || Cell_DetailProperty.propertySizeTextField.text.length ==0 || Cell_DetailProperty.noOfBedroomTextField.text.length ==0 )
+    {
+        
         moreCell.createButton.enabled = NO;
         [moreCell.createButton setBackgroundColor:[UIColor lightGrayColor]];
         
     }
     else
     {
-        sellingPlaceholder.hidden = YES;
-//        moreCell.createButton.enabled = YES;
-//        [moreCell.createButton setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
-
+        moreCell.createButton.enabled = YES;
+        [moreCell.createButton setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
+        
+        
     }
+  
     
     
-    if ([self.name isEqualToString:@"car"])
-    {
-        
-        if (Cell_DetailCar.sellingTextview.text.length == 0)
-        {
-            moreCell.createButton.enabled = NO;
-            [moreCell.createButton setBackgroundColor:[UIColor lightGrayColor]];
-        }
-        else
-        {
-            moreCell.createButton.enabled = YES;
-            [moreCell.createButton setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
-        }
-        
-        
-        if ([Cell_DetailCar.modelTextField.text isEqualToString:@""]  || [Cell_DetailCar.mileageTextField.text isEqualToString:@""]) {
-            moreCell.createButton.enabled = NO;
-            [moreCell.createButton setBackgroundColor:[UIColor lightGrayColor]];
-            
-        }
-    }
     
-    else if([self.name isEqualToString:@"property"])
-    {
-        
-        if (Cell_DetailProperty.sellingTextview.text.length == 0)
-        {
-            moreCell.createButton.enabled = NO;
-            [moreCell.createButton setBackgroundColor:[UIColor lightGrayColor]];
-        }
-        else
-        {
-            moreCell.createButton.enabled = YES;
-            [moreCell.createButton setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
-        }
-        
-        
-        if ([Cell_DetailProperty.propertySizeTextField.text isEqualToString:@""]  || [Cell_DetailProperty.noOfBedroomTextField.text isEqualToString:@""]) {
-            moreCell.createButton.enabled = NO;
-            [moreCell.createButton setBackgroundColor:[UIColor lightGrayColor]];
-            
-        }
+    
+    
+    
+    
+    
+    
+    
+    
     }
     else
     {
-        
-        if (detailCell.sellingTextview.text.length == 0)
+        if ([textView.text isEqual:detailCell.sellingTextview])//What are you selling?
         {
+        if ([textView.text isEqualToString:@"ماذا ترغب في البيع؟"] || [textView.text isEqualToString:@""])//What are you selling?
+        {
+            textView.text = @"";
+            sellingPlaceholder3.hidden = NO;
+            
+            
+        }
+        
+            
+            
+            
+            
+        }
+
+        
+        if ([detailCell.sellingTextview.text isEqualToString:@"ماذا ترغب في البيع؟"] || [detailCell.sellingTextview.text isEqualToString:@""] )
+        {
+            
             moreCell.createButton.enabled = NO;
             [moreCell.createButton setBackgroundColor:[UIColor lightGrayColor]];
+            
         }
         else
         {
             moreCell.createButton.enabled = YES;
             [moreCell.createButton setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
+            
+            
         }
+        
+        
         
         
     }
@@ -1084,33 +1343,50 @@
     
     
 }
+
+
 -(void)textViewDidBeginEditing:(UITextView *)textView
 {
-    if ([self.name isEqualToString:@"car"])
+     Str_TxtField_Flag=@"no";
+    carPickerView.hidden=YES;
+    
+    toolBar.hidden=YES;
+    [carPickerView removeFromSuperview];
+    if ([self.name isEqualToString:@"سيارات"])//car
     {
         
-        
+        carPickerView.hidden=YES;
+        toolBar.hidden=YES;
+        [carPickerView removeFromSuperview];
         
         
         if ([textView isEqual: Cell_DetailCar.sellingTextview])
         {
-            if ([textView.text isEqualToString:@"What are you selling?"] || [textView.text isEqualToString:@""])
+            if ([[UIScreen mainScreen]bounds].size.width == 320)
             {
-                textView.text = @"";
-                sellingPlaceholder.hidden = YES;
-                moreCell.createButton.enabled = NO;
-                [moreCell.createButton setBackgroundColor:[UIColor lightGrayColor]];
-               
+                
+                    self.tableView.frame= CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.frame.size.height - 20);
+                    NSIndexPath *indexPath =[NSIndexPath indexPathForRow:0 inSection:1];
+                    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+                
+                // self.tableView.frame= CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y - 40, self.tableView.frame.size.width, self.tableView.frame.size.height);
+                
                 
             }
             else
             {
-                sellingPlaceholder.hidden = YES;
-                moreCell.createButton.enabled = YES;
-                [moreCell.createButton setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
-               
-
+                
             }
+            
+            if ([textView.text isEqualToString:@"ماذا ترغب في البيع؟"] || [textView.text isEqualToString:@""])//What are you selling?
+            {
+                textView.text = @"";
+                sellingPlaceholder1.hidden = YES;
+               
+               
+                
+            }
+           
             
             
         }
@@ -1122,28 +1398,47 @@
                 textView.text = @"";
                 hashPlaceholder.hidden = YES;
                 textView.textColor = [UIColor grayColor];
+                
+                
             }
         }
+        
+        if (([Cell_DetailCar.sellingTextview.text isEqualToString:@"ماذا ترغب في البيع؟"] || [Cell_DetailCar.sellingTextview.text isEqualToString:@""]) || Cell_DetailCar.mileageTextField.text.length ==0 || Cell_DetailCar.modelTextField.text.length ==0 || Cell_DetailCar.carMakeTextField.text.length ==0 )
+        {
+            
+            moreCell.createButton.enabled = NO;
+            [moreCell.createButton setBackgroundColor:[UIColor lightGrayColor]];
+            
+        }
+        else
+        {
+            moreCell.createButton.enabled = YES;
+            [moreCell.createButton setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
+            
+            
+            
+            
+        }
+ 
+        
     }
-    else if ([self.name isEqualToString:@"property"])
+    else if ([self.name isEqualToString:@"عقار"])//property
     {
         if ([textView isEqual: Cell_DetailProperty.sellingTextview])
         {
-            if ([textView.text isEqualToString:@"What are you selling?"] || [textView.text isEqualToString:@""])
+            if ([textView.text isEqualToString:@"ماذا ترغب في البيع؟"] || [textView.text isEqualToString:@""])//What are you selling?
             {
                 textView.text = @"";
-                sellingPlaceholder.hidden = YES;
-                moreCell.createButton.enabled = NO;
-                [moreCell.createButton setBackgroundColor:[UIColor lightGrayColor]];
+                sellingPlaceholder2.hidden = YES;
+               
                 
 
                 
             }
             else
             {
-                sellingPlaceholder.hidden = YES;
-                moreCell.createButton.enabled = YES;
-                [moreCell.createButton setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
+                sellingPlaceholder2.hidden = YES;
+              
                
             }
             
@@ -1159,7 +1454,21 @@
                 textView.textColor = [UIColor grayColor];
             }
         }
-        
+        if (([Cell_DetailProperty.sellingTextview.text isEqualToString:@"ماذا ترغب في البيع؟"] || [Cell_DetailProperty.sellingTextview.text isEqualToString:@""]) || Cell_DetailProperty.propertySizeTextField.text.length ==0 || Cell_DetailProperty.noOfBedroomTextField.text.length ==0 )
+        {
+            
+            moreCell.createButton.enabled = NO;
+            [moreCell.createButton setBackgroundColor:[UIColor lightGrayColor]];
+            
+        }
+        else
+        {
+            moreCell.createButton.enabled = YES;
+            [moreCell.createButton setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
+            
+            
+        }
+ 
         
     }
     
@@ -1169,21 +1478,19 @@
         
         if ([textView isEqual: detailCell.sellingTextview])
         {
-            if ([textView.text isEqualToString:@"What are you selling?"] || [textView.text isEqualToString:@""])
+            if ([textView.text isEqualToString:@"ماذا ترغب في البيع؟"] || [textView.text isEqualToString:@""])//What are you selling?
             {
                 textView.text = @"";
-                sellingPlaceholder.hidden = YES;
-                moreCell.createButton.enabled = NO;
-                [moreCell.createButton setBackgroundColor:[UIColor lightGrayColor]];
+                sellingPlaceholder3.hidden = YES;
+               
                 
 
                 
             }
             else
             {
-                sellingPlaceholder.hidden = YES;
-                moreCell.createButton.enabled = YES;
-                [moreCell.createButton setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
+                sellingPlaceholder3.hidden = YES;
+               
                 
 
             }
@@ -1207,7 +1514,7 @@
     if ([textView isEqual: moreCell.moreTextView])
     {
         
-        if ([textView.text isEqualToString:@"Tell us more about the product"] )
+        if ([textView.text isEqualToString:@"أخبرنا أكثر عن منتجك"] )//Tell us more about the product
         {
             textView.text = @"";
             moreCell.morePlaceholder.hidden = YES;
@@ -1218,20 +1525,36 @@
 
 -(void)textViewDidEndEditing:(UITextView *)textView
 {
+     Str_TxtField_Flag=@"no";
+    carPickerView.hidden=YES;
     
-    if ([self.name isEqualToString:@"car"])
+    toolBar.hidden=YES;
+    [carPickerView removeFromSuperview];
+    if ([self.name isEqualToString:@"سيارات"])//car
     {
         
         
         
         if ([textView isEqual: Cell_DetailCar.sellingTextview])
         {
+            if ([[UIScreen mainScreen]bounds].size.width == 320)
+            {
+                
+                self.tableView.frame= CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.frame.size.height + 20);
+                NSIndexPath *indexPath =[NSIndexPath indexPathForRow:0 inSection:1];
+                [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+                
+//                self.tableView.frame= CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y + 40, self.tableView.frame.size.width, self.tableView.frame.size.height);
+                
+                
+            }
+
+            
             if ([textView.text isEqualToString:@""])
             {
-                textView.text = @"What are you selling?";
-                sellingPlaceholder.hidden = NO;
-                moreCell.createButton.enabled = NO;
-                moreCell .createButton.backgroundColor = [UIColor lightGrayColor];
+                textView.text = @"ماذا ترغب في البيع؟";//@"What are you selling?";
+                sellingPlaceholder1.hidden = NO;
+               
                 
 
             }
@@ -1247,9 +1570,25 @@
                 hashPlaceholder.hidden = NO;
             }
         }
-        
+        if (([Cell_DetailCar.sellingTextview.text isEqualToString:@"ماذا ترغب في البيع؟"] || [Cell_DetailCar.sellingTextview.text isEqualToString:@""]) || Cell_DetailCar.mileageTextField.text.length ==0 || Cell_DetailCar.modelTextField.text.length ==0 || Cell_DetailCar.carMakeTextField.text.length ==0 )
+        {
+            
+            moreCell.createButton.enabled = NO;
+            [moreCell.createButton setBackgroundColor:[UIColor lightGrayColor]];
+            
+        }
+        else
+        {
+            moreCell.createButton.enabled = YES;
+            [moreCell.createButton setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
+            
+            
+            
+            
+        }
+  
     }
-    else if ([self.name isEqualToString:@"property"])
+    else if ([self.name isEqualToString:@"عقار"])//property
     {
         
         
@@ -1258,10 +1597,9 @@
         {
             if ([textView.text isEqualToString:@""])
             {
-                textView.text = @"What are you selling?";
-                sellingPlaceholder.hidden = NO;
-                moreCell.createButton.enabled = NO;
-                moreCell .createButton.backgroundColor = [UIColor lightGrayColor];
+                textView.text = @"ماذا ترغب في البيع؟";//@"What are you selling?";
+                sellingPlaceholder2.hidden = NO;
+               
                 
             }
         }
@@ -1276,7 +1614,21 @@
                 hashPlaceholder.hidden = NO;
             }
         }
-        
+        if (([Cell_DetailProperty.sellingTextview.text isEqualToString:@"ماذا ترغب في البيع؟"] || [Cell_DetailProperty.sellingTextview.text isEqualToString:@""]) || Cell_DetailProperty.propertySizeTextField.text.length ==0 || Cell_DetailProperty.noOfBedroomTextField.text.length ==0 )
+        {
+            
+            moreCell.createButton.enabled = NO;
+            [moreCell.createButton setBackgroundColor:[UIColor lightGrayColor]];
+            
+        }
+        else
+        {
+            moreCell.createButton.enabled = YES;
+            [moreCell.createButton setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
+            
+            
+        }
+ 
     }
     else
     {
@@ -1286,10 +1638,9 @@
         {
             if ([textView.text isEqualToString:@""])
             {
-                textView.text = @"What are you selling?";
-                sellingPlaceholder.hidden = NO;
-                moreCell.createButton.enabled = NO;
-                moreCell .createButton.backgroundColor = [UIColor lightGrayColor];
+                textView.text = @"ماذا ترغب في البيع؟";//@"What are you selling?";
+                sellingPlaceholder3.hidden = NO;
+                
                 
             }
         }
@@ -1313,13 +1664,22 @@
         
         if ([textView.text isEqualToString:@""] )
         {
-            textView.text = @"Tell us more about the product";
+            textView.text = @"أخبرنا أكثر عن منتجك";//@"Tell us more about the product";
             moreCell.morePlaceholder.hidden = NO;
         }
+        
+//        UIEdgeInsets contentInsets = UIEdgeInsetsZero;
+//        self.tableView.contentInset = contentInsets;
+//        self.tableView.scrollIndicatorInsets = contentInsets;
     }
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    
+    
+
+   if ([text length] == 0)
+   {
     
     if([text isEqualToString:@"\n"])
     {
@@ -1327,10 +1687,21 @@
         [textView resignFirstResponder];
         return NO;
     }
-    
-
-  
-    return YES;
+    else
+    {
+        return YES;
+    }
+       
+   }
+    else if([[textView text] length] >= 40 )
+    {
+        if ([textView tag ]==2)
+        {
+           return NO;
+        }
+      
+    }
+       return YES;
 }
 
 
@@ -1356,9 +1727,11 @@
     
     if  ([textField isEqual:moreCell.askingPriceTextField])
     {
-    self.tableView.frame= CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.frame.size.height - 220 -40);
-    NSIndexPath *indexPath =[NSIndexPath indexPathForRow:0 inSection:2];
-    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+//    self.tableView.frame= CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.frame.size.height - 220 -40);
+//    NSIndexPath *indexPath =[NSIndexPath indexPathForRow:0 inSection:2];
+//    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+        
+        
     }
     
     return YES;
@@ -1369,9 +1742,9 @@
 {
     if  ([textField isEqual:moreCell.askingPriceTextField])
     {
-        self.tableView.frame= CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.frame.size.height + 220);
-        NSIndexPath *indexPath =[NSIndexPath indexPathForRow:0 inSection:2];
-        [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+//        self.tableView.frame= CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.frame.size.height + 220);
+//        NSIndexPath *indexPath =[NSIndexPath indexPathForRow:0 inSection:2];
+//        [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
     }
     
     return YES;
@@ -1382,12 +1755,30 @@
 {
     if ([textField isEqual:Cell_DetailCar.carMakeTextField])
     {
+        Str_TxtField_Flag=@"yes";
+        Cell_DetailCar.DownArrowImageView.userInteractionEnabled = NO;
+        
+        if ([[UIScreen mainScreen]bounds].size.width == 320)
+        {
         
         
         self.tableView.frame= CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.frame.size.height - 14);
         NSIndexPath *indexPath =[NSIndexPath indexPathForRow:0 inSection:1];
         [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        }
+        else
+        {
+        }
+        
         [self addPickerView];
+    }
+    else
+    {
+         Str_TxtField_Flag=@"no";
+        carPickerView.hidden=YES;
+        
+        toolBar.hidden=YES;
+        [carPickerView removeFromSuperview];
     }
     
     
@@ -1395,7 +1786,7 @@
     
     if (moreCell.askingPriceTextField.text.length  == 0)
     {
-        moreCell.askingPriceTextField.text = @"$";
+        moreCell.askingPriceTextField.text = @"ر.س";//@"$";
     }
    
 }
@@ -1442,22 +1833,54 @@
     
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    if ([self.name isEqualToString: @"car"])
+    if ([self.name isEqualToString: @"سيارات"])//car
     {
+        if ([textField isEqual:moreCell.askingPriceTextField])
+        {
+            NSString *newText = [moreCell.askingPriceTextField.text stringByReplacingCharactersInRange:range withString:string];
+            
+            if (![newText hasPrefix:@"ر.س"])//$
+            {
+                return NO;
+            }
+ 
+        }
+        else
+        {
+            
+        }
         
-       
+        
+        
         
     }
-    else if ([self.name isEqualToString:@"property"])
+    else if ([self.name isEqualToString:@"عقار"])//property
     {
+        if ([textField isEqual:moreCell.askingPriceTextField])
+        {
+            NSString *newText = [moreCell.askingPriceTextField.text stringByReplacingCharactersInRange:range withString:string];
+            
+            if (![newText hasPrefix:@"ر.س"])//$
+            {
+                return NO;
+            }
+            
+        }
+        else
+        {
+            
+        }
+        
+        
         
     }
+    
     else
     {
     
     NSString *newText = [moreCell.askingPriceTextField.text stringByReplacingCharactersInRange:range withString:string];
     
-    if (![newText hasPrefix:@"$"])
+    if (![newText hasPrefix:@"ر.س"])//$
     {
         return NO;
     }
@@ -1466,6 +1889,27 @@
     
     // Default:
     return YES;
+}
+
+-(void)DownArrowImageTapped:(UITapGestureRecognizer *)sender
+{
+    [self.view endEditing:YES];
+    Cell_DetailCar.DownArrowImageView.userInteractionEnabled = NO;
+    Cell_DetailCar.carMakeTextField.enabled = NO;
+    
+    if ([[UIScreen mainScreen]bounds].size.width == 320)
+    {
+        
+        
+        self.tableView.frame= CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.frame.size.height - 14);
+        NSIndexPath *indexPath =[NSIndexPath indexPathForRow:0 inSection:1];
+        [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    }
+    
+
+    
+    [self addPickerView];
+    
 }
 
 #pragma mark - Image Tapped Functionality
@@ -1479,7 +1923,7 @@
     
      NSLog(@"Imageview tap==:==%ld", (long)imageView1.tag);
     
-    Image_View = imageView1;
+    NSInteger indexImagetap=[ImageId indexOfObject:[NSString stringWithFormat:@"%ld",(long)imageView1.tag]];
     
     UIAlertController *alert =[UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
@@ -1487,37 +1931,15 @@
     UIAlertAction *yesAction = [UIAlertAction actionWithTitle:@"Remove" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action)
                                 {
                                     NSLog(@"Yes button Pressed");
+                        NSInteger indexmediaids=[Array_ImagesMediaIndex indexOfObject:[NSString stringWithFormat:@"%ld",(long)imageView1.tag]];
+                                    mediaIdStr=[Array_ImageMediaId objectAtIndex:indexmediaids];
+                                    removeIndexCount=[NSString stringWithFormat:@"%ld",(long)imageView1.tag];
+                                    [self removePictureConnection];
                                     
-//                                    [imageArray removeObjectAtIndex:(long)imageView1.tag];
-//                                    [array_MediaTypes removeObjectAtIndex:(long)imageView1.tag];
-//                                    [array_VideoUrl removeObjectAtIndex:(long)imageView1.tag];
-                                  //  NSString *indexStr = [NSString stringWithFormat:@"%d",imageView1.tag];
-                                    
-//                                    for (int i =0 ; i < ImageId.count; i++)
-//                                    {
-                                        for (int j=0; j < Array_mediaTypeId.count; j++)
-                                        {
-                                            if ([[[Array_mediaTypeId objectAtIndex:j] valueForKey:@"indexid"] isEqualToString:[ImageId objectAtIndex:imageView1.tag]])
-                                            {
-                                                mediaIdStr = [[Array_mediaTypeId objectAtIndex:j] valueForKey:@"indexid"];
-                                                
-                                                [Array_mediaTypeId removeObjectAtIndex:j];
-                                                [imageArray removeObjectAtIndex:(long)imageView1.tag];
-                                                [array_MediaTypes removeObjectAtIndex:(long)imageView1.tag];
-                                                [array_VideoUrl removeObjectAtIndex:(long)imageView1.tag];
-                                                [ImageId removeObjectAtIndex:(long)imageView1.tag];
-
-
-                                                [self removePictureConnection];
-                                                break;
-                                            }
-                                       // }
-                                        
-                                        
-                                        
-                                    }
-                
-                                    [self.tableView reloadData];
+//                                    NSIndexPath* rowToReload = [NSIndexPath indexPathForRow:0 inSection:0];
+//                                    NSArray* rowsToReload = [NSArray arrayWithObjects:rowToReload, nil];
+//                                    [self.tableView reloadRowsAtIndexPaths:rowsToReload withRowAnimation:UITableViewRowAnimationNone];
+//                                    [self.tableView endUpdates];
                                     
                                     
                                 }];
@@ -1526,17 +1948,17 @@
     
     UIAlertAction *playAlert;
     
-    if ([[array_MediaTypes objectAtIndex:imageView1.tag] isEqualToString:@"IMAGE"])
+   if ([[array_MediaTypes objectAtIndex:indexImagetap] isEqualToString:@"IMAGE"])
     {
 
 
        playAlert =[UIAlertAction actionWithTitle:@"View" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
-                              
+                   
                               {
-                                  [self displayImage:Image_View withImage:imageView1.image];
+                                 [self displayImage:Image_View withImage:imageView1.image];
                                   
-                                  
-                                  NSLog(@"playAlert button Pressed");
+                                 
+                                NSLog(@"playAlert button Pressed");
                                   
                               }];
     }
@@ -1546,7 +1968,7 @@
         playAlert =[UIAlertAction actionWithTitle:@"Play" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
                                    
                                    {
-                                       movieController = [[MPMoviePlayerViewController alloc] initWithContentURL:[array_VideoUrl objectAtIndex:imageView1.tag ]];
+                    movieController = [[MPMoviePlayerViewController alloc] initWithContentURL:[array_VideoUrl objectAtIndex:indexImagetap ]];
                                        
                                        
                                        [self presentMoviePlayerViewControllerAnimated:movieController];
@@ -1587,7 +2009,7 @@
     
     NSLog(@"Imageview tap==:==%ld", (long)imageView1.tag);
     
-    Image_View = imageView1;
+    NSString * Str_RemoveId=[NSString stringWithFormat:@"%ld",(long)imageView1.tag];
     
     UIAlertController *alert =[UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
@@ -1596,23 +2018,32 @@
                                 {
                                     NSLog(@"Yes button Pressed");
                                     
-                                    //                                    [imageArray removeObjectAtIndex:(long)imageView1.tag];
-                                    //                                    [array_MediaTypes removeObjectAtIndex:(long)imageView1.tag];
-                                    //                                    [array_VideoUrl removeObjectAtIndex:(long)imageView1.tag];
-                                    //  NSString *indexStr = [NSString stringWithFormat:@"%d",imageView1.tag];
                                     
-                                    //                                    for (int i =0 ; i < ImageId.count; i++)
-                                    //                                    {
+                                    
+                                    if ([ImageId containsObject:Str_RemoveId])
+                                    {
+                                      NSInteger indexValser1=[ImageId indexOfObject:Str_RemoveId];
+                                        [ImageId removeObjectAtIndex:indexValser1];
+                                        [array_MediaTypes removeObjectAtIndex:indexValser1];
+                                        [array_VideoUrl removeObjectAtIndex:indexValser1];
+                                        [imageArray removeObjectAtIndex:indexValser1];
+                                    }
+                                    [Array_RemoveImages addObject:Str_RemoveId];
                                    
-                                            [imageArray removeObjectAtIndex:(long)imageView1.tag];
-                                            [array_MediaTypes removeObjectAtIndex:(long)imageView1.tag];
-                                            [array_VideoUrl removeObjectAtIndex:(long)imageView1.tag];
-                                            [ImageId removeObjectAtIndex:(long)imageView1.tag];
-                                    
-                                            removeIndexCount =  [ImageId objectAtIndex:(long)imageView1.tag];
 
                                     
-                                    [self.tableView reloadData];
+                                    
+                                    
+
+
+#pragma mark- tableview reload comment
+                                
+                                    [self.tableView beginUpdates];
+                                    
+                                    NSIndexPath* rowToReload = [NSIndexPath indexPathForRow:0 inSection:0];
+                                    NSArray* rowsToReload = [NSArray arrayWithObjects:rowToReload, nil];
+                                    [self.tableView reloadRowsAtIndexPaths:rowsToReload withRowAnimation:UITableViewRowAnimationNone];
+                                    [self.tableView endUpdates];
                                     
                                     
                                 }];
@@ -1701,8 +2132,10 @@
         
         [array_MediaTypes addObject:mediaTypeVal];
         FrameImage= [[UIImage alloc] initWithCGImage:refImg];
-        [imageArray addObject:FrameImage];
         
+        [imageArray addObject:FrameImage];
+        indexCount_image=indexCount_image+1;
+        [ImageId addObject:[NSString stringWithFormat:@"%ld",(long)indexCount_image]];
         
         
         NSLog(@"FrameImage height size==%f",FrameImage.size.height);
@@ -1734,19 +2167,162 @@
     {
         
         [array_VideoUrl addObject:@""];
-       
+        
         //chosenImage = info[UIImagePickerControllerEditedImage];
         chosenImage = info[UIImagePickerControllerOriginalImage];
         
-          [imageArray addObject:chosenImage];
+        [imageArray addObject:chosenImage];
         [array_MediaTypes addObject:mediaTypeVal];
-      //  NSData *imageData = UIImageJPEGRepresentation(chosenImage, 0.5);
         
-        imageData = UIImageJPEGRepresentation(chosenImage, 0.5);
+
+#pragma mark- image compression code
+        
+        float actualHeight = chosenImage.size.height;
+        
+        float actualWidth = chosenImage.size.width;
+        
+        float maxHeight = 1000.0;
+        
+        float maxWidth = 1000.0;
+        
+        float imgRatio = actualWidth/actualHeight;
+        
+        float maxRatio = maxWidth/maxHeight;
+        
+        float compressionQuality = 0.7;
+        
+        
+        
+        if (actualHeight > maxHeight || actualWidth > maxWidth){
+            
+            if(imgRatio < maxRatio){
+                
+                
+                
+                imgRatio = maxHeight / actualHeight;
+                
+                actualWidth = imgRatio * actualWidth;
+                
+                actualHeight = maxHeight;
+                
+            }
+            
+            else if(imgRatio > maxRatio){
+                
+                //adjust height according to maxWidth
+                
+                imgRatio = maxWidth / actualWidth;
+                
+                actualHeight = imgRatio * actualHeight;
+                
+                actualWidth = maxWidth;
+                
+            }
+            
+            else{
+                
+                actualHeight = maxHeight;
+                
+                actualWidth = maxWidth;
+                
+            }
+            
+        }
+        
+        NSLog(@"Actual height : %f and Width : %f",actualHeight,actualWidth);
+        
+        CGRect rect1 = CGRectMake(0.0, 0.0, actualWidth, actualHeight);
+        
+        UIGraphicsBeginImageContext(rect1.size);
+        
+        [chosenImage  drawInRect:rect1];
+        
+        UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
+        
+        imageData = UIImageJPEGRepresentation(img, compressionQuality);
+        
+        UIGraphicsEndImageContext();
+          NSLog(@"size of image in KB: %f ", imageData.length/1024.0);
+        
+        
+        
+        float maxHeight1 = 500.0;
+        
+        float maxWidth1 = 500.0;
+        
+        float imgRatio1 = actualWidth/actualHeight;
+        
+        float maxRatio1 = maxWidth1/maxHeight1;
+        
+        float compressionQuality1 = 0.3;
+        
+        
+        
+        if (actualHeight > maxHeight1 || actualWidth > maxWidth1){
+            
+            if(imgRatio1 < maxRatio1){
+                
+                
+                
+                imgRatio1 = maxHeight1 / actualHeight;
+                
+                actualWidth = imgRatio1 * actualWidth;
+                
+                actualHeight = maxHeight1;
+                
+            }
+            
+            else if(imgRatio1 > maxRatio1){
+                
+                //adjust height according to maxWidth
+                
+                imgRatio1 = maxWidth1 / actualWidth;
+                
+                actualHeight = imgRatio1 * actualHeight;
+                
+                actualWidth = maxWidth1;
+                
+            }
+            
+            else{
+                
+                actualHeight = maxHeight1;
+                
+                actualWidth = maxWidth1;
+                
+            }
+            
+        }
+        
+        NSLog(@"Actual height : %f and Width : %f",actualHeight,actualWidth);
+        
+        CGRect rect11 = CGRectMake(0.0, 0.0, actualWidth, actualHeight);
+        
+        UIGraphicsBeginImageContext(rect11.size);
+        
+        [chosenImage  drawInRect:rect11];
+        
+        UIImage *img1 = UIGraphicsGetImageFromCurrentImageContext();
+        
+       NSData * imageData1 = UIImageJPEGRepresentation(img1, compressionQuality1);
+        
+        UIGraphicsEndImageContext();
+        NSLog(@"size of image in KB: %f ", imageData1.length/1024.0);
+
+        
+ //-----------------------------------------------------------------------------------------------------
+        
+        
+        //  NSData *imageData = UIImageJPEGRepresentation(chosenImage, 0.5);
+        
+     //   imageData = UIImageJPEGRepresentation(chosenImage, 0.5);
         
         // ImageNSdata = [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
         
         ImageNSdata = [Base64 encode:imageData];
+       NSString *ImageNSdata1 = [Base64 encode:imageData1];
+        
+        encodedImageThumb = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,(CFStringRef)ImageNSdata1,NULL,(CFStringRef)@"!*'\"();:@&=+$,/?%#[]% ",CFStringConvertNSStringEncodingToEncoding(NSUTF8StringEncoding)));
         
         
         encodedImage = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,(CFStringRef)ImageNSdata,NULL,(CFStringRef)@"!*'\"();:@&=+$,/?%#[]% ",CFStringConvertNSStringEncodingToEncoding(NSUTF8StringEncoding)));
@@ -1754,14 +2330,14 @@
         
         [[self navigationController] dismissViewControllerAnimated:YES completion:nil];
         [picker dismissViewControllerAnimated:YES completion:NULL];
-        
+       
+        indexCount_image=indexCount_image+1;
+        [ImageId addObject:[NSString stringWithFormat:@"%ld",(long)indexCount_image]];
         [self postMediaConnection];
-        //[self viewImgCrop];
-        // [[self navigationController] dismissViewControllerAnimated:YES completion:nil];
+        
     }
+   
     
-    indexCount +=1;
-    [ImageId addObject:[NSString stringWithFormat:@"%ld",(long)indexCount]];
     
     
    //  [self.tableView reloadData];
@@ -1855,7 +2431,10 @@
              
              encodedImageThumb = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,(CFStringRef)ImageNSdataThumb,NULL,(CFStringRef)@"!*'\"();:@&=+$,/?%#[]% ",CFStringConvertNSStringEncodingToEncoding(NSUTF8StringEncoding)));
              
+             
              [pcker1.view hideActivityViewWithAfterDelay:1];
+             
+             
              
              [pcker1 dismissViewControllerAnimated:YES completion:nil];
              [self postMediaConnection];
@@ -1947,8 +2526,11 @@
 
 -(void)createButtonPressed:(id)sender
 {
+    [self.view endEditing:YES];
     
-    if ([self.name isEqualToString:@"car"])
+    [defaults setObject:@"yes" forKey:@"refreshView"];
+    
+    if ([self.name isEqualToString:@"سيارات"])//car
     {
         
         
@@ -2045,11 +2627,11 @@
         
         
         
-        if ([self.name isEqualToString:@"car"])
+        if ([self.name isEqualToString:@"سيارات"])//car
         {
             
             
-            if ([Cell_DetailCar.sellingTextview.text isEqualToString:@"What are you selling?"])
+            if ([Cell_DetailCar.sellingTextview.text isEqualToString:@"ماذا ترغب في البيع؟"])//What are you selling?
             {
                 title= @"title";
                 titleVal = @"";
@@ -2058,7 +2640,7 @@
             {
                 
                 title= @"title";
-                titleVal =Cell_DetailCar.sellingTextview.text;
+                titleVal =(NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,(CFStringRef)Cell_DetailCar.sellingTextview.text,NULL,(CFStringRef)@"!*\"();:@&=+$,/?%#[]% ",CFStringConvertNSStringEncodingToEncoding(NSUTF8StringEncoding)));;
             }
             
             
@@ -2072,17 +2654,17 @@
             else
             {
                 hashtags= @"hashtags";
-                hashtagsVal = Cell_DetailCar.hashTextView.text;
+                hashtagsVal = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,(CFStringRef)Cell_DetailCar.hashTextView.text,NULL,(CFStringRef)@"!*\"();:@&=+$,/?%#[]% ",CFStringConvertNSStringEncodingToEncoding(NSUTF8StringEncoding)));
                 
             }
             
         }
-        else if ([self.name isEqualToString:@"property"])
+        else if ([self.name isEqualToString:@"عقار"])//property
         {
             //            title= @"title";
             //            titleVal =Cell_DetailProperty.sellingTextview.text;// [defaults valueForKey:@"title"];
             
-            if ([Cell_DetailProperty.sellingTextview.text isEqualToString:@"What are you selling?"])
+            if ([Cell_DetailProperty.sellingTextview.text isEqualToString:@"ماذا ترغب في البيع؟"])//What are you selling?
             {
                 title= @"title";
                 titleVal = @"";
@@ -2091,7 +2673,7 @@
             {
                 
                 title= @"title";
-                titleVal =Cell_DetailProperty.sellingTextview.text;
+                titleVal =(NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,(CFStringRef)Cell_DetailProperty.sellingTextview.text,NULL,(CFStringRef)@"!*\"();:@&=+$,/?%#[]% ",CFStringConvertNSStringEncodingToEncoding(NSUTF8StringEncoding)));;
             }
             
             
@@ -2106,7 +2688,7 @@
             else
             {
                 hashtags= @"hashtags";
-                hashtagsVal = Cell_DetailProperty.hashTextView.text;
+                hashtagsVal = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,(CFStringRef)Cell_DetailProperty.hashTextView.text,NULL,(CFStringRef)@"!*\"();:@&=+$,/?%#[]% ",CFStringConvertNSStringEncodingToEncoding(NSUTF8StringEncoding)));;
                 
             }
             
@@ -2117,7 +2699,7 @@
             //            title= @"title";
             //            titleVal =detailCell.sellingTextview.text;// [defaults valueForKey:@"title"];
             
-            if ([detailCell.sellingTextview.text isEqualToString:@"What are you selling?"])
+            if ([detailCell.sellingTextview.text isEqualToString:@"ماذا ترغب في البيع؟"])//What are you selling
             {
                 title= @"title";
                 titleVal = @"";
@@ -2126,7 +2708,7 @@
             {
                 
                 title= @"title";
-                titleVal =detailCell.sellingTextview.text;
+                titleVal =(NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,(CFStringRef)detailCell.sellingTextview.text,NULL,(CFStringRef)@"!*\"();:@&=+$,/?%#[]% ",CFStringConvertNSStringEncodingToEncoding(NSUTF8StringEncoding)));;
             }
             
             
@@ -2151,21 +2733,20 @@
         NSString *carmakeVal = Cell_DetailCar.carMakeTextField.text;
         
         
-        NSString *carmodel = @"carmodel";
-        NSString *carmodelVal = Cell_DetailCar.modelTextField.text;
-        NSString *carmileage = @"carmileage";
-        NSString *carmileageVal = Cell_DetailCar.mileageTextField.text;
+       
         
         
         NSString *propertytype = @"propertytype";
         NSString *propertytypeVal = propertyType;
         
         NSString *propertysize = @"propertysize";
-        NSString *propertysizeVal = Cell_DetailProperty.propertySizeTextField.text;
+        
         NSString *noofrooms = @"noofrooms";
-        NSString *noofroomsVal = Cell_DetailProperty.noOfBedroomTextField.text;
-        
-        
+       
+        long propertysizeVals=[ Cell_DetailProperty.propertySizeTextField.text longLongValue];
+        long noofroomsVals=[Cell_DetailProperty.noOfBedroomTextField.text longLongValue];
+        NSString *propertysizeVal = [NSString stringWithFormat:@"%ld",propertysizeVals];
+        NSString *noofroomsVal =[NSString stringWithFormat:@"%ld",noofroomsVals]; ;
         
         NSString *allowcalls= @"allowcalls";
         NSString *allowcallsVal = [defaults valueForKey:@"CallPressed"];
@@ -2181,14 +2762,16 @@
         else
         {
             NSString *askingpriceValString = [NSString stringWithFormat:@"%@",moreCell.askingPriceTextField.text];
-            askingpriceValString = [askingpriceValString substringFromIndex:1];
+            askingpriceValString = [askingpriceValString stringByReplacingOccurrencesOfString:@"ر.س" withString:@""];//[askingpriceValString substringFromIndex:1];
             askingprice= @"askingprice";
-            askingpriceVal =askingpriceValString;
+            
+            NSInteger number = [askingpriceValString intValue];
+            askingpriceVal = [NSString stringWithFormat:@"%ld",(long)number];//(long)number;
         }
         
         NSString *description;
         NSString *descriptionVal;
-        if ([ moreCell.moreTextView.text isEqualToString:@"Tell us more about the product"] )
+        if ([ moreCell.moreTextView.text isEqualToString:@"أخبرنا أكثر عن منتجك"] )//Tell us more about the product
         {
             description= @"description";
             descriptionVal = @"";
@@ -2197,19 +2780,74 @@
         else
         {
             description= @"description";
-            descriptionVal = moreCell.moreTextView.text;
+            descriptionVal = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,(CFStringRef)moreCell.moreTextView.text,NULL,(CFStringRef)@"!*\"();:@&=+$,/?%#[]% ",CFStringConvertNSStringEncodingToEncoding(NSUTF8StringEncoding)));;;
         }
         
         
         NSString *city= @"city";
-        NSString *cityVal = [defaults valueForKey:@"Cityname"];
+        NSString *cityVal = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,(CFStringRef)[defaults valueForKey:@"Cityname"],NULL,(CFStringRef)@"!*\"();:@&=+$,/?%#[]% ",CFStringConvertNSStringEncodingToEncoding(NSUTF8StringEncoding)));;;
         NSString *country= @"country";
-        NSString *countryVal =[defaults valueForKey:@"Countryname"];
+        NSString *countryVal =(NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,(CFStringRef)[defaults valueForKey:@"Countryname"],NULL,(CFStringRef)@"!*\"();:@&=+$,/?%#[]% ",CFStringConvertNSStringEncodingToEncoding(NSUTF8StringEncoding)));;;
         NSString *category= @"category";
-        NSString *categoryVal = self.name;
+        
+         NSString *categoryVal ;
+        
+        if ([self.name isEqualToString:@"سيارات"])
+        {
+            
+            
+            categoryVal = @"car";
+            
+           
+        }
+         else if([self.name isEqualToString:@"عقار"])
+        {
+            
+        categoryVal=@"property";
+        }
+        else if ([self.name isEqualToString:@"إلكترونيات"])
+        {
+            categoryVal=@"electronics";
+        }
+        else if([self.name isEqualToString:@"حيوانات أليفة"])
+        {
+            
+            categoryVal=@"pets";
+        }
+        else if([self.name isEqualToString:@"أثاث"])
+            
+        {
+    
+          categoryVal=@"furniture";
+        }
+        else if([self.name isEqualToString:@"خدمات"])
+        {
+            categoryVal=@"services";
+            
+        }
+       else if([self.name isEqualToString:@"أخرى"])
+        {
+            
+            categoryVal=@"others";
+        }
+        else
+        {
+            categoryVal=self.name;
+        }
         
         
-        NSString *reqStringFUll=[NSString stringWithFormat:@"%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@",postid,postidVal,userid,useridVal,title,titleVal,allowcalls,allowcallsVal,askingprice,askingpriceVal,description,descriptionVal,hashtags,hashtagsVal,city,cityVal,country,countryVal,category,categoryVal,carmake,carmakeVal,carmodel,carmodelVal,carmileage,carmileageVal,propertytype,propertytypeVal,propertysize,propertysizeVal,noofrooms,noofroomsVal];
+        NSString *carmodel = @"carmodel";
+       
+        NSString *carmileage = @"carmileage";
+     
+        
+        
+        NSUInteger carmilegesvals=[Cell_DetailCar.mileageTextField.text integerValue];
+        NSUInteger carmodelsvals=[Cell_DetailCar.modelTextField.text integerValue];
+        NSString *carmodelVal = [NSString stringWithFormat:@"%ld",carmodelsvals];
+           NSString *carmileageVal =[NSString stringWithFormat:@"%ld",carmilegesvals]; ;
+        
+        NSString *reqStringFUll=[NSString stringWithFormat:@"%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@",postid,postidVal,userid,useridVal,title,titleVal,allowcalls,allowcallsVal,askingprice,askingpriceVal,description,descriptionVal,hashtags,hashtagsVal,city,cityVal,country,countryVal,category,categoryVal,carmake,carmakeVal,carmodel,carmodelVal,carmileage,carmileageVal,propertytype,propertytypeVal,propertysize,propertysizeVal,noofrooms,noofroomsVal,@"dummy",@"dummyyyyyyyyyy"];
         
         
         //converting  string into data bytes and finding the lenght of the string.
@@ -2245,14 +2883,14 @@
     if ([[defaults valueForKey:@"CallPressed"] isEqualToString:@"NO"])
     {
         [moreCell.callButton setImage:[UIImage imageNamed:@"Callsgreen"] forState:UIControlStateNormal];
-        moreCell.callLabel.text = @"YES";
+        moreCell.callLabel.text = @"نعم";
         moreCell.callLabel.textColor = [UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1];
         [defaults setObject:@"YES" forKey:@"CallPressed"];
     }
     else
     {
         [moreCell.callButton setImage:[UIImage imageNamed:@"Callsgrey"] forState:UIControlStateNormal];
-        moreCell.callLabel.text = @"NO";
+        moreCell.callLabel.text = @"لا";
         moreCell.callLabel.textColor = [UIColor lightGrayColor];
         [defaults setObject:@"NO" forKey:@"CallPressed"];
     }
@@ -2289,73 +2927,267 @@
     }
     else
     {
+#pragma mark - swipe sesion
         
-        NSURL *url;//=[NSURL URLWithString:[urlplist valueForKey:@"singup"]];
-        NSString *  urlStr=[urlplist valueForKey:@"uploadpostmedia"];
-        url =[NSURL URLWithString:urlStr];
+        NSString *postid= @"postid";
+                NSString *postidVal = postIDValue;
+        
+                NSString *userid= @"userid";
+                NSString *useridVal =[defaults valueForKey:@"userid"];
+        
+                NSString *indexid= @"indexid";
+                NSString *indexidVal =[NSString stringWithFormat:@"%ld",(long)indexCount_image];
+        
+        
+                NSString *media= @"media";
+                NSString *mediaVal =encodedImage;
+        
+                NSString *mediathumbnail= @"mediathumbnail";
+                NSString *mediathumbnailVal = encodedImageThumb;
+        
+                NSString *mediatype= @"mediatype";
+                NSString *mediatypeVal = mediaTypeVal;
+        
+                NSString *height= @"height";
+                NSString *heightVal =[NSString stringWithFormat:@"%@",Vedio_Height];
+                NSString *width= @"width";
+                NSString *widthVal = [NSString stringWithFormat:@"%@",Vedio_Width];;
+        
+        
+                NSString *reqStringFUll=[NSString stringWithFormat:@"%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@",postid,postidVal,userid,useridVal,indexid,indexidVal,media,mediaVal,mediathumbnail,mediathumbnailVal,mediatype,mediatypeVal,height,heightVal,width,widthVal];
+        
+        NSURLSession *session = [NSURLSession sessionWithConfiguration: [NSURLSessionConfiguration defaultSessionConfiguration] delegate: nil delegateQueue: [NSOperationQueue mainQueue]];
+        
+        NSURL *url;
+        NSString *  urlStrLivecount=[urlplist valueForKey:@"uploadpostmedia"];;
+        url =[NSURL URLWithString:urlStrLivecount];
+        
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
         
         [request setHTTPMethod:@"POST"];//Web API Method
         
         [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
         
-        
-        NSString *postid= @"postid";
-        NSString *postidVal = postIDValue;
-        
-        NSString *userid= @"userid";
-        NSString *useridVal =[defaults valueForKey:@"userid"];
-        
-        NSString *indexid= @"indexid";
-        NSString *indexidVal =[NSString stringWithFormat:@"%ld",(long)indexCount];
+        request.HTTPBody = [reqStringFUll dataUsingEncoding:NSUTF8StringEncoding];
         
         
-        NSString *media= @"media";
-        NSString *mediaVal =encodedImage;
         
-        NSString *mediathumbnail= @"mediathumbnail";
-        NSString *mediathumbnailVal = encodedImageThumb;
-        
-        NSString *mediatype= @"mediatype";
-        NSString *mediatypeVal = mediaTypeVal;
-        
-        NSString *height= @"height";
-        NSString *heightVal =[NSString stringWithFormat:@"%@",Vedio_Height];
-        NSString *width= @"width";
-        NSString *widthVal = [NSString stringWithFormat:@"%@",Vedio_Width];;
-        
-        
-        NSString *reqStringFUll=[NSString stringWithFormat:@"%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@",postid,postidVal,userid,useridVal,indexid,indexidVal,media,mediaVal,mediathumbnail,mediathumbnailVal,mediatype,mediatypeVal,height,heightVal,width,widthVal];
-        
-        
-        //converting  string into data bytes and finding the lenght of the string.
-        NSData *requestData = [NSData dataWithBytes:[reqStringFUll UTF8String] length:[reqStringFUll length]];
-        [request setHTTPBody: requestData];
-        
-        Connection_Media = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-        {
-            if( Connection_Media)
-            {
-                webData_Media =[[NSMutableData alloc]init];
-                
-                
-            }
-            else
-            {
-                NSLog(@"theConnection is NULL");
-            }
-        }
+        NSURLSessionDataTask *dataTask =[session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
+                                         {
+                                             if(data)
+                                             {
+                                                 NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+                                                 NSInteger statusCode = httpResponse.statusCode;
+                                                 if(statusCode == 200)
+                                                 {
+                                                     
+                                                     Array_Media=[[NSMutableArray alloc]init];
+                                                     SBJsonParser *objSBJsonParser = [[SBJsonParser alloc]init];
+                                                     Array_Media=[objSBJsonParser objectWithData:data];
+                                                     NSString * ResultString=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+                                                     //  Array_LodingPro=[NSJSONSerialization JSONObjectWithData:webData_LodingPro options:kNilOptions error:nil];
+                                                     
+                                                     ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+                                                     ResultString = [ResultString stringByReplacingOccurrencesOfString:@"\t" withString:@""];
+                                                     
+                                                     NSLog(@"Array_Media %@",Array_Media);
+                                                     
+                                                     NSLog(@"Array_Media_ResultString %@",ResultString);
+                                                     if (Array_Media != 0)
+                                                     {
+                                                         
+                                      [Array_ImageMediaId addObject:[[Array_Media objectAtIndex:0] valueForKey:@"mediaid"]];
+                                        
+                                        [Array_ImagesMediaIndex addObject:[[Array_Media objectAtIndex:0] valueForKey:@"indexid"]];
+                                                         
+                                                         
+                                            NSLog(@"Array_ImagesMediaIndex==%@",Array_ImagesMediaIndex);
+                                            NSLog(@"Array_ImageMediaId==%@",Array_ImageMediaId);
+              
+                                                        
+                                                         
+                                                         NSIndexPath* rowToReload = [NSIndexPath indexPathForRow:0 inSection:0];
+                                                         NSArray* rowsToReload = [NSArray arrayWithObjects:rowToReload, nil];
+                                                         [self.tableView reloadRowsAtIndexPaths:rowsToReload withRowAnimation:UITableViewRowAnimationNone];
+                                                         [self.tableView endUpdates];
+                                                         
+                                                         
+                                                         
+                                                         
+                                                         
+                                                     }
+                                                     
+                                                     
+                                                     else if ([ResultString isEqualToString:@"nouserid"])
+                                                     {
+                                                         
+                                                         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"nouserid" message:@"User account has been deleted or has been deactivated. Please contact our team at support@tammapp.com" preferredStyle:UIAlertControllerStyleAlert];
+                                                         
+                                                         UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                                                                            style:UIAlertActionStyleDefault
+                                                                                                          handler:nil];
+                                                         [alertController addAction:actionOk];
+                                                         
+                                                         [self presentViewController:alertController animated:YES completion:nil];
+                                                         
+                                                     }
+                                                     else if ([ResultString isEqualToString:@"nomedia"])
+                                                     {
+                                                         
+                                                         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"nomedia" message:@"Successfully Posted Post" preferredStyle:UIAlertControllerStyleAlert];
+                                                         
+                                                         UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                                                                            style:UIAlertActionStyleDefault
+                                                                                                          handler:nil];
+                                                         [alertController addAction:actionOk];
+                                                         
+                                                         [self presentViewController:alertController animated:YES completion:nil];
+                                                         
+                                                     }
+                                                     
+                                                     else if ([ResultString isEqualToString:@"imageerror"])
+                                                     {
+                                                         
+                                                         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"imageerror" message:@"Successfully Posted Post" preferredStyle:UIAlertControllerStyleAlert];
+                                                         
+                                                         UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                                                                            style:UIAlertActionStyleDefault
+                                                                                                          handler:nil];
+                                                         [alertController addAction:actionOk];
+                                                         
+                                                         [self presentViewController:alertController animated:YES completion:nil];
+                                                         
+                                                     }
+                                                     
+                                                     else if ([ResultString isEqualToString:@"error"])
+                                                     {
+                                                         
+                                                         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Server Error" message:@"There was an error in creating your post. Please try again." preferredStyle:UIAlertControllerStyleAlert];
+                                                         
+                                                         UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                                                                            style:UIAlertActionStyleDefault
+                                                                                                          handler:nil];
+                                                         [alertController addAction:actionOk];
+                                                         
+                                                         [self presentViewController:alertController animated:YES completion:nil];
+                                                         
+                                                     }
+                                                     else
+                                                     {
+                                                         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Server Error" message:@"There was an error in creating your post. Please try again." preferredStyle:UIAlertControllerStyleAlert];
+                                                         
+                                                         UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                                                                            style:UIAlertActionStyleDefault
+                                                                                                          handler:nil];
+                                                         [alertController addAction:actionOk];
+                                                         
+                                                         [self presentViewController:alertController animated:YES completion:nil];
+                                                     }
+                                for (int k=0; k<Array_RemoveImages.count; k++)
+                                        {
+                    if ([Array_ImagesMediaIndex containsObject:[Array_RemoveImages objectAtIndex:k]])
+                        {
+                    NSInteger indexmediaids=[Array_ImagesMediaIndex indexOfObject:[NSString stringWithFormat:@"%@",[Array_RemoveImages objectAtIndex:k]]];
+                                                             
+                    mediaIdStr=[Array_ImageMediaId objectAtIndex:indexmediaids];
+                    removeIndexCount=[NSString stringWithFormat:@"%@",[Array_RemoveImages objectAtIndex:k]];
+                                                             [self removePictureConnection];
+                                                         }
+                                                     }
+                                            
+                                                 
+                                                 }
+                                                 
+                                                 else
+                                                 {
+                                                     NSLog(@" error login1 ---%ld",(long)statusCode);
+                                                     
+                                                 }
+                                                 
+                                             }
+                                             else if(error)
+                                             {
+                                                 
+                                                 NSLog(@"error login2.......%@",error.description);
+                                                 
+                                             }
+                                         }];
+    
+        [dataTask resume];
         
     }
+//    {
+//        
+//        NSURL *url;//=[NSURL URLWithString:[urlplist valueForKey:@"singup"]];
+//        NSString *  urlStr=[urlplist valueForKey:@"uploadpostmedia"];
+//        url =[NSURL URLWithString:urlStr];
+//        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+//        
+//        [request setHTTPMethod:@"POST"];//Web API Method
+//        
+//        [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+//        
+//        
+//        NSString *postid= @"postid";
+//        NSString *postidVal = postIDValue;
+//        
+//        NSString *userid= @"userid";
+//        NSString *useridVal =[defaults valueForKey:@"userid"];
+//        
+//        NSString *indexid= @"indexid";
+//        NSString *indexidVal =[NSString stringWithFormat:@"%ld",(long)indexCount];
+//        
+//        
+//        NSString *media= @"media";
+//        NSString *mediaVal =encodedImage;
+//        
+//        NSString *mediathumbnail= @"mediathumbnail";
+//        NSString *mediathumbnailVal = encodedImageThumb;
+//        
+//        NSString *mediatype= @"mediatype";
+//        NSString *mediatypeVal = mediaTypeVal;
+//        
+//        NSString *height= @"height";
+//        NSString *heightVal =[NSString stringWithFormat:@"%@",Vedio_Height];
+//        NSString *width= @"width";
+//        NSString *widthVal = [NSString stringWithFormat:@"%@",Vedio_Width];;
+//        
+//        
+//        NSString *reqStringFUll=[NSString stringWithFormat:@"%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@",postid,postidVal,userid,useridVal,indexid,indexidVal,media,mediaVal,mediathumbnail,mediathumbnailVal,mediatype,mediatypeVal,height,heightVal,width,widthVal];
+//        
+//        
+//        //converting  string into data bytes and finding the lenght of the string.
+//        NSData *requestData = [NSData dataWithBytes:[reqStringFUll UTF8String] length:[reqStringFUll length]];
+//        [request setHTTPBody: requestData];
+//        
+//        Connection_Media = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+//        {
+//            if( Connection_Media)
+//            {
+//                webData_Media =[[NSMutableData alloc]init];
+//                
+//                
+//            }
+//            else
+//            {
+//                NSLog(@"theConnection is NULL");
+//            }
+//        }
+//        
+//    }
 
     
     
 }
 
+
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
     if (error)
     {
+        
+        
+        [self.view hideActivityViewWithAfterDelay:0];
         NSLog(@"errorr===%@",error);
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Server Error" message:@"Error in creating post. Please try again." preferredStyle:UIAlertControllerStyleAlert];
         
@@ -2418,10 +3250,11 @@
         NSLog(@"cc %@",Array_Create);
         NSLog(@"registration_status %@",[[Array_Create objectAtIndex:0]valueForKey:@"registration_status"]);
         NSLog(@"ResultString %@",ResultString);
+         [self.view hideActivityViewWithAfterDelay:0];
         if ([ResultString isEqualToString:@"done"])
         {
             
-             [self.view hideActivityViewWithAfterDelay:0];
+            
             
 #pragma mark - Boost
             
@@ -2435,14 +3268,14 @@
             
             
             [self.view addSubview:myBoostXIBViewObj];
-         
-            myBoostXIBViewObj.postIdLabel.text =[NSString stringWithFormat:@"POST ID: %@",postIDValue];
+        // POST ID=:رقم الإعلان
+            myBoostXIBViewObj.postIdLabel.text =[NSString stringWithFormat:@"%@%@",postIDValue,@" :رقم الإعلان"];
   
             
             myBoostXIBViewObj.layer.cornerRadius = 10;
             myBoostXIBViewObj.clipsToBounds = YES;
             
-            myBoostXIBViewObj.boostTextLabel.text = @"Your post has been successfully created! You can also Boost your post to increase your visibility and it will be displayed at the top of your chosen category for limited time.";
+            myBoostXIBViewObj.boostTextLabel.text = @"روِّج إعلانك لزيادة مستوى رؤيته من قِبل الآخرون! إعلانك  سوف يظهر في أعلى الفئة المختارة لمدة محددة من الوقت.";//@"Your post has been successfully created! You can also Boost your post to increase your visibility and it will be displayed at the top of your chosen category for limited time.";
             
             [myBoostXIBViewObj.imageViewButton1 setUserInteractionEnabled:YES];
             UITapGestureRecognizer *viewTapped1 =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewButton1_Action:)];
@@ -2495,6 +3328,48 @@
 //            [self presentViewController:alertController animated:YES completion:nil];
             
         }
+        if ([ResultString isEqualToString:@"nullerror"])
+        {
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops" message:@"Title of your post is mandatory. Please fill all details and try again." preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                               style:UIAlertActionStyleDefault
+                                                             handler:^(UIAlertAction *action)
+                                       {
+                                           
+                                       }];
+            
+            [alertController addAction:actionOk];
+            [self presentViewController:alertController animated:YES completion:nil];
+        }
+        if ([ResultString isEqualToString:@"nouserid"])
+        {
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops" message:@"Your account does not exist or seems to have been deactivated. Please contact support@tammapp.com" preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                               style:UIAlertActionStyleDefault
+                                                             handler:^(UIAlertAction *action)
+                                       {
+                                       
+                                       }];
+            
+            [alertController addAction:actionOk];
+            [self presentViewController:alertController animated:YES completion:nil];
+        }
+        if ([ResultString isEqualToString:@"inserterror"])
+        {
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops" message:@"Error in creating your posts. Please check your details and try again." preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                               style:UIAlertActionStyleDefault
+                                                             handler:^(UIAlertAction *action)
+                                       {
+                                           
+                                       }];
+            
+            [alertController addAction:actionOk];
+            [self presentViewController:alertController animated:YES completion:nil];
+        }
     }
     if (connection==Connection_Media)
     {
@@ -2525,7 +3400,8 @@
 //                [alertController addAction:actionOk];
             
            //     [self presentViewController:alertController animated:YES completion:nil];
-                [Array_mediaTypeId addObject:[Array_Media objectAtIndex:0]];
+            
+            
             
             
             
@@ -2647,10 +3523,10 @@
         NSString *useridVal =[defaults valueForKey:@"userid"];
         
         NSString *postid= @"postid";
-        NSString *postidVal =[defaults valueForKey:@"postid"];
+        NSString *postidVal =postIDValue;//[defaults valueForKey:@"postid"];
         
-        NSString *media= @"media";
-        NSString *mediaVal =encodedImage;
+        NSString *media= @"mediaid";
+        NSString *mediaVal =mediaIdStr;
         
         NSString *indexid= @"indexid";
         
@@ -2705,12 +3581,49 @@
                                                      
                                                      NSLog(@"Array_AllData ResultString %@",ResultString);
                                                      
+                                                     NSLog(@"sddg=%lu",(unsigned long)Array_RemovePicture.count);
                                                      
                                                      if (Array_RemovePicture.count !=0)
                                                      {
-                                                         NSInteger serverid = [[[Array_RemovePicture objectAtIndex:0]valueForKey:@"indexid"] integerValue];
-                                                         [ImageId removeObjectAtIndex:serverid];
-                                                         [self.tableView reloadData];
+                                        NSString * serverid = [[Array_RemovePicture objectAtIndex:0]valueForKey:@"indexid"] ;
+                                                         if ([ImageId containsObject:serverid] && [Array_ImagesMediaIndex containsObject:serverid] )
+                                                         {
+                                                             NSInteger indexValser1=[ImageId indexOfObject:serverid];
+                                                             NSInteger indexValser2=[Array_ImagesMediaIndex indexOfObject:serverid];
+                                                             [ImageId removeObjectAtIndex:indexValser1];
+                                                             [array_MediaTypes removeObjectAtIndex:indexValser1];
+                                                             [array_VideoUrl removeObjectAtIndex:indexValser1];
+                                                             [imageArray removeObjectAtIndex:indexValser1];
+                                                             [Array_ImagesMediaIndex removeObjectAtIndex:indexValser2];
+                                                             [Array_ImageMediaId removeObjectAtIndex:indexValser2];
+                                                         }
+                                                         else
+                                                         {
+                                                             if ([Array_ImagesMediaIndex containsObject:serverid] )
+                                                             {
+                                                    NSInteger indexValser1=[Array_RemoveImages indexOfObject:serverid];
+                                                        NSInteger indexValser2=[Array_ImagesMediaIndex indexOfObject:serverid];
+                                                        [Array_RemoveImages removeObjectAtIndex:indexValser1];
+                                                    [Array_ImagesMediaIndex removeObjectAtIndex:indexValser2];
+                                                    [Array_ImageMediaId removeObjectAtIndex:indexValser2];
+                                                             }
+  
+                                                         }
+                                
+                                                         
+                                                         
+                                                        
+#pragma mark - tableview reloaddata comment
+                                                        // [self.tableView reloadData];
+                                                         
+                                                         [self.tableView beginUpdates];
+                                                         
+                                                         NSIndexPath* rowToReload = [NSIndexPath indexPathForRow:0 inSection:0];
+                                                         NSArray* rowsToReload = [NSArray arrayWithObjects:rowToReload, nil];
+                                                         [self.tableView reloadRowsAtIndexPaths:rowsToReload withRowAnimation:UITableViewRowAnimationNone];
+                                                         [self.tableView endUpdates];
+                                                         
+                                                         
 
                                                      }
                                                      
@@ -2931,9 +3844,10 @@
                                                      transparentView1.hidden = YES;
                                                      [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewEnable" object:self userInfo:nil];
                                                      
+                                                //- Boosted
+                                            // Thank you for your payment, your post has been successfully boosted!
                                                      
-                                                     
-                                                     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Boosted" message:@"Thank-you for your payment, your post has been successfully boosted!" preferredStyle:UIAlertControllerStyleAlert];
+                                                     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"تم الترويج!" message:@"شكراً لتسديدك المبلغ! إعلانك تم ترويجه بنجاح!" preferredStyle:UIAlertControllerStyleAlert];
                                                      
 //                                                     UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
 //                                                                                                        style:UIAlertActionStyleDefault
@@ -2942,7 +3856,7 @@
 //                                                     [self presentViewController:alertController animated:YES completion:nil];
                                                      
                                                      
-                                                     UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                     UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"حسنا" //OK
                                                                                                         style:UIAlertActionStyleDefault
                                                                                                       handler:^(UIAlertAction *action)
                                                                                 {
@@ -2977,9 +3891,14 @@
                                                  if ([ResultString isEqualToString:@"alreadyboosted"])
                                                  {
                                                      
+ 
                                                      transparentView1.hidden = YES;
                                                      [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollViewEnable" object:self userInfo:nil];
-                                                     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops" message:@"Your post is already boosted. Please wait for it to get over to boost again." preferredStyle:UIAlertControllerStyleAlert];
+                                                     
+                                                     //- Oops
+                                                     //Your post is already boosted. Please try again when boost time is up.
+                                                     
+                                                     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"تنبيه!" message:@"إعلانك قد تم ترويجه. الرجاء المحاولة مرة أخرى عند انتهاء الوقت." preferredStyle:UIAlertControllerStyleAlert];
                                                      
                                                      UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
                                                                                                         style:UIAlertActionStyleDefault
@@ -3060,6 +3979,7 @@
 #pragma marks - PickerView
 -(void)addPickerView
 {
+    [Cell_DetailCar.modelTextField resignFirstResponder] ;
     pickerArray = [[NSArray alloc]initWithObjects:@"Alfa Romeo",@"Aston Martin",@"Audi",@"Bentley",@"Bmw",@"Bugatti",@"Cadillac",@"Chevrolet",@"Chrysler",@"Citroen",@"Corvette",@"Dodge",@"Ferrari",@"Fiat",@"Ford",@"GMC",@"Honda",@"Hummer",@"Hyundai",@"Infiniti",@"Jaguar",@"Jeep",@"Lamborghini",@"Land Rover",@"Lexus",@"Lincoln",@"Maserati",@"Maybach",@"Mazda",@"Mclaren",@"Mercedes Benz",@"Mini",@"Mitsubishi",@"Mustang",@"Nissan",@"Peugeot",@"Porsche",@"Renault",@"Rolls Royce",@"SAAB",@"Skoda",@"Subaru",@"Tesla",@"Toyota",@"Volkswagen",@"Volvo",nil] ;
     
     
@@ -3070,14 +3990,16 @@
     carPickerView.delegate = self;
     carPickerView.showsSelectionIndicator = YES;
     carPickerView.backgroundColor=[UIColor colorWithRed:237/255.0 green:237/255.0 blue:237/255.0 alpha:1];
+    [carPickerView selectRow:myLastPressed inComponent:0 animated:YES];
     
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc]
+    
+    doneButton = [[UIBarButtonItem alloc]
                                    initWithTitle:@"Done" style:UIBarButtonItemStyleDone
                                    target:self action:@selector(done:)];
-    doneButton.tintColor = [UIColor whiteColor];
+    doneButton.tintColor = [UIColor lightGrayColor];
     toolBar = [[UIToolbar alloc]initWithFrame:
                CGRectMake(0, self.view.frame.size.height-
-                          carPickerView.frame.size.height - 50, 375, 50)];
+                          carPickerView.frame.size.height - 50,self.view.frame.size.width, 50)];
     [toolBar setBarStyle:UIBarStyleBlackOpaque];
     [toolBar setBarTintColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
     
@@ -3085,9 +4007,14 @@
                              doneButton, nil];
     [toolBar setItems:toolbarItems];
     
+    doneButton.enabled = NO;
+    
+    
     [self.view addSubview:carPickerView];
     //    countryTextField.inputView = countryPickerView;
     [self.view addSubview:toolBar];
+    
+     [ self.tableView setFrame :CGRectMake(0,self.tableView.frame.origin.y, self.tableView.frame.size.width, Tablevie_height-250)];
     
 }
 
@@ -3110,39 +4037,232 @@
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     
+    NSInteger currentSelectedIndex;
+    
+    
+    currentSelectedIndex = row;
+    myLastPressed = currentSelectedIndex;
+   
+    
+    
     [Cell_DetailCar.carMakeTextField setText:[pickerArray objectAtIndex:row]];
     
     Cell_DetailCar.carMakeImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png",Cell_DetailCar.carMakeTextField.text]];
     
+//    if ([Cell_DetailCar.carMakeTextField.text isEqualToString:@""])
+//    {
+//        doneButton.enabled = NO;
+//        doneButton.tintColor = [UIColor grayColor];
+//    }
+//    else
+//    {
+        doneButton.enabled = YES;
+        doneButton.tintColor = [UIColor whiteColor];
+ 
+//    }
+    
+    
+    if (([Cell_DetailCar.sellingTextview.text isEqualToString:@"ماذا ترغب في البيع؟"] || [Cell_DetailCar.sellingTextview.text isEqualToString:@""]) || Cell_DetailCar.mileageTextField.text.length ==0 || Cell_DetailCar.modelTextField.text.length ==0 || Cell_DetailCar.carMakeTextField.text.length ==0 )
+    {
+        
+        moreCell.createButton.enabled = NO;
+        [moreCell.createButton setBackgroundColor:[UIColor lightGrayColor]];
+        
+    }
+    else
+    {
+        moreCell.createButton.enabled = YES;
+        [moreCell.createButton setBackgroundColor:[UIColor colorWithRed:0/255.0 green:144/255.0 blue:48/255.0 alpha:1]];
+        
+        
+        
+        
+    }
+
+   
     
     
 }
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    return [pickerArray objectAtIndex:row];
     
+   
     
+    if ([Cell_DetailCar.carMakeTextField.text isEqualToString:@""])
+    {
+        doneButton.enabled = NO;
+        doneButton.tintColor = [UIColor grayColor];
+    }
+    else
+    {
+        doneButton.enabled = YES;
+        doneButton.tintColor = [UIColor whiteColor];
+        
+    }
+    
+     return [pickerArray objectAtIndex:row];
     
 }
 
 -(void)done:(UIBarButtonItem *)button
 {
-   
+   Cell_DetailCar.DownArrowImageView.userInteractionEnabled = YES;
+   Cell_DetailCar.carMakeTextField.enabled = YES;
     carPickerView.hidden=YES;
     
     toolBar.hidden=YES;
     [carPickerView removeFromSuperview];
     [Cell_DetailCar.carMakeTextField endEditing:YES];
     
-    self.tableView.frame= CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.frame.size.height + 14);
-    NSIndexPath *indexPath =[NSIndexPath indexPathForRow:0 inSection:1];
-    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    if ([[UIScreen mainScreen]bounds].size.width == 320)
+    {
+            self.tableView.frame= CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.frame.size.height + 14);
+            NSIndexPath *indexPath =[NSIndexPath indexPathForRow:0 inSection:1];
+            [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    }
+    
+ [self.tableView setFrame:CGRectMake(0,self.tableView.frame.origin.y, self.tableView.frame.size.width,Tablevie_height)];
     
 }
 
 
+#pragma mark - Keyboard
+
+- (void)keyboardWillShow:(NSNotification *)notification
+{
+    
+
+    
+    NSDictionary* info = [notification userInfo];
+//    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+//    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
+//    self.tableView.contentInset = contentInsets;
+//    self.tableView.scrollIndicatorInsets = contentInsets;
+//    
+//    // If active text field is hidden by keyboard, scroll it so it's visible
+//    // Your application might not need or want this behavior.
+//    
+//    CGRect aRect = self.tableView.frame;
+//    aRect.size.height -= kbSize.height +5;
+
+    
+}
 
 
-
+- (void)keyboardWillHide:(NSNotification *)notification
+{
+    
+//    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
+//    self.tableView.contentInset = contentInsets;
+//    self.tableView.scrollIndicatorInsets = contentInsets;
+}
+- (void)subscribeToKeyboard {
+    [self an_subscribeKeyboardWithAnimations:^(CGRect keyboardRect, NSTimeInterval duration, BOOL isShowing) {
+        if (isShowing)
+        {
+            
+            
+            [ self.tableView setFrame :CGRectMake(0,self.tableView.frame.origin.y, self.tableView.frame.size.width, Tablevie_height-keyboardRect.size.height)];
+        
+            
+        } else
+        {
+            
+            
+               [self.tableView setFrame:CGRectMake(0,self.tableView.frame.origin.y, self.tableView.frame.size.width,Tablevie_height)];
+           
+            if ([Str_TxtField_Flag isEqualToString:@"yes"])
+            {
+                [self.tableView setFrame:CGRectMake(0,self.tableView.frame.origin.y, self.tableView.frame.size.width,Tablevie_height-250)];
+            }
+     
+            
+        }
+        [self.view layoutIfNeeded];
+    } completion:nil];}
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    
+    [textField resignFirstResponder];
+    return YES;
+}
 @end
+
+
+//UIImageView * imageBackround=[[UIImageView alloc]initWithImage:chosenImage];
+//
+//
+//
+//float actualHeight = chosenImage.size.height;
+//
+//float actualWidth = chosenImage.size.width;
+//
+//float maxHeight = 1000.0;
+//
+//float maxWidth = 1000.0;
+//
+//float imgRatio = actualWidth/actualHeight;
+//
+//float maxRatio = maxWidth/maxHeight;
+//
+//float compressionQuality = 0.7;
+//
+//
+//
+//if (actualHeight > maxHeight || actualWidth > maxWidth){
+//    
+//    if(imgRatio < maxRatio){
+//        
+//        
+//        
+//        imgRatio = maxHeight / actualHeight;
+//        
+//        actualWidth = imgRatio * actualWidth;
+//        
+//        actualHeight = maxHeight;
+//        
+//    }
+//    
+//    else if(imgRatio > maxRatio){
+//        
+//        //adjust height according to maxWidth
+//        
+//        imgRatio = maxWidth / actualWidth;
+//        
+//        actualHeight = imgRatio * actualHeight;
+//        
+//        actualWidth = maxWidth;
+//        
+//    }
+//    
+//    else{
+//        
+//        actualHeight = maxHeight;
+//        
+//        actualWidth = maxWidth;
+//        
+//    }
+//    
+//}
+//
+//NSLog(@"Actual height : %f and Width : %f",actualHeight,actualWidth);
+//
+//CGRect rect = CGRectMake(0.0, 0.0, actualWidth, actualHeight);
+//
+//UIGraphicsBeginImageContext(rect.size);
+//
+//[imageBackround.image drawInRect:rect];
+//
+//UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
+//
+//NSData *imageDataback = UIImageJPEGRepresentation(img, compressionQuality);
+//
+//UIGraphicsEndImageContext();
+//
+//
+//
+//NSLog(@"size of image in KB: %f ", imageDataback.length/1024.0);
+
+
+
 

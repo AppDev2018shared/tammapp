@@ -14,11 +14,12 @@
 #import "CommentsTableViewCell.h"
 #import "SuggestedTableViewCell.h"
 #import "PostHeaderTableViewCell.h"
+#import "PostFooterTableViewCell.h"
 @interface OnCellClickViewController : UIViewController
 {
     UIView *transparentView,*grayView;
 }
-
+@property  NSUInteger pageIndex;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (strong,nonatomic)NSMutableArray * Array_UserInfo;
@@ -33,10 +34,15 @@
 
 
 
-
+@property (strong,nonatomic)PostHeaderTableViewCell * cell_postcomments;
 @property (strong,nonatomic)CommentsTableViewCell * ComCell;
+@property (strong,nonatomic)PostFooterTableViewCell * cell_seeallcomments;
+
+
 @property (strong,nonatomic)SuggestedTableViewCell * SuggestCell;
 
-@property (strong,nonatomic)PostHeaderTableViewCell * cell_postcomments;
+
 @property (nonatomic, strong) NSArray *MoreImageArray;
+@property (strong, nonatomic) NSURL *videoURL;
+
 @end

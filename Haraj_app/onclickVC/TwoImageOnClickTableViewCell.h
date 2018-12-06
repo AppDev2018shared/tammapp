@@ -16,11 +16,16 @@
 @property (weak, nonatomic) IBOutlet UIImageView *image_play1;
 @property (weak, nonatomic) IBOutlet UIImageView *image_play2;
 @property (weak, nonatomic) IBOutlet UIButton  *button_threedots;
+@property (weak, nonatomic) IBOutlet UIButton  *button_threedotsBig;
+
 @property (weak, nonatomic) IBOutlet UIButton  *button_favourite;
 @property (weak, nonatomic) IBOutlet UIButton  *button_back;
 
 // more button click
 @property (weak, nonatomic) IBOutlet UIView *bgView;
 @property (weak, nonatomic) IBOutlet UILabel *countLabel;
+
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator1;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator2;
 
 @end

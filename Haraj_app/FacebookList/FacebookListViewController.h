@@ -14,5 +14,9 @@
 @property(strong,nonatomic)IBOutlet UIActivityIndicatorView *indicator;
 @property(strong,nonatomic)FacebookoneTableViewCell *cell_fb;
 -(IBAction)Button_Back:(id)sender;
+
+@property(strong,nonatomic)IBOutlet UIButton *BackButton;
+@property(strong,nonatomic)IBOutlet UILabel *label_heading;
+
 @property(strong,nonatomic)IBOutlet UISearchBar *searchbar;
 @end

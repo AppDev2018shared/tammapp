@@ -62,9 +62,22 @@
 @end
 
 @implementation AccountSettViewController
-@synthesize onecell,Twocell2,Threecell3,HeadTopView,Twocellpush2;
+@synthesize onecell,Twocell2,Threecell3,HeadTopView,Twocellpush2,Button_Back,Label_heading;
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
+    
+    
+    if (self.view.frame.size.width==375 && self.view.frame.size.height==812)
+    {
+        
+        
+        [Label_heading setFrame:CGRectMake(Label_heading.frame.origin.x, Label_heading.frame.origin.y+12, Label_heading.frame.size.width, 26)];
+       
+        [Button_Back setFrame:CGRectMake(Button_Back.frame.origin.x, Button_Back.frame.origin.y+12, Button_Back.frame.size.width, 30)];
+       
+    }
     
      defaults=[[NSUserDefaults alloc]init];
     
@@ -87,18 +100,25 @@
 
     
   
-    Array_Title1=[[NSArray alloc]initWithObjects:@"Post on Facebook",@"Twitter Friends",@"Contacts", nil];
-Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_twitter.png",@"setting_contacts.png", nil];
+   // Array_Title1=[[NSArray alloc]initWithObjects:@"Post on Facebook",@"Twitter Friends",@"Contacts", nil];
+    
+     Array_Title1=[[NSArray alloc]initWithObjects:@"فيسبوك",@"تويتر",@"جهات الاتصال", nil];
+    
+     Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_twitter.png",@"setting_contacts.png", nil];
  
-    Array_Title2=[[NSArray alloc]initWithObjects:@"Edit Profile",@"Change Password",@"Location:",@"Allow public calls",nil];
+   // Array_Title2=[[NSArray alloc]initWithObjects:@"Edit Profile",@"Change Password",@"Location:",@"Allow public calls",nil];
+     Array_Title2=[[NSArray alloc]initWithObjects:@"تغيير المعلومات الشخصية",@"تغيير كلمة المرور",@"الموقع:",@"السماح بالاتصالات",nil];
+    
     
    // @"Push Notification Settings",
     
-    Array_TitlePush = [[NSArray alloc]initWithObjects:@"Offers",@"Messages",@"Comments", nil];
-   
-    Array_Title3=[[NSArray alloc]initWithObjects:@"Report a Problem",@"Terms",@"About",@"Log Out",@"Delete my account",nil];
+   // Array_TitlePush = [[NSArray alloc]initWithObjects:@"Offers",@"Messages",@"Comments", nil];
+    Array_TitlePush = [[NSArray alloc]initWithObjects:@"عروض",@"رسائل",@"تعليقات", nil];
     
    
+  //  Array_Title3=[[NSArray alloc]initWithObjects:@"Report a Problem",@"Terms",@"About",@"Log Out",@"Delete my account",nil];
+    
+   Array_Title3=[[NSArray alloc]initWithObjects:@"التبليغ عن مشكلة",@"الشروط",@"عن التطبيق",@"تسجيل الخروج",@"احذف حسابي",nil];
     
     
    
@@ -234,16 +254,42 @@ Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_t
                     
                     //locationName = [defaults valueForKey:@"Cityname"];
                     
-                    NSString *text = [NSString stringWithFormat:@"Location: %@",locationName];
+                    NSString *text = [NSString stringWithFormat:@"الموقع: %@",locationName];//Location:
                     
                     Twocell2.LabelVal.text = text;
                     
-                    UIImageView *locImage = [[UIImageView alloc]initWithFrame:CGRectMake(345, Twocell2.frame.size.height/2 - 7, 15, 15)];
+                  //  UIImageView *locImage = [[UIImageView alloc]initWithFrame:CGRectMake(345, Twocell2.frame.size.height/2 - 7, 15, 15)];
+                    
+                    UIImageView *locImage;
+                    
+                    if ([[UIScreen mainScreen]bounds].size.width == 320)
+                    {
+                        locImage = [[UIImageView alloc]initWithFrame:CGRectMake(295, Twocell2.frame.size.height/2 - 7, 15, 15)];
+                    }
+                    else if ([[UIScreen mainScreen]bounds].size.width == 414)
+                    {
+                        locImage = [[UIImageView alloc]initWithFrame:CGRectMake(385, Twocell2.frame.size.height/2 - 7, 15, 15)];
+                    }
+                    else
+                    {
+                        locImage = [[UIImageView alloc]initWithFrame:CGRectMake(345, Twocell2.frame.size.height/2 - 7, 15, 15)];
+                    }
+                    
+                    
+                    
                     locImage.image = [UIImage imageNamed:@"Location_on"];
                     locImage.contentMode = UIViewContentModeScaleAspectFill;
+                    locImage.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+                    locImage.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+//                    locImage.autoresizingMask = UIViewContentModeRight;
                     
                     [Twocell2 addSubview:locImage];
                     [Twocell2 bringSubviewToFront:locImage];
+                    
+                    if (locationName==nil)
+                    {
+                        locationName=@"";
+                    }
                     
                  
                     
@@ -431,7 +477,7 @@ Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_t
         Label1.textColor=[UIColor lightGrayColor];
       
     Label1.font=[UIFont fontWithName:@"San Francisco Display" size:15.0f];
-        Label1.text=@"If checked, users will only be able to contact you through the app messaging system.";
+        Label1.text=@"بالنقر على هذا، يمكن للمستخدمين الآخرين التواصلمعك من خلال نظام المراسلات الخاص بالتطبيق";//@"If checked, users will only be able to contact you through the app messaging system.";
         Label1.textAlignment = NSTextAlignmentRight;
         Label1.numberOfLines =2;
         Label1.adjustsFontSizeToFitWidth=YES;
@@ -454,7 +500,7 @@ Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_t
         Label1.backgroundColor=[UIColor clearColor];
         Label1.textColor=[UIColor lightGrayColor];
         Label1.font=[UIFont fontWithName:@"SanFranciscoDisplay-Medium" size:15.0f];
-        Label1.text=@"Share & Invite";
+        Label1.text=@"مشاركة";//@"Share & Invite";
         Label1.textAlignment = NSTextAlignmentRight;
           [sectionView addSubview:Label1];
         sectionView.tag=section;
@@ -470,7 +516,7 @@ Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_t
         Label1.backgroundColor=[UIColor clearColor];
         Label1.textColor=[UIColor lightGrayColor];
         Label1.font=[UIFont fontWithName:@"SanFranciscoDisplay-Medium" size:15.0f];
-        Label1.text=@"Account";
+        Label1.text=@"حسابي";//@"Account";
         Label1.textAlignment = NSTextAlignmentRight;
         [sectionView addSubview:Label1];
         
@@ -488,7 +534,7 @@ Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_t
         Label1.backgroundColor=[UIColor clearColor];
         Label1.textColor=[UIColor lightGrayColor];
         Label1.font=[UIFont fontWithName:@"SanFranciscoDisplay-Medium" size:15.0f];
-        Label1.text=@"Push Notifications";
+        Label1.text=@"إعدادات الإشعارات";//@"Push Notifications";
         Label1.textAlignment = NSTextAlignmentRight;
         [sectionView addSubview:Label1];
         sectionView.tag=section;
@@ -505,7 +551,7 @@ Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_t
         Label1.backgroundColor=[UIColor clearColor];
         Label1.textColor=[UIColor lightGrayColor];
         Label1.font=[UIFont fontWithName:@"SanFranciscoDisplay-Medium" size:15.0f];
-        Label1.text=@"Support";
+        Label1.text=@"الدعم";//@"Support";
         Label1.textAlignment = NSTextAlignmentRight;
         [sectionView addSubview:Label1];
         sectionView.tag=section;
@@ -788,7 +834,7 @@ Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_t
                 
                 [self.view hideActivityViewWithAfterDelay:0];
                 
-                UIAlertController * alert=[UIAlertController alertControllerWithTitle:@"Delete Account?" message:@"Are you sure you want to delete your account? This will remove all your challenges, videos, contributions and all other details permanently."preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertController * alert=[UIAlertController alertControllerWithTitle:@"Delete Account?" message:@"Are you sure you want to delete your account? This will remove all your posts, comments, offers and all other details permanently."preferredStyle:UIAlertControllerStyleAlert];
                 
                 UIAlertAction* yesButton = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action)
                                             {
@@ -1139,7 +1185,7 @@ Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_t
                   nameFb=[Array_sinupFb valueForKey:@"name"];
                   emailFb=[Array_sinupFb valueForKey:@"email"];
                   Fbid= [session userID];
-                 [defaults setObject:Fbid forKey:@"twitterid"];
+                  [defaults setObject:Fbid forKey:@"twitterid"];
                   [defaults setObject:Fbid forKey:@"twitterids"];
                   [defaults synchronize];
                   regTypeVal =@"TWITTER";
@@ -1397,7 +1443,7 @@ Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_t
                                 
                             [self.view hideActivityViewWithAfterDelay:0];
                                 [self.view hideActivityViewWithAfterDelay:0];
-                                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops" message:@"You already have another account with us linked to Facebook. Please login through that or delete that account." preferredStyle:UIAlertControllerStyleAlert];
+                                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops" message:@"You already have another account with us linked to Twitter. Please login through that or delete that account." preferredStyle:UIAlertControllerStyleAlert];
                                 
                                 UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
                                                                                    style:UIAlertActionStyleDefault
@@ -1405,25 +1451,25 @@ Array_Images=[[NSArray alloc]initWithObjects:@"setting_facebook.png",@"setting_t
                                 [alertController addAction:actionOk];
                                 [self presentViewController:alertController animated:YES completion:nil];
                             }
-                    if ([ResultString isEqualToString:[defaults valueForKey:@"facebookid"]])
-                            {
-                                 [self.view hideActivityViewWithAfterDelay:0];
-                                if ([regTypeVal isEqualToString:@"FACEBOOK"])
-                                {
-                                    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//                                    FacebookListViewController * set=[mainStoryboard instantiateViewControllerWithIdentifier:@"FacebookListViewController"];
-//                                    [self.navigationController pushViewController:set animated:YES];
-                                    [defaults setObject:@"yes" forKey:@"facebookconnect"];
-                                    [defaults synchronize];
-                                    
-                                }
-                            }
+//                    if ([ResultString isEqualToString:[defaults valueForKey:@"facebookid"]])
+//                            {
+//                                 [self.view hideActivityViewWithAfterDelay:0];
+//                                if ([regTypeVal isEqualToString:@"FACEBOOK"])
+//                                {
+//                                    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+////                                    FacebookListViewController * set=[mainStoryboard instantiateViewControllerWithIdentifier:@"FacebookListViewController"];
+////                                    [self.navigationController pushViewController:set animated:YES];
+//                                    [defaults setObject:@"yes" forKey:@"facebookconnect"];
+//                                    [defaults synchronize];
+//                                    
+//                                }
+//                            }
                     if ([ResultString isEqualToString:[defaults valueForKey:@"twitterids"]])
                         {
                              [self.view hideActivityViewWithAfterDelay:0];
                                 if ([regTypeVal isEqualToString:@"TWITTER"])
                                 {
-                        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//                        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
 //                    TwitterListViewController * set=[mainStoryboard instantiateViewControllerWithIdentifier:@"TwitterListViewController"];
 //                                    [self.navigationController pushViewController:set animated:YES];
                                     [defaults setObject:@"yes" forKey:@"twitterconnect"];

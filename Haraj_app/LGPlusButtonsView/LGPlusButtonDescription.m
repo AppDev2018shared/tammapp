@@ -77,7 +77,7 @@
 
 - (void)drawTextInRect:(CGRect)rect
 {
-    rect.origin.x += _contentEdgeInsets.right;
+    rect.origin.x += (_contentEdgeInsets.right);
     rect.size.width -= (_contentEdgeInsets.left+_contentEdgeInsets.right);
 
     [super drawTextInRect:rect];

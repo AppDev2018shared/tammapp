@@ -13,10 +13,13 @@
 {
     UIView *transparentView,*grayView,*transparentView1;
 }
-
+@property (weak, nonatomic) IBOutlet UIButton *Button_Back;
+@property (weak, nonatomic) IBOutlet UIButton *Button_setting;
+@property (weak, nonatomic) IBOutlet UIImageView *Img_Search;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
-
+@property (weak, nonatomic) IBOutlet UIButton *Button_CircleGreen;
 @property (weak, nonatomic) IBOutlet UITextField *searchTextField;
+@property (weak, nonatomic) IBOutlet UILabel *Label_CircleFrontgreen;
 - (IBAction)SearchEditing_Action:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UIImageView *searchImageView;

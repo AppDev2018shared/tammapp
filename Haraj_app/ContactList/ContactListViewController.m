@@ -14,6 +14,7 @@
 #import <MessageUI/MessageUI.h>
 #import <AddressBook/ABAddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
+#import "UIViewController+KeyboardAnimation.h"
 @interface ContactListViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     NSString * name,*phoneNumber,*emailAddress;
@@ -28,13 +29,25 @@
     UIView *sectionView;
     NSArray * Array_Add,*array_invite;
     NSMutableArray * Array_searchFriend1,*arrayCount;
+     CGFloat tableview_height;
 }
 @end
 
 @implementation ContactListViewController
-@synthesize cell_contact,cell_contactAdd,searchbar,indcator;
+@synthesize cell_contact,cell_contactAdd,searchbar,indcator,BackButton,label_heading;
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    if (self.view.frame.size.width==375 && self.view.frame.size.height==812)
+    {
+        
+        
+        [label_heading setFrame:CGRectMake(label_heading.frame.origin.x, label_heading.frame.origin.y+10, label_heading.frame.size.width, 28)];
+        
+        [BackButton setFrame:CGRectMake(BackButton.frame.origin.x, BackButton.frame.origin.y+10, BackButton.frame.size.width, 28)];
+        
+    }
+    
     defaults=[[NSUserDefaults alloc]init];
     NSString *plistPath = [[NSBundle mainBundle]pathForResource:@"UrlName" ofType:@"plist"];
     urlplist = [NSDictionary dictionaryWithContentsOfFile:plistPath];
@@ -42,7 +55,7 @@
     Array_Email=[[NSMutableArray alloc]init];
     Array_Phone=[[NSMutableArray alloc]init];
     contactlists=[[NSMutableArray alloc]init];
-    
+     tableview_height=_tableview_contact.frame.size.height;
     
     Array_searchFriend1=[[NSMutableArray alloc]init];
     borderBottom_SectionView0 = [CALayer layer];
@@ -54,9 +67,40 @@
     indcator.hidden=NO;
     [_tableview_contact setHidden:YES];
     store = [[CNContactStore alloc] init];
-    [self contactListData];
+    int64_t delayInSeconds = 0.2;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        
+        
+        [self contactListData];
+    });
 }
-
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self subscribeToKeyboard];
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self an_unsubscribeKeyboard];
+}
+- (void)subscribeToKeyboard
+{
+    [self an_subscribeKeyboardWithAnimations:^(CGRect keyboardRect, NSTimeInterval duration, BOOL isShowing) {
+        if (isShowing)
+        {
+            
+            [_tableview_contact setFrame:CGRectMake(0, _tableview_contact.frame.origin.y, self.view.frame.size.width, tableview_height-keyboardRect.size.height)];
+            
+            
+        } else
+        {
+            
+            [_tableview_contact setFrame:CGRectMake(0, _tableview_contact.frame.origin.y, self.view.frame.size.width, tableview_height)];
+        }
+        [self.view layoutIfNeeded];
+    } completion:nil];
+}
 -(IBAction)Button_Back:(id)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
@@ -153,13 +197,10 @@
         
         //
         
-        NSString* mobileLabel;
-        NSString* basic_mobile;
-        NSString* work_mobile;
-        NSString* home_mobile;
-        NSString* strOtherMobile;
+
         NSString* phonelabels;
-        NSString* mobileLabel33;
+    
+        
         
         
         
@@ -185,7 +226,11 @@
                     else
                     {
                         [Array_name addObject:fullName];
-                        [Array_Phone addObject:phonelabels];
+                        
+                        long long phonenumberss;
+                        phonenumberss=[phonelabels longLongValue];
+                        NSString *phonelabels1=[NSString stringWithFormat:@"%lld",phonenumberss];
+                        [Array_Phone addObject:phonelabels1];
                         [Array_Email addObject:@""];
                     }
                 }
@@ -252,25 +297,25 @@
 {
     if (indexPath.section==0)
     {
-        return 44;
+        return 0;
     }
     if (indexPath.section==1)
     {
-        NSDictionary * dictVal=[ArryMerge_twitterlistSection1 objectAtIndex:indexPath.row];
-        
-        if ([[dictVal valueForKey:@"friendmobileno"] isEqualToString:@""] && ![[dictVal valueForKey:@"friendemail"] isEqualToString:@""])
-        {
-            return 47;
-        }
-        if (![[dictVal valueForKey:@"friendmobileno"] isEqualToString:@""] && [[dictVal valueForKey:@"friendemail"] isEqualToString:@""])
-        {
-            return 47;
-        }
-        if (![[dictVal valueForKey:@"friendmobileno"] isEqualToString:@""] && ![[dictVal valueForKey:@"friendemail"] isEqualToString:@""])
-        {
-            return 67;
-        }
-        
+//        NSDictionary * dictVal=[ArryMerge_twitterlistSection1 objectAtIndex:indexPath.row];
+//        
+//        if ([[dictVal valueForKey:@"friendmobileno"] isEqualToString:@""] && ![[dictVal valueForKey:@"friendemail"] isEqualToString:@""])
+//        {
+//            return 47;
+//        }
+//        if (![[dictVal valueForKey:@"friendmobileno"] isEqualToString:@""] && [[dictVal valueForKey:@"friendemail"] isEqualToString:@""])
+//        {
+//            return 47;
+//        }
+//        if (![[dictVal valueForKey:@"friendmobileno"] isEqualToString:@""] && ![[dictVal valueForKey:@"friendemail"] isEqualToString:@""])
+//        {
+//            return 67;
+//        }
+        return 52;
     }
     
     return 0;
@@ -336,11 +381,11 @@
 //            else
 //            {
 //                
-//                Bottomborder_Cell2 = [CALayer layer];
-//                Bottomborder_Cell2.backgroundColor = [UIColor colorWithRed:241/255.0 green:241/255.0 blue:241/255.0 alpha:1.0].CGColor;
-//                Bottomborder_Cell2.frame = CGRectMake(0, cell_contact.frame.size.height-1,cell_contact.frame.size.width, 1);
-//                [cell_contact.layer addSublayer:Bottomborder_Cell2];
-//                
+                Bottomborder_Cell2 = [CALayer layer];
+                Bottomborder_Cell2.backgroundColor = [UIColor colorWithRed:241/255.0 green:241/255.0 blue:241/255.0 alpha:1.0].CGColor;
+                Bottomborder_Cell2.frame = CGRectMake(0, cell_contact.frame.size.height-1,self.view.frame.size.width, 1);
+                [cell_contact.layer addSublayer:Bottomborder_Cell2];
+//
 //                
 //            }
             
@@ -360,12 +405,13 @@
                 cell_contact.label_two.text=[dictVal valueForKey:@"friendmobileno"];
                 cell_contact.label_three.hidden=YES;
             }
-            if (![[dictVal valueForKey:@"friendmobileno"] isEqualToString:@""] && ![[dictVal valueForKey:@"friendemail"] isEqualToString:@""])
+            if ([[dictVal valueForKey:@"friendmobileno"] isEqualToString:@""] && [[dictVal valueForKey:@"friendemail"] isEqualToString:@""])
             {
                // [cell_contact.button_invite addTarget:self action:@selector(InviteUser:) forControlEvents:UIControlEventTouchUpInside];
-                cell_contact.label_two.text=[dictVal valueForKey:@"friendmobileno"];
-                cell_contact.label_three.text=[dictVal valueForKey:@"friendemail"];
-                cell_contact.label_three.hidden=NO;
+                cell_contact.label_two.text=@"";
+                 cell_contact.label_three.hidden=YES;
+//                cell_contact.label_three.text=[dictVal valueForKey:@"friendemail"];
+//                cell_contact.label_three.hidden=NO;
             }
             //cell_contact.label_two.text=[dictVal valueForKey:@"friendemail"];
             // cell_contact.label_three.text=[dictVal valueForKey:@"friendmobileno"];

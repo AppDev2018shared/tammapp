@@ -17,6 +17,7 @@
 
 @property(nonatomic,weak)IBOutlet UIView * view_LoginFB;
 @property(nonatomic,weak)IBOutlet UIView *  View_LoginTW;
+@property (weak, nonatomic) IBOutlet UIImageView *Image_logo;
 
 @property(nonatomic,weak)IBOutlet UIButton *  Button_LoginFb;
 @property(nonatomic,weak)IBOutlet UIButton *  Button_LoginTw;

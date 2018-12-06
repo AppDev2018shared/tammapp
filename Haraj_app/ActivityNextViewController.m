@@ -13,9 +13,10 @@
 #import "SBJsonParser.h"
 #import "UIImageView+WebCache.h"
 #import "FriendCahtingViewController.h"
-#import "AllViewSwapeViewController.h"
+
 #import "OnCellClickViewController.h"
 #import "MyPostViewController.h"
+#import "AFNetworking.h"
 
 @interface ActivityNextViewController ()<UITableViewDataSource, UITableViewDelegate>
 {
@@ -35,18 +36,31 @@
 @end
 
 @implementation ActivityNextViewController
-@synthesize AllDataArray,touchedIndex,postIdLabel,postImageView;
+@synthesize AllDataArray,touchedIndex,postIdLabel,postImageView,backbutton,labelheding,view_line;
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    if (self.view.frame.size.width==375 && self.view.frame.size.height==812)
+    {
+        [postImageView setFrame:CGRectMake(postImageView.frame.origin.x, postImageView.frame.origin.y+12, postImageView.frame.size.width, 86)];
+        
+         [postIdLabel setFrame:CGRectMake(postIdLabel.frame.origin.x, postIdLabel.frame.origin.y, postIdLabel.frame.size.width, 21)];
+        
+       [backbutton setFrame:CGRectMake(backbutton.frame.origin.x, backbutton.frame.origin.y+14, backbutton.frame.size.width, 28)];
+        [labelheding setFrame:CGRectMake(labelheding.frame.origin.x, labelheding.frame.origin.y+14, labelheding.frame.size.width, 28)];
+        [view_line setFrame:CGRectMake(view_line.frame.origin.x, view_line.frame.origin.y+9, view_line.frame.size.width, 1)];
+        
+        
+        
+    }
     
     NSString *plistPath = [[NSBundle mainBundle]pathForResource:@"UrlName" ofType:@"plist"];
     urlplist = [NSDictionary dictionaryWithContentsOfFile:plistPath];
     
     defaults = [[NSUserDefaults alloc]init];
     
-    postIdLabel.text =[NSString stringWithFormat:@"POST ID: %@",[[AllDataArray objectAtIndex:touchedIndex]valueForKey:@"postid"]];
+    postIdLabel.text =[NSString stringWithFormat:@"%@%@",@" :رقم الإعلان",[[AllDataArray objectAtIndex:touchedIndex]valueForKey:@"postid"]];//POST ID[NSString stringWithFormat:@"POST ID: %@",[[AllDataArray objectAtIndex:touchedIndex]valueForKey:@"postid"]];
     
     
     postImageView.layer.cornerRadius = 10;
@@ -56,8 +70,7 @@
     
     
     NSURL * url=[NSURL URLWithString:[[AllDataArray objectAtIndex:touchedIndex] valueForKey:@"mediathumbnailurl"]];
-    [postImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"]
-                                              options:SDWebImageRefreshCached];
+    [postImageView setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"]];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(postImageTap:)];
     [self.postImageView addGestureRecognizer:tap];
@@ -190,8 +203,7 @@
     ActivityCell.messageLabel.text = [dic_request valueForKey:@"message"];
     
     NSURL * url=[NSURL URLWithString:[dic_request valueForKey:@"profilepic"]];
-    [ActivityCell.profileImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"]
-                                              options:SDWebImageRefreshCached];
+    [ActivityCell.profileImageView setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"]];
     
     
     // messageread
@@ -212,6 +224,24 @@
     
     return ActivityCell;
     
+    
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    if ([[UIScreen mainScreen]bounds].size.width ==320)
+    {
+        return 89;
+    }
+    else if ([[UIScreen mainScreen]bounds].size.width == 414)
+    {
+        return 113;
+    }
+    else
+    {
+        return 103;
+    }
     
 }
 

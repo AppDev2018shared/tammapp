@@ -23,6 +23,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *bidAmountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicatorVideo;
+
 
 //----------------profile screen button-----------------------
 

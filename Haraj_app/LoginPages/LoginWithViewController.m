@@ -37,7 +37,7 @@
 @end
 
 @implementation LoginWithViewController
-@synthesize facebookButton,twitterButton,Label_TermsAndCon;
+@synthesize facebookButton,twitterButton,Label_TermsAndCon,loginButton,orLabel,signupButton;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -59,6 +59,23 @@
     twitterButton.layer.borderColor=[UIColor whiteColor].CGColor;
     twitterButton.layer.borderWidth=1.5;
     twitterButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    
+    
+    // Login and signup title font for 5s
+    
+    if ([[UIScreen mainScreen]bounds].size.width == 320)
+    {
+    
+        [loginButton.titleLabel setFont:[UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:16]];
+         orLabel.font = [UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:16];
+        [signupButton.titleLabel setFont:[UIFont fontWithName:@"SanFranciscoDisplay-Bold" size:16]];
+        
+    }
+    else
+    {
+        
+    }
+    
     
     
 
@@ -115,7 +132,9 @@
 }
 
 
-- (IBAction)facebookAction:(id)sender {
+- (IBAction)facebookAction:(id)sender
+{
+    [self.view showActivityViewWithLabel:@"Loading"];
     FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];
     
     
@@ -207,7 +226,7 @@
 {
     
     
-    //[self.view showActivityViewWithLabel:@"Loading"];
+    [self.view showActivityViewWithLabel:@"Loading"];
     
     [[Twitter sharedInstance] logInWithMethods:TWTRLoginMethodWebBased completion:^(TWTRSession *session, NSError *error)
      {
@@ -258,7 +277,7 @@
              
          } else
          {
-             [self.view hideActivityViewWithAfterDelay:1];
+             [self.view hideActivityViewWithAfterDelay:0];
              NSLog(@"error: %@", [error localizedDescription]);
          }
      }];
@@ -296,10 +315,10 @@
     NSString *DobVal =@"";
     
     NSString *city= @"city";
-    NSString *cityVal =[defaults valueForKey:@"Cityname"];;
+    NSString *cityVal =(NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,(CFStringRef)[defaults valueForKey:@"Cityname"],NULL,(CFStringRef)@"!*\"();:@&=+$,/?%#[]% ",CFStringConvertNSStringEncodingToEncoding(NSUTF8StringEncoding)));;;
     
     NSString *country= @"country";
-    NSString *countryVal =[defaults valueForKey:@"Countryname"];
+    NSString *countryVal =(NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,(CFStringRef)[defaults valueForKey:@"Countryname"],NULL,(CFStringRef)@"!*\"();:@&=+$,/?%#[]% ",CFStringConvertNSStringEncodingToEncoding(NSUTF8StringEncoding)));;
     
    
     NSString *token = [[FIRInstanceID instanceID] token];
@@ -388,8 +407,8 @@
                                                      
                                                      
                                                  }
-                                                 if ([ResultString isEqualToString:@"emailexists-email"])
-                                                 {
+                    if ([ResultString isEqualToString:@"emailexists-email"])
+                        {
                                                      [self.view hideActivityViewWithAfterDelay:0];
                                                      UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops" message:@"You already have an Account registered with this email id. Please login with your registered email." preferredStyle:UIAlertControllerStyleAlert];
                                                      
@@ -466,34 +485,36 @@
                                                      [defaults setObject:[NSString stringWithFormat:@"%@",[[array_login objectAtIndex:0]valueForKey:@"pushoffers"]] forKey:@"pushoffers"];
                                                      
                                                      
-                                                     [defaults setObject:@"yes" forKey:@"LoginView"];
                                                      
-                                                     [defaults synchronize];
+                                                     
+                                                   
                                                      
                                                      
                                                      if ([[[array_login objectAtIndex:0]valueForKey:@"verified"] isEqualToString:@"yes"])
                                                      
                                                      {
+                                                           [defaults setObject:@"yes" forKey:@"LoginView"];
                                                          HomeNavigationController *loginController=[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"HomeNavigationController"];
                                                          [[UIApplication sharedApplication].keyWindow setRootViewController:loginController];
+                                                       
                                                          
                                                      }
                                                      else
                                                      {
-                                                         
-                                                         UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                            [defaults setObject:@"no" forKey:@"LoginView"];
+                        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
                                                          MobileViewController * mobileController=[mainStoryboard instantiateViewControllerWithIdentifier:@"MobileViewController"];
                                                          [self.navigationController pushViewController:mobileController animated:YES];
                                                          
                                                      }
-                                                     
+                                                       [defaults synchronize];
                                                      
 //                                                     HomeNavigationController *loginController=[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"HomeNavigationController"];
 //                                                     [[UIApplication sharedApplication].keyWindow setRootViewController:loginController];
                                                      
                                                  }
                                                  
-                                                 
+                    [self.view hideActivityViewWithAfterDelay:0];
                                                  
                                              }
                                              

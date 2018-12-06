@@ -10,7 +10,8 @@
 #import "SearchTableViewCell.h"
 #import "SBJsonParser.h"
 #import "SearchCollectionViewController.h"
-
+#import "AFNetworking.h"
+#import "UIViewController+KeyboardAnimation.h"
 @interface SearchViewController ()<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource>
 {
     
@@ -24,14 +25,14 @@
     NSMutableArray *Array_1, *Array_2;
     
     UIView *sectionView;
-    
+    CGFloat tableview_height;
 }
 
 @end
 
 @implementation SearchViewController
 
-@synthesize initialTitles,filteredTitles,Button_Back,Button_Cancel,searchTextField;
+@synthesize initialTitles,filteredTitles,Button_Back,Button_Cancel,searchTextField,Img_Search,view_line;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -42,10 +43,17 @@
     urlplist = [NSDictionary dictionaryWithContentsOfFile:plistPath];
     
    // initialTitles = [[NSMutableArray alloc]initWithObjects:@"Cars",@"Electronics", nil ];
-    
+    if (self.view.frame.size.width==375 && self.view.frame.size.height==812)
+    {
+         [view_line setFrame:CGRectMake(view_line.frame.origin.x, view_line.frame.origin.y+6, view_line.frame.size.width, 1)];
+        [searchTextField setFrame:CGRectMake(searchTextField.frame.origin.x, searchTextField.frame.origin.y+17, searchTextField.frame.size.width, 35)];
+        [Button_Cancel setFrame:CGRectMake(Button_Cancel.frame.origin.x, Button_Cancel.frame.origin.y+13, Button_Cancel.frame.size.width, 20)];
+        [Button_Back setFrame:CGRectMake(Button_Back.frame.origin.x, Button_Back.frame.origin.y+16, Button_Back.frame.size.width, 30)];
+        [Img_Search setFrame:CGRectMake(Img_Search.frame.origin.x, Img_Search.frame.origin.y+13, Img_Search.frame.size.width, 22)];
+    }
     Button_Cancel.hidden = YES;
    
-    
+    tableview_height=self.tableView.frame.size.height;
     UIView *paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10,searchTextField.frame.size.height)];
     searchTextField.rightView = paddingView;
     searchTextField.rightViewMode = UITextFieldViewModeAlways;
@@ -58,10 +66,35 @@
     
     
 }
+- (void)subscribeToKeyboard
+{
+    [self an_subscribeKeyboardWithAnimations:^(CGRect keyboardRect, NSTimeInterval duration, BOOL isShowing) {
+        if (isShowing)
+        {
+          
+           
+                [self.tableView setFrame:CGRectMake(0, self.tableView.frame.origin.y, self.view.frame.size.width, tableview_height-keyboardRect.size.height)];
+           
+            
+            
+        } else
+        {
+           
+            [self.tableView setFrame:CGRectMake(0, self.tableView.frame.origin.y, self.view.frame.size.width,tableview_height)];
+        }
+        [self.view layoutIfNeeded];
+    } completion:nil];
+}
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self an_unsubscribeKeyboard];
+}
 -(void)viewWillAppear:(BOOL)animated
 {
     self.tableView.hidden = NO;
+    [self subscribeToKeyboard];
      [self searchCategoriesConnection];
 }
 

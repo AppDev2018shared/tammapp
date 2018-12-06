@@ -16,7 +16,10 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-
+@property (weak, nonatomic) IBOutlet  UILabel *labelheding;
+@property (weak, nonatomic) IBOutlet  UIButton *Button_help;
+@property (weak, nonatomic) IBOutlet UIButton *backbutton;
+@property (weak, nonatomic) IBOutlet UIView *view_line;
 
 - (IBAction)InfoButton_Action:(id)sender;
 

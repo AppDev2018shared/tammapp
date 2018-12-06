@@ -12,6 +12,14 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *facebookButton;
 @property (weak, nonatomic) IBOutlet UIButton *twitterButton;
+
+@property (weak, nonatomic) IBOutlet UIButton *loginButton;
+@property (weak, nonatomic) IBOutlet UIButton *signupButton;
+@property (weak, nonatomic) IBOutlet UILabel *orLabel;
+
+
+
+
 @property(nonatomic,weak)IBOutlet UILabel * Label_TermsAndCon;
 
 

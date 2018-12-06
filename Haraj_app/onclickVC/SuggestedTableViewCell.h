@@ -17,6 +17,13 @@
 @property (weak, nonatomic) IBOutlet UIImageView *sImageView5;
 @property (weak, nonatomic) IBOutlet UIImageView *sImageView6;
 
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator1;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator2;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator3;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator4;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator5;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator6;
+
 
 
 @end

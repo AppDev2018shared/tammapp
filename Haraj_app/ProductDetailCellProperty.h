@@ -25,4 +25,6 @@
 @property (weak, nonatomic) IBOutlet UITextField *propertySizeTextField;
 @property (weak, nonatomic) IBOutlet UITextField *noOfBedroomTextField;
 
+
+
 @end

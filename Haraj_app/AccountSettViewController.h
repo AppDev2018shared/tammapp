@@ -25,7 +25,8 @@
 @property (nonatomic, retain) UIRefreshControl *refreshControl;
 @property(nonatomic,strong)IBOutlet UIView * HeadTopView;
 
-
+@property (weak, nonatomic) IBOutlet UIButton *Button_Back;
+@property (weak, nonatomic) IBOutlet UILabel *Label_heading;
 
 - (IBAction)DoneButton:(id)sender;
 @end

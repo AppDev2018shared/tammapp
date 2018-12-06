@@ -15,7 +15,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *postIdLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *postImageView;
 
-
+@property (weak, nonatomic) IBOutlet  UILabel *labelheding;
+@property (weak, nonatomic) IBOutlet UIButton *backbutton;
+@property (weak, nonatomic) IBOutlet UIView *view_line;
 
 - (IBAction)ProfileButton_Action:(id)sender;
 - (IBAction)SearchButton_Action:(id)sender;

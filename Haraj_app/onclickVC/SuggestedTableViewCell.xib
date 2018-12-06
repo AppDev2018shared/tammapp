@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1510" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -11,11 +14,11 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="280"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <frame key="frameInset" width="375" height="279"/>
+                <rect key="frame" x="0.0" y="0.0" width="375" height="279"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="defaultimg.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="zgS-Ky-KZe">
-                        <frame key="frameInset" minX="252" minY="20" width="115" height="115"/>
+                        <rect key="frame" x="252" y="20" width="115" height="115"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
@@ -24,8 +27,13 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </imageView>
+                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="ThV-r4-DIr">
+                        <rect key="frame" x="299" y="68" width="20" height="20"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    </activityIndicatorView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="defaultimg.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="cEm-PW-EPF">
-                        <frame key="frameInset" minX="130" minY="21" width="115" height="115"/>
+                        <rect key="frame" x="130" y="21" width="115" height="115"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
@@ -34,8 +42,13 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </imageView>
+                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Uik-YO-Rnx">
+                        <rect key="frame" x="177" y="68" width="20" height="20"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    </activityIndicatorView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="defaultimg.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="MGO-VR-sGk">
-                        <frame key="frameInset" minX="8" minY="21" width="115" height="115"/>
+                        <rect key="frame" x="8" y="21" width="115" height="115"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
@@ -45,7 +58,7 @@
                         </userDefinedRuntimeAttributes>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="defaultimg.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="Zlr-ub-Ypn">
-                        <frame key="frameInset" minX="252" minY="144" width="115" height="115"/>
+                        <rect key="frame" x="252" y="143" width="115" height="115"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
@@ -55,7 +68,7 @@
                         </userDefinedRuntimeAttributes>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="defaultimg.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="YEk-Yy-kIJ">
-                        <frame key="frameInset" minX="130" minY="145" width="115" height="115"/>
+                        <rect key="frame" x="130" y="144" width="115" height="115"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
@@ -64,8 +77,13 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </imageView>
+                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Vvs-Kc-TZ4">
+                        <rect key="frame" x="177" y="192" width="20" height="20"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    </activityIndicatorView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="defaultimg.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="RWt-3H-mp1">
-                        <frame key="frameInset" minX="8" minY="145" width="115" height="115"/>
+                        <rect key="frame" x="8" y="144" width="115" height="115"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
@@ -74,9 +92,30 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </imageView>
+                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Cee-In-Gfq">
+                        <rect key="frame" x="55" y="192" width="20" height="20"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    </activityIndicatorView>
+                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="EWH-HC-Il2">
+                        <rect key="frame" x="55" y="68" width="20" height="20"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    </activityIndicatorView>
+                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="iIz-lB-3k4">
+                        <rect key="frame" x="299" y="192" width="20" height="20"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    </activityIndicatorView>
                 </subviews>
             </tableViewCellContentView>
             <connections>
+                <outlet property="activityIndicator1" destination="ThV-r4-DIr" id="6vS-aF-9HT"/>
+                <outlet property="activityIndicator2" destination="Uik-YO-Rnx" id="9s6-KA-rgx"/>
+                <outlet property="activityIndicator3" destination="EWH-HC-Il2" id="oiw-T8-j9B"/>
+                <outlet property="activityIndicator4" destination="iIz-lB-3k4" id="bDr-6e-OKT"/>
+                <outlet property="activityIndicator5" destination="Vvs-Kc-TZ4" id="h3T-g5-5O8"/>
+                <outlet property="activityIndicator6" destination="Cee-In-Gfq" id="CM0-JZ-cdt"/>
                 <outlet property="sImageView1" destination="zgS-Ky-KZe" id="b7o-of-hPw"/>
                 <outlet property="sImageView2" destination="cEm-PW-EPF" id="jfq-FS-vBm"/>
                 <outlet property="sImageView3" destination="MGO-VR-sGk" id="mOA-Cv-RgB"/>
@@ -84,6 +123,7 @@
                 <outlet property="sImageView5" destination="YEk-Yy-kIJ" id="1xY-8Y-iZX"/>
                 <outlet property="sImageView6" destination="RWt-3H-mp1" id="H30-CX-SaA"/>
             </connections>
+            <point key="canvasLocation" x="7" y="9"/>
         </tableViewCell>
     </objects>
     <resources>

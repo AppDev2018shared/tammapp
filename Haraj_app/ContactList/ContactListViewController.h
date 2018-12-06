@@ -17,6 +17,10 @@
 @property(strong,nonatomic)ContactTableViewCell *cell_contact;
 @property(strong,nonatomic)ContactAddTableViewCell *cell_contactAdd;
 @property(strong,nonatomic)IBOutlet UISearchBar *searchbar;
+
+@property(strong,nonatomic)IBOutlet UIButton *BackButton;
+@property(strong,nonatomic)IBOutlet UILabel *label_heading;
+
 -(IBAction)Button_Back:(id)sender;
 @property(strong,nonatomic)IBOutlet UIActivityIndicatorView *indcator;
 @end

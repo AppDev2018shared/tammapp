@@ -19,8 +19,8 @@
 #import "MyPostViewController.h"
 #import "SBJsonParser.h"
 #import "Reachability.h"
-#import "AllViewSwapeViewController.h"
-
+#import "SVPullToRefresh.h"
+#import "RootViewController.h"
 
 @interface FurnitureViewController ()<UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UICollectionViewDelegate,FRGWaterfallCollectionViewDelegate>
 
@@ -36,6 +36,8 @@
     NSURLConnection *Connection_ViewPost;
     NSMutableData *webData_ViewPost;
     NSMutableArray *Array_ViewPost , *Array_Furniture;
+    
+    CGFloat cellWidth,cellHeight,cellVideoHeight;
 }
 
 
@@ -54,10 +56,31 @@
     NSString *plistPath = [[NSBundle mainBundle]pathForResource:@"UrlName" ofType:@"plist"];
     urlplist = [NSDictionary dictionaryWithContentsOfFile:plistPath];
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
+    self.collectionView.alwaysBounceVertical = YES;
+    if ([[UIScreen mainScreen]bounds].size.width == 320)
+    {
+        cellWidth = 160.0f;
+        cellHeight = 210.0;
+        cellVideoHeight = 260.0;
+    }
+    else if ([[UIScreen mainScreen]bounds].size.width == 414)
+    {
+        cellWidth = 200.0f;
+        cellHeight = 255.0;
+        cellVideoHeight = 310.0;
+    }
+    else
+    {
+        cellWidth = 173.0f;
+        cellHeight = 225.0;
+        cellVideoHeight = 275.0;
+    }
+    
+
     
     FRGWaterfallCollectionViewLayout *cvLayout = [[FRGWaterfallCollectionViewLayout alloc] init];
     cvLayout.delegate = self;
-    cvLayout.itemWidth = 173.0f;
+    cvLayout.itemWidth = cellWidth;//173.0f;
     cvLayout.topInset = 1.0f;
     cvLayout.bottomInset = 10.0f;
     cvLayout.stickyHeader = YES;
@@ -65,12 +88,87 @@
     [self.collectionView setCollectionViewLayout:cvLayout];
     [self.collectionView reloadData];
     
+    //------------- Pull to Refresh----------------------------
+    
+    [self.collectionView addPullToRefreshWithActionHandler:^{
+        
+        [self insertRowAtTop];
+        
+    }];
     
     
     
-       
-   // [self viewPostConnection];
+    // setup infinite scrolling
+    
+    [self.collectionView addInfiniteScrollingWithActionHandler:^{
+        
+        [self insertRowAtBottom];
+        
+    }];
+    
+    
+    //[self viewPostConnection];
+    
+    
 }
+
+- (void)insertRowAtTop {
+    
+    
+    
+    // [self PulltoRefershtable];
+    
+    int64_t delayInSeconds = 2.0;
+    
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+    
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        
+        [self.collectionView.pullToRefreshView stopAnimating];
+        
+    });
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"PullToRefreshTop" object: self userInfo:nil];
+}
+
+
+
+
+
+- (void)insertRowAtBottom {
+    
+    
+    if (_collectionView.contentOffset.y<0)
+    {
+        [self.collectionView.infiniteScrollingView setAlpha:0];
+        [self.collectionView.infiniteScrollingView stopAnimating];
+    }
+    else
+    {
+        [self.collectionView.infiniteScrollingView setAlpha:1];
+        int64_t delayInSeconds = 1.0;
+        
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+        
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            
+            [self.collectionView.infiniteScrollingView stopAnimating];
+            
+        });
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"PullToRefreshBottom" object: self userInfo:nil];
+    }
+}
+-(void) scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if (_collectionView.contentOffset.y<0)
+    {
+        [self.collectionView.infiniteScrollingView setAlpha:0];
+        [self.collectionView.infiniteScrollingView stopAnimating];
+    }
+    
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -223,12 +321,25 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    if ([[defaults valueForKey:@"refreshView"] isEqualToString:@"yes"])
+    {
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"PullToRefreshTop" object: self userInfo:nil];
+        
+    }
+    else
+    {
+        
+    }
+    
+    [defaults setObject:@"no" forKey:@"refreshView"];
    // [self viewPostConnection];
    [[self navigationController] setNavigationBarHidden:YES animated:YES];
 }
 
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
+     [self.collectionView.collectionViewLayout invalidateLayout];
     return 1;
 }
 
@@ -250,6 +361,9 @@
         PatternViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"PatternCell" forIndexPath:indexPath];
         
         NSURL * url=[NSURL URLWithString:[dic_request valueForKey:@"mediathumbnailurl"]];
+        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+        cell.activityIndicatorVideo.hidden = NO;
+        [cell.activityIndicatorVideo startAnimating];
         if([NSNull null] ==[dic_request valueForKey:@"mediathumbnailurl"])
         {
             
@@ -258,10 +372,22 @@
         }
         else
         {
-            [cell.videoImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"]
-                                            options:SDWebImageRefreshCached];
+          //  [cell.videoImageView setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"]];
+            
+            [cell.videoImageView setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image)
+             {
+                 cell.videoImageView.image = image;
+                 cell.activityIndicatorVideo.hidden = YES;
+                 [cell.activityIndicatorVideo stopAnimating];
+             }
+                                                failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error)
+             {
+                 cell.activityIndicatorVideo.hidden = YES;
+                 [cell.activityIndicatorVideo stopAnimating];
+             }
+             ];
             cell.playImageView.image = [UIImage imageNamed:@"Play"];
-            //[cell.videoImageView sd_setImageWithURL:url];
+         
             
         }
         
@@ -272,14 +398,14 @@
         cell.videoImageView.layer.cornerRadius = 10;
         cell.videoImageView.layer.masksToBounds = YES;
         
-        if ([dic_request valueForKey:@"showamount"] > [dic_request valueForKey:@"askingprice"])
+        if ([[dic_request valueForKey:@"showamount"]floatValue] > [[dic_request valueForKey:@"askingprice"]floatValue])
         {
-            NSString *show = [NSString stringWithFormat:@"$%@",[dic_request valueForKey:@"showamount"]];
+            NSString *show = [NSString stringWithFormat:@"ر.س%@",[dic_request valueForKey:@"showamount"]];//$
             cell.bidAmountLabel.text = show;
         }
         else
         {
-            NSString *show = [NSString stringWithFormat:@"$%@",[dic_request valueForKey:@"askingprice"]];
+            NSString *show = [NSString stringWithFormat:@"ر.س%@",[dic_request valueForKey:@"askingprice"]];//$
             cell.bidAmountLabel.text = show;
         }
 
@@ -298,23 +424,42 @@
     {
         
         ImageCollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"ImageCell" forIndexPath:indexPath];
-        //        [cell.videoImageView sd_setImageWithURL:url];
+       
         cell.videoImageView.layer.cornerRadius = 10;
         cell.videoImageView.layer.masksToBounds = YES;
+        
         NSURL * url=[NSURL URLWithString:[dic_request valueForKey:@"mediathumbnailurl"]];
-        [cell.videoImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"]
-                                        options:SDWebImageRefreshCached];
+       // [cell.videoImageView setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"]];
+        cell.activityIndicator.hidden = NO;
+        [cell.activityIndicator startAnimating];
+        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+        
+        [cell.videoImageView setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image)
+         {
+             cell.videoImageView.image = image;
+             cell.activityIndicator.hidden = YES;
+             [cell.activityIndicator stopAnimating];
+         }
+                                            failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error)
+         {
+             cell.activityIndicator.hidden = YES;
+             [cell.activityIndicator stopAnimating];
+         }
+         ];
+
+        
+        
         cell.locationLabel.text = [dic_request valueForKey:@"city1"];
         cell.timeLabel.text = [dic_request valueForKey:@"createtime"];
         
-        if ([dic_request valueForKey:@"showamount"] > [dic_request valueForKey:@"askingprice"])
+        if ([[dic_request valueForKey:@"showamount"]floatValue] > [[dic_request valueForKey:@"askingprice"]floatValue])
         {
-            NSString *show = [NSString stringWithFormat:@"$%@",[dic_request valueForKey:@"showamount"]];
+            NSString *show = [NSString stringWithFormat:@"ر.س%@",[dic_request valueForKey:@"showamount"]];//$
             cell.bidAmountLabel.text = show;
         }
         else
         {
-            NSString *show = [NSString stringWithFormat:@"$%@",[dic_request valueForKey:@"askingprice"]];
+            NSString *show = [NSString stringWithFormat:@"ر.س%@",[dic_request valueForKey:@"askingprice"]];//$
             cell.bidAmountLabel.text = show;
         }
 
@@ -332,8 +477,8 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    AllViewSwapeViewController * set1=[mainStoryboard instantiateViewControllerWithIdentifier:@"AllViewSwapeViewController"];
-    
+//    AllViewSwapeViewController * set1=[mainStoryboard instantiateViewControllerWithIdentifier:@"AllViewSwapeViewController"];
+     RootViewController * set1=[mainStoryboard instantiateViewControllerWithIdentifier:@"RootViewController"];
     
     // OnCellClickNewViewController * set=[mainStoryboard instantiateViewControllerWithIdentifier:@"OnCellClickNewViewController"];
     
@@ -366,12 +511,12 @@
     
     if ([[dic_request valueForKey:@"mediatype"] isEqualToString:@"VIDEO"]  )
     {
-        height = 275.0;
+        height = cellVideoHeight;//275.0;
     }
     else
     {
         
-        height = 225.0;
+        height = cellHeight;//225.0;
         
     }
     return height;
@@ -383,7 +528,7 @@
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(FRGWaterfallCollectionViewLayout *)collectionViewLayout
 heightForHeaderAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 26.0f;//(indexPath.section + 1) * 26.0f;
+    return 15.0f;//(indexPath.section + 1) * 26.0f;
 }
 
 - (NSMutableArray *)cellHeights {

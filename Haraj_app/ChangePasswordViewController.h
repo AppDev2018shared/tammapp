@@ -17,7 +17,9 @@
 @property(nonatomic,weak)IBOutlet UITextField * Textfield_newpassword;
 @property(nonatomic,weak)IBOutlet UITextField * Textfield_confirmpassword;
 
-
+@property (weak, nonatomic) IBOutlet  UILabel *labelheding;
+@property (weak, nonatomic) IBOutlet UIButton *backbutton;
+@property (weak, nonatomic) IBOutlet UIView *view_line;
 
 
 -(IBAction)Button_BackAction:(id)sender;

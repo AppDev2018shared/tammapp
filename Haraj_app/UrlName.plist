@@ -76,5 +76,7 @@
 	<string>http://www.tammapp.com/app/savesettings.php</string>
 	<key>flag</key>
 	<string>http://www.tammapp.com/app/flag.php</string>
+	<key>deletepost</key>
+	<string>http://www.tammapp.com/app/deletepost.php</string>
 </dict>
 </plist>

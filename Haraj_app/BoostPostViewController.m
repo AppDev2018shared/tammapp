@@ -13,6 +13,7 @@
 #import "SBJsonParser.h"
 #import "Reachability.h"
 #import "UIView+RNActivityView.h"
+#import "AFNetworking.h";
 
 
 @interface BoostPostViewController ()<UITableViewDataSource, UITableViewDelegate,UIGestureRecognizerDelegate>
@@ -40,11 +41,19 @@
 
 @implementation BoostPostViewController
 @synthesize Array_Boost;
-
+@synthesize labelheding,backbutton,Button_help,view_line;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    if (self.view.frame.size.width==375 && self.view.frame.size.height==812)
+    {
+        
+        [view_line setFrame:CGRectMake(view_line.frame.origin.x, view_line.frame.origin.y+6, view_line.frame.size.width, 1)];
+        [labelheding setFrame:CGRectMake(labelheding.frame.origin.x, labelheding.frame.origin.y+16, labelheding.frame.size.width, 26)];
+        
+        [backbutton setFrame:CGRectMake(backbutton.frame.origin.x, backbutton.frame.origin.y+16, backbutton.frame.size.width, 30)];
+        [Button_help setFrame:CGRectMake(Button_help.frame.origin.x, Button_help.frame.origin.y+16, Button_help.frame.size.width, 30)];
+    }
     defaults = [[NSUserDefaults alloc]init];
     
     
@@ -96,14 +105,13 @@
         FavouriteCell.postImageView.layer.cornerRadius = 10;
         FavouriteCell.postImageView.layer.masksToBounds = YES;
     
-        FavouriteCell.postIdLabel.text =[NSString stringWithFormat:@"POST ID:%@",[dic_request valueForKey:@"postid"]] ;
+        FavouriteCell.postIdLabel.text =[NSString stringWithFormat:@"%@%@",[dic_request valueForKey:@"postid"],@" :رقم الإعلان"];//POST ID[NSString stringWithFormat:@"رمز الإعلان: %@",[dic_request valueForKey:@"postid"]] ;//POST ID:
         FavouriteCell.durationLabel.text = [dic_request valueForKey:@"postdur"];
         FavouriteCell.titleLabel.text = [dic_request valueForKey:@"title"];
     
     
         NSURL * url=[NSURL URLWithString:[dic_request valueForKey:@"mediathumbnailurl"]];
-        [FavouriteCell.postImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"]
-                                                options:SDWebImageRefreshCached];
+        [FavouriteCell.postImageView setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"]];
     
     if ([[dic_request valueForKey:@"boosted"] isEqualToString:@"TRUE"])
     {
@@ -129,6 +137,23 @@
     
     
 }
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    if ([[UIScreen mainScreen]bounds].size.width ==320)
+    {
+        return 89;
+    }
+    else if ([[UIScreen mainScreen]bounds].size.width == 414)
+    {
+        return 113;
+    }
+    else
+    {
+        return 103;
+    }
+
+}
 
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -146,7 +171,7 @@
     
     
     
-    myBoostXIBViewObj.postIdLabel.text =[NSString stringWithFormat:@"POST ID: %@",[[Array_MyViewPost  valueForKey:@"postid"]objectAtIndex:indexPath.row]];
+    myBoostXIBViewObj.postIdLabel.text =[NSString stringWithFormat:@"%@%@",[[Array_MyViewPost  valueForKey:@"postid"]objectAtIndex:indexPath.row],@" :رقم الإعلان"];//POST ID [NSString stringWithFormat:@"رمز الإعلان: %@",[[Array_MyViewPost  valueForKey:@"postid"]objectAtIndex:indexPath.row]];//POST ID:
     postIdVal = [[Array_MyViewPost  valueForKey:@"postid"]objectAtIndex:indexPath.row];
     
     myBoostXIBViewObj.layer.cornerRadius = 10;
@@ -422,7 +447,9 @@
     
     NSLog(@"InfoButton_Action Pressed");
     
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Boost Post" message:@"You can Boost your posts and increase it's visibility. Your posts will be displayed on top of other posts for this period of time." preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"روِّج إعلانك" message:@"تستطيع ترويج إعلانك وزيادة عدد المشاهدات. سيتم إظهار إعلانك في أوائل الإعلانات خلال مدة معينة." preferredStyle:UIAlertControllerStyleAlert];
+
+   // UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Boost Post" message:@"You can Boost your posts and increase it's visibility. Your posts will be displayed on top of other posts for this period of time." preferredStyle:UIAlertControllerStyleAlert];
     
     UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
                                                        style:UIAlertActionStyleDefault

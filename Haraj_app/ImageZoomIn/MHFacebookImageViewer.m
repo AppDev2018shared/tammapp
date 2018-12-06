@@ -84,8 +84,10 @@ static const CGFloat kMinImageScale = 1.0f;
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     CGRect frame = [UIScreen mainScreen].bounds;
     __scrollView = [[UIScrollView alloc]initWithFrame:frame];
+    
     __scrollView.delegate = self;
-    __scrollView.backgroundColor = [UIColor clearColor];
+   
+  __scrollView.backgroundColor = [UIColor clearColor];
     [self addSubview:__scrollView];
     [_doneButton addTarget:self
                     action:@selector(close:)
@@ -101,7 +103,7 @@ static const CGFloat kMinImageScale = 1.0f;
         if(!__imageView){
             __imageView = [[UIImageView alloc]init];
             [__scrollView addSubview:__imageView];
-            __imageView.contentMode = UIViewContentModeScaleAspectFill;
+            __imageView.contentMode = UIViewContentModeScaleAspectFit;
         }
         __block UIImageView * _imageViewInTheBlock = __imageView;
         __block MHFacebookImageViewerCell * _justMeInsideTheBlock = self;
@@ -122,7 +124,7 @@ static const CGFloat kMinImageScale = 1.0f;
                 __imageView.frame = [self centerFrameFromImage:__imageView.image];
                 CGAffineTransform transf = CGAffineTransformIdentity;
                 // Root View Controller - move backward
-                _rootViewController.view.transform = CGAffineTransformScale(transf, 0.95f, 0.95f);
+                _rootViewController.view.transform = CGAffineTransformScale(transf, 0.75f, 0.75f);
                 // Root View Controller - move forward
                 //                _viewController.view.transform = CGAffineTransformScale(transf, 1.05f, 1.05f);
                 _blackMask.alpha = 1;
@@ -315,14 +317,14 @@ static const CGFloat kMinImageScale = 1.0f;
         contentsFrame.origin.x = 0.0f;
     }
     
-    if (contentsFrame.size.height < boundsSize.height) {
+    if (contentsFrame.size.height < boundsSize.height)
+    {
         contentsFrame.origin.y = (boundsSize.height - contentsFrame.size.height) / 2.0f;
     } else
     {
         contentsFrame.origin.y = 0.0f;
     }
-   
-         
+    
         __imageView.frame = contentsFrame;
         
    
@@ -578,7 +580,14 @@ static const CGFloat kMinImageScale = 1.0f;
     [_doneButton setImageEdgeInsets:UIEdgeInsetsMake(-10, -10, -10, -10)];  // make click area bigger
     [_doneButton setImage:[UIImage imageNamed:@"Done"] forState:UIControlStateNormal];
 //    _doneButton.frame = CGRectMake(windowBounds.size.width - (51.0f + 9.0f),15.0f, 51.0f, 26.0f);
+    if ([UIScreen mainScreen].bounds.size.width==375 && [UIScreen mainScreen].bounds.size.height==812)
+    {
+        _doneButton.frame = CGRectMake(20,28.0f, 51.0f, 26.0f);
+    }
+    else
+    {
     _doneButton.frame = CGRectMake(20,15.0f, 51.0f, 26.0f);
+    }
 }
 
 #pragma mark - Show

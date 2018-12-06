@@ -12,6 +12,7 @@
 #import <TwitterKit/TwitterKit.h>
 #import <Fabric/Fabric.h>
 #import "UIImageView+WebCache.h"
+#import "UIViewController+KeyboardAnimation.h"
 @interface TwitterListViewController ()
 {
     NSDictionary *urlplist;
@@ -24,15 +25,28 @@
     CALayer *Bottomborder_Cell2;
       NSMutableArray * Array_searchFriend1;
     NSArray * Array_Add,*array_invite;
-    
+       CGFloat tableview_height;
 }
 @end
 
 @implementation TwitterListViewController
-@synthesize tableview_twitter,indicator,Lable_JSONResult,cell_twitter,cell_twitter2,searchbar;
+@synthesize tableview_twitter,indicator,Lable_JSONResult,cell_twitter,cell_twitter2,searchbar,BackButton,label_heading;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+  
+    if (self.view.frame.size.width==375 && self.view.frame.size.height==812)
+    {
+        
+        
+        [label_heading setFrame:CGRectMake(label_heading.frame.origin.x, label_heading.frame.origin.y+10, label_heading.frame.size.width, 28)];
+        
+        [BackButton setFrame:CGRectMake(BackButton.frame.origin.x, BackButton.frame.origin.y+10, BackButton.frame.size.width, 28)];
+        
+    }
+ 
+  
     defaults=[[NSUserDefaults alloc]init];
     NSString *plistPath = [[NSBundle mainBundle]pathForResource:@"UrlName" ofType:@"plist"];
     urlplist = [NSDictionary dictionaryWithContentsOfFile:plistPath];
@@ -42,7 +56,7 @@
     
     borderBottom_SectionView0 = [CALayer layer];
     borderBottom_SectionView1 = [CALayer layer];
-    
+    tableview_height=tableview_twitter.frame.size.height;
     [tableview_twitter setHidden:YES];
     indicator.hidden=NO;
     [indicator startAnimating];
@@ -56,6 +70,34 @@
     
     [self twittercommunication];
     
+    
+    
+}
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self subscribeToKeyboard];
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self an_unsubscribeKeyboard];
+}
+- (void)subscribeToKeyboard
+{
+    [self an_subscribeKeyboardWithAnimations:^(CGRect keyboardRect, NSTimeInterval duration, BOOL isShowing) {
+        if (isShowing)
+        {
+            
+            [tableview_twitter setFrame:CGRectMake(0, tableview_twitter.frame.origin.y, self.view.frame.size.width, tableview_height-keyboardRect.size.height)];
+            
+            
+        } else
+        {
+            
+            [tableview_twitter setFrame:CGRectMake(0, tableview_twitter.frame.origin.y, self.view.frame.size.width, tableview_height)];
+        }
+        [self.view layoutIfNeeded];
+    } completion:nil];
 }
 - (void)twittercommunication
 {
@@ -286,7 +328,7 @@
             [cell_twitter.image_profile_img setFrame:CGRectMake(cell_twitter.image_profile_img.frame.origin.x, cell_twitter.image_profile_img.frame.origin.y, cell_twitter.image_profile_img.frame.size.height, cell_twitter.image_profile_img.frame.size.height)];
             NSURL * url=[NSURL URLWithString:[dictVal valueForKey:@"imageurl"]];
             
-            [cell_twitter.image_profile_img sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"DefaultImg.jpg"] options:SDWebImageRefreshCached];
+            [cell_twitter.image_profile_img sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultimg.jpg"] options:SDWebImageRefreshCached];
              [cell_twitter.Button_invite addTarget:self action:@selector(AddUser:) forControlEvents:UIControlEventTouchUpInside];
             cell_twitter.label_fbname.text=[dictVal valueForKey:@"name"];
             cell_twitter.Button_invite.clipsToBounds=YES;
@@ -326,7 +368,7 @@
             
               [cell_twitter2.image_profile_img1 setFrame:CGRectMake(cell_twitter2.image_profile_img1.frame.origin.x, cell_twitter2.image_profile_img1.frame.origin.y, cell_twitter2.image_profile_img1.frame.size.height, cell_twitter2.image_profile_img1.frame.size.height)];
             
-            [cell_twitter2.image_profile_img1 sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"DefaultImg.jpg"] options:SDWebImageRefreshCached];
+            [cell_twitter2.image_profile_img1 sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultimg.jpg"] options:SDWebImageRefreshCached];
             
             
             [cell_twitter2.Button_invite1 addTarget:self action:@selector(InviteUser:) forControlEvents:UIControlEventTouchUpInside];

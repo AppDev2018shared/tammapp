@@ -17,6 +17,7 @@
 #import "OnCellClickViewController.h"
 #import "MyPostViewController.h"
 #import "SearchViewController.h"
+#import "AFNetworking.h"
 
 
 @interface ActivityViewController ()<UITableViewDataSource, UITableViewDelegate>
@@ -38,21 +39,36 @@
 @end
 
 @implementation ActivityViewController
-@synthesize segmentedControl,greenViewInbox,greenViewNotification;
+@synthesize segmentedControl,greenViewInbox,greenViewNotification,backbutton,profile,search,labelheding,view_line;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-    segmentPressed =@"inbox";
+   
+    if (self.view.frame.size.width==375 && self.view.frame.size.height==812)
+    {
+        [profile setFrame:CGRectMake(profile.frame.origin.x, profile.frame.origin.y+16, profile.frame.size.width, 30)];
+       
+        [search setFrame:CGRectMake(search.frame.origin.x, search.frame.origin.y+16, search.frame.size.width, 30)];
+        [backbutton setFrame:CGRectMake(backbutton.frame.origin.x, backbutton.frame.origin.y+16, backbutton.frame.size.width, 30)];
+         [labelheding setFrame:CGRectMake(labelheding.frame.origin.x, labelheding.frame.origin.y+16, labelheding.frame.size.width, 30)];
+         [view_line setFrame:CGRectMake(view_line.frame.origin.x, view_line.frame.origin.y+6, view_line.frame.size.width, 1)];
+        
+           [greenViewInbox setFrame:CGRectMake(greenViewInbox.frame.origin.x-10, greenViewInbox.frame.origin.y-2, greenViewInbox.frame.size.width, 8)];
+        
+        
+          [greenViewNotification setFrame:CGRectMake(greenViewNotification.frame.origin.x+2, greenViewNotification.frame.origin.y-2, greenViewNotification.frame.size.width, 8)];
+     
+    }
     
     NSString *plistPath = [[NSBundle mainBundle]pathForResource:@"UrlName" ofType:@"plist"];
     urlplist = [NSDictionary dictionaryWithContentsOfFile:plistPath];
     
     defaults = [[NSUserDefaults alloc]init];
     [self activityConnection];
+    NSLog(@"valsde==%@",[defaults valueForKey:@"notificationtype"]);
     
-    
+   
     
     segmentedControl.frame = CGRectMake(segmentedControl.frame.origin.x,segmentedControl.frame.origin.y, segmentedControl.frame.size.width, segmentedControl.frame.size.height + 10);
     
@@ -91,8 +107,22 @@
     
     [self refresh_updateBadge];
     
-    
-    
+    if ([[defaults valueForKey:@"notificationtype"]isEqualToString:@"notifications"])
+    {
+        [defaults setObject:@"0" forKey:@"notificationtype"];
+        segmentPressed =@"notification";
+        segmentedControl.selectedSegmentIndex = 0;
+        [self segmentedControl_Action:nil];
+    }
+    else
+    {
+        segmentPressed =@"inbox";
+        [defaults setObject:@"0" forKey:@"notificationtype"];
+        segmentedControl.selectedSegmentIndex =1;
+        [self segmentedControl_Action:nil];
+        
+    }
+    [defaults synchronize];
    
 }
 
@@ -173,8 +203,7 @@
     
     
    NSURL * url=[NSURL URLWithString:[dic_request valueForKey:@"mediathumbnailurl"]];
-    [ActivityCell.profileImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"]
-                                            options:SDWebImageRefreshCached];
+    [ActivityCell.profileImageView setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"]];
     
     
    // messageread
@@ -216,8 +245,7 @@
         
         
         NSURL * url=[NSURL URLWithString:[dic_request valueForKey:@"mediathumbnailurl"]];
-        [ActivityCell.profileImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"]
-                                                  options:SDWebImageRefreshCached];
+        [ActivityCell.profileImageView setImageWithURL:url placeholderImage:[UIImage imageNamed:@"defaultpostimg.jpg"]];
         
         
         // messageread
@@ -242,6 +270,24 @@
     }
     
    return ActivityCell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    if ([[UIScreen mainScreen]bounds].size.width ==320)
+    {
+        return 89;
+    }
+    else if ([[UIScreen mainScreen]bounds].size.width == 414)
+    {
+        return 113;
+    }
+    else
+    {
+        return 103;
+    }
+    
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

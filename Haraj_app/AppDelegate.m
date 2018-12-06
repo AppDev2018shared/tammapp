@@ -1,4 +1,4 @@
-//
+ //
 //  AppDelegate.m
 //  Haraj_app
 //
@@ -39,6 +39,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    defaults=[[NSUserDefaults alloc]init];
     
     [FIRApp configure];
     
@@ -100,17 +102,20 @@
         
     }
     
-//-------------------------------------Location ---------------------------------------------------------------------
+//-------------------------------------Location ------------------------------------------------------
+    
     
     location = true;
-    defaults=[[NSUserDefaults alloc]init];
+//    defaults=[[NSUserDefaults alloc]init];
     
     
     locationManager = [[CLLocationManager alloc] init] ;
     geocoder = [[CLGeocoder alloc] init];
     locationManager.delegate = self;
-    locationManager.desiredAccuracy =kCLLocationAccuracyThreeKilometers; //kCLLocationAccuracyNearestTenMeters;
+   locationManager.desiredAccuracy =kCLLocationAccuracyThreeKilometers; //kCLLocationAccuracyNearestTenMeters;
     [locationManager requestWhenInUseAuthorization];
+//    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    locationManager.distanceFilter = kCLDistanceFilterNone;
     [locationManager startUpdatingLocation];
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -237,9 +242,48 @@
      (void (^)(UIBackgroundFetchResult))completionHandler
 {
     
-    // Handle your message. With swizzling enabled, no need to indicate
+ 
+  //sachin changes new
     
-    // that a message was received.
+    if (application.applicationState == UIApplicationStateActive)
+    {
+        NSLog(@"active app running");
+    }
+    else
+    {
+      
+        if ([[userInfo valueForKey:@"type"] isEqualToString:@"notifications"] || [[userInfo valueForKey:@"type"] isEqualToString:@"inbox"])
+        {
+            [defaults setObject:@"1" forKey:@"tabindex"];
+              [defaults setObject:[userInfo valueForKey:@"type"] forKey:@"notificationtype"];
+             [defaults synchronize];
+            if ([[defaults valueForKey:@"LoginView"] isEqualToString:@"yes"])
+            {
+                
+                HomeNavigationController *loginController=[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"HomeNavigationController"];
+                
+                self.window.rootViewController=loginController;
+            }
+            else
+            {
+                
+                
+                MainNavigationController *loginController=[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MainNavigationController"];
+                
+                self.window.rootViewController=loginController;
+            }
+            
+        }
+        
+       
+      
+    }
+    
+    
+}
+
+-(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(nonnull NSData *)deviceToken
+{
     
 }
 

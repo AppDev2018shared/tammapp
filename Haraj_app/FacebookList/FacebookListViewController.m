@@ -10,6 +10,7 @@
 #import "Reachability.h"
 #import "SBJsonParser.h"
 #import "UIImageView+WebCache.h"
+
 @interface FacebookListViewController ()
 {
     NSDictionary *urlplist;
@@ -22,10 +23,19 @@
 @end
 
 @implementation FacebookListViewController
-@synthesize tableview_facebook,indicator,Lable_JSONResult,cell_fb,searchbar;
+@synthesize tableview_facebook,indicator,Lable_JSONResult,cell_fb,searchbar,BackButton,label_heading;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    if (self.view.frame.size.width==375 && self.view.frame.size.height==812)
+    {
+        
+        
+        [label_heading setFrame:CGRectMake(label_heading.frame.origin.x, label_heading.frame.origin.y+10, label_heading.frame.size.width, 28)];
+        
+        [BackButton setFrame:CGRectMake(BackButton.frame.origin.x, BackButton.frame.origin.y+10, BackButton.frame.size.width, 28)];
+        
+    }
     defaults=[[NSUserDefaults alloc]init];
     NSString *plistPath = [[NSBundle mainBundle]pathForResource:@"UrlName" ofType:@"plist"];
     urlplist = [NSDictionary dictionaryWithContentsOfFile:plistPath];

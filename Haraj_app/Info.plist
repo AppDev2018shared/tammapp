@@ -40,7 +40,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>9</string>
+	<string>38</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -79,17 +79,19 @@
 		<true/>
 	</dict>
 	<key>NSAppleMusicUsageDescription</key>
-	<string>Permission to access Media</string>
+	<string>Allow permission to access your gallery in order to upload media of the item you wish to sell</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Permission to access Camera</string>
+	<string>Allow permission to access camera in order to take photo/video of the item you wish to sell</string>
 	<key>NSContactsUsageDescription</key>
-	<string>Permission to access Contacts</string>
+	<string>Allow permission to access your contacts in order to share the app details with them</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Allow permission to access your location in order to show you posts in your area.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Permission to access Location</string>
+	<string>Allow permission to access your location in order to show you posts in your area.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Permission to access microphone</string>
+	<string>Allow permission to access microphone in order to record video of the item you wish to sell</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Permission to access Photo Library</string>
+	<string>Allow permission to access your gallery in order to upload photo/video of the item you wish to sell</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>SanFranciscoDisplay-Semibold.otf</string>
@@ -99,6 +101,12 @@
 		<string>SanFranciscoDisplay-Medium.otf</string>
 		<string>SanFranciscoDisplay-Thin.otf</string>
 		<string>SanFranciscoDisplay-Bold.otf</string>
+		<string>Cairo-Black.ttf</string>
+		<string>Cairo-Bold.ttf</string>
+		<string>Cairo-ExtraLight.ttf</string>
+		<string>Cairo-Light.ttf</string>
+		<string>Cairo-Regular.ttf</string>
+		<string>Cairo-SemiBold.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>
@@ -118,8 +126,6 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 </dict>
 </plist>
